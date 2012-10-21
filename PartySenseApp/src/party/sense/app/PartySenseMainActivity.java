@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import party.sense.app.dummyFrag;
 
 public class PartySenseMainActivity extends FragmentActivity {
 
@@ -49,12 +50,13 @@ public class PartySenseMainActivity extends FragmentActivity {
 
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_party_sense_main, menu);
         return true;
     }
-
+     */
     
 
 
@@ -70,16 +72,21 @@ public class PartySenseMainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new DummySectionFragment();
-            Bundle args = new Bundle();
+            Fragment fragment = new dummyFrag(); //DummySectionFragment();
+            /*Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);
+            fragment.setArguments(args);*/
             return fragment;
+            
+            /*
+             * Switch case "i" and attach a fragment
+             * 
+             */
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
