@@ -72,7 +72,13 @@ public class PartySenseMainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new dummyFrag(); //DummySectionFragment();
+            Fragment fragment; //DummySectionFragment();
+            if(i ==0){
+            	fragment = new dummyFrag(); 
+            }
+            else{
+            	fragment = new FragmentSongsScreen();
+            }
             /*Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);*/

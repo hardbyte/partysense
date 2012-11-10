@@ -1,0 +1,82 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp" 
+        android:weightSum="50">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+           android:layout_height="40dp" 
+            android:layout_weight="5"
+            android:weightSum="10">
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:ems="10" >
+
+                <requestFocus />
+            </EditText>
+            
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="0dp"
+           		android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:src="@android:drawable/ic_menu_search" />
+
+            
+            
+        </LinearLayout>
+        
+       <!-- <com.google.android.maps.MapView
+		    android:id="@+id/mapview"
+		    android:layout_width="match_parent"
+           	android:layout_height="200dp" 
+		    android:clickable="true"
+		    android:apiKey="0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg"
+		    android:layout_weight="20" 
+		/> -->
+
+<View
+    android:id="@+id/view2"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_weight="20"
+    android:padding="5dp"
+    android:background="#00ff00" />
+
+<View
+    android:id="@+id/view01"
+    android:layout_width="fill_parent"
+    android:layout_height="2dip"
+    android:background="#FF00FF00" />
+
+       <TextView
+           android:id="@+id/textView1"
+           android:layout_width="match_parent"
+           android:layout_height="40dp"
+           android:text="Club List"
+           android:gravity="bottom"
+           android:textAppearance="?android:attr/textAppearanceLarge" 
+           android:layout_weight="5"/>
+
+       <View
+           android:id="@+id/view1"
+           android:layout_width="fill_parent"
+			android:layout_height="2dip"
+			android:background="#FF00FF00" />
+
+       <ListView
+           android:id="@+id/listView1"
+           android:layout_width="match_parent"
+           android:layout_height="200dp"
+           android:layout_weight="20"
+           android:entries="@array/ListItem">
+       </ListView>
+		
+    </LinearLayout>

@@ -1,0 +1,113 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10dp" 
+        android:weightSum="50">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+           android:layout_height="0px" 
+            android:layout_weight="5"
+            android:weightSum="10">
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:ems="10" >
+
+                <requestFocus />
+            </EditText>
+            
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="0dp"
+           		android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:src="@android:drawable/ic_menu_search" />
+
+            
+            
+        </LinearLayout>
+        
+       <!-- <com.google.android.maps.MapView
+		    xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/mapview"
+		    android:layout_width="match_parent"
+           android:layout_height="0dp"
+		    android:clickable="true"
+		    android:apiKey="Your Maps API Key goes here"
+		    android:layout_weight="20"
+		/>  -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px" 
+            android:layout_weight="10"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                android:src="@drawable/album_art" />
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="60"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:text="Incredible"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="Timomatic"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <RatingBar
+                    android:rating="3"
+                    android:numStars="5"
+                    android:stepSize="1"
+                    android:id="@+id/ratingBar1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+           android:id="@+id/textView1"
+           android:layout_width="match_parent"
+           android:layout_height="0px"
+           android:text="Song List"
+           android:gravity="bottom"
+           android:textAppearance="?android:attr/textAppearanceLarge" 
+           android:layout_weight="5"/>
+
+              <View
+                  android:id="@+id/view01"
+                  android:layout_width="fill_parent"
+                  android:layout_height="2dip"
+                  android:background="#FF00FF00" />
+
+       <ListView
+           android:id="@+id/listView1"
+           android:layout_width="match_parent"
+           android:layout_height="0px"
+           android:layout_weight="30"
+           android:entries="@array/ListSongs">
+       </ListView>
+		
+    </LinearLayout>
