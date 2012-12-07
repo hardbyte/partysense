@@ -2,9 +2,10 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="#000022"
         android:orientation="vertical"
-        android:padding="10dp" 
-        android:weightSum="50">
+        android:padding="10dp"
+        android:weightSum="50" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,29 +61,31 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="60"
-                android:orientation="vertical" >
+                android:orientation="vertical" 
+                android:weightSum="100">
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
                     android:text="Incredible"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" 
+                    android:layout_weight="40"/>
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
                     android:text="Timomatic"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall" 
+                    android:layout_weight="20"/>
 
                 <RatingBar
-                    android:rating="3"
                     android:numStars="5"
-                    android:stepSize="1"
                     android:id="@+id/ratingBar1"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="0px"
+                    android:layout_weight="40"/>
 
             </LinearLayout>
 
@@ -101,13 +104,15 @@
                   android:layout_width="fill_parent"
                   android:layout_height="2dip"
                   android:background="#FF00FF00" />
-
+
        <ListView
            android:id="@+id/listView1"
            android:layout_width="match_parent"
            android:layout_height="0px"
            android:layout_weight="30"
-           android:entries="@array/ListSongs">
+           android:background="#000022"
+           android:entries="@array/ListSongs" >
+
        </ListView>
 		
     </LinearLayout>

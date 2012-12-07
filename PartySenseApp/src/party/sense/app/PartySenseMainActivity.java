@@ -33,7 +33,7 @@ public class PartySenseMainActivity extends FragmentActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    public ViewPager mViewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,12 @@ public class PartySenseMainActivity extends FragmentActivity {
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.setCurrentItem(1);
     }
 
     /*
@@ -69,12 +69,20 @@ public class PartySenseMainActivity extends FragmentActivity {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+        
+        
 
         @Override
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
             if(i ==0){
-            	fragment = new dummyFrag(); 
+            	Bundle b = new Bundle();
+            	b.putInt("menuCnt", 0);
+            	fragment = new FragmentMenuScreen();
+            	fragment.setArguments(b);
+            }
+            else if(i ==1){
+            	fragment = new dummyFrag();
             }
             else{
             	fragment = new FragmentSongsScreen();
@@ -83,16 +91,11 @@ public class PartySenseMainActivity extends FragmentActivity {
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);*/
             return fragment;
-            
-            /*
-             * Switch case "i" and attach a fragment
-             * 
-             */
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override

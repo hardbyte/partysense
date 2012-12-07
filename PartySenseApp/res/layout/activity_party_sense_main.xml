@@ -10,24 +10,28 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:src="@drawable/partysense_banner" />
-
+
 <android.support.v4.view.ViewPager
     android:id="@+id/pager"
     android:layout_width="match_parent"
-    android:layout_height="460dp" >
+    android:layout_height="fill_parent"
+    android:background="#000022" >
 
     <!--
     This title strip will display the currently visible page title, as well as the page
     titles for adjacent pages.
     -->
-    <android.support.v4.view.PagerTitleStrip android:id="@+id/pager_title_strip"
+
+    <android.support.v4.view.PagerTitleStrip
+        android:id="@+id/pager_title_strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:background="#000022"
-        android:textColor="#ffffff"
+        android:background="#000000"
+        android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:paddingBottom="4dp" />
+        android:textColor="#ffffff" />
+
 </android.support.v4.view.ViewPager>
  
     </LinearLayout>

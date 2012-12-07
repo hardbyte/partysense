@@ -14,7 +14,8 @@
         
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_party_sense_main" >
+            android:label="@string/title_activity_party_sense_main"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +24,23 @@
             </intent-filter>
         </activity>
         <uses-library android:name="com.google.android.maps" />
-        <activity android:name=".PartySenseMainActivity">
+        <activity android:name=".PartySenseMainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait">
+            
             <intent-filter>
                 
                 <action android:name="android.intent.action.PartySenseMainActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="PartySenseClubActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                
+                <action android:name="android.intent.action.PartySenseClubActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
