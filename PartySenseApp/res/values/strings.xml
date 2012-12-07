@@ -6,6 +6,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_party_sense_main">PartySense</string>
+    <string-array name="MenuItems">
+       <item >Recommended</item>
+       <item >Nearby</item>
+       <item >Friends</item>
+       <item >Settings</item>
+    </string-array>
 	<string-array name="ListItem">
        <item >Was</item>
        <item >Wrong</item>

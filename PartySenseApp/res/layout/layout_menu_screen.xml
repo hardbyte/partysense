@@ -13,27 +13,43 @@
             android:layout_width="wrap_content"
             android:layout_height="0px"
             android:layout_weight="35" />
-		
-        <Button
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="0px" 
+            android:layout_weight = "30" 
+            android:entries="@array/MenuItems" />
+		
+
+        <!--<Button
             android:id="@+id/btnSongs"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:text="Songs"
             android:layout_weight="10" />
-
+
+
+
+
         <Button
             android:id="@+id/btnClubs"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:text="Clubs" 
             android:layout_weight="10"/>
-
+
+
+
+
         <Button
             android:id="@+id/btnSettings"
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:text="Settings" 
-            android:layout_weight="10"/>
+            android:layout_weight="10"
+            />
+              -->
         
         <View
             android:id="@+id/view2"
