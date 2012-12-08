@@ -19,10 +19,7 @@ public class FragmentSongsScreen extends Fragment {
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
-		EditText edtView=(EditText) view.findViewById(R.id.editText1);
-		ImageButton myBtn = (ImageButton) view.findViewById(R.id.imageButton1);
-		myBtn.setFocusableInTouchMode(true);
-		myBtn.requestFocus();
+		
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		

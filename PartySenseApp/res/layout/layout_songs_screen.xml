@@ -7,66 +7,14 @@
         android:padding="10dp"
         android:weightSum="50" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-           android:layout_height="0px" 
-            android:layout_weight="5"
-            android:weightSum="10">
-
-            <EditText
-                android:id="@+id/editText1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="8"
-                android:ems="10" >
-
-                <requestFocus />
-            </EditText>
-            
-            <ImageButton
-                android:id="@+id/imageButton1"
-                android:layout_width="0dp"
-           		android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:src="@android:drawable/ic_menu_search" />
-
-            
-            
-        </LinearLayout>
-        
-       <!-- <com.google.android.maps.MapView
-		    xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:id="@+id/mapview"
-		    android:layout_width="match_parent"
-           android:layout_height="0dp"
-		    android:clickable="true"
-		    android:apiKey="Your Maps API Key goes here"
-		    android:layout_weight="20"
-		/>  -->
-
-        
-        <TextView
-           android:id="@+id/textView1"
-           android:layout_width="match_parent"
-           android:layout_height="0px"
-           android:text="Club List"
-           android:gravity="bottom"
-           android:textAppearance="?android:attr/textAppearanceLarge" 
-           android:layout_weight="5"/>
-
-              <View
-                  android:id="@+id/view01"
-                  android:layout_width="fill_parent"
-                  android:layout_height="2dip"
-                  android:background="#26ADE4" />
-
-
        <ListView
            android:id="@+id/recommended_club_listview"
            android:layout_width="match_parent"
            android:layout_height="0px"
-           android:layout_weight="40"
+           android:layout_weight="50"
            android:background="#000000"
+           android:divider="#26ADE4"
+           android:dividerHeight="4px"
            android:entries="@array/ListSongs" >
 
        </ListView>
