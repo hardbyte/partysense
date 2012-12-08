@@ -20,7 +20,7 @@ public class FragmentMenuScreen extends Fragment {
 		int menuCnt = b.getInt("menuCnt");
 		//int menuCnt = savedInstanceState.getInt("menuCnt");
 		view = inflater.inflate(R.layout.layout_menu_screen, container,false);
-		btnSongs = (Button) view.findViewById(R.id.btnSongs);
+		/*btnSongs = (Button) view.findViewById(R.id.btnSongs);
 		btnSettings = (Button) view.findViewById(R.id.btnSettings);
 		btnClubs = (Button) view.findViewById(R.id.btnClubs);
 		
@@ -38,9 +38,9 @@ public class FragmentMenuScreen extends Fragment {
 				startActivity(new Intent("android.intent.action.PartySenseClubActivity"));
 				getActivity().finish();
 			}
-		});
+		});*/
 		
-		switch(menuCnt)
+		/*switch(menuCnt)
 		{
 		case 0:
 			btnSongs.setEnabled(false);
@@ -51,7 +51,7 @@ public class FragmentMenuScreen extends Fragment {
 		case 2:
 			btnSettings.setEnabled(false);
 			break;
-		}
+		}*/
 		
 		
 		return view;		

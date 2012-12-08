@@ -93,6 +93,9 @@ public class PartySenseMainActivity extends FragmentActivity {
             return fragment;
         }
 
+        /**
+         * Method to get count 
+         */
         @Override
         public int getCount() {
             return 3;
