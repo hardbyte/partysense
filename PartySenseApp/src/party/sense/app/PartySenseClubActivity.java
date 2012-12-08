@@ -84,7 +84,7 @@ public class PartySenseClubActivity extends FragmentActivity {
             	fragment.setArguments(b);
             }
             else if(i ==1){
-            	fragment = new FragmentSongsScreen();
+            	fragment = new FragmentClubScreen();
             }
             else{
             	fragment = new dummyFrag();

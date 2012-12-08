@@ -26,21 +26,23 @@ public final class R {
         public static final int ps_logo=0x7f020007;
     }
     public static final class id {
-        public static final int club_item_tvClubName=0x7f080003;
-        public static final int editText1=0x7f080005;
-        public static final int imageButton1=0x7f080006;
-        public static final int imageView1=0x7f08000d;
+        public static final int club_item_imgClubBG=0x7f080003;
+        public static final int club_item_tvClubName=0x7f080004;
+        public static final int club_item_tvClubSub=0x7f080005;
+        public static final int editText1=0x7f080006;
+        public static final int imageButton1=0x7f080007;
+        public static final int imageView1=0x7f08000f;
         public static final int imgBanner=0x7f080002;
-        public static final int listMenu=0x7f08000c;
-        public static final int listView1=0x7f08000b;
-        public static final int menu_settings=0x7f08000e;
+        public static final int listMenu=0x7f08000d;
+        public static final int listView1=0x7f08000c;
+        public static final int menu_settings=0x7f080010;
         public static final int pager=0x7f080000;
         public static final int pager_title_strip=0x7f080001;
-        public static final int textView1=0x7f080009;
-        public static final int textView2=0x7f080004;
-        public static final int view01=0x7f080008;
-        public static final int view1=0x7f08000a;
-        public static final int view2=0x7f080007;
+        public static final int recommended_club_listview=0x7f08000e;
+        public static final int textView1=0x7f08000a;
+        public static final int view01=0x7f080009;
+        public static final int view1=0x7f08000b;
+        public static final int view2=0x7f080008;
     }
     public static final class layout {
         public static final int activity_party_sense_main=0x7f030000;

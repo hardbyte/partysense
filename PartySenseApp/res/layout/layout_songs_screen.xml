@@ -2,7 +2,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#000022"
+        android:background="#000000"
         android:orientation="vertical"
         android:padding="10dp"
         android:weightSum="50" >
@@ -49,7 +49,7 @@
            android:id="@+id/textView1"
            android:layout_width="match_parent"
            android:layout_height="0px"
-           android:text="Song List"
+           android:text="Club List"
            android:gravity="bottom"
            android:textAppearance="?android:attr/textAppearanceLarge" 
            android:layout_weight="5"/>
@@ -58,15 +58,15 @@
                   android:id="@+id/view01"
                   android:layout_width="fill_parent"
                   android:layout_height="2dip"
-                  android:background="#FF00FF00" />
+                  android:background="#26ADE4" />
 
 
        <ListView
-           android:id="@+id/listView1"
+           android:id="@+id/recommended_club_listview"
            android:layout_width="match_parent"
            android:layout_height="0px"
            android:layout_weight="40"
-           android:background="#000022"
+           android:background="#000000"
            android:entries="@array/ListSongs" >
 
        </ListView>
