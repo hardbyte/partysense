@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+    <link href='http://fonts.googleapis.com/css?family=Arbutus+Slab' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+    <title>{% block title %}Party Sense{% endblock %}</title>
+    {% block onreadyfunc %}
+    {% endblock %}
+    {% endblock %}
+</head>
+<body>
+
+<div id="site-container">
+    <a id="top-bar" href="/">
+        <img src="/images/logo.png" />
+        <h3>Party Sense</h3>
+    </a>
+    <div id="navigation">
+        <ul>
+            <li><a href="/admin/">Admin</a></li>
+        </ul>
+    </div><br/>
+    <div id="content-container">
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <div id="footer-container">
+    </div>
+</div>
+
+</body>
+</html>
