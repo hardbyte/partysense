@@ -5,11 +5,7 @@
         android:orientation="vertical"
         tools:context=".PartySenseMainActivity">
         
-        <ImageView
-        android:id="@+id/imgBanner"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@drawable/partysense_banner" />
+        
 
 
 
@@ -18,9 +14,7 @@
 		    android:id="@+id/pager"
 		    android:layout_width="match_parent"
 		    android:layout_height="fill_parent"
-		    android:layout_alignTop="@+id/imgBanner"
-		    android:layout_marginTop="30dp"
-		    android:background="#000022">
+		    android:background="#000000">
 	
 	    <!--
 	    This title strip will display the currently visible page title, as well as the page
@@ -30,13 +24,22 @@
 	    <android.support.v4.view.PagerTitleStrip
 	        android:id="@+id/pager_title_strip"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
+	        android:layout_height="60dp"
 	        android:layout_gravity="top"
-	        android:background="#000000"
+	        android:gravity = "bottom"
+	        android:background="@drawable/header_bg"
 	        android:paddingBottom="4dp"
 	        android:paddingTop="4dp"
 	        android:textColor="#ffffff"/>
 	
 		</android.support.v4.view.ViewPager>
  
+		<ImageView
+		    android:id="@+id/imgBanner"
+		    android:layout_width="180dp"
+		    android:layout_height="40dp"
+		    android:layout_alignParentLeft="true"
+		    android:padding="0dp"
+		    android:src="@drawable/ps_logo" />
+		
     </RelativeLayout>

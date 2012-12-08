@@ -4,6 +4,7 @@ package party.sense.app;
 //import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -34,7 +35,7 @@ public class PartySenseClubActivity extends FragmentActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     public ViewPager mViewPager;
-
+    public String[] segmentTitles = {"Menu","Nearby","Map View"}; 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +49,7 @@ public class PartySenseClubActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
+        
     }
 
     /*
@@ -100,12 +102,14 @@ public class PartySenseClubActivity extends FragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
+        	return segmentTitles[position];
+        	
+            /*switch (position) {
                 case 0: return getString(R.string.title_section1).toUpperCase();
                 case 1: return getString(R.string.title_section2).toUpperCase();
                 case 2: return getString(R.string.title_section3).toUpperCase();
             }
-            return null;
+            return null;*/
         }
     }
 

@@ -44,54 +44,7 @@
 		    android:layout_weight="20"
 		/>  -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px" 
-            android:layout_weight="10"
-            android:weightSum="100">
-
-
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:src="@drawable/album_art" />
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="60"
-                android:orientation="vertical" 
-                android:weightSum="100">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0px"
-                    android:text="Incredible"
-                    android:textAppearance="?android:attr/textAppearanceLarge" 
-                    android:layout_weight="40"/>
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0px"
-                    android:text="Timomatic"
-                    android:textAppearance="?android:attr/textAppearanceSmall" 
-                    android:layout_weight="20"/>
-
-                <RatingBar
-                    android:numStars="5"
-                    android:id="@+id/ratingBar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0px"
-                    android:layout_weight="40"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
+        
         <TextView
            android:id="@+id/textView1"
            android:layout_width="match_parent"
@@ -112,7 +65,7 @@
            android:id="@+id/listView1"
            android:layout_width="match_parent"
            android:layout_height="0px"
-           android:layout_weight="30"
+           android:layout_weight="40"
            android:background="#000022"
            android:entries="@array/ListSongs" >
 

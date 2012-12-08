@@ -4,6 +4,7 @@ package party.sense.app;
 //import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,8 @@ public class PartySenseMainActivity extends FragmentActivity {
      */
     public ViewPager mViewPager;
 
+    public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class PartySenseMainActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
+        mViewPager.setBackgroundColor(Color.argb(128, 0, 0, 0));
     }
 
     /*
@@ -82,10 +86,10 @@ public class PartySenseMainActivity extends FragmentActivity {
             	fragment.setArguments(b);
             }
             else if(i ==1){
-            	fragment = new dummyFrag();
+            	fragment = new FragmentSongsScreen();
             }
             else{
-            	fragment = new FragmentSongsScreen();
+            	fragment = new dummyFrag();
             }
             /*Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
@@ -103,12 +107,15 @@ public class PartySenseMainActivity extends FragmentActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
+        	
+        	return segmentTitles[position];
+        	
+            /*switch (position) {
                 case 0: return getString(R.string.title_section1).toUpperCase();
                 case 1: return getString(R.string.title_section2).toUpperCase();
                 case 2: return getString(R.string.title_section3).toUpperCase();
             }
-            return null;
+            return null;*/
         }
     }
 
@@ -132,3 +139,4 @@ public class PartySenseMainActivity extends FragmentActivity {
         }
     }
 }
+
