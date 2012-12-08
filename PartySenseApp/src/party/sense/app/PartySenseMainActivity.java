@@ -2,24 +2,21 @@ package party.sense.app;
 
 //import android.app.ActionBar;
 //import android.app.FragmentTransaction;
-import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
+import java.io.IOException;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import party.sense.app.dummyFrag;
 
 public class PartySenseMainActivity extends FragmentActivity {
 
@@ -52,8 +49,24 @@ public class PartySenseMainActivity extends FragmentActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
         mViewPager.setBackgroundColor(Color.argb(128, 0, 0, 0));
+        
+        
+        try {
+        	readJson();
+        }catch(IOException exception){
+        	Log.e("PartySenseMainActivity", exception.getMessage());
+        }
     }
 
+    /**
+     * Temporary method to Test Android JSON capability
+     * @throws IOException 
+     */
+    public void readJson() throws IOException {
+    	String fetchUrl = "http://partysenseapp.appspot.com/api/sample-json";
+    	new GetInfoTask().execute(fetchUrl);
+    }
+    
     /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
