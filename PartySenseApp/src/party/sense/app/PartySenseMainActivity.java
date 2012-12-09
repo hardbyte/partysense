@@ -3,6 +3,8 @@ package party.sense.app;
 //import android.app.ActionBar;
 //import android.app.FragmentTransaction;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -55,16 +57,23 @@ public class PartySenseMainActivity extends FragmentActivity {
         	readJson();
         }catch(IOException exception){
         	Log.e("PartySenseMainActivity", exception.getMessage());
-        }
+        } catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
     }
 
     /**
      * Temporary method to Test Android JSON capability
      * @throws IOException 
+     * @throws ExecutionException 
+     * @throws InterruptedException 
      */
-    public void readJson() throws IOException {
-    	String fetchUrl = "http://partysenseapp.appspot.com/api/sample-json";
-    	new GetInfoTask().execute(fetchUrl);
+    public void readJson() throws IOException, InterruptedException, ExecutionException {
+    	String fetchUrl = "http://partysenseapp.appspot.com/api/clubs-dump";
+    	Log.i("PartySenseMainActivity", "Going to Execute task");
+    	List<Club> clubs = new GetInfoTask().execute(fetchUrl).get();
     }
     
     /*
