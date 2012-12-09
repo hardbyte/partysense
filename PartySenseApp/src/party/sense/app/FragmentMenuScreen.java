@@ -27,7 +27,6 @@ public class FragmentMenuScreen extends Fragment {
 		//int menuCnt = savedInstanceState.getInt("menuCnt");
 		view = inflater.inflate(R.layout.layout_menu_screen, container,false);
 		lvMenu = (ListView) view.findViewById(R.id.listMenu);
-		
 		lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
 				if(pos == menuCnt){

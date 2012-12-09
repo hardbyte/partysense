@@ -35,22 +35,22 @@
             android:orientation="horizontal" 
             android:weightSum="10">
 
-            <TextView
+            <Button
                 android:id="@+id/textView1"
                 android:layout_width="0px"
+                
                 android:layout_height="fill_parent"
                 android:text="Recommended"
                 android:gravity="center_vertical|center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceLarge" 
+                
                 android:layout_weight="5"/>
 
-            <TextView
+            <Button
                 android:id="@+id/textView2"
                 android:layout_width="0px"
                 android:layout_height="fill_parent"
                 android:text="Nearby"
                 android:gravity="center_vertical|center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_weight="5" />
 			
         </LinearLayout>

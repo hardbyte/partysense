@@ -58,6 +58,14 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter></activity>
+        <activity android:name="PartySenseSettingsActivity" android:windowSoftInputMode="stateHidden|adjustPan"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                
+                <action android:name="android.intent.action.PartySenseSettingsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter></activity>
     </application>
 
 </manifest>
