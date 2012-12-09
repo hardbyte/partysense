@@ -7,7 +7,7 @@
             android:id="@+id/imageView1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:src="@drawable/partysense_sml_sq" 
+            android:src="@drawable/splash" 
             android:layout_gravity="center_vertical" 
          />
 

@@ -40,6 +40,6 @@
 		    android:layout_height="40dp"
 		    android:layout_alignParentLeft="true"
 		    android:padding="0dp"
-		    android:src="@drawable/ps_logo" />
+		    android:src="@drawable/logo" />
 		
     </RelativeLayout>

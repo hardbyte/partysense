@@ -8,6 +8,7 @@
             android:id="@+id/club_item_imgClubBG"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:scaleType="fitStart"
             android:src="@drawable/item_bg" />
 
         <TextView

@@ -15,6 +15,7 @@ public class FragmentSongsScreen extends Fragment {
 
 	View view;
 	ListView lvClubList;
+	ClubListItemAdapter adapter;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		
@@ -37,5 +38,9 @@ public class FragmentSongsScreen extends Fragment {
 		//edtView.setInputType(0);
 		
 		return view;
+	}
+	
+	private void addClubItem(int imgID, String clubName, String clubSub){
+		adapter.add(new ClubListItem(imgID, clubName, clubSub));
 	}
 }
