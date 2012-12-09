@@ -22,7 +22,7 @@ public class PartySenseMapActivity extends MapActivity {
 	    setContentView(R.layout.layout_club_map);
 	    mapV = (MapView) findViewById(R.id.mapview);
 	    mapV.displayZoomControls(false);
-	    mapV.setBuiltInZoomControls(true);
+	    mapV.setBuiltInZoomControls(false);
 	    
 	    double lon = 174.767;
 	    double lat = -36.8667;

@@ -13,6 +13,11 @@
        <item>Friends</item>
        <item >Settings</item>
     </string-array>
+    <string-array name="MapItems">
+       <item >Recommended</item>
+       <item >Friends</item>
+       <item >All</item>
+    </string-array>
 	<string-array name="ListItem">
        <item >Was</item>
        <item >Wrong</item>
