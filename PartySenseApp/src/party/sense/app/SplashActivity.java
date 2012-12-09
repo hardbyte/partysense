@@ -47,6 +47,7 @@ public class SplashActivity extends Activity {
 	    };
 	    splashTimerThread.start();
 	    
+	    /*
 	    // Adding functionality to Read/ Write to internal storage
 	    String myString = "Testing writing to Club DB";
 	    File partySenseDir = this.getDir("PartySenseData", Context.MODE_PRIVATE); //Creating an internal dir;
@@ -79,7 +80,7 @@ public class SplashActivity extends Activity {
 			Log.e("SplashActivity", "Read : " + line);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
-
+	
 }
