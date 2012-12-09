@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 
 class Club(ndb.Model):
     name = ndb.StringProperty(required=True)
+    city = ndb.StringProperty()
     address = ndb.StringProperty()
     phone_number = ndb.StringProperty()
     email = ndb.StringProperty()
@@ -23,7 +24,7 @@ class Club(ndb.Model):
 
     tags = ndb.StringProperty(repeated=True)
 
-    description = ndb.StringProperty()
+    description = ndb.TextProperty()
 
     unstructured_data = ndb.TextProperty()
 

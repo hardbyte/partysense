@@ -9,6 +9,8 @@ import cgi
 import quopri
 from datamodel import Club
 import json
+from lib import get_lines, get_form, get_json
+import csv
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -33,10 +35,6 @@ class AdminHandler(BaseHandler):
         template = {}
         self.render_template('admin.html', **template)
 
-class SampleJson(BaseHandler):
-    def get(self):
-        self.response.write('{"message": "hello world"}')
-
 class BrowseDataModel(BaseHandler):
     def get(self):
         kinds = ["Club", "User", "Tag", "TrendingClubs"]
@@ -46,96 +44,105 @@ class BrowseDataModel(BaseHandler):
 
         self.response.write('<br/>'.join(models))
 
-class EditKindHandler(BaseHandler):
-    def get(self, kind):
-        template = {'form': get_form(kind)}
-        self.render_template('edit-kind.html', **template)
+
+class EditClubHandler(BaseHandler):
+    def get(self):
+        pass
+
 
 class JsonHandler(BaseHandler):
     def get(self, kind):
         self.response.write(get_json(kind))
 
-def get_lines(kind):
-    end1 = "class "
-    end2 = "(ndb.Model):"
-    with open('datamodel.py') as f:
-        lines = f.readlines()
-    append = False
-    chunk = []
-    for line in lines:
-        if append:
-            if end1 in line and end2 in line:
-                break
-            chunk.append(line)
-        if "class " + kind + "(ndb.Model):" in line:
-            append = True
+class ImportClubsHandler(BaseHandler):
+    def get(self):
+        template = {}
+        self.render_template('import-clubs.html', **template)
 
-    return chunk
+    def post(self):
+        dr = csv.DictReader(self.request.POST.get('myfile').file)
+        expected_keys = set(['Web', 'Tags', 'Name of Club',
+                             'Description', 'City', 'Number', 'Survey Completed',
+                             'Phone', 'Contact', 'Address', 'Latitude', 'Response',
+                             'Longitude'])
+        dr = list(dr)
+        d0 = dr[0]
+        for key_ in d0:
+            if key_ not in expected_keys:
+                return self.redirect("/error/unexpected_key_{0}".format(key_))
+        for key_ in expected_keys:
+            if key_ not in d0:
+                return self.redirect("/error/missing_key_{0}".format(key_))
+        dr = [d for d in dr if d['Name of Club']]
+        for d in dr:
+            for k in d:
+                d[k] = d[k].strip()
+        club_keys = [ndb.Key('Club', d['Name of Club']) for d in dr]
+        clubs = ndb.get_multi(club_keys)
 
-def get_form(kind):
+        clubs_to_save = []
+        for d, club in zip(dr, clubs):
 
-    lines = get_lines(kind)
-    form_lines = []
-    form_lines.append("<form>")
-    for line in lines:
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        is_string = "StringProperty" in line
-        is_repeat = "repeated=True" in line
-        is_int = "IntegerProperty" in line
-        is_float = "FloatProperty" in line
-        is_text = "TextProperty" in line
-        is_key = "Key" in line
-        is_date = "DateTimeProperty" in line
-        assert [is_date, is_string, is_int, is_float, is_key, is_text].count(True) == 1
-        if is_key or is_date:
-            continue
-        label = line.split("=")[0].strip()
-        input_ = """<input type="text" name="{0}">""".format(label)
-        if is_repeat:
-            input_ = input_ * 5
-        input_ += "<br/>"
-        form_line = "{label}: {input_}".format(label=label, input_=input_)
-        form_lines.append(form_line)
-    form_lines.append("""<input type="submit" value="Submit">""")
-    form_lines.append("</form>")
-    return "".join(form_lines)
 
-def get_json(kind):
-    lines = get_lines(kind)
-    json_dicts = []
-    #print lines, 'wtf'
-    for xx in "abc":
-        json_dict = {}
-        for line in lines:
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            is_string = "StringProperty" in line
-            is_repeat = "repeated=True" in line
-            is_int = "IntegerProperty" in line
-            is_float = "FloatProperty" in line
-            is_text = "TextProperty" in line
-            is_key = "Key" in line
-            is_date = "DateTimeProperty" in line
-            assert [is_date, is_string, is_int, is_float, is_key, is_text].count(True) == 1
-            if is_key or is_date:
-                continue
-            label = line.split("=")[0].strip()
-            #print label
-            json_dict[label] = xx
-        json_dicts.append(json_dict)
-    return json.dumps(json_dicts)
+            tags = d['Tags'].split(",")
+            tags = [t.strip() for t in tags]
+            if not club:
+                club = Club(key=ndb.Key('Club', d['Name of Club']))
+            club.populate(
+                name=d['Name of Club'],
+                website=d['Web'],
+                tags=tags,
+                city=d['City']
+            )
+            club.description = d['Description']
+            club.address = d['Address']
+            club.phone_number = d['Phone']
+            #ignore d['Response']
+            #ignore d['Survey Completed']
+            #ignore d['Contact']
+            try:
+                if d['Latitude']:
+                    club.latitude = float(d['Latitude'])
+                if d['Longitude']:
+                    club.longitude = float(d['Longitude'])
+            except:
+                return self.redirect('/error/long-lat-{0}'.format(club.name))
 
+            clubs_to_save.append(club)
+        ndb.put_multi(clubs_to_save)
+        self.response.write("success")
+
+class ClubsJsonHandler(BaseHandler):
+    def get(self):
+        clubs = Club.query().fetch()
+        json_dicts = []
+        props = ['name', 'website', 'tags', 'city', 'description', 'address', 'phone_number', 'longitude', 'latitude']
+        for club in clubs:
+            d = {}
+            for p in props:
+                if hasattr(club, p):
+                    val = getattr(club, p)
+                    if val:
+                        d[p] = val
+            assert d
+            json_dicts.append(d)
+        self.response.write(json.dumps(json_dicts, sort_keys=True,indent=4))
 
 _routes = [
     RedirectRoute('/', HomeHandler, name="home", strict_slash=True),
     RedirectRoute('/error/<message>/', ErrorHandler, name="error", strict_slash=True),
     RedirectRoute('/admin', AdminHandler, name="admin", strict_slash=True),
-    RedirectRoute('/api/sample-json', SampleJson, name="sample-json", strict_slash=True),
     RedirectRoute('/api/all/<kind>', JsonHandler, name="json", strict_slash=True),
     RedirectRoute('/admin/browse-data-model', BrowseDataModel, name="browse-data-model", strict_slash=True),
-    RedirectRoute('/admin/edit-kind/<kind>', EditKindHandler, name="edit-kind", strict_slash=True)
+    #RedirectRoute('/admin/edit-kind/<kind>', EditKindHandler, name="edit-kind", strict_slash=True)
+    RedirectRoute('/admin/import-clubs', ImportClubsHandler, name='import-clubs', strict_slash=True),
+    RedirectRoute('/api/clubs-dump', ClubsJsonHandler, name='clubs-dump', strict_slash=True)
 ]
 app = webapp2.WSGIApplication(_routes, debug=True)
+
+
+#class EditKindHandler(BaseHandler):
+#    def get(self, kind):
+#        #gives basic form to cut and paste.
+#        template = {'form': get_form(kind)}
+#        self.render_template('edit-kind.html', **template)
