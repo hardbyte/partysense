@@ -42,6 +42,9 @@ public class FragmentMenuScreen extends Fragment {
 	                	startActivity(new Intent("android.intent.action.PartySenseClubActivity"));
 	    				getActivity().finish();
 	                }
+	                else if (pos == 2){
+	                	startActivity(new Intent("android.intent.action.PartySenseMapActivity"));
+	                }
 	                else{}
 				}
             }

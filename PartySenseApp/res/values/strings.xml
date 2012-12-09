@@ -9,7 +9,7 @@
     <string-array name="MenuItems">
        <item >Recommended Clubs</item>
        <item >Nearby Clubs</item>
-       <item >Search Clubs</item>
+       <item >Map View</item>
        <item>Friends</item>
        <item >Settings</item>
     </string-array>
