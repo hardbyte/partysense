@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.BreakIterator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -47,14 +48,13 @@ public class SplashActivity extends Activity {
 	    };
 	    splashTimerThread.start();
 	    
-	    /*
+	    
 	    // Adding functionality to Read/ Write to internal storage
 	    String myString = "Testing writing to Club DB";
-	    File partySenseDir = this.getDir("PartySenseData", Context.MODE_PRIVATE); //Creating an internal dir;
-	    File clubDbFile = new File(partySenseDir, "clubDbTest.json"); //Getting a file within the dir.
-	    FileOutputStream out = null;
+	    
+	    //File filesDirectory = this.getDir("files", Context.MODE_PRIVATE); //Creating an internal dir;
 	    try {
-			out = new FileOutputStream(clubDbFile);
+			FileOutputStream out = openFileOutput("clubDbTest.json", Context.MODE_PRIVATE);
 			out.write(myString.getBytes());
 			out.close();
 		} catch (FileNotFoundException fnfe) {
@@ -65,19 +65,27 @@ public class SplashActivity extends Activity {
 		
 		FileInputStream in = null;
 		try {
-			in = openFileInput("filename.txt");
+			in = openFileInput("clubDbTest.json");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	    InputStreamReader inputStreamReader = new InputStreamReader(in);
 	    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-	    StringBuilder sb = new StringBuilder();
-	    String line;
+	    String line = null;
+		try {
+			line = bufferedReader.readLine();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		Log.e("SplashActivity", "Read : " + line);
+		
+	    /*StringBuilder sb = new StringBuilder();
 	    try {
 			while ((line = bufferedReader.readLine()) != null) {
 			    sb.append(line);
 			}
 			Log.e("SplashActivity", "Read : " + line);
+			bufferedReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}*/
