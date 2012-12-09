@@ -1,0 +1,78 @@
+body {
+	background: url(../images/background-top.png) #000 no-repeat top center;
+	color: #fff;
+}
+#page {
+	background: rgba(0,0,0,0.4);
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+}
+#main {
+	text-align: left;
+	display: block;
+	padding: 15px 0 0 25px;
+}
+#logo { 
+	display: block;
+	width: 451px;
+	height: 71px;
+	margin: 35px 0 20px 30px;
+	background: url(../images/logo.png) no-repeat;
+}
+#phones { 
+	display: block;
+	width: 433px;
+	height: 602px;
+	background: url(../images/phones.png) no-repeat;
+}
+h3 { 
+	color: #fff;
+	font-weight: 300;
+	font-size: 18pt;
+	line-height: 25px;
+}
+input { color: #000; }
+.button { color: #000; }
+#footer {
+	margin-left: 25px;
+	font-size: 10px;
+}
+#mc_embed_signup {
+	max-width: 30em;
+}
+#nav {
+	padding: 60px 0 0 0;
+}
+#nav a {
+	font-size: 1.6em;
+	width: 30%;
+	max-width: 100px;
+	height: 25px;
+	background: rgba(0,0,0,0.4);
+	padding: 5px 10px 5px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#nav a:hover {
+	-webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);	
+	-webkit-transition-duration: 0.25s;
+	-moz-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+}
+#download img {
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+	border-radius: 11px;	
+}
+#download img:hover {
+	-webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);	
+	-webkit-transition-duration: 0.25s;
+	-moz-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+}
