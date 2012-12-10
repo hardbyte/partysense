@@ -28,7 +28,14 @@ class ErrorHandler(BaseHandler):
 class HomeHandler(BaseHandler):
     def get(self):
         template = {}
-        self.render_template('home.html', **template)
+        #self.render_template('home.html', **template)
+        self.render_template('index.html', **template)
+
+class AboutHandler(BaseHandler):
+    def get(self):
+        template = {}
+        #self.render_template('home.html', **template)
+        self.render_template('about.html', **template)
 
 class AdminHandler(BaseHandler):
     def get(self):
@@ -123,13 +130,14 @@ class ClubsJsonHandler(BaseHandler):
                 if hasattr(club, p):
                     val = getattr(club, p)
                     if val:
-                        d[p] = val
+                        d[p] = str(val) if p in ('longitude', 'latitude') else val
             assert d
             json_dicts.append(d)
         self.response.write(json.dumps(json_dicts, sort_keys=True,indent=4))
 
 _routes = [
     RedirectRoute('/', HomeHandler, name="home", strict_slash=True),
+    RedirectRoute('/about', AboutHandler, name="about", strict_slash=True),
     RedirectRoute('/error/<message>/', ErrorHandler, name="error", strict_slash=True),
     RedirectRoute('/admin', AdminHandler, name="admin", strict_slash=True),
     RedirectRoute('/api/all/<kind>', JsonHandler, name="json", strict_slash=True),

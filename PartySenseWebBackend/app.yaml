@@ -5,6 +5,10 @@ api_version: 1
 threadsafe: true
 
 handlers:
+- url: /(.*.txt)
+  static_files: stylesheets/\1
+  upload: stylesheets/(.*.txt)
+
 - url: /admin.*
   script: main.app
   login: admin
