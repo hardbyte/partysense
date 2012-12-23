@@ -7,4 +7,7 @@ package party.sense.app;
  */
 public class PartySenseTag {
 	
+	public PartySenseTag(){
+		
+	}
 }

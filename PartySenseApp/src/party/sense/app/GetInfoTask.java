@@ -35,9 +35,7 @@ class GetInfoTask extends AsyncTask<String, Void, List<Club>> {
             for (JsonElement element: infoArray){
             	Club club = gson.fromJson(element, Club.class);
             	clubs.add(club);
-            	clubnames+=club.getName()+" ";
             }
-            Log.e("GetInfoTask",clubnames);
             return clubs;
             
         } catch (Exception exception) {
