@@ -4,6 +4,9 @@
     <string name="title_section2">Songs</string>
     <string name="title_section1">Clubs</string>
     <string name="hello_world">Hello world!</string>
+    <string name="mooTest">Test</string>
+    <string name="mooTest2">Test</string>
+    <string name="mooTest3">Test</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_party_sense_main">PartySense</string>
     <string-array name="MenuItems">
