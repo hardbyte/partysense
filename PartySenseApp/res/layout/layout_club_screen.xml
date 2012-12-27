@@ -15,11 +15,18 @@
 		    android:layout_weight="20" 
 		/> -->
 
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4.69"
+            android:text="Button" />
+
 		<ListView
            android:id="@+id/nearby_club_listview"
            android:layout_width="match_parent"
            android:layout_height="0px"
-           android:layout_weight="50"
+           android:layout_weight="45"
            android:background="#000000"
            android:divider="#26ADE4"
            android:dividerHeight="4px"

@@ -1,5 +1,7 @@
 package party.sense.app;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,12 +26,11 @@ public class FragmentSongsScreen extends Fragment {
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		
-		ClubListItem[] clubListArray = new ClubListItem[] {
-				new ClubListItem(R.drawable.item_bg, "Degree","ELECTRO/HOUSE"),
-				new ClubListItem(R.drawable.item_bg, "1885 Britomart","JAZZ/BLUES/FUNK"),
-				new ClubListItem(R.drawable.item_bg, "A'isha","UNDERGROUND"),
-				new ClubListItem(R.drawable.item_bg, "Club DELUXE","HOUSE/POP/RNB")
-		};
+		ArrayList<ClubListItem> clubListArray = new ArrayList<ClubListItem>();
+		clubListArray.add(new ClubListItem(R.drawable.item_bg, "Degree","ELECTRO/HOUSE"));
+		clubListArray.add(new ClubListItem(R.drawable.item_bg, "1885 Britomart","JAZZ/BLUES/FUNK"));
+		clubListArray.add(new ClubListItem(R.drawable.item_bg, "A'isha","UNDERGROUND"));
+		clubListArray.add(new ClubListItem(R.drawable.item_bg, "Club DELUXE","HOUSE/POP/RNB"));
 		
 		ClubListItemAdapter adapter = new ClubListItemAdapter(getActivity(), R.layout.club_item, clubListArray);
 		

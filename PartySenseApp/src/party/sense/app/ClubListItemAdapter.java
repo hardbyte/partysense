@@ -2,6 +2,8 @@ package party.sense.app;
 
 //http://www.ezzylearning.com/tutorial.aspx?tid=1763429
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,9 +17,10 @@ public class ClubListItemAdapter extends ArrayAdapter<ClubListItem>{
 
     Context context; 
     int layoutResourceId;    
-    ClubListItem data[] = null;
+    //ClubListItem data[] = null;
+    ArrayList<ClubListItem> data;
     
-    public ClubListItemAdapter(Context context, int layoutResourceId, ClubListItem[] data) {
+    public ClubListItemAdapter(Context context, int layoutResourceId, ArrayList<ClubListItem> data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -46,7 +49,7 @@ public class ClubListItemAdapter extends ArrayAdapter<ClubListItem>{
             holder = (ClubListItemHolder)row.getTag();
         }
         
-        ClubListItem clubListItem = data[position];
+        ClubListItem clubListItem = data.get(position);
         holder.tvClubName.setText(clubListItem.ClubName);
         holder.tvClubSub.setText(clubListItem.ClubSub);
         holder.imgClubBG.setImageResource(clubListItem.ClubBG);
