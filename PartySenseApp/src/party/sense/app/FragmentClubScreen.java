@@ -44,6 +44,8 @@ public class FragmentClubScreen extends Fragment {
 		
 		lvClubList.setAdapter(adapter);
 		
+		
+		
 		return view;
 	}
 	
