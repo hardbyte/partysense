@@ -5,12 +5,15 @@ package party.sense.app;
 
 import java.util.List;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Class to represent our Data model of a Club
  * @author Tanmay Bhola [tanmay9@gmail.com]
  *
  */
-public class Club {
+public class Club implements Parcelable{
 	private String name;
 	private String address;
 	private String phone_number;
@@ -41,6 +44,39 @@ public class Club {
 	private String hours_friday; 
 	private String hours_saturday;
 	private String hours_sunday;
+	
+	public int describeContents() {
+		return 0;
+	}
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeString(name);
+		out.writeString(address);
+		out.writeString(email);
+		out.writeString(website);
+		out.writeString(twitter);
+		out.writeString(facebook);
+		out.writeString(google_plus);
+		out.writeString(time_created);
+		out.writeString(time_updated);
+		out.writeString(latitude);
+		out.writeString(longitude);
+
+		out.writeList(photo_urls);
+		out.writeList(tags);
+		
+		out.writeString(description);
+		out.writeString(unstructured_data);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		out.writeString(phone_number);
+		
+		
+	}
 	
 	public String getName() {
 		return name;
@@ -186,4 +222,5 @@ public class Club {
 	public void setHours_sunday(String hours_sunday) {
 		this.hours_sunday = hours_sunday;
 	}
+
 }
