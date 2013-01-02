@@ -48,7 +48,8 @@ public class SplashActivity extends Activity {
 			}
 		};
 		splashTimerThread.start();
-
+		
+		/*
 		// Adding functionality to Read/ Write to internal storage
 		String myString = "Testing writing to Club DB";
 
@@ -89,16 +90,17 @@ public class SplashActivity extends Activity {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}*/
-
+		
+		/*
 		try {
-			updateClubs();
+			this.updateClubs();
 		}catch(IOException exception){
-			Log.e("PartySenseMainActivity", exception.getMessage());
+			Log.e(TAG, exception.getMessage());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 
@@ -110,8 +112,8 @@ public class SplashActivity extends Activity {
 	 */
 	public void updateClubs() throws IOException, InterruptedException, ExecutionException {
 		String fetchUrl = "http://partysenseapp.appspot.com/api/clubs-dump";
-		Log.i("PartySenseMainActivity", "Going to Execute task");
-		List<Club> clubs = new GetInfoTask().execute(fetchUrl).get();
+		Log.i(TAG, "Going to Execute task");
+		List<Club> clubs = new GetInfoTask(this.getApplicationContext(), "").execute(fetchUrl).get();
 		String clubInfo = ""; 
 		String clubTags = "";
 		for (Club club : clubs) {
@@ -123,7 +125,7 @@ public class SplashActivity extends Activity {
 			}
 			clubInfo += "}";
 		}
-		Log.e("PartySenseMainActivity", "Got Results from Back end : " + clubInfo);
+		Log.e(TAG, "Got Results from Back end : " + clubInfo);
 
 	}
 

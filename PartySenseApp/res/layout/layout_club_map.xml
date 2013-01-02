@@ -78,14 +78,25 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/relativeLayout1"
             android:orientation="vertical" >
-
-            <com.google.android.maps.MapView
+			
+            <!-- @TODO: Obtain an API key for the application and add here -->
+            
+				<!--<com.google.android.maps.MapView
                 android:id="@+id/mapview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:apiKey="0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg"
+                android:apiKey="0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg""
+                android:clickable="true" > -->
+                
+            	<com.google.android.maps.MapView
+                android:id="@+id/mapview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:apiKey="0zye_bGqdIiksasycZZeHqVMhGysQSpdzmE5u9w"
                 android:clickable="true" >
             </com.google.android.maps.MapView>
 
