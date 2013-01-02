@@ -27,6 +27,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Clubs Map View"
+                android:textColor="@color/divder_blue"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </RelativeLayout>
         <LinearLayout 

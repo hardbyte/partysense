@@ -26,6 +26,10 @@ public class ClubListItemAdapter extends ArrayAdapter<ClubListItem>{
         this.context = context;
         this.data = data;
     }
+    
+    public void removeLast(){
+    	data.remove(data.size()-1);
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
