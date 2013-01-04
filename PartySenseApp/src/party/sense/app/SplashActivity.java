@@ -13,7 +13,7 @@ import android.util.Log;
 public class SplashActivity extends Activity {
 
 	private static final String TAG = "com.partysense.app.SplashActivity";
-	
+	Intent i;
 	/** Called when the activity is first created. */
 	@Override
 
@@ -53,14 +53,33 @@ public class SplashActivity extends Activity {
 		try {
 			clubs = this.updateClubs();
 			while( clubs == null){
-				Thread.currentThread().sleep(100);
 				Log.e("Splash Activity","Waiting for Clubs List from Task");
 			}
 			Bundle b = new Bundle();
 			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
-			Intent i = new Intent(this, PartySenseMainActivity.class);
+			i = new Intent(this, PartySenseMainActivity.class);
 			i.putExtras(b);
-			startActivity(i);
+			
+			Thread splashTimerThread = new Thread(){
+				public void run(){
+					try{
+						int counter = 0;
+						while(counter<5)
+						{
+							Thread.sleep(1000);
+							counter += 1;
+						}
+					}
+					catch(Exception e){
+					}
+					finally{
+						startActivity(i);
+						finish();
+					}
+				}
+			};
+			splashTimerThread.start();
+			
 
 		} catch(IOException exception){
 			Log.e(TAG, exception.getMessage());

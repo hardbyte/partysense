@@ -16,6 +16,7 @@ public class PartySenseSettingsActivity extends Activity {
 	Button btnSavePrefs;
 	ListView lView;
 	SharedPreferences settings;
+	SharedPreferences.Editor edit;
 	ArrayList<String> genres = new ArrayList<String>();
 	/** Called when the activity is first created. */
 	@Override
@@ -37,6 +38,7 @@ public class PartySenseSettingsActivity extends Activity {
 	    
 	    
 	    settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+	    edit = settings.edit();
 	    
 	    for(int i = 0; i<lView.getCount(); i++){
 	    	lView.setItemChecked(i, settings.getBoolean(genres.get(i), false));
