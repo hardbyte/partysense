@@ -1,18 +1,11 @@
 package party.sense.app;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.text.BreakIterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,20 +20,27 @@ public class SplashActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
-
-		Thread splashTimerThread = new Thread(){
+		ArrayList<Club> clubs = new ArrayList<Club>();
+		
+		/*Thread splashTimerThread = new Thread(){
 			public void run(){
 				try{
+					clubs = this.updateClubs();
 					int counter = 0;
-					while(counter < 5000)
+					while()
 					{
+						Thread.currentThread().sleep(1000);
 						sleep(100);
 						counter += 100;
 					}
 					startActivity(new Intent("android.intent.action.PartySenseMainActivity"));
-				}
-				catch(InterruptedException e){
-
+					
+				} catch(IOException exception){
+					Log.e(TAG, exception.getMessage());
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
 				}
 				finally{
 					finish();
@@ -48,10 +48,21 @@ public class SplashActivity extends Activity {
 			}
 		};
 		splashTimerThread.start();
+		*/
 		
 		try {
-			this.updateClubs();
-		}catch(IOException exception){
+			clubs = this.updateClubs();
+			while( clubs == null){
+				Thread.currentThread().sleep(100);
+				Log.e("Splash Activity","Waiting for Clubs List from Task");
+			}
+			Bundle b = new Bundle();
+			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
+			Intent i = new Intent(this, PartySenseMainActivity.class);
+			i.putExtras(b);
+			startActivity(i);
+
+		} catch(IOException exception){
 			Log.e(TAG, exception.getMessage());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -65,12 +76,13 @@ public class SplashActivity extends Activity {
 	 * Temporary method to Test Android JSON capability
 	 * @throws IOException 
 	 * @throws ExecutionException 
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
+	 * @return List of Clubs  
 	 */
-	public void updateClubs() throws IOException, InterruptedException, ExecutionException {
+	public ArrayList<Club> updateClubs() throws IOException, InterruptedException, ExecutionException {
 		String fetchUrl = "http://partysenseapp.appspot.com/api/clubs-dump";
 		Log.e(TAG, "Going to Execute task");
-		List<Club> clubs = new GetInfoTask(this.getApplicationContext(), "").execute(fetchUrl).get();
+		ArrayList<Club> clubs = new GetClubsListTask(this.getApplicationContext(), "").execute(fetchUrl).get();
 		String clubInfo = ""; 
 		for (Club club : clubs) {
 			clubInfo += club.getName() + " ";
@@ -81,7 +93,8 @@ public class SplashActivity extends Activity {
 			}
 			clubInfo += "}";
 		}
-		Log.e(TAG, "Got Clubs List : " + clubInfo);
+		//Log.e(TAG, "Got Clubs List : " + clubInfo);
+		return clubs;
 	}
 }
 

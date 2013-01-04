@@ -2,9 +2,7 @@ package party.sense.app;
 
 //import android.app.ActionBar;
 //import android.app.FragmentTransaction;
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,6 +39,11 @@ public class PartySenseMainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_sense_main);
+        
+        Bundle b = getIntent().getExtras();
+        ArrayList<Club> clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
+        
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

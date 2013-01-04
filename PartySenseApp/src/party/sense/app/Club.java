@@ -3,6 +3,7 @@
  */
 package party.sense.app;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
@@ -29,9 +30,9 @@ public class Club implements Parcelable{
 	private String latitude;
 	private String longitude;
 	
-	private List<String> photo_urls;
+	private ArrayList<String> photo_urls;
 	
-	private List<String> tags;
+	private ArrayList<String> tags;
 	
 	private String description;
 	private String unstructured_data;
@@ -48,6 +49,44 @@ public class Club implements Parcelable{
 	public int describeContents() {
 		return 0;
 	}
+	
+	/**
+	 * Constructor for a club object
+	 */
+	public Club(){
+		
+	}
+	
+	public Club(Parcel in){
+		this.name = in.readString();
+		this.address = in.readString();
+		this.email = in.readString();
+		this.website = in.readString();
+		this.twitter = in.readString();
+		this.facebook = in.readString();
+		this.google_plus = in.readString();
+		this.time_created = in.readString();
+		this.time_updated = in.readString();
+		this.latitude = in.readString();
+		this.longitude = in.readString();
+		
+		this.photo_urls = new ArrayList<String>();
+		in.readList(this.photo_urls,null);
+		this.tags = new ArrayList<String>();
+		in.readList(this.tags, null);
+		
+		this.description = in.readString();
+		this.unstructured_data = in.readString();
+		this.hours_default = in.readString();
+		this.hours_monday = in.readString();
+		this.hours_tuesday = in.readString();
+		this.hours_wednesday = in.readString();
+		this.hours_thursday = in.readString();
+		this.hours_friday = in.readString();
+		this.hours_saturday = in.readString();
+		this.hours_sunday = in.readString();
+	}
+	
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeString(name);
 		out.writeString(address);
@@ -66,17 +105,28 @@ public class Club implements Parcelable{
 		
 		out.writeString(description);
 		out.writeString(unstructured_data);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
-		out.writeString(phone_number);
+		out.writeString(hours_default);
+		out.writeString(hours_monday);
+		out.writeString(hours_tuesday);
+		out.writeString(hours_wednesday);
+		out.writeString(hours_thursday);
+		out.writeString(hours_friday);
+		out.writeString(hours_saturday);
+		out.writeString(hours_sunday);
 		
 		
 	}
+	
+	public static final Parcelable.Creator<Club> CREATOR = new Parcelable.Creator<Club>() {
+		public Club createFromParcel(Parcel in) {
+			return new Club(in);
+		}
+
+		public Club[] newArray(int size) {
+			return new Club[size];
+		}
+		
+	};
 	
 	public String getName() {
 		return name;
@@ -150,16 +200,16 @@ public class Club implements Parcelable{
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	public List<String> getPhoto_urls() {
+	public ArrayList<String> getPhoto_urls() {
 		return photo_urls;
 	}
-	public void setPhoto_urls(List<String> photo_urls) {
+	public void setPhoto_urls(ArrayList<String> photo_urls) {
 		this.photo_urls = photo_urls;
 	}
-	public List<String> getTags() {
+	public ArrayList<String> getTags() {
 		return tags;
 	}
-	public void setTags(List<String> tags) {
+	public void setTags(ArrayList<String> tags) {
 		this.tags = tags;
 	}
 	public String getDescription() {

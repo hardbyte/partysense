@@ -46,7 +46,7 @@ public class FragmentMenuScreen extends Fragment {
 	                else if (pos == 2){
 	                	startActivity(new Intent("android.intent.action.PartySenseMapActivity"));
 	                }
-	                else if (pos == 3){
+	                else if (pos == 4){
 	                	startActivity(new Intent("android.intent.action.PartySenseSettingsActivity"));
 	                }
 	                else{}
