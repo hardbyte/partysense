@@ -34,14 +34,14 @@ public class PartySenseMainActivity extends FragmentActivity {
     public ViewPager mViewPager;
 
     public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
-    
+    ArrayList<Club> clubsList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_sense_main);
         
         Bundle b = getIntent().getExtras();
-        ArrayList<Club> clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
         // Create the adapter that will return a fragment for each of the three primary sections
@@ -83,21 +83,19 @@ public class PartySenseMainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
+            Bundle b = new Bundle();
             if(i ==0){
-            	Bundle b = new Bundle();
             	b.putInt("menuCnt", 0);
             	fragment = new FragmentMenuScreen();
-            	fragment.setArguments(b);
             }
             else if(i ==1){
+            	b.putParcelableArrayList(SplashActivity.BUNDLE_ID_CLUBS_LIST, clubsList);
             	fragment = new FragmentSongsScreen();
             }
             else{
             	fragment = new dummyFrag();
             }
-            /*Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);*/
+        	fragment.setArguments(b);
             return fragment;
         }
 

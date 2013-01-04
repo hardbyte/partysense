@@ -18,11 +18,13 @@ public class FragmentSongsScreen extends Fragment {
 	View view;
 	ListView lvClubList;
 	ClubListItemAdapter adapter;
+	ArrayList<Club> clubList;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
 		
+		clubList = savedInstanceState.getParcelable(SplashActivity.BUNDLE_ID_CLUBS_LIST);
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		
@@ -38,6 +40,10 @@ public class FragmentSongsScreen extends Fragment {
 		
 		//edtView.setInputType(0);
 		
+		for(Club c:clubList){
+			addClubItem(c);
+		}
+		
 		return view;
 	}
 	
@@ -46,12 +52,12 @@ public class FragmentSongsScreen extends Fragment {
 	}
 	
 	private void addClubItem(Club c){
-		String genreString = "";
-		for(String tags : c.getTags()){
+		String genreString = "d";
+		/*for(String tags : c.getTags()){
 			if (tags.split("_")[0]=="genre"){
 				genreString += "/" + tags.split("_")[1]; 
 			}
-		}
+		}*/
 		adapter.add(new ClubListItem(R.drawable.item_bg, c.getName(), genreString));	
 	}
 }

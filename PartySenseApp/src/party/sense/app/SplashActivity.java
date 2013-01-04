@@ -13,6 +13,7 @@ import android.util.Log;
 public class SplashActivity extends Activity {
 
 	private static final String TAG = "com.partysense.app.SplashActivity";
+	public static final String BUNDLE_ID_CLUBS_LIST = "party.sense.app.clubsList";
 	Intent i;
 	/** Called when the activity is first created. */
 	@Override
