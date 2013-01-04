@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class FragmentMenuScreen extends Fragment {
+	public static final String PREFS_NAME = "PartySenseSharedPreff";
 	View view;
 	ListView lvMenu;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -44,6 +45,9 @@ public class FragmentMenuScreen extends Fragment {
 	                }
 	                else if (pos == 2){
 	                	startActivity(new Intent("android.intent.action.PartySenseMapActivity"));
+	                }
+	                else if (pos == 3){
+	                	startActivity(new Intent("android.intent.action.PartySenseSettingsActivity"));
 	                }
 	                else{}
 				}

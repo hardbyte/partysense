@@ -44,4 +44,14 @@ public class FragmentSongsScreen extends Fragment {
 	private void addClubItem(int imgID, String clubName, String clubSub){
 		adapter.add(new ClubListItem(imgID, clubName, clubSub));
 	}
+	
+	private void addClubItem(Club c){
+		String genreString = "";
+		for(String tags : c.getTags()){
+			if (tags.split("_")[0]=="genre"){
+				genreString += "/" + tags.split("_")[1]; 
+			}
+		}
+		adapter.add(new ClubListItem(R.drawable.item_bg, c.getName(), genreString));	
+	}
 }

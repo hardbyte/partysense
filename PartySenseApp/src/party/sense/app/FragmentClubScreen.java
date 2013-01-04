@@ -73,4 +73,5 @@ public class FragmentClubScreen extends Fragment {
 	private void addClubItem(int imgID, String clubName, String clubSub){
 		adapter.add(new ClubListItem(imgID, clubName, clubSub));
 	}
+	
 }
