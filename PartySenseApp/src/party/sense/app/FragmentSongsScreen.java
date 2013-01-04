@@ -23,13 +23,13 @@ public class FragmentSongsScreen extends Fragment {
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
-		
-		clubList = savedInstanceState.getParcelable(SplashActivity.BUNDLE_ID_CLUBS_LIST);
+		Bundle b = this.getArguments();
+		clubList = b.getParcelableArrayList("party.sense.app.clubsList");
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		
 		ArrayList<ClubListItem> clubListArray = new ArrayList<ClubListItem>();
-		clubListArray.add(new ClubListItem(R.drawable.item_bg, "Degree","ELECTRO/HOUSE"));
+		clubListArray.add(new ClubListItem(R.drawable.item_bg, clubList.get(0).getName(),"ELECTRO/HOUSE"));
 		clubListArray.add(new ClubListItem(R.drawable.item_bg, "1885 Britomart","JAZZ/BLUES/FUNK"));
 		clubListArray.add(new ClubListItem(R.drawable.item_bg, "A'isha","UNDERGROUND"));
 		clubListArray.add(new ClubListItem(R.drawable.item_bg, "Club DELUXE","HOUSE/POP/RNB"));
@@ -40,9 +40,7 @@ public class FragmentSongsScreen extends Fragment {
 		
 		//edtView.setInputType(0);
 		
-		for(Club c:clubList){
-			addClubItem(c);
-		}
+		
 		
 		return view;
 	}
@@ -58,6 +56,6 @@ public class FragmentSongsScreen extends Fragment {
 				genreString += "/" + tags.split("_")[1]; 
 			}
 		}*/
-		adapter.add(new ClubListItem(R.drawable.item_bg, c.getName(), genreString));	
+		adapter.add(new ClubListItem(R.drawable.item_bg, "Degree","ELECTRO/HOUSE"));	
 	}
 }

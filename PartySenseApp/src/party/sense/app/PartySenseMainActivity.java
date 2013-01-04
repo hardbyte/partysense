@@ -34,19 +34,20 @@ public class PartySenseMainActivity extends FragmentActivity {
     public ViewPager mViewPager;
 
     public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
-    ArrayList<Club> clubsList;
+    ArrayList<Club> clubsList = new ArrayList<Club>();
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_sense_main);
         
         Bundle b = getIntent().getExtras();
-        clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);
         
 
         // Set up the ViewPager with the sections adapter.
@@ -74,12 +75,14 @@ public class PartySenseMainActivity extends FragmentActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+    	ArrayList<Club> clubsList = new ArrayList<Club>();
+    	
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Club> clubsList) {
             super(fm);
+            this.clubsList = clubsList;
+            
         }
         
-        
-
         @Override
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
@@ -89,7 +92,7 @@ public class PartySenseMainActivity extends FragmentActivity {
             	fragment = new FragmentMenuScreen();
             }
             else if(i ==1){
-            	b.putParcelableArrayList(SplashActivity.BUNDLE_ID_CLUBS_LIST, clubsList);
+            	b.putParcelableArrayList("party.sense.app.clubsList", this.clubsList);
             	fragment = new FragmentSongsScreen();
             }
             else{
