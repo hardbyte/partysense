@@ -49,49 +49,6 @@ public class SplashActivity extends Activity {
 		};
 		splashTimerThread.start();
 		
-		/*
-		// Adding functionality to Read/ Write to internal storage
-		String myString = "Testing writing to Club DB";
-
-		//File filesDirectory = this.getDir("files", Context.MODE_PRIVATE); //Creating an internal dir;
-		try {
-			FileOutputStream out = openFileOutput("clubDbTest.json", Context.MODE_PRIVATE);
-			out.write(myString.getBytes());
-			out.close();
-		} catch (FileNotFoundException fnfe) {
-			fnfe.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		FileInputStream in = null;
-		try {
-			in = openFileInput("clubDbTest.json");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		InputStreamReader inputStreamReader = new InputStreamReader(in);
-		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-		String line = null;
-		try {
-			line = bufferedReader.readLine();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-		Log.e( TAG, "Read : " + line);
-
-		/*StringBuilder sb = new StringBuilder();
-	    try {
-			while ((line = bufferedReader.readLine()) != null) {
-			    sb.append(line);
-			}
-			Log.e("SplashActivity", "Read : " + line);
-			bufferedReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		
-		/*
 		try {
 			this.updateClubs();
 		}catch(IOException exception){
@@ -100,7 +57,7 @@ public class SplashActivity extends Activity {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 	}
 
@@ -112,10 +69,9 @@ public class SplashActivity extends Activity {
 	 */
 	public void updateClubs() throws IOException, InterruptedException, ExecutionException {
 		String fetchUrl = "http://partysenseapp.appspot.com/api/clubs-dump";
-		Log.i(TAG, "Going to Execute task");
+		Log.e(TAG, "Going to Execute task");
 		List<Club> clubs = new GetInfoTask(this.getApplicationContext(), "").execute(fetchUrl).get();
 		String clubInfo = ""; 
-		String clubTags = "";
 		for (Club club : clubs) {
 			clubInfo += club.getName() + " ";
 			List<String> tagList = club.getTags();
@@ -125,8 +81,51 @@ public class SplashActivity extends Activity {
 			}
 			clubInfo += "}";
 		}
-		Log.e(TAG, "Got Results from Back end : " + clubInfo);
+		Log.e(TAG, "Got Clubs List : " + clubInfo);
+	}
+}
 
+
+	/*
+	// Adding functionality to Read/ Write to internal storage
+	String myString = "Testing writing to Club DB";
+
+	//File filesDirectory = this.getDir("files", Context.MODE_PRIVATE); //Creating an internal dir;
+	try {
+		FileOutputStream out = openFileOutput("clubDbTest.json", Context.MODE_PRIVATE);
+		out.write(myString.getBytes());
+		out.close();
+	} catch (FileNotFoundException fnfe) {
+		fnfe.printStackTrace();
+	} catch (IOException ioe) {
+		ioe.printStackTrace();
 	}
 
-}
+	FileInputStream in = null;
+	try {
+		in = openFileInput("clubDbTest.json");
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	}
+	InputStreamReader inputStreamReader = new InputStreamReader(in);
+	BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+	String line = null;
+	try {
+		line = bufferedReader.readLine();
+	} catch (IOException ioe) {
+		ioe.printStackTrace();
+	}
+	Log.e( TAG, "Read : " + line);
+
+	/*StringBuilder sb = new StringBuilder();
+    try {
+		while ((line = bufferedReader.readLine()) != null) {
+		    sb.append(line);
+		}
+		Log.e("SplashActivity", "Read : " + line);
+		bufferedReader.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}*/
+
+

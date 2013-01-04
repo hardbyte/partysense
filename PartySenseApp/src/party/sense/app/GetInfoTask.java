@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -42,45 +43,46 @@ class GetInfoTask extends AsyncTask<String, Void, List<Club>> {
     }
     
     protected List<Club> doInBackground(String... urls) {
-    	Log.i("GetInfoTask", "Starting");
-        try {
-        	Gson gson = new Gson();
-        	String fetchUrl = (String)urls[0];
+    	Log.e("GetInfoTask", "Starting");
+    	List<Club> clubs = new ArrayList<Club>();
+    	try {
+    		Gson gson = new Gson();
+    		String fetchUrl = (String)urls[0];
             URLConnection urlConnection =  new URL(fetchUrl).openConnection();
             urlConnection.connect();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String inputLine;
             FileOutputStream out = null;
-            try {
-    			out = this.context.openFileOutput("clubDbTest.json", Context.MODE_PRIVATE);
-    			while((inputLine = in.readLine()) != null){
-    				out.write(inputLine.getBytes());
-    			}
-    			out.close();
-    			Log.e(TAG , "Finished Writing to json File");
-    		} catch (FileNotFoundException fnfe) {
-    			fnfe.printStackTrace();
-    		} catch (IOException ioe) {
-    			ioe.printStackTrace();
-    		}
-    		//UrlConnection localConnection = new URL()
-            JsonReader reader = new JsonReader(
-                 new InputStreamReader(urlConnection.getInputStream()));
-            JsonParser parser = new JsonParser();
-            JsonArray infoArray = parser.parse(reader).getAsJsonArray();
-            List<Club> clubs = new ArrayList<Club>();
-            String clubnames = "";
-            for (JsonElement element: infoArray){
-            	Club club = gson.fromJson(element, Club.class);
-            	clubs.add(club);
+
+            out = this.context.openFileOutput("clubDbTest.json", Context.MODE_PRIVATE);
+            while((inputLine = in.readLine()) != null){
+            	out.write(inputLine.getBytes());
             }
-            in.close();
-            return clubs;
-            
-        } catch (Exception exception) {
-            this.exception = exception;
-            return null;
-        }
+            out.close();
+            Log.e(TAG , "Finished Writing to json File");
+    		
+    		URLConnection localConnection = new URL("file:///data/data/party.sense.app/files/clubDbTest.json").openConnection();
+    		localConnection.connect();
+    		JsonReader reader = new JsonReader(
+    				new InputStreamReader(localConnection.getInputStream()));
+    		JsonParser parser = new JsonParser();
+    		JsonArray infoArray = parser.parse(reader).getAsJsonArray();
+    		String clubnames = "";
+    		for (JsonElement element: infoArray){
+    			Club club = gson.fromJson(element, Club.class);
+    			clubs.add(club);
+    		}
+    		reader.close();
+
+    	} catch(MalformedURLException mue){
+    		Log.e(TAG, "MalformedUrlException in trying to open the URL : " + mue.getMessage());
+    	}  catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} 
+
+    	return clubs;
     }
 
     protected void onPostExecute(String greeting) {
