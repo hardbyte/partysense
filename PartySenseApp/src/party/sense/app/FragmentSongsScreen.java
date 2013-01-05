@@ -49,8 +49,8 @@ public class FragmentSongsScreen extends Fragment {
 			public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
             	Intent detailIntent = new Intent("android.intent.action.PartySenseDetailsActivity");
             	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_NAME, clubsList.get(pos).getName());
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_GENRE, getGenreString(clubsList.get(pos).getTags()));
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_ADDRESS, clubsList.get(pos).getAddress());
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_GENRE, getGenreString(clubsList.get(pos).getTags()).replace('/', '\n'));
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_ADDRESS, clubsList.get(pos).getAddress().replace(',', '\n'));
             	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_WEBSITE, clubsList.get(pos).getWebsite());
             	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_DESCRIPTION, clubsList.get(pos).getDescription());
             	startActivity(detailIntent);

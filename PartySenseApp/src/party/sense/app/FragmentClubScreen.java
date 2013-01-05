@@ -48,7 +48,7 @@ public class FragmentClubScreen extends Fragment {
 		
 		lvClubList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-	            if (pos == adapter.getCount()-1){
+	            /*if (pos == adapter.getCount()-1){
 	            	//startActivity(new Intent("android.intent.action.PartySenseMainActivity"));
 	            	adapter.removeLast();
 	            	addClubItem(R.drawable.item_bg, "ClubTanmay", "HipHop/Bhangra");
@@ -59,11 +59,11 @@ public class FragmentClubScreen extends Fragment {
 	            	Intent detailIntent = new Intent("android.intent.action.PartySenseDetailsActivity");
 	            	detailIntent.putExtra("ClubName", adapter.getItem(pos).ClubName);
 	            	startActivity(detailIntent);
-	            }
+	            }*/
             }
 		});
 		
-		addClubItem(R.color.blue_rect, "Load more Clubs", "");
+		//addClubItem(R.color.blue_rect, "Load more Clubs", "");
 		
 		return view;
 	}
