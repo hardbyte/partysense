@@ -32,7 +32,6 @@ public class FragmentSongsScreen extends Fragment {
 		/*clubListArray.add(new ClubListItem(R.drawable.item_bg, clubList.get(0).getName(),"ELECTRO/HOUSE"));
 		clubListArray.add(new ClubListItem(R.drawable.item_bg, "1885 Britomart","JAZZ/BLUES/FUNK"));
 		clubListArray.add(new ClubListItem(R.drawable.item_bg, "A'isha","UNDERGROUND"));*/
-		clubListArray.add(new ClubListItem(R.drawable.item_bg, "Club TANMAY","BHANGRA/POP/RNB"));
 		
 		adapter = new ClubListItemAdapter(getActivity(), R.layout.club_item, clubListArray);
 		
