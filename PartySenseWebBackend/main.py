@@ -11,6 +11,7 @@ from datamodel import Club
 import json
 from lib import get_lines, get_form, get_json
 import csv
+from datetime import datetime
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -88,6 +89,10 @@ class ImportClubsHandler(BaseHandler):
         clubs = ndb.get_multi(club_keys)
 
         clubs_to_save = []
+        def same(a, b):
+            return a is b or a == b
+
+
         for d, club in zip(dr, clubs):
 
 
@@ -95,6 +100,8 @@ class ImportClubsHandler(BaseHandler):
             tags = [t.strip() for t in tags]
             if not club:
                 club = Club(key=ndb.Key('Club', d['Name of Club']))
+            props = ['name', 'website', 'tags', 'city', 'description', 'address', 'phone_number', 'longitude', 'latitude']
+            olds = [getattr(club, prop, None) for prop in props]
             club.populate(
                 name=d['Name of Club'],
                 website=d['Web'],
@@ -115,13 +122,46 @@ class ImportClubsHandler(BaseHandler):
             except:
                 return self.redirect('/error/long-lat-{0}'.format(club.name))
 
-            clubs_to_save.append(club)
+
+
+            for i, j in zip(olds, [getattr(club, prop, None) for prop in props]):
+                if i!=j:
+                    try:
+                        mis_match = unicode(j, 'utf-8') != i
+                    except TypeError:
+                        mis_match = True
+                    if mis_match:
+                        clubs_to_save.append(club)
+                        break
+        if not clubs_to_save:
+            return self.redirect('/error/data-the-same-as-last-time-no-new-data')
         ndb.put_multi(clubs_to_save)
-        self.response.write("success")
+        self.response.write("success, updated {0} clubs".format(len(clubs_to_save)))
 
 class ClubsJsonHandler(BaseHandler):
     def get(self):
         clubs = Club.query().fetch()
+        json_dicts = []
+        props = ['name', 'website', 'tags', 'city', 'description', 'address', 'phone_number', 'longitude', 'latitude']
+        for club in clubs:
+            d = {}
+            for p in props:
+                if hasattr(club, p):
+                    val = getattr(club, p)
+                    if val:
+                        d[p] = str(val) if p in ('longitude', 'latitude') else val
+            assert d
+            json_dicts.append(d)
+        self.response.write(json.dumps(json_dicts, sort_keys=True,indent=4))
+
+class ClubsDeltaJsonHandler(BaseHandler):
+    def get(self, year, month, day):
+        try:
+            year, month, day = int(year), int(month), int(day)
+            last_refresh_date = datetime(year, month, day)
+        except ValueError:
+            return self.redirect('/error/invalid-date-year-{year}-month-{month}-day-{day}'.format(year=year, month=month, day=day))
+        clubs = Club.query(Club.time_updated >= last_refresh_date).fetch()
         json_dicts = []
         props = ['name', 'website', 'tags', 'city', 'description', 'address', 'phone_number', 'longitude', 'latitude']
         for club in clubs:
@@ -144,7 +184,8 @@ _routes = [
     RedirectRoute('/admin/browse-data-model', BrowseDataModel, name="browse-data-model", strict_slash=True),
     #RedirectRoute('/admin/edit-kind/<kind>', EditKindHandler, name="edit-kind", strict_slash=True)
     RedirectRoute('/admin/import-clubs', ImportClubsHandler, name='import-clubs', strict_slash=True),
-    RedirectRoute('/api/clubs-dump', ClubsJsonHandler, name='clubs-dump', strict_slash=True)
+    RedirectRoute('/api/clubs-dump', ClubsJsonHandler, name='clubs-dump', strict_slash=True),
+    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True)
 ]
 app = webapp2.WSGIApplication(_routes, debug=True)
 
