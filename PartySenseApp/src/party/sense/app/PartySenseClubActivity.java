@@ -2,6 +2,8 @@ package party.sense.app;
 
 //import android.app.ActionBar;
 //import android.app.FragmentTransaction;
+import java.util.ArrayList;
+
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import party.sense.app.dummyFrag;
+import party.sense.app.PartySenseMainActivity.SectionsPagerAdapter;
 
 public class PartySenseClubActivity extends FragmentActivity {
 
@@ -36,13 +40,17 @@ public class PartySenseClubActivity extends FragmentActivity {
      */
     public ViewPager mViewPager;
     public String[] segmentTitles = {"Menu","Nearby","Map View"}; 
+    ArrayList<Club> clubsList = new ArrayList<Club>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_sense_main);
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        
+        Bundle b = getIntent().getExtras();
+        this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
+        
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);
         
 
         // Set up the ViewPager with the sections adapter.
@@ -68,20 +76,22 @@ public class PartySenseClubActivity extends FragmentActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+    	ArrayList<Club> clubsList = new ArrayList<Club>();
+    	
+        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Club> clubsList) {
             super(fm);
+            this.clubsList = clubsList;
+            
         }
         
-        
-
         @Override
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
+        	Bundle b = new Bundle();
+        	b.putParcelableArrayList("party.sense.app.clubsList", this.clubsList);
             if(i ==0){
-            	Bundle b = new Bundle();
             	b.putInt("menuCnt", 1);
             	fragment = new FragmentMenuScreen();
-            	fragment.setArguments(b);
             }
             else if(i ==1){
             	fragment = new FragmentClubScreen();
@@ -89,9 +99,7 @@ public class PartySenseClubActivity extends FragmentActivity {
             else{
             	fragment = new dummyFrag();
             }
-            /*Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);*/
+            fragment.setArguments(b);
             return fragment;
         }
 

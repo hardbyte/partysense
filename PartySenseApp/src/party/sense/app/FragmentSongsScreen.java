@@ -20,13 +20,13 @@ public class FragmentSongsScreen extends Fragment {
 	View view;
 	ListView lvClubList;
 	ClubListItemAdapter adapter;
-	ArrayList<Club> clubList;
+	ArrayList<Club> clubsList;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
 		Bundle b = this.getArguments();
-		clubList = b.getParcelableArrayList("party.sense.app.clubsList");
+		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		
@@ -39,7 +39,7 @@ public class FragmentSongsScreen extends Fragment {
 		
 		lvClubList.setAdapter(adapter);
 		
-		for(Club c: clubList){
+		for(Club c: clubsList){
 			addClubItem(c);
 		}
 		
@@ -48,11 +48,11 @@ public class FragmentSongsScreen extends Fragment {
 		lvClubList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
             	Intent detailIntent = new Intent("android.intent.action.PartySenseDetailsActivity");
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_NAME, clubList.get(pos).getName());
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_GENRE, getGenreString(clubList.get(pos).getTags()));
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_ADDRESS, clubList.get(pos).getAddress());
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_WEBSITE, clubList.get(pos).getWebsite());
-            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_DESCRIPTION, clubList.get(pos).getDescription());
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_NAME, clubsList.get(pos).getName());
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_GENRE, getGenreString(clubsList.get(pos).getTags()));
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_ADDRESS, clubsList.get(pos).getAddress());
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_WEBSITE, clubsList.get(pos).getWebsite());
+            	detailIntent.putExtra(PartySenseDetailsActivity.BUNDLE_ID_CLUB_DESCRIPTION, clubsList.get(pos).getDescription());
             	startActivity(detailIntent);
             }
 		});

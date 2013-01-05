@@ -31,7 +31,6 @@ public class FragmentClubScreen extends Fragment {
 		btnTest = (Button) view.findViewById(R.id.btnTest);
 		
 		btnTest.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View v) {
 				Toast.makeText(getActivity(), Integer.toString(adapter.getCount()), Toast.LENGTH_LONG).show();
 			}
@@ -60,7 +59,6 @@ public class FragmentClubScreen extends Fragment {
 	            	Intent detailIntent = new Intent("android.intent.action.PartySenseDetailsActivity");
 	            	detailIntent.putExtra("ClubName", adapter.getItem(pos).ClubName);
 	            	startActivity(detailIntent);
-	            	//Toast.makeText(getActivity(), adapter.getItem(pos).ClubName, Toast.LENGTH_SHORT).show();
 	            }
             }
 		});

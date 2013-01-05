@@ -32,10 +32,8 @@ public class PartySenseMainActivity extends FragmentActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     public ViewPager mViewPager;
-
     public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
-    ArrayList<Club> clubsList = new ArrayList<Club>();
-    
+    ArrayList<Club> clubsList = new ArrayList<Club>();   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +43,6 @@ public class PartySenseMainActivity extends FragmentActivity {
         this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);
         
 
@@ -87,12 +83,12 @@ public class PartySenseMainActivity extends FragmentActivity {
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
             Bundle b = new Bundle();
+            b.putParcelableArrayList("party.sense.app.clubsList", this.clubsList);
             if(i ==0){
             	b.putInt("menuCnt", 0);
             	fragment = new FragmentMenuScreen();
             }
             else if(i ==1){
-            	b.putParcelableArrayList("party.sense.app.clubsList", this.clubsList);
             	fragment = new FragmentSongsScreen();
             }
             else{

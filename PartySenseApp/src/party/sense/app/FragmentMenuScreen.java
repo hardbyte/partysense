@@ -1,5 +1,7 @@
 package party.sense.app;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -21,6 +23,7 @@ public class FragmentMenuScreen extends Fragment {
 	public static final String PREFS_NAME = "PartySenseSharedPreff";
 	View view;
 	ListView lvMenu;
+	ArrayList<Club> clubsList = new ArrayList<Club>();
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		Bundle b = this.getArguments();
@@ -28,6 +31,7 @@ public class FragmentMenuScreen extends Fragment {
 		//int menuCnt = savedInstanceState.getInt("menuCnt");
 		view = inflater.inflate(R.layout.layout_menu_screen, container,false);
 		lvMenu = (ListView) view.findViewById(R.id.listMenu);
+		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
 		
 		lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
@@ -36,11 +40,19 @@ public class FragmentMenuScreen extends Fragment {
 				}
 				else{
 	                if (pos == 0){
-	                	startActivity(new Intent("android.intent.action.PartySenseMainActivity"));
+	                	Bundle b = new Bundle();
+	                	Intent i = new Intent("android.intent.action.PartySenseMainActivity");
+	                    b.putParcelableArrayList("party.sense.app.clubsList", clubsList);
+	        			i.putExtras(b);
+	        			startActivity(i);
 	    				getActivity().finish();
 	                }
 	                else if (pos == 1){
-	                	startActivity(new Intent("android.intent.action.PartySenseClubActivity"));
+	    				Bundle b = new Bundle();
+	                	Intent i = new Intent("android.intent.action.PartySenseClubActivity");
+	                    b.putParcelableArrayList("party.sense.app.clubsList", clubsList);
+	        			i.putExtras(b);
+	        			startActivity(i);
 	    				getActivity().finish();
 	                }
 	                else if (pos == 2){
@@ -53,54 +65,6 @@ public class FragmentMenuScreen extends Fragment {
 				}
             }
 		});
-		
-		/*lvMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-				Toast.ma
-            }
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});*/
-		
-		
-		/*btnSongs = (Button) view.findViewById(R.id.btnSongs);
-		btnSettings = (Button) view.findViewById(R.id.btnSettings);
-		btnClubs = (Button) view.findViewById(R.id.btnClubs);
-		
-		btnSongs.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				startActivity(new Intent("android.intent.action.PartySenseMainActivity"));
-				getActivity().finish();
-			}
-		});
-		
-		btnClubs.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				startActivity(new Intent("android.intent.action.PartySenseClubActivity"));
-				getActivity().finish();
-			}
-		});*/
-		
-		/*switch(menuCnt)
-		{
-		case 0:
-			btnSongs.setEnabled(false);
-			break;
-		case 1:
-			btnClubs.setEnabled(false);
-			break;
-		case 2:
-			btnSettings.setEnabled(false);
-			break;
-		}*/
 		
 		
 		return view;		
