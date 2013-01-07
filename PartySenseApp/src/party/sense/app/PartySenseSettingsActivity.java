@@ -78,7 +78,9 @@ public class PartySenseSettingsActivity extends Activity {
 					startActivity(new Intent("android.intent.action.PartySenseGenreSelectActivity"));
 				}
 				else if(pos == 4){
-					Toast.makeText(getApplicationContext(), "Account Login", Toast.LENGTH_LONG).show();
+					//Toast.makeText(getApplicationContext(), "Account Login", Toast.LENGTH_LONG).show();
+					startActivity(new Intent("android.intent.action.PartySenseLoginActivity"));
+					finish();
 				}
 				else{}
 			}
