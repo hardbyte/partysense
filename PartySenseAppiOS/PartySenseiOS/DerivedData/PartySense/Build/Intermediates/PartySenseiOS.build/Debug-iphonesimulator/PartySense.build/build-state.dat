@@ -1,0 +1,362 @@
+TPartySense
+v5
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist PartySense-Info.plist
+cCompileXIB /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib
+cCpResource Default-568h@2x.png DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png
+cProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth PartySense_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cLd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense normal i386
+cGenerateDSYMFile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense
+cTouch /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk
+c00000000504916AD0000000000000110
+t1346967213
+s272
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c00000000507F92770000000000228FD0
+t1350537847
+s2265040
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c00000000507F927800000000003DCEF0
+t1350537848
+s4050672
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
+c00000000507F927700000000000015F7
+t1350537847
+s5623
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+c00000000507F927A0000000000000E8D
+t1350537850
+s3725
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c00000000507F927C0000000000AB3D60
+t1350537852
+s11222368
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/ATPagingViewDemo_Prefix.pch
+c00000000000000000000000000000000
+t2
+s0
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.h
+c000000004DB615CA0000000000000B2A
+t1303778762
+s2858
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m
+c000000004DB615CA0000000000003DA7
+t1303778762
+s15783
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.h
+c0000000050F3D8EA00000000000000C4
+t1358158058
+s196
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m
+c0000000050F3D8FA0000000000000429
+t1358158074
+s1065
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.h
+c0000000050F3D8E30000000000000093
+t1358158051
+s147
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m
+c0000000050F3D8DA00000000000004A2
+t1358158042
+s1186
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.h
+c0000000050F3D8BB000000000000018E
+t1358158011
+s398
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m
+c0000000050F3D8B60000000000000430
+t1358158006
+s1072
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Default-568h@2x.png
+c0000000050660F4200000000000048A2
+t1348865858
+s18594
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o
+t1358158210
+s125264
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o
+t1358158209
+s72360
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o
+t1358158209
+s71092
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySense.LinkFileList
+c0000000050F3D9120000000000000415
+t1358158098
+s1045
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o
+t1358158209
+s90732
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o
+t1358158209
+s3928
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/ATPagingViewDemo_Prefix-ajqvnffrezngfkdefhipncqusrds/ATPagingViewDemo_Prefix.pch.pth
+t2
+s0
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/ATPagingViewDemo_Prefix-dglulnfhypgpwgaojboshqteyiwh/ATPagingViewDemo_Prefix.pch.pth
+t2
+s0
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth
+t1358158209
+s4836020
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app
+t1358158212
+s238
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM
+t1358158212
+s102
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png
+t1358158207
+s18594
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist
+t1358158207
+s610
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/MainWindow.nib
+t1358158208
+s1636
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense
+t1358158212
+s59832
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PkgInfo
+t1358158207
+s8
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib
+c0000000050F3D9F80000000000003BE8
+t1358158328
+s15336
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/PartySense_Prefix.pch
+c000000004DB615CA00000000000000A8
+t1303778762
+s168
+i<Foundation/Foundation.h>
+i<UIKit/UIKit.h>
+
+N/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m
+c000000004DB615CA000000000000012F
+t1303778762
+s303
+
+NPartySense-Info.plist
+c0000000050F3D954000000000000038F
+t1358158164
+s911
+
+CBuild AST from /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m
+r0
+
+CBuild AST from /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m
+r0
+
+CBuild AST from /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m
+r0
+
+CBuild AST from /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m
+r0
+
+CBuild AST from /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m
+r0
+
+CCheck dependencies
+r0
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesb64db57811a4b641^5e4abd7811a4b641^---0#1#0#--18"Check dependencies36"CB94D096-416C-4DB9-8F66-96B076CB7B4D-
+
+CCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851009.877026
+e379851010.823070
+r1
+xCompileC
+xDerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection101"Compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m3331e10111a4b641^e598fc0211a4b641^---0#0#0#-19%DVTDocumentLocation2@109"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m0000000000000000^4502"CompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o Classes/ATPagingView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -include /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.d --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/ATPagingView.m -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/ATPagingView.o36"D7AFD481-8348-4F43-8969-A6AD4147EC15-
+
+CCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851009.234251
+e379851009.866924
+r1
+xCompileC
+xDerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection107"Compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.mb5183c0111a4b641^9aeedd0111a4b641^---0#0#0#-19%DVTDocumentLocation2@115"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m0000000000000000^4538"CompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o Classes/HomeViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -include /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.d --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/HomeViewController.m -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/HomeViewController.o36"35E304EA-6285-464B-8C71-A650A86EB5B5-
+
+CCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851009.234391
+e379851009.899963
+r1
+xCompileC
+xDerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+o/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m:42:131: warning: 'UILineBreakModeClip' is deprecated: first deprecated in iOS 6.0 [-Wdeprecated-declarations]
+o    [[NSString stringWithFormat:@"Page %d", self.tag] drawInRect:textRect withFont:[UIFont boldSystemFontOfSize:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+o                                                                                                                                  ^
+o/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h:31:5: note: 'UILineBreakModeClip' declared here
+o    UILineBreakModeClip,                    // Simply clip when it hits the end of the rect
+o    ^
+o/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m:42:161: warning: 'UITextAlignmentCenter' is deprecated: first deprecated in iOS 6.0 [-Wdeprecated-declarations]
+o    [[NSString stringWithFormat:@"Page %d", self.tag] drawInRect:textRect withFont:[UIFont boldSystemFontOfSize:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+o                                                                                                                                                                ^
+o/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h:42:5: note: 'UITextAlignmentCenter' declared here
+o    UITextAlignmentCenter,
+o    ^
+o2 warnings generated.
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection99"Compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m9f1d3c0111a4b641^ed62e60111a4b641^-1687"/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m:42:131: warning: 'UILineBreakModeClip' is deprecated: first deprecated in iOS 6.0 [-Wdeprecated-declarations]    [[NSString stringWithFormat:@"Page %d", self.tag] drawInRect:textRect withFont:[UIFont boldSystemFontOfSize:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];                                                                                                                                  ^/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h:31:5: note: 'UILineBreakModeClip' declared here    UILineBreakModeClip,                    // Simply clip when it hits the end of the rect    ^/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m:42:161: warning: 'UITextAlignmentCenter' is deprecated: first deprecated in iOS 6.0 [-Wdeprecated-declarations]    [[NSString stringWithFormat:@"Page %d", self.tag] drawInRect:textRect withFont:[UIFont boldSystemFontOfSize:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];                                                                                                                                                                ^/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h:42:5: note: 'UITextAlignmentCenter' declared here    UITextAlignmentCenter,    ^2 warnings generated.2(36%IDEClangDiagnosticActivityLogMessage2@64"'UILineBreakModeClip' is deprecated: first deprecated in iOS 6.0-379851009#18446744073709551615#0#1(2@35"'UILineBreakModeClip' declared here-379851009#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@199"file://localhost/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h0000000000000000^30#4#30#4#1427#0#14"Semantic Issue--1#27"com.apple.dt.IDE.diagnostic3@107"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m0000000000000000^41#130#41#130#1081#0#12"Deprecations--2@66"'UITextAlignmentCenter' is deprecated: first deprecated in iOS 6.0-379851009#18446744073709551615#0#1(2@37"'UITextAlignmentCenter' declared here-379851009#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic3@199"file://localhost/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIStringDrawing.h0000000000000000^41#4#41#4#2094#0#14"Semantic Issue--1#27"com.apple.dt.IDE.diagnostic3@107"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m0000000000000000^41#160#41#160#1111#0#12"Deprecations--0#0#0#-19%DVTDocumentLocation4@107"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m0000000000000000^4490"CompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o Classes/PSPageView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -include /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.d --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PSPageView.m -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PSPageView.o36"3A9F7BBD-4CD9-4E2A-959B-1F2F8D3C59C1-
+
+CCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851009.233711
+e379851009.880482
+r1
+xCompileC
+xDerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection110"Compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m7ffa3b0111a4b641^3b6de10111a4b641^---0#0#0#-19%DVTDocumentLocation2@118"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m0000000000000000^4556"CompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o Classes/PartySenseAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -include /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.d --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Classes/PartySenseAppDelegate.m -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySenseAppDelegate.o36"50117CFD-BFBE-4E06-9A98-F85210CB7237-
+
+CCompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851009.233686
+e379851009.877443
+r1
+xCompileC
+xDerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection85"Compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m92243c0111a4b641^7e3be10111a4b641^---0#0#0#-19%DVTDocumentLocation2@93"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m0000000000000000^4438"CompileC DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -include /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.d --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/main.m -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/main.o36"68D0198B-A985-4129-B84B-5FFDDFDA26F4-
+
+CCompileXIB /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib
+s379851128.771495
+e379851137.980898
+r1
+xCompileXIB
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compiling /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xibcba1c57811a4b641^da1cfb8111a4b641^---0#0#0#-19%DVTDocumentLocation2@101"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib0000000000000000^990"CompileXIB MainWindow.xib    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 6.0    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    setenv XCODE_DEVELOPER_USR_PATH /Applications/Xcode.app/Contents/Developer/usr/bin/..    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/MainWindow.nib /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/MainWindow.xib --sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk36"20821004-ADC3-48FA-ABA6-B014EB4ECA84-
+
+CCpResource Default-568h@2x.png DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png
+s379851007.801585
+e379851007.804306
+r1
+xCpResource
+xDefault-568h@2x.png
+xDerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection99"Copy DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png3d46cdff10a4b641^0ce8cdff10a4b641^---0#0#0#-19%DVTDocumentLocation2@181"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png000000000080d041^754"CpResource "Default-568h@2x.png" "DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Default-568h@2x.png"    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks "/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/Default-568h@2x.png" /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app36"FBB19E43-B372-40E2-A9FD-F4A76DCBB46C-
+
+CGenerateDSYMFile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense
+s379851012.627210
+e379851012.731358
+r1
+xGenerateDSYMFile
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection161"Generating /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM6aa1a00411a4b641^8a3abb0411a4b641^---0#0#0#-19%DVTDocumentLocation2@166"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM000000000080d041^867"GenerateDSYMFile DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app.dSYM36"3210D8EB-CFD2-431B-9870-C3F8646F953D-
+
+CLd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense normal i386
+s379851010.830554
+e379851012.619601
+r1
+xLd
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense
+xnormal
+xi386
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection161"Link /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense0d33d80211a4b641^77a09e0411a4b641^---0#0#0#--1485"Ld DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense normal i386    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv IPHONEOS_DEPLOYMENT_TARGET 6.0    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -L/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator -filelist /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/Objects-normal/i386/PartySense.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=6.0 -framework Foundation -framework UIKit -framework CoreGraphics -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PartySense36"834C79B3-343F-4406-9023-D6493A034543-
+
+CProcessInfoPlistFile /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist PartySense-Info.plist
+s379851007.733817
+e379851007.781041
+r1
+xProcessInfoPlistFile
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist
+xPartySense-Info.plist
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection29"Process PartySense-Info.pliste353c0ff10a4b641^5017cdff10a4b641^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/PartySense-Info.plist0000000000000000^841"ProcessInfoPlistFile DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist PartySense-Info.plist    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility PartySense-Info.plist -genpkginfo /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app/Info.plist36"A823E0BB-512F-41E1-B04F-F2E778A3A567-
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/ATPagingViewDemo_Prefix-ajqvnffrezngfkdefhipncqusrds/ATPagingViewDemo_Prefix.pch.pth ATPagingViewDemo_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/ATPagingViewDemo_Prefix-dglulnfhypgpwgaojboshqteyiwh/ATPagingViewDemo_Prefix.pch.pth ATPagingViewDemo_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth PartySense_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s379851008.154563
+e379851009.226248
+r1
+xProcessPCH
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth
+xPartySense_Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection32"Precompile PartySense_Prefix.pchd5b0270011a4b641^20eb390111a4b641^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/PartySense_Prefix.pch0000000000000000^4286"ProcessPCH DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth PartySense_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=0 -std=c99 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -fvisibility=hidden -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=6.0 -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-generated-files.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-own-target-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-all-target-headers.hmap -iquote /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/PartySense-project-headers.hmap -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources/i386 -I/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PartySenseiOS.build/Debug-iphonesimulator/PartySense.build/DerivedSources -F/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator --serialize-diagnostics /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.dia -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/PartySense_Prefix.pch -o /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.pth -MMD -MT dependencies -MF /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Intermediates/PrecompiledHeaders/PartySense_Prefix-ajqvnffrezngfkdefhipncqusrds/PartySense_Prefix.pch.d36"838A61D1-F773-4FE7-9BDD-512CBC336113-
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Index/PrecompiledHeaders/ATPagingViewDemo_Prefix-anrcfbrxfshtmqbyopewcferlsdt_ast/ATPagingViewDemo_Prefix.pch.pth ATPagingViewDemo_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Index/PrecompiledHeaders/ATPagingViewDemo_Prefix-gxmekkwxhkbkcvbpddladludejwu_ast/ATPagingViewDemo_Prefix.pch.pth ATPagingViewDemo_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Index/PrecompiledHeaders/PartySense_Prefix-anrcfbrxfshtmqbyopewcferlsdt_ast/PartySense_Prefix.pch.pth PartySense_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CTouch /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app
+s379851138.022688
+e379851138.054943
+r1
+xTouch
+x/Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection151"Touch /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app59de058211a4b641^56110e8211a4b641^---0#0#0#--522"Touch DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app    cd /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /usr/bin/touch -c /Users/wilson/Ahmed/Projects/PartySense/PartySenseAppiOS/PartySenseiOS/DerivedData/PartySense/Build/Products/Debug-iphonesimulator/PartySense.app36"30500B9C-A09A-4C20-B885-7DAF72A5D5BC-
+
