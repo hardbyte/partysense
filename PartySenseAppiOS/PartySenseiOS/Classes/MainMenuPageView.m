@@ -27,6 +27,9 @@
         [self addSubview: listView];
         
         [listView retain];
+        [itemArray release];
+        
+        [self setBackgroundColor: [UIColor blackColor]];
     }
     return self;
 }

@@ -19,7 +19,7 @@
 #pragma mark ATPagingViewDelegate methods
 
 - (NSInteger)numberOfPagesInPagingView:(ATPagingView *)pagingView {
-    return 10;
+    return 2;
 }
 
 - (UIView *)viewForPageInPagingView:(ATPagingView *)pagingView atIndex:(NSInteger)index {
@@ -27,7 +27,7 @@
     if(index == 0)
     {
         if(mainMenuPageView == nil)
-            mainMenuPageView = [[[MainMenuPageView alloc] init] autorelease];
+            mainMenuPageView = [[[MainMenuPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
         
         return mainMenuPageView;
     }

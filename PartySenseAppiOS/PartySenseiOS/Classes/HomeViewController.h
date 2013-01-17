@@ -4,11 +4,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ATPagingView.h"
+#import "PSPageView.h"
 
 @class MainMenuPageView;
 
 @interface HomeViewController : ATPagingViewController {
     MainMenuPageView* mainMenuPageView;
+    PSPageView* currentPageView;
 }
 
 @end

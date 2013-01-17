@@ -42,6 +42,11 @@
     return items;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 1;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	@synchronized(items) {
@@ -52,13 +57,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellIdent = @"PartySenseIdent";
+    static NSString* cellIdent = @"PartySenseCell";
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellIdent];
     
-    if(!cell)
+    if(cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdent] autorelease];
-        [tableView setSeparatorColor:[UIColor blackColor]];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdent] autorelease];
+        [tableView setSeparatorColor:[UIColor whiteColor]];
     }
     
     NSObject* obj = [items objectAtIndex:indexPath.row];
@@ -68,7 +73,7 @@
 	
 	cell.textLabel.textColor = [UIColor whiteColor];
 	cell.textLabel.text = [menuItem title];
-	cell.detailTextLabel.text = @"";
+	cell.detailTextLabel.text = @"Blah";
     cell.detailTextLabel.textColor = [UIColor whiteColor];
 	cell.textLabel.textAlignment = NSTextAlignmentLeft;
 	cell.accessoryType = UITableViewCellAccessoryNone;
