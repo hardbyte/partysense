@@ -4,7 +4,6 @@
 package party.sense.app;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
