@@ -1,5 +1,5 @@
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
@@ -11,4 +11,67 @@
             android:layout_gravity="center_vertical" 
          />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical" 
+            android:weightSum="10">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp" 
+                android:layout_weight="4"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp" 
+                android:layout_weight="6"
+                android:orientation="vertical"
+                android:weightSum="10">
+				
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical" />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/transparent"
+                        android:visibility="visible"
+                        android:textColor="@color/white"
+                        android:text="You are not logged in. Click here to log in." />
+
+                    <TextView
+                        android:id="@+id/txtLogin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:visibility="invisible"
+                        android:textColor="@color/white"
+                        android:text="TextView" />
+                    
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+            
+        </LinearLayout>
+
+    </RelativeLayout>
