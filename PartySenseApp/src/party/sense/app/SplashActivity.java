@@ -7,14 +7,21 @@ import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class SplashActivity extends Activity {
-
+	SharedPreferences settings;
 	private static final String TAG = "com.partysense.app.SplashActivity";
 	public static final String BUNDLE_ID_CLUBS_LIST = "party.sense.app.clubsList";
 	Intent i;
+	Button btnLogin;
+	TextView txtLogin;
 	/** Called when the activity is first created. */
 	@Override
 
@@ -22,34 +29,28 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		ArrayList<Club> clubs = new ArrayList<Club>();
+		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
 		
-		/*Thread splashTimerThread = new Thread(){
+		btnLogin = (Button) findViewById(R.id.btnLogin);
+		String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
+		Thread splashTimerThread = new Thread(){
 			public void run(){
 				try{
-					clubs = this.updateClubs();
 					int counter = 0;
-					while()
+					while(counter<5)
 					{
-						Thread.currentThread().sleep(1000);
-						sleep(100);
-						counter += 100;
+						Thread.sleep(1000);
+						counter += 1;
 					}
-					startActivity(new Intent("android.intent.action.PartySenseMainActivity"));
-					
-				} catch(IOException exception){
-					Log.e(TAG, exception.getMessage());
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					e.printStackTrace();
+				}
+				catch(Exception e){
 				}
 				finally{
+					startActivity(i);
 					finish();
 				}
 			}
 		};
-		splashTimerThread.start();
-		*/
 		
 		try {
 			clubs = this.updateClubs();
@@ -61,25 +62,18 @@ public class SplashActivity extends Activity {
 			i = new Intent(this, PartySenseMainActivity.class);
 			i.putExtras(b);
 			
-			Thread splashTimerThread = new Thread(){
-				public void run(){
-					try{
-						int counter = 0;
-						while(counter<5)
-						{
-							Thread.sleep(1000);
-							counter += 1;
-						}
-					}
-					catch(Exception e){
-					}
-					finally{
-						startActivity(i);
-						finish();
-					}
-				}
-			};
-			splashTimerThread.start();
+			//Logic to set login
+			if (loginName != null){
+				txtLogin.setVisibility(View.INVISIBLE);
+				btnLogin.setVisibility(View.VISIBLE);
+			}
+			else{
+				txtLogin.setText("You are logged in as:" + loginName);
+				txtLogin.setVisibility(View.VISIBLE);
+				btnLogin.setVisibility(View.INVISIBLE);
+				splashTimerThread.start();
+			}
+			
 			
 
 		} catch(IOException exception){

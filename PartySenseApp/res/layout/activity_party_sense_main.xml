@@ -24,7 +24,7 @@
 	    <android.support.v4.view.PagerTitleStrip
 	        android:id="@+id/pager_title_strip"
 	        android:layout_width="match_parent"
-	        android:layout_height="60dp"
+	        android:layout_height="70dp"
 	        android:layout_gravity="top"
 	        android:gravity = "bottom"
 	        android:background="@drawable/header_bg"
