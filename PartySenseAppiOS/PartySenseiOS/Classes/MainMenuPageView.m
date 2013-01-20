@@ -4,25 +4,33 @@
 
 #import "MainMenuPageView.h"
 
-@implementation MainMenuPageView
+NSString* pageStrings[EMP_COUNT] =
+{
+    @"Recommended Clubs",
+    @"Nearby Clubs",
+    @"Map View",
+    @"Friends",
+    @"Settings"
+};
 
+@implementation MainMenuPageView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         listView = [[MenuItemListView alloc] initWithFrame: frame];
         
-        NSMutableArray* itemArray = [[NSMutableArray alloc] initWithCapacity: 5];
+        NSMutableArray* itemArray = [[NSMutableArray alloc] initWithCapacity: EMP_COUNT];
         
-        PSMenuItem* item1 = [[PSMenuItem alloc] init];
-        item1.title = @"Recommended Clubs";
-        [itemArray addObject: item1];
-        
-        PSMenuItem* item2 = [[PSMenuItem alloc] init];
-        item2.title = @"Nearby Clubs";
-        [itemArray addObject: item2];
+        for(int i = 0;i < EMP_COUNT;i++)
+        {
+            PSMenuItem* menuItem = [[PSMenuItem alloc] init];
+            menuItem.title = pageStrings[i];
+            [itemArray addObject: menuItem];
+        }
         
         listView.items = itemArray;
+        listView.listDelegate = self;
         
         [self addSubview: listView];
         
@@ -39,5 +47,18 @@
     [listView release];
 }
 
+- (void) onItemSelected:(int)index
+{
+    switch (index) {
+        case EMP_RECOMMENDED_CLUBS:
+            
+            break;
+            
+        default:
+            break;
+    }
+    
+    [pagingView setCurrentPageIndex: 1];
+}
 
 @end

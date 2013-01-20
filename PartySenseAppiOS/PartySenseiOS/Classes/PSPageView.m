@@ -6,7 +6,8 @@
 
 
 @implementation PSPageView
-
+@synthesize pagingView;
+@synthesize title;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

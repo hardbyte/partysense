@@ -5,6 +5,11 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+@protocol MenuItemListDelegate <NSObject>
+@required
+-(void) onItemSelected:(int)index;
+@end
+
 @interface PSMenuItem : NSObject
 {
 	NSString* title;
@@ -14,10 +19,12 @@
 
 @interface MenuItemListView : UITableView<UITableViewDelegate, UITableViewDataSource>
 {
-     NSMutableArray* items;
+    NSMutableArray* items;
+    id<MenuItemListDelegate> listDelegate;
 }
 
 @property (retain,setter=setItems:,getter=items)NSArray* items;
+@property (nonatomic,retain) id<MenuItemListDelegate> listDelegate;
 
 -(void)setItems:(NSArray*)itemsIn;
 -(NSArray*)items;
