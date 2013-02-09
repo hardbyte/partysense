@@ -272,5 +272,27 @@ public class Club implements Parcelable{
 	public void setHours_sunday(String hours_sunday) {
 		this.hours_sunday = hours_sunday;
 	}
-
+	public ArrayList<String> getGenres(){
+		ArrayList<String> tagsList = getTags();
+		ArrayList<String> genreList = new ArrayList<String>();
+		for(String tags : tagsList){
+			if (tags.split("_")[0].toLowerCase().equals("music")){
+				genreList.add(tags.split("_")[1].toUpperCase()); 
+			}
+		}
+		return genreList;
+	}
+	public String getGenreString() {
+		ArrayList<String> tagsList = getTags();
+		String genreString ="";
+		for(String tags : tagsList){
+			if (tags.split("_")[0].toLowerCase().equals("music")){
+				genreString += "/" + tags.split("_")[1].toUpperCase(); 
+			}
+		}
+		if (genreString.length()>1){
+			genreString = genreString.substring(1);
+		}
+		return genreString;
+	}
 }

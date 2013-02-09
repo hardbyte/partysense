@@ -13,8 +13,7 @@
            android:layout_weight="50"
            android:background="#000000"
            android:divider="@android:color/black"
-           android:dividerHeight="10dp"
-           android:entries="@array/ListSongs" >
+           android:dividerHeight="10dp">
 
        </ListView>
 		

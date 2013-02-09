@@ -3,6 +3,7 @@ package party.sense.app;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,12 +22,31 @@ public class FragmentSongsScreen extends Fragment {
 	ListView lvClubList;
 	ClubListItemAdapter adapter;
 	ArrayList<Club> clubsList;
+	RecommendedFilter recomFilter;
+	SharedPreferences settings;
+	ArrayList<String> genreSelectionList = new ArrayList<String>();
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
 		Bundle b = this.getArguments();
 		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+		
+		settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		String d = "";
+		
+		for(String s : PartySenseGenreSelectActivity.genres){
+			if(settings.getBoolean(s, false)){
+				genreSelectionList.add(s);
+			}
+		}
+		
+		recomFilter = new RecommendedFilter(clubsList, genreSelectionList);
+		clubsList = recomFilter.getFilteredClubList();
+		/*d = Integer.toString(a);
+		Toast.makeText(getActivity(), d, Toast.LENGTH_LONG).show();
+		*/
+		
 		
 		lvClubList = (ListView) view.findViewById(R.id.recommended_club_listview);
 		

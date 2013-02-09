@@ -1,6 +1,7 @@
 package party.sense.app;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -19,16 +20,31 @@ public class PartySenseGenreSelectActivity extends Activity {
 	ListView lView;
 	SharedPreferences settings;
 	SharedPreferences.Editor edit;
-	ArrayList<String> genres = new ArrayList<String>();
+	static ArrayList<String> genres = new ArrayList<String>();
+	
+	static{
+		genres.add("Blues");
+		genres.add("Country");
+		genres.add("Electronic");
+		genres.add("Disco");
+		genres.add("House");
+		genres.add("Hiphop");
+		genres.add("Jazz");
+		genres.add("Latin");
+		genres.add("Pop");
+		genres.add("Reggae");
+		genres.add("RnB");
+		genres.add("Rock");
+	}
+	
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
-		genres.add("Rock");
-		genres.add("HipHop");
-		genres.add("Blues");
-		genres.add("Jazz");
-		genres.add("Techno");
+		/*for(int i = 0; i < genreArray.length; i++){
+			genres.add(genreArray[i]);
+		}*/
 		
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.layout_genre_screen);
@@ -44,6 +60,7 @@ public class PartySenseGenreSelectActivity extends Activity {
 	    
 	    for(int i = 0; i<lView.getCount(); i++){
 	    	lView.setItemChecked(i, settings.getBoolean(genres.get(i), false));
+	    	
 	    }
 	    
 	    

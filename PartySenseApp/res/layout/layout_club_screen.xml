@@ -29,8 +29,7 @@
            android:layout_height="0px"
            android:layout_weight="45"
            android:divider="#ffffff"
-           android:dividerHeight="5dp"
-           android:entries="@array/ListSongs" >
+           android:dividerHeight="5dp">
 
        </ListView>
 		

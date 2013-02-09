@@ -97,12 +97,15 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:apiKey="0zye_bGqdIiksasycZZeHqVMhGysQSpdzmE5u9w"
+                android:apiKey="0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg"
                 android:clickable="true" >
             </com.google.android.maps.MapView>
 
         </LinearLayout>
-<!--  -->
+<!-- 
+	Deva: 0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg
+	Tanmay: 0zye_bGqdIiksasycZZeHqVMhGysQSpdzmE5u9w
+ -->
         
 
     </LinearLayout>

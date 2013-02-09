@@ -12,6 +12,7 @@ import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,10 +31,11 @@ public class SplashActivity extends Activity {
 		setContentView(R.layout.splash);
 		ArrayList<Club> clubs = new ArrayList<Club>();
 		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
-		
+		txtLogin = (TextView) findViewById(R.id.txtLogin);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
+		
 		String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
-		Thread splashTimerThread = new Thread(){
+		final Thread splashTimerThread = new Thread(){
 			public void run(){
 				try{
 					int counter = 0;
@@ -52,6 +54,15 @@ public class SplashActivity extends Activity {
 			}
 		};
 		
+		
+		btnLogin.setOnClickListener(new OnClickListener() {
+					
+					public void onClick(View v) {
+						splashTimerThread.start();
+						
+					}
+		});
+		
 		try {
 			clubs = this.updateClubs();
 			while( clubs == null){
@@ -63,7 +74,7 @@ public class SplashActivity extends Activity {
 			i.putExtras(b);
 			
 			//Logic to set login
-			if (loginName != null){
+			if (loginName != "null"){
 				txtLogin.setVisibility(View.INVISIBLE);
 				btnLogin.setVisibility(View.VISIBLE);
 			}

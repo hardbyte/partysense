@@ -1,12 +1,14 @@
 <resources>
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
     <string name="app_name">PartySenseApp</string>
     <string name="title_section3">Section 3</string>
     <string name="title_section2">Songs</string>
     <string name="title_section1">Clubs</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="mooTest">Test</string>
-    <string name="mooTest2">Test</string>
-    <string name="mooTest3">Test</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_party_sense_main">PartySense</string>
     <string-array name="MenuItems">
@@ -21,41 +23,20 @@
        <item >Friends</item>
        <item >All</item>
     </string-array>
-	<string-array name="ListItem">
-       <item >Was</item>
-       <item >Wrong</item>
-       <item >Oh,No</item>
-       <item >Where</item>
-       <item >Okay</item>
-       <item >Lame</item>
-       <item >Focus</item>
-       <item >Closed</item>
-       <item >Third Base</item>
-       <item >Hopeless</item>
-    </string-array>
-    <string-array name="ListSongs">
-       <item>Guy Sebastian feat. Lupe Fiasco - Battlescars</item>
-		<item>The Wanted - I Found You</item>
-		<item>Bridgit Mendler	- Ready Or Not</item>
-		<item>Timomatic - Incredible</item>
-		<item>Pink - Try</item>
-		<item>One Direction - Live While We\'re Young</item>
-		<item>Titanium - Come On Home</item>
-		<item>The Script feat. Will.I.Am - Hall Of Fame</item>
-		<item>Mumford And Sons - I Will Wait</item>
-		<item>Ne-Yo - Let Me Love You</item>
-		<item>Taylor Swift - We Are Never Ever Getting Back Together</item>
-		<item>Kids Of 88 - La La</item>
-		<item>Example feat. Calvin Harris - We\'ll Be Coming Back</item>
-		<item>Rihanna - Diamonds</item>
-		<item>Macklemore And Ryan Lewis - Thrift Shop</item>
-		<item>Maroon 5 - One More Night</item>
-		<item>Lana Del Ray - Summertime Sadness</item>
-		<item>Flo Rida - I Cry</item>
-		<item>Ke$ha - Die Young</item>
-		<item>Reece Mastin - Rockstar</item>
-    </string-array>
     <string name="app_id">386541278102635</string>
     <string name="pref_name_on_facebook">name_on_facebook</string>
-	
+	<string-array name="BasicGenre">
+       	<item>Blues</item>
+		<item>Country</item>
+		<item>Electronic</item>
+		<item>Disco</item>
+		<item>House</item>
+		<item>Hiphop</item>
+		<item>Jazz</item>
+		<item>Latin</item>
+		<item>Pop</item>
+		<item>Reggae</item>
+		<item>RnB</item>
+		<item>Rock</item>
+    </string-array>
 </resources>
