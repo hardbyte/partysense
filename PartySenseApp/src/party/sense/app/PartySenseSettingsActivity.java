@@ -33,7 +33,7 @@ public class PartySenseSettingsActivity extends FragmentActivity {
      */
     public static ViewPager mViewPager;
     public String[] segmentTitles = {"Menu","Settings","Map View"}; 
-    ArrayList<Club> clubsList = new ArrayList<Club>();   
+    ArrayList<Club> clubsList = new ArrayList<Club>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
