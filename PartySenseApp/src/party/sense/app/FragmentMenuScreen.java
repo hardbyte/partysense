@@ -36,7 +36,12 @@ public class FragmentMenuScreen extends Fragment {
 		lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapter, View view, int pos, long id) {
 				if(pos == menuCnt){
-					
+					if (pos == 0){
+						PartySenseMainActivity.mViewPager.setCurrentItem(1);
+	                }
+	                else if (pos == 1){
+	                	PartySenseClubActivity.mViewPager.setCurrentItem(1);
+	                }
 				}
 				else{
 	                if (pos == 0){

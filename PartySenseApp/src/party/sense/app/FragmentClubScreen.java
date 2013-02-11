@@ -32,7 +32,7 @@ public class FragmentClubScreen extends Fragment {
 		
 		btnTest.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), Integer.toString(adapter.getCount()), Toast.LENGTH_LONG).show();
+				PartySenseClubActivity.mViewPager.setCurrentItem(0);
 			}
 		});
 		
@@ -71,5 +71,7 @@ public class FragmentClubScreen extends Fragment {
 	private void addClubItem(int imgID, String clubName, String clubSub){
 		adapter.add(new ClubListItem(imgID, clubName, clubSub));
 	}
+	
+	
 	
 }

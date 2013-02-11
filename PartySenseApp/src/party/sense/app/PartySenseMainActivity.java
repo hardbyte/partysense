@@ -31,7 +31,7 @@ public class PartySenseMainActivity extends FragmentActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    public ViewPager mViewPager;
+    public static ViewPager mViewPager;
     public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
     ArrayList<Club> clubsList = new ArrayList<Club>();   
     @Override
@@ -62,7 +62,14 @@ public class PartySenseMainActivity extends FragmentActivity {
         return true;
     }
      */
-    
+    public void onBackPressed(){
+    	if(mViewPager.getCurrentItem()>0){
+    		mViewPager.setCurrentItem(0);
+    	}
+    	else{
+    		super.onBackPressed();
+    	}
+    }
 
 
     /**
