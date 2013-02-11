@@ -42,6 +42,9 @@ public class FragmentMenuScreen extends Fragment {
 	                else if (pos == 1){
 	                	PartySenseClubActivity.mViewPager.setCurrentItem(1);
 	                }
+	                else if (pos == 4){
+	                	PartySenseSettingsActivity.mViewPager.setCurrentItem(1);
+	                }
 				}
 				else{
 	                if (pos == 0){
@@ -64,7 +67,12 @@ public class FragmentMenuScreen extends Fragment {
 	                	startActivity(new Intent("android.intent.action.PartySenseMapActivity"));
 	                }
 	                else if (pos == 4){
-	                	startActivity(new Intent("android.intent.action.PartySenseSettingsActivity"));
+	                	Bundle b = new Bundle();
+	                	Intent i = new Intent("android.intent.action.PartySenseSettingsActivity");
+	                    b.putParcelableArrayList("party.sense.app.clubsList", clubsList);
+	        			i.putExtras(b);
+	        			startActivity(i);
+	    				getActivity().finish();
 	                }
 	                else{}
 				}

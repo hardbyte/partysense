@@ -44,7 +44,7 @@ public class PartySenseMainActivity extends FragmentActivity {
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);
-        
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),null);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
