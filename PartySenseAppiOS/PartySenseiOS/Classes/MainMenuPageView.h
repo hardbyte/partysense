@@ -18,6 +18,15 @@ enum E_MENU_PAGE
     EMP_COUNT
 };
 
+static NSString* pageStrings[EMP_COUNT] =
+{
+    @"Recommended Clubs",
+    @"Nearby Clubs",
+    @"Map View",
+    @"Friends",
+    @"Settings"
+};
+
 @interface MainMenuPageView : PSPageView<MenuItemListDelegate> {
     MenuItemListView* listView;
 

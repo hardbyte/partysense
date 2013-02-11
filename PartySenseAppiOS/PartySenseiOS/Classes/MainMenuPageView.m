@@ -4,14 +4,7 @@
 
 #import "MainMenuPageView.h"
 
-NSString* pageStrings[EMP_COUNT] =
-{
-    @"Recommended Clubs",
-    @"Nearby Clubs",
-    @"Map View",
-    @"Friends",
-    @"Settings"
-};
+
 
 @implementation MainMenuPageView
 

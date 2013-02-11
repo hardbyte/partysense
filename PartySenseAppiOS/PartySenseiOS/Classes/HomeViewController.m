@@ -43,10 +43,13 @@
         return mainMenuPageView;
     }
     
-    UIView *view = [pagingView dequeueReusablePage];
-    if (view == nil) {
+    PSPageView* view = (PSPageView*)[pagingView dequeueReusablePage];
+    if (view == nil)
+    {
         view = [[[PSPageView alloc] init] autorelease];
+        view.title = pageStrings[index];
     }
+    
     return view;
 }
 
@@ -55,7 +58,7 @@
     if(pagingView.currentPageIndex == 0)
         self.navigationItem.title = @"PartySense";
     else
-        self.navigationItem.title = @"NULL";
+        self.navigationItem.title = [currentPageView title];
 }
 
 
