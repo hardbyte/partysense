@@ -11,12 +11,20 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.pagingView.currentPageIndex = 0;
-    [self currentPageDidChangeInPagingView:self.pagingView];
+    [self currentPageDidChangeInPagingView: self.pagingView];
 }
-
 
 #pragma mark -
 #pragma mark ATPagingViewDelegate methods
+
+- (void)loadView {
+
+    [super loadView];
+
+    UIImage* headerBg = [UIImage imageNamed:@"Data/header_bg.png"];
+    UIImage* navBackground =[headerBg resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.navigationController.navigationBar setBackgroundImage: navBackground forBarMetrics: UIBarMetricsDefault];
+}
 
 - (NSInteger)numberOfPagesInPagingView:(ATPagingView *)pagingView {
     return 2;
@@ -27,7 +35,10 @@
     if(index == 0)
     {
         if(mainMenuPageView == nil)
+        {
             mainMenuPageView = [[[MainMenuPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+            mainMenuPageView.pagingView = self.pagingView;
+        }
         
         return mainMenuPageView;
     }
@@ -39,10 +50,10 @@
     return view;
 }
 
-- (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingView {
-    
+- (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingView
+{
     if(pagingView.currentPageIndex == 0)
-        self.navigationItem.title = @"Menu";
+        self.navigationItem.title = @"PartySense";
     else
         self.navigationItem.title = @"NULL";
 }

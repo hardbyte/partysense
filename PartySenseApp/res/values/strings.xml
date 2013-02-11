@@ -10,6 +10,7 @@
     <string name="title_section2">Songs</string>
     <string name="title_section1">Clubs</string>
     <string name="menu_settings">Settings</string>
+    <string name="get_started">Login via Facebook to get started</string>
     <string name="title_activity_party_sense_main">PartySense</string>
     <string-array name="MenuItems">
        <item >Recommended Clubs</item>

@@ -17,6 +17,7 @@
 		43AD684F12F5C67F0093AF73 /* PSPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43AD684E12F5C67F0093AF73 /* PSPageView.m */; };
 		C81AF16B16A40FF200742618 /* ATPagingView.m in Sources */ = {isa = PBXBuildFile; fileRef = C81AF16A16A40FF200742618 /* ATPagingView.m */; };
 		C81AF16D16A4109C00742618 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C81AF16C16A4109C00742618 /* Default-568h@2x.png */; };
+		C8B9823D16ABA0D2009FE453 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = C8B9823C16ABA0D2009FE453 /* Data */; };
 		C8FE0D7816A6B82100070851 /* MainMenuPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FE0D7716A6B82100070851 /* MainMenuPageView.m */; };
 		C8FE0D7C16A6BA5200070851 /* MenuItemListView.m in Sources */ = {isa = PBXBuildFile; fileRef = C8FE0D7B16A6BA5200070851 /* MenuItemListView.m */; };
 /* End PBXBuildFile section */
@@ -39,6 +40,7 @@
 		C81AF16916A40FF200742618 /* ATPagingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATPagingView.h; path = Classes/ATPagingView.h; sourceTree = "<group>"; };
 		C81AF16A16A40FF200742618 /* ATPagingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATPagingView.m; path = Classes/ATPagingView.m; sourceTree = "<group>"; };
 		C81AF16C16A4109C00742618 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C8B9823C16ABA0D2009FE453 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
 		C8FE0D7616A6B82100070851 /* MainMenuPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuPageView.h; sourceTree = "<group>"; };
 		C8FE0D7716A6B82100070851 /* MainMenuPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuPageView.m; sourceTree = "<group>"; };
 		C8FE0D7A16A6BA5200070851 /* MenuItemListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemListView.h; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				C8B9823C16ABA0D2009FE453 /* Data */,
 				C81AF16C16A4109C00742618 /* Default-568h@2x.png */,
 				43AD67F512F5772E0093AF73 /* ATPagingView */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -186,6 +189,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				C81AF16D16A4109C00742618 /* Default-568h@2x.png in Resources */,
+				C8B9823D16ABA0D2009FE453 /* Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

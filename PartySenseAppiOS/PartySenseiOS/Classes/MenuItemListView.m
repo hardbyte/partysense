@@ -11,6 +11,7 @@
 @implementation MenuItemListView
 
 @synthesize items;
+@synthesize listDelegate;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -67,7 +68,7 @@
     }
     
     NSObject* obj = [items objectAtIndex:indexPath.row];
-    printf("Item requested row %d", indexPath.row);
+    printf("\nItem requested row %d", indexPath.row);
     
     PSMenuItem* menuItem = (PSMenuItem*)obj;
 	
@@ -84,16 +85,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	//if( self.listDelegate )
-	{
-		NSObject* item = nil;
-		@synchronized(items) {
-			item = [items objectAtIndex:indexPath.row];
-		}
-	    
-        // TODO
-        //[self.listDelegate listView:self didSelectItem:item];
-	}
+	if(listDelegate)
+        [listDelegate onItemSelected: indexPath.row];
 }
 
 @end
