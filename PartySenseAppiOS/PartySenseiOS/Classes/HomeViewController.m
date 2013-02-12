@@ -1,6 +1,7 @@
 #import "HomeViewController.h"
 #import "PSPageView.h"
 #import "MainMenuPageView.h"
+#import "PSCentral.h"
 
 @implementation HomeViewController
 
@@ -18,6 +19,8 @@
 #pragma mark ATPagingViewDelegate methods
 
 - (void)loadView {
+    
+    [[PSCentral sharedInstance] blah];
 
     [super loadView];
 
