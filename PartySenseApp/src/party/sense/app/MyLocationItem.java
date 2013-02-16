@@ -23,8 +23,10 @@ public class MyLocationItem extends ItemizedOverlay<OverlayItem>{
     }
 	
 	public MyLocationItem(Drawable defaultMarker,Context context) {
-		super(boundCenterBottom(defaultMarker));		
+		super(boundCenterBottom(defaultMarker));
+
 		  mContext = context;
+			populate();
 	}
 	
 	public void clear(){
