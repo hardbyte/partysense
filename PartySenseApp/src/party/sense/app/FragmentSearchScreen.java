@@ -10,11 +10,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class dummyFrag extends Fragment {
+public class FragmentSearchScreen extends Fragment {
 	View view;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		view = inflater.inflate(R.layout.dummy_layout, container,false);
+		view = inflater.inflate(R.layout.layout_search_screen, container,false);
 		return view;
 	}
 }

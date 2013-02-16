@@ -19,7 +19,8 @@ import android.widget.Toast;
 public class FragmentClubScreen extends Fragment {
 
 	ListView lvClubList;
-	Button btnTest;
+	Button btnTest, switch1;
+	//Switch switch1;
 	ClubListItemAdapter adapter;
 	View view;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -29,10 +30,17 @@ public class FragmentClubScreen extends Fragment {
 		//edtView.setInputType(0);
 		lvClubList = (ListView) view.findViewById(R.id.nearby_club_listview);
 		btnTest = (Button) view.findViewById(R.id.btnTest);
+		switch1 = (Button) view.findViewById(R.id.switch1);
 		
 		btnTest.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				PartySenseClubActivity.mViewPager.setCurrentItem(0);
+			}
+		});
+		
+		switch1.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				
 			}
 		});
 		

@@ -99,7 +99,7 @@ public class PartySenseMainActivity extends FragmentActivity {
             	fragment = new FragmentSongsScreen();
             }
             else{
-            	fragment = new dummyFrag();
+            	fragment = new FragmentSearchScreen();
             }
         	fragment.setArguments(b);
             return fragment;
@@ -110,7 +110,7 @@ public class PartySenseMainActivity extends FragmentActivity {
          */
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
