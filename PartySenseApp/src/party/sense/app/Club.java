@@ -6,6 +6,7 @@ package party.sense.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -295,4 +296,13 @@ public class Club implements Parcelable{
 		}
 		return genreString;
 	}
+	
+	public Location getLocation(){
+		Location loc = new Location("a");
+		loc.setLatitude(Double.parseDouble(latitude));
+		loc.setLongitude(Double.parseDouble(longitude));
+		return loc;
+	}
+	
+	
 }

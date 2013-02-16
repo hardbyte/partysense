@@ -72,7 +72,6 @@ public class PartySenseMapActivity extends MapActivity {
 				//mController.animateTo(geoP);
 				GeoPoint point = new GeoPoint((int)(location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
 				
-				//Toast.makeText(getApplicationContext(), "123", duration)
 				
 				OverlayItem overlayitem = new OverlayItem(point, "", "");
 				//mController.setCenter(point);
@@ -83,15 +82,20 @@ public class PartySenseMapActivity extends MapActivity {
 	    
 		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 2, locListener);
 		mapOverlays.add(myLocItemOverlay);
-	    
 	    /*double lon = 174.767;
 	    double lat = -36.8667;
 	    
 	    geoP = new GeoPoint((int)(lat * 1E6) , (int)(lon * 1E6 ));
 	    
-	    mController = mapV.getController();
-	    mController.animateTo(geoP);
-	    mController.setZoom(14);*/
+	    OverlayItem oi = new OverlayItem(geoP, "", "");
+	    myLocItemOverlay.addOverlay(oi);
+		mapOverlays.add(myLocItemOverlay);
+	    
+	    /*double lon = 174.767;
+	    double lat = -36.8667;
+	    
+	    geoP = new GeoPoint((int)(lat * 1E6) , (int)(lon * 1E6 ));**/
+	    
 	    
 	}
 

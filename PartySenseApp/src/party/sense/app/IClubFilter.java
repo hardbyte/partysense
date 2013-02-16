@@ -11,7 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 public interface IClubFilter {
 	static Map<String,String> map = new HashMap<String,String>();
 	
-	ArrayList<Club> getFilteredClubList();
+	//ArrayList<Club> getFilteredClubList();
 	void setClubList(ArrayList<Club> newClubList);
 	void addClub(Club newClub);
 }

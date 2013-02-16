@@ -5,7 +5,6 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.SharedPreferences;
 
 public class RecommendedFilter implements IClubFilter {
-	
  
 	private ArrayList<Club> clubList = new ArrayList<Club>();
 	
