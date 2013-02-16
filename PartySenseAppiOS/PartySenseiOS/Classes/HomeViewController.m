@@ -2,6 +2,7 @@
 #import "PSPageView.h"
 #import "MainMenuPageView.h"
 #import "PSCentral.h"
+#import "RecommendedClubsPageView.h"
 
 @implementation HomeViewController
 
@@ -20,8 +21,7 @@
 
 - (void)loadView {
     
-    [[PSCentral sharedInstance] blah];
-
+    
     [super loadView];
 
     UIImage* headerBg = [UIImage imageNamed:@"Data/header_bg.png"];
@@ -44,6 +44,16 @@
         }
         
         return mainMenuPageView;
+    }
+    else
+    {
+        if(recommendedPageView == nil)
+        {
+            recommendedPageView = [[[RecommendedClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+            recommendedPageView.pagingView = self.pagingView;
+        }
+        
+        return recommendedPageView;
     }
     
     PSPageView* view = (PSPageView*)[pagingView dequeueReusablePage];

@@ -10,4 +10,5 @@
 
 @interface PSCentral : NSObject
 +(PSCentral*) sharedInstance;
+-(void) getClubsList: (void (^)(NSDictionary* json))callback;
 @end
