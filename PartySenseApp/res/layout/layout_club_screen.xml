@@ -1,26 +1,40 @@
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#000000"
         android:orientation="vertical"
         android:weightSum="50" >
 
-               
-       <!-- <com.google.android.maps.MapView
-		    android:id="@+id/mapview"
-		    android:layout_width="match_parent"
-           	android:layout_height="0px" 
-		    android:clickable="true"
-		    android:apiKey="0TgY9YnGfZiUcMC2xpEEfipa6JMSvRx2McVeOTg"
-		    android:layout_weight="20" 
-		/> -->
+       
+       
+        
 
-        <Button
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0px"
+           android:layout_weight="5"
+           android:weightSum="10"
+            >
+           <Button
             android:id="@+id/btnTest"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4.69"
-            android:text="Button" />
+            android:layout_width= "0px" 
+            android:layout_height= "fill_parent"
+            android:layout_weight="5"
+            android:text="Update" />
+           
+           <android.widget.Switch
+            android:id="@+id/switch1"
+            android:layout_width= "0px" 
+            android:layout_height= "fill_parent"
+            android:layout_weight="5"
+            android:layout_gravity="right"
+            android:text = "AutoUpdate"/>
+           
+       </LinearLayout>
+
+        
+
+
 
 		<ListView
            android:id="@+id/nearby_club_listview"

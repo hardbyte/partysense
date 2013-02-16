@@ -19,6 +19,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class PartySenseMapActivity extends MapActivity {
 
@@ -41,6 +42,7 @@ public class PartySenseMapActivity extends MapActivity {
 	    final MapController mController = mapV.getController();
 	    mapV.displayZoomControls(true);
 	    mapV.setBuiltInZoomControls(true);
+	    
 	    
 	    mapOverlays = mapV.getOverlays();
 	    Drawable pinDraw = this.getResources().getDrawable(R.drawable.pin_0);
@@ -69,6 +71,9 @@ public class PartySenseMapActivity extends MapActivity {
 				// TODO Auto-generated method stub
 				//mController.animateTo(geoP);
 				GeoPoint point = new GeoPoint((int)(location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
+				
+				//Toast.makeText(getApplicationContext(), "123", duration)
+				
 				OverlayItem overlayitem = new OverlayItem(point, "", "");
 				//mController.setCenter(point);
 				myLocItemOverlay.clear();
@@ -78,6 +83,7 @@ public class PartySenseMapActivity extends MapActivity {
 	    
 		lManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 2, locListener);
 		mapOverlays.add(myLocItemOverlay);
+	    
 	    /*double lon = 174.767;
 	    double lat = -36.8667;
 	    

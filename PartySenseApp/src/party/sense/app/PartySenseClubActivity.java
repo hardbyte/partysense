@@ -22,7 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import party.sense.app.dummyFrag;
+import party.sense.app.FragmentSearchScreen;
 import party.sense.app.PartySenseMainActivity.SectionsPagerAdapter;
 
 public class PartySenseClubActivity extends FragmentActivity {
@@ -106,7 +106,7 @@ public class PartySenseClubActivity extends FragmentActivity {
             	fragment = new FragmentClubScreen();
             }
             else{
-            	fragment = new dummyFrag();
+            	fragment = new FragmentSearchScreen();
             }
             fragment.setArguments(b);
             return fragment;

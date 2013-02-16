@@ -99,7 +99,7 @@ public class PartySenseSettingsActivity extends FragmentActivity {
             	fragment = new FragmentSettingsScreen();
             }
             else{
-            	fragment = new dummyFrag();
+            	fragment = new FragmentSearchScreen();
             }
         	fragment.setArguments(b);
             return fragment;
