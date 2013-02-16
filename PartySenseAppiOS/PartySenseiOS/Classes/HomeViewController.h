@@ -7,9 +7,11 @@
 #import "PSPageView.h"
 
 @class MainMenuPageView;
+@class RecommendedClubsPageView;
 
 @interface HomeViewController : ATPagingViewController {
     MainMenuPageView* mainMenuPageView;
+    RecommendedClubsPageView* recommendedPageView;
     PSPageView* currentPageView;
 }
 

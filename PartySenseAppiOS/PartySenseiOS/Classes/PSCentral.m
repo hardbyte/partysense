@@ -7,6 +7,7 @@
 //
 
 #import "PSCentral.h"
+#import "ASIHTTPRequest.h"
 
 @implementation PSCentral
 
@@ -27,9 +28,15 @@ static PSCentral *sharedSingleton;
     return sharedSingleton;
 }
 
--(void)blah
+-(void) getClubsList: (void (^)(NSDictionary* json))callback
 {
-    NSLog(@"BLAH");
+    NSURL* url = [NSURL URLWithString: @"http://partysenseapp.appspot.com/api/clubs-dump"];
+    __block ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL: url];
+    [request setCompletionBlock: ^{
+        // Parse the response data as JSON and provide it the callback block.
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData: [request responseData] options: nil error: nil];
+        callback(json);
+    }];
 }
 
 @end
