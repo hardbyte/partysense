@@ -7,6 +7,10 @@
 #import "MenuItemListView.h"
 #import "ATPagingView.h"
 
+@protocol PSMainMenuPageDelegate <NSObject>
+-(void) onPageSelected: (NSInteger)index;
+@end
+
 enum E_MENU_PAGE
 {
     EMP_RECOMMENDED_CLUBS,
@@ -29,7 +33,9 @@ static NSString* pageStrings[EMP_COUNT] =
 
 @interface MainMenuPageView : PSPageView<MenuItemListDelegate> {
     MenuItemListView* listView;
-
+    id<PSMainMenuPageDelegate> delegate;
 }
+
+@property (nonatomic, retain) id<PSMainMenuPageDelegate> delegate;
 
 @end

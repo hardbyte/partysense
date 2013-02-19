@@ -8,6 +8,8 @@
 
 @implementation MainMenuPageView
 
+@synthesize delegate;
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -42,16 +44,7 @@
 
 - (void) onItemSelected:(int)index
 {
-    switch (index) {
-        case EMP_RECOMMENDED_CLUBS:
-            
-            break;
-            
-        default:
-            break;
-    }
-    
-    [pagingView setCurrentPageIndex: 1];
+    [delegate onPageSelected: index];
 }
 
 @end

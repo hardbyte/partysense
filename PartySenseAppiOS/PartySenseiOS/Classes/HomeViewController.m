@@ -41,19 +41,29 @@
         {
             mainMenuPageView = [[[MainMenuPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
             mainMenuPageView.pagingView = self.pagingView;
+            mainMenuPageView.delegate = self;
         }
         
         return mainMenuPageView;
     }
     else
     {
-        if(recommendedPageView == nil)
-        {
-            recommendedPageView = [[[RecommendedClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
-            recommendedPageView.pagingView = self.pagingView;
+        switch (selectedIndex) {
+            case 0:
+                if(recommendedPageView == nil)
+                {
+                    recommendedPageView = [[[RecommendedClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+                    recommendedPageView.pagingView = self.pagingView;
+                }
+                
+                return recommendedPageView;
+            case 1:
+                return nil;
+
+            default:
+                break;
         }
         
-        return recommendedPageView;
     }
     
     PSPageView* view = (PSPageView*)[pagingView dequeueReusablePage];
@@ -64,6 +74,12 @@
     }
     
     return view;
+}
+
+- (void)onPageSelected:(NSInteger)index
+{
+    selectedIndex = index;
+    self.pagingView.currentPageIndex = 1;
 }
 
 - (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingView

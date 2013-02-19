@@ -5,14 +5,15 @@
 #import <UIKit/UIKit.h>
 #import "ATPagingView.h"
 #import "PSPageView.h"
+#import "MainMenuPageView.h"
 
-@class MainMenuPageView;
 @class RecommendedClubsPageView;
 
-@interface HomeViewController : ATPagingViewController {
+@interface HomeViewController : ATPagingViewController<PSMainMenuPageDelegate> {
     MainMenuPageView* mainMenuPageView;
     RecommendedClubsPageView* recommendedPageView;
     PSPageView* currentPageView;
+    NSInteger selectedIndex;
 }
 
 @end

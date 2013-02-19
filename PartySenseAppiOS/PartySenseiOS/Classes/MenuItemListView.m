@@ -37,6 +37,8 @@
 		[items removeAllObjects];
 		[items addObjectsFromArray:itemsIn];
 	}
+    
+    [self reloadData];
 }
 
 - (NSArray*)items {
