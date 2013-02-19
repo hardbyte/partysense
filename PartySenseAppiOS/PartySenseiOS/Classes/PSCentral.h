@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PSClub.h"
 
 @interface PSCentral : NSObject
 +(PSCentral*) sharedInstance;
--(void) getClubsList: (void (^)(NSDictionary* json))callback;
+-(void) getClubsListJSON: (void (^)(NSArray* json))callback;
+-(void) getClubsList: (void (^)(NSArray* clubs))callback;
 @end

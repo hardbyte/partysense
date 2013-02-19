@@ -13,16 +13,13 @@
     if (self) {
         listView = [[MenuItemListView alloc] initWithFrame: frame];
         
-        [[PSCentral sharedInstance] getClubsList: ^(NSDictionary* json){
-            [self performSelectorOnMainThread: @selector(setClubsData:) withObject:json waitUntilDone:NO];
+        [[PSCentral sharedInstance] getClubsList: ^(NSArray* clubs){
+            [self performSelectorOnMainThread: @selector(setClubsData:) withObject:clubs waitUntilDone:NO];
         }];
         
         listView.listDelegate = self;
-        
         [self addSubview: listView];
-        
         [listView retain];
-        
         
         [self setBackgroundColor: [UIColor blackColor]];
     }
@@ -31,20 +28,20 @@
 
 -(void)setClubsData: (id *) data
 {
-    NSDictionary* json = (NSDictionary*)data;
-    NSInteger clubCount = [json count];
+    NSArray* clubs = (NSArray*)data;
+    NSInteger clubCount = [clubs count];
 
     NSMutableArray* itemArray = [[NSMutableArray alloc] initWithCapacity: clubCount];
     for(int i = 0;i < clubCount;i++)
     {
         PSMenuItem* menuItem = [[PSMenuItem alloc] init];
-        NSDictionary* currentItem = [json objectForKey: i];
+        PSClub* currentClub = [clubs objectAtIndex: i];
         
-        menuItem.title = [currentItem objectForKey: @"name"];
+        menuItem.title = currentClub.name;
         [itemArray addObject: menuItem];
     }
     
-    listView.items = itemArray;
+    [listView setItems: itemArray];
     [itemArray release];
 }
 
