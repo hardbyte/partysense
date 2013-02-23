@@ -23,8 +23,8 @@
 @property (retain, nonatomic) NSString* latitude;
 @property (retain, nonatomic) NSString* longitude;
 
-@property (retain, nonatomic) NSMutableArray* photo_urls;
-@property (retain, nonatomic) NSMutableArray* tags;
+@property (retain, nonatomic) NSArray* photo_urls;
+@property (retain, nonatomic) NSArray* tags;
 @property (retain, nonatomic) NSString* description;
 @property (retain, nonatomic) NSString* unstructured_data;
 

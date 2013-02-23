@@ -8,10 +8,12 @@
 #import "MainMenuPageView.h"
 
 @class RecommendedClubsPageView;
+@class NearbyClubsPageView;
 
 @interface HomeViewController : ATPagingViewController<PSMainMenuPageDelegate> {
     MainMenuPageView* mainMenuPageView;
     RecommendedClubsPageView* recommendedPageView;
+    NearbyClubsPageView* nearbyPageView;
     PSPageView* currentPageView;
     NSInteger selectedIndex;
 }
