@@ -30,7 +30,9 @@ static PSCentral *sharedSingleton;
 
 -(void) getClubsListJSON: (void (^)(NSArray* json))callback
 {
-    NSURL* url = [NSURL URLWithString: @"http://partysenseapp.appspot.com/api/clubs-dump"];
+    // Temp url.
+    //NSURL* url = [NSURL URLWithString: @"http://partysenseapp.appspot.com/api/clubs-dump"];
+    NSURL* url = [NSURL URLWithString: @"http://partysenseapp.appspot.com/api/clubs-delta/year/2012/month/02/day/23"];
     __block ASIHTTPRequest* request = [ASIHTTPRequest requestWithURL: url];
     [request setCompletionBlock: ^{
         // Parse the response data as JSON and provide it the callback block.
@@ -77,6 +79,9 @@ static PSCentral *sharedSingleton;
              club.hours_friday = [currentItem objectForKey: @"hours_friday"];
              club.hours_saturday = [currentItem objectForKey: @"hours_saturday"];
              club.hours_sunday = [currentItem objectForKey: @"hours_sunday"];
+             
+             club.tags = [currentItem objectForKey: @"tags"];
+             
              [itemArray addObject: club];
          }
          

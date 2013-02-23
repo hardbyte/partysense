@@ -2,24 +2,31 @@
 //  Copyright 2011 Andrey Tarantsov. Distributed under the MIT license.
 //
 
-#import "RecommendedClubsPageView.h"
+#import "NearbyClubsPageView.h"
 
-
-
-@implementation RecommendedClubsPageView
+@implementation NearbyClubsPageView
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        listView = [[MenuItemListView alloc] initWithFrame: frame];
+        CGRect listRect = frame;
+        listRect.size.height -= 40;
+        
+        listView = [[MenuItemListView alloc] initWithFrame: listRect];
+        listView.listDelegate = self;
+        [self addSubview: listView];
+        [listView retain];
+        
+        distanceSlider = [[UISlider alloc] initWithFrame: CGRectMake(0, 440, 320, 40)];
+        [distanceSlider setMinimumValue:0.01];
+        [distanceSlider setMaximumValue:1];
+        [distanceSlider setValue:0.5];
+        [distanceSlider setUserInteractionEnabled:YES];
+        [self addSubview: distanceSlider];
         
         [[PSCentral sharedInstance] getClubsList: ^(NSArray* clubs){
             [self performSelectorOnMainThread: @selector(setClubsData:) withObject:clubs waitUntilDone:NO];
         }];
-        
-        listView.listDelegate = self;
-        [self addSubview: listView];
-        [listView retain];
         
         [self setBackgroundColor: [UIColor blackColor]];
     }

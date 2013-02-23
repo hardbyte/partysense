@@ -3,6 +3,7 @@
 #import "MainMenuPageView.h"
 #import "PSCentral.h"
 #import "RecommendedClubsPageView.h"
+#import "NearbyClubsPageView.h"
 
 @implementation HomeViewController
 
@@ -58,7 +59,13 @@
                 
                 return recommendedPageView;
             case 1:
-                return nil;
+                if(nearbyPageView == nil)
+                {
+                    nearbyPageView = [[[NearbyClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+                    nearbyPageView.pagingView = self.pagingView;
+                }
+                
+                return nearbyPageView;
 
             default:
                 break;

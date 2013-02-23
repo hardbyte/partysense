@@ -36,6 +36,7 @@
 		F70A346116CA526600FCE7A1 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F70A346016CA526600FCE7A1 /* libz.1.2.5.dylib */; };
 		F74B0BD816CF0E72007436F0 /* PSClub.m in Sources */ = {isa = PBXBuildFile; fileRef = F74B0BD716CF0E72007436F0 /* PSClub.m */; };
 		F74B0BDB16CF14B0007436F0 /* RecommendedClubsPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F74B0BDA16CF14B0007436F0 /* RecommendedClubsPageView.m */; };
+		F7FB7C2516D8CD1B006137B9 /* NearbyClubsPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FB7C2416D8CD1B006137B9 /* NearbyClubsPageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,8 @@
 		F74B0BD716CF0E72007436F0 /* PSClub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSClub.m; sourceTree = "<group>"; };
 		F74B0BD916CF14B0007436F0 /* RecommendedClubsPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendedClubsPageView.h; sourceTree = "<group>"; };
 		F74B0BDA16CF14B0007436F0 /* RecommendedClubsPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendedClubsPageView.m; sourceTree = "<group>"; };
+		F7FB7C2316D8CD1B006137B9 /* NearbyClubsPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyClubsPageView.h; sourceTree = "<group>"; };
+		F7FB7C2416D8CD1B006137B9 /* NearbyClubsPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyClubsPageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,8 @@
 				43AD684E12F5C67F0093AF73 /* PSPageView.m */,
 				C8FE0D7616A6B82100070851 /* MainMenuPageView.h */,
 				C8FE0D7716A6B82100070851 /* MainMenuPageView.m */,
+				F7FB7C2316D8CD1B006137B9 /* NearbyClubsPageView.h */,
+				F7FB7C2416D8CD1B006137B9 /* NearbyClubsPageView.m */,
 				F74B0BD916CF14B0007436F0 /* RecommendedClubsPageView.h */,
 				F74B0BDA16CF14B0007436F0 /* RecommendedClubsPageView.m */,
 				C8FE0D7A16A6BA5200070851 /* MenuItemListView.h */,
@@ -320,6 +325,7 @@
 				F704E18516CDFA8200BDA00D /* Reachability.m in Sources */,
 				F74B0BD816CF0E72007436F0 /* PSClub.m in Sources */,
 				F74B0BDB16CF14B0007436F0 /* RecommendedClubsPageView.m in Sources */,
+				F7FB7C2516D8CD1B006137B9 /* NearbyClubsPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

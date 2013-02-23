@@ -13,8 +13,10 @@
 @interface PSMenuItem : NSObject
 {
 	NSString* title;
+    NSString* detail;
 }
 @property (nonatomic,retain) NSString* title;
+@property (nonatomic,retain) NSString* detail;
 @end;
 
 @interface MenuItemListView : UITableView<UITableViewDelegate, UITableViewDataSource>
