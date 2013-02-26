@@ -126,13 +126,15 @@ class ClubsDeltaJsonHandler(BaseHandler):
                     if val:
                         d[p] = str(val) if p in ('longitude', 'latitude') else val
             assert d
-            d['photos'] = {
-                "photo1": club.photo1 or "",
-                "photo2": club.photo2 or "",
-                "photo3": club.photo3 or "",
-                "photo4": club.photo4 or "",
-                "photo5": club.photo5 or ""
-            }
+            d['photos'] = {}
+            if hasattr(club, 'photo1'):
+                d['photos'] = {
+                    "photo1": club.photo1 or "",
+                    "photo2": club.photo2 or "",
+                    "photo3": club.photo3 or "",
+                    "photo4": club.photo4 or "",
+                    "photo5": club.photo5 or ""
+                }
             for k in d['photos']:
                 if d['photos'][k]:
                     d['photos'][k] = get_serving_url(d['photos'][k])
