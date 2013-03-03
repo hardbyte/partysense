@@ -31,7 +31,78 @@ public class Club implements Parcelable{
 	private String latitude;
 	private String longitude;
 	
-	private ArrayList<String> photo_urls;
+	private Photos photos;
+	
+	public static class Photos implements Parcelable{
+		private String photo1;
+		private String photo2;
+		private String photo3;
+		private String photo4;
+		private String photo5;
+		
+		public static final Parcelable.Creator<Photos> CREATOR = new Parcelable.Creator<Photos>() {
+			public Photos createFromParcel(Parcel in) {
+				return new Photos(in);
+			}
+
+			public Photos[] newArray(int size) {
+				return new Photos[size];
+			}
+			
+		};
+		
+		public Photos(Parcel in){
+			this.photo1 = in.readString();
+			this.photo2 = in.readString();
+			this.photo3 = in.readString();
+			this.photo4 = in.readString();
+			this.photo5 = in.readString();
+		}
+		
+		
+		public int describeContents() {
+			return 0;
+		}
+		public void writeToParcel(Parcel out, int flags) {
+			out.writeString(photo1);
+			out.writeString(photo2);
+			out.writeString(photo3);
+			out.writeString(photo4);
+			out.writeString(photo5);
+		}
+		
+		public String getPhoto1() {
+			return photo1;
+		}
+		public void setPhoto1(String photo1) {
+			this.photo1 = photo1;
+		}
+		public String getPhoto2() {
+			return photo2;
+		}
+		public void setPhoto2(String photo2) {
+			this.photo2 = photo2;
+		}
+		public String getPhoto3() {
+			return photo3;
+		}
+		public void setPhoto3(String photo3) {
+			this.photo3 = photo3;
+		}
+		public String getPhoto4() {
+			return photo4;
+		}
+		public void setPhoto4(String photo4) {
+			this.photo4 = photo4;
+		}
+		public String getPhoto5() {
+			return photo5;
+		}
+		public void setPhoto5(String photo5) {
+			this.photo5 = photo5;
+		}
+		
+	}
 	
 	private ArrayList<String> tags;
 	
@@ -46,6 +117,18 @@ public class Club implements Parcelable{
 	private String hours_friday; 
 	private String hours_saturday;
 	private String hours_sunday;
+	
+	public static final Parcelable.Creator<Club> CREATOR = new Parcelable.Creator<Club>() {
+		public Club createFromParcel(Parcel in) {
+			return new Club(in);
+		}
+
+		public Club[] newArray(int size) {
+			return new Club[size];
+		}
+		
+	};
+	
 	
 	public int describeContents() {
 		return 0;
@@ -71,11 +154,11 @@ public class Club implements Parcelable{
 		this.latitude = in.readString();
 		this.longitude = in.readString();
 		
-		this.photo_urls = new ArrayList<String>();
-		in.readList(this.photo_urls,null);
-		this.tags = new ArrayList<String>();
-		in.readList(this.tags, null);
+		this.photos = in.readParcelable(Photos.class.getClassLoader());
 		
+		this.tags = new ArrayList<String>();
+        in.readList(this.tags, null);
+        
 		this.description = in.readString();
 		this.unstructured_data = in.readString();
 		this.hours_default = in.readString();
@@ -101,7 +184,7 @@ public class Club implements Parcelable{
 		out.writeString(latitude);
 		out.writeString(longitude);
 
-		out.writeList(photo_urls);
+		out.writeParcelable(photos, 0);
 		out.writeList(tags);
 		
 		out.writeString(description);
@@ -117,17 +200,6 @@ public class Club implements Parcelable{
 		
 		
 	}
-	
-	public static final Parcelable.Creator<Club> CREATOR = new Parcelable.Creator<Club>() {
-		public Club createFromParcel(Parcel in) {
-			return new Club(in);
-		}
-
-		public Club[] newArray(int size) {
-			return new Club[size];
-		}
-		
-	};
 	
 	public String getName() {
 		return name;
@@ -201,11 +273,11 @@ public class Club implements Parcelable{
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	public ArrayList<String> getPhoto_urls() {
-		return photo_urls;
+	public Photos getPhotos() {
+		return photos;
 	}
-	public void setPhoto_urls(ArrayList<String> photo_urls) {
-		this.photo_urls = photo_urls;
+	public void setPhotos(Photos photos) {
+		this.photos = photos;
 	}
 	public ArrayList<String> getTags() {
 		return tags;
@@ -306,3 +378,5 @@ public class Club implements Parcelable{
 	
 	
 }
+
+
