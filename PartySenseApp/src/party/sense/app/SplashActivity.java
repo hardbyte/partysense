@@ -39,7 +39,7 @@ public class SplashActivity extends Activity {
 			public void run(){
 				try{
 					int counter = 0;
-					while(counter<5)
+					while(counter<1)
 					{
 						Thread.sleep(1000);
 						counter += 1;

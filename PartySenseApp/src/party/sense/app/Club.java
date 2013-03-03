@@ -33,6 +33,11 @@ public class Club implements Parcelable{
 	
 	private Photos photos;
 	
+	/***
+	 * Class containing the definition of Club Photos in the data model	
+	 * @author Tanmay Bhola (tanmay9@gmail.com)
+	 * @see http://blog.logicexception.com/2012/09/a-parcelable-tutorial-for-android.html
+	 */
 	public static class Photos implements Parcelable{
 		private String photo1;
 		private String photo2;
