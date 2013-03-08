@@ -1,6 +1,7 @@
 package party.sense.app;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,11 +9,14 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -52,7 +56,7 @@ class GetClubsListTask extends AsyncTask<String, Void, ArrayList<Club>> {
     	ArrayList<Club> clubs = new ArrayList<Club>();
     	try {
     		Gson gson = new Gson();
-    		String fetchUrl = (String)urls[0];
+    		/*String fetchUrl = (String)urls[0];
             URLConnection urlConnection =  new URL(fetchUrl).openConnection();
             urlConnection.connect();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -64,8 +68,9 @@ class GetClubsListTask extends AsyncTask<String, Void, ArrayList<Club>> {
             	out.write(inputLine.getBytes());
             }
             out.close();
-            Log.e(TAG , "Finished Writing to json File");
-
+            Log.e(TAG , "Finished Writing to json File");*/
+    		
+    		
     		
     		URLConnection localConnection = new URL("file:///data/data/party.sense.app/files/clubDbTest.json").openConnection();
     		localConnection.connect();

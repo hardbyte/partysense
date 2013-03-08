@@ -20,13 +20,15 @@ public class MyLocationItem extends ItemizedOverlay<OverlayItem>{
 	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
         super.draw(canvas, mapView, false);
+        //populate();
+        
     }
 	
 	public MyLocationItem(Drawable defaultMarker,Context context) {
 		super(boundCenterBottom(defaultMarker));
 
 		  mContext = context;
-			populate();
+		populate();
 	}
 	
 	public void clear(){

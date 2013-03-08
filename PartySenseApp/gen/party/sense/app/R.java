@@ -434,7 +434,8 @@ containing a value of this type.
         public static final int partysense_banner=0x7f02002b;
         public static final int partysense_sml_sq=0x7f02002c;
         public static final int pin_0=0x7f02002d;
-        public static final int splash=0x7f02002e;
+        public static final int pin_1=0x7f02002e;
+        public static final int splash=0x7f02002f;
     }
     public static final class id {
         public static final int alignBounds=0x7f040005;
