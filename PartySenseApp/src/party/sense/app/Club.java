@@ -297,6 +297,23 @@ public class Club implements Parcelable{
 		return genreString;
 	}
 	
+	public double distanceTo(Location thatLoc){
+		//Algorithm from    http://www.movable-type.co.uk/scripts/latlong.html
+		Location thisLoc = getLocation();
+		double R = 6371.0; // km
+		
+		double dLat = Math.toRadians(thisLoc.getLatitude() - thatLoc.getLatitude());
+		double dLon = Math.toRadians(thisLoc.getLongitude() - thatLoc.getLongitude());
+		
+		double lat1 = Math.toRadians(thatLoc.getLatitude());
+		double lat2 = Math.toRadians(thisLoc.getLatitude());
+
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+		double d =  R * c;
+		return d;
+	}
+	
 	public Location getLocation(){
 		Location loc = new Location("a");
 		loc.setLatitude(Double.parseDouble(latitude));
