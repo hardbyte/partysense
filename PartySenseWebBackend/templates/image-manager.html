@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Image Manager</h1>
+<a href="/admin">Home</a>
+<p>Max 32 megabytes at a time. All previously uploaded images for club are deleted!</p>
+<form action="{{upload_url}}" enctype="multipart/form-data"  method="POST">
+    Club images are for:
+    <select name="club_name">
+        {% for club_name in club_names %}
+        <option name="{{club_name}}" value="{{club_name}}"/> {{club_name}}</option>
+        {% endfor %}
+    </select><br />
+
+    {% for i in range(1,6) %}
+    club.photo{{i}}: <input type="file" name="img{{i}}"/><br />
+    {% endfor %}
+    <input type="submit" value="Submit" name="submit" /><br />
+    <br>
+
+</form>
+<ul>
+    {% for project_name in project_names %}
+    <li>
+        <a href="/admin/priority/{{project_name}}">Set Image Priorities for {{project_name}}</a>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
+{% endblock %}

@@ -2,13 +2,13 @@ package party.sense.app;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +39,7 @@ public class SplashActivity extends Activity {
 			public void run(){
 				try{
 					int counter = 0;
-					while(counter<5)
+					while(counter<1)
 					{
 						Thread.sleep(1000);
 						counter += 1;
@@ -105,7 +105,10 @@ public class SplashActivity extends Activity {
 	 * @return List of Clubs  
 	 */
 	public ArrayList<Club> updateClubs() throws IOException, InterruptedException, ExecutionException {
-		String fetchUrl = "http://partysenseapp.appspot.com/api/clubs-dump";
+		Calendar calendar = Calendar.getInstance();
+		String apiRequestBaseUrl = "http://partysenseapp.appspot.com/api/clubs-delta";
+		String apiRequestParams = "/year/" + calendar.get(Calendar.YEAR) + "/month/" + calendar.get(Calendar.MONTH) + "/day/"+ calendar.get(Calendar.DAY_OF_MONTH);
+		String fetchUrl = apiRequestBaseUrl + apiRequestParams;
 		Log.e(TAG, "Going to Execute task");
 		ArrayList<Club> clubs = new GetClubsListTask(this.getApplicationContext(), "").execute(fetchUrl).get();
 		String clubInfo = ""; 
