@@ -121,7 +121,7 @@ public class SplashActivity extends Activity {
 			}
 			clubInfo += "}";
 		}
-		//Log.e(TAG, "Got Clubs List : " + clubInfo);
+		Log.e(TAG, "Got Clubs List : " + clubInfo);
 		return clubs;
 	}
 }

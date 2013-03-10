@@ -56,7 +56,7 @@ class GetClubsListTask extends AsyncTask<String, Void, ArrayList<Club>> {
     	ArrayList<Club> clubs = new ArrayList<Club>();
     	try {
     		Gson gson = new Gson();
-    		/*String fetchUrl = (String)urls[0];
+    		String fetchUrl = (String)urls[0];
             URLConnection urlConnection =  new URL(fetchUrl).openConnection();
             urlConnection.connect();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -68,7 +68,7 @@ class GetClubsListTask extends AsyncTask<String, Void, ArrayList<Club>> {
             	out.write(inputLine.getBytes());
             }
             out.close();
-            Log.e(TAG , "Finished Writing to json File");*/
+            Log.e(TAG , "Finished Writing to json File");
     		
     		
     		
