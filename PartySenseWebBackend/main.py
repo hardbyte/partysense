@@ -36,6 +36,11 @@ class BrowseDataModel(BaseHandler):
             models.append("<hr/><h3>" + kind + "</h3>" + "<br/>".join(get_lines(kind)))
         self.response.write('<br/>'.join(models))
 
+class GetUsersJsonHandler(BaseHandler):
+    def get(self):
+        from lib import PEOPLE
+        self.response.write(json.dumps(PEOPLE, sort_keys=True,indent=4))
+
 class ImportClubsHandler(BaseHandler):
     def get(self):
         template = {}
@@ -190,7 +195,8 @@ _routes = [
     RedirectRoute('/admin/image-upload/', ImageUploadHandler, name="image-upload", strict_slash=True),
     RedirectRoute('/admin/image-upload-success/<num>', ImageSuccessHandler, name="admin", strict_slash=True),
     RedirectRoute('/admin/image-manager', ImageManagerHandler, name='image-manager', strict_slash=True),
-    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True)
+    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True),
+    RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True)
 ]
 
 
