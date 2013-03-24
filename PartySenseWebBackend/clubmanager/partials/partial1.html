@@ -15,6 +15,13 @@
                 <option value="Male">male</option>
                 <option value="Female">female</option>
             </select>
+            City:<br>
+            <select ng-model="city">
+                <option value="any">any</option>
+                <option value="Auckland">Auckland</option>
+                <option value="Christchurch">Christchurch</option>
+                <option value="Wellington">Wellington</option>
+            </select>
             <br>
             Music:<br>
             <select ng-model="music">
@@ -42,10 +49,28 @@
             <button>Send Offer</button>
         </div>
         <div class="span10">
+            Note: people from one city fav club from another city.. TODO: fix data. Also shuffle data initially.
             <br><br>
-            <table class="people">
+            <table class="people" border="1">
+                <tr>
+                    <th>age</th>
+                    <th>gender</th>
+                    <th>work</th>
+                    <th>city</th>
+                    <th>friends</th>
+                    <th colspan="2">fav clubs</th>
+                    <th>music</th>
+                </tr>
                 <tr ng-repeat="person in data.people | filter:okay">
-                    <td>{{person.age}} - {{person.gender}} - {{person.tags}}</td>
+<!--"age": 19, "category": "young professional", "city": "Auckland", "fav_clubs": [ "Hitch", "Flight Lounge" ], "friends": 126, "gender": "Female", "offers_claimed": 3, "tags": [ "" ]-->
+                    <td>{{person.age}}</td>
+                    <td>{{person.gender}}</td>
+                    <td>{{person.category}}</td>
+                    <td>{{person.city}}</td>
+                    <td>{{person.friends}}</td>
+
+                    <td ng-repeat="club in person.fav_clubs">{{club}} </td>
+                    <td><span ng-repeat="tag in person.tags">{{tag.replace("music_", "")}} </span></td>
                 </tr>
             </table>
         </div>
