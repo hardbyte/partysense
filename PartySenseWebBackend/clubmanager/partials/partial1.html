@@ -1,0 +1,53 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <!--Sidebar content-->
+            Age:<br>
+            <select ng-model="age">
+                <option value="any">Any</option>
+                <option value="teen">Teen</option>
+                <option value="youngadult">Young Adult</option>
+                <option value="adult">Adult</option>
+            </select>
+            Gender:<br>
+            <select ng-model="gender">
+                <option value="both">both</option>
+                <option value="Male">male</option>
+                <option value="Female">female</option>
+            </select>
+            <br>
+            Music:<br>
+            <select ng-model="music">
+                <option value="any">any</option>
+                <option value="dubstep">dubstep</option>
+                <option value="dnb">dnb</option>
+                <option value="jazz">jazz</option>
+                <option value="disco">disco</option>
+                <option value="funk">funk</option>
+                <option value="pop">pop</option>
+                <option value="house">house</option>
+                <option value="oldschool">oldschool</option>
+                <option value="soul">soul</option>
+                <option value="hiphop">hiphop</option>
+                <option value="electro">electro</option>
+                <option value="lounge">lounge</option>
+                <option value="blues">blues</option>
+                <option value="dutch">dutch</option>
+                <option value="livepercussion">livepercussion</option>
+            </select>
+            <br><br>
+            People Selected: {{(data.people | filter:okay).length}}<br><br>
+            Cost: {{(data.people | filter:okay).length*0.02|currency}}
+            <br><br>
+            <button>Send Offer</button>
+        </div>
+        <div class="span10">
+            <br><br>
+            <table class="people">
+                <tr ng-repeat="person in data.people | filter:okay">
+                    <td>{{person.age}} - {{person.gender}} - {{person.tags}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

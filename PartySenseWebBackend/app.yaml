@@ -33,12 +33,12 @@ handlers:
   login: admin
 
 - url: /club-manager/
-  static_files: app/index.html
-  upload: app/index\.html
+  static_files: clubmanager/index.html
+  upload: clubmanager/index\.html
   login: admin
 
 - url: /club-manager
-  static_dir: app
+  static_dir: clubmanager
   login: admin
 
 - url: /.*
