@@ -16,10 +16,6 @@ handlers:
   script: main.app
   login: admin
 
-- url: /club-manager.*
-  script: main.app
-  login: admin
-
 - url: /stylesheets
   static_dir: stylesheets
 
@@ -31,6 +27,19 @@ handlers:
 
 - url: /scripts
   static_dir: scripts
+
+- url: /club-manager/people
+  script: main.app
+  login: admin
+
+- url: /club-manager/
+  static_files: app/index.html
+  upload: app/index\.html
+  login: admin
+
+- url: /club-manager
+  static_dir: app
+  login: admin
 
 - url: /.*
   script: main.app

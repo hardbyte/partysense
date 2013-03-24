@@ -14,6 +14,7 @@ import csv
 from datetime import datetime
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api.users import create_logout_url
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -21,6 +22,9 @@ class BaseHandler(webapp2.RequestHandler):
         return jinja2.get_jinja2(app=self.app)
 
     def render_template(self, filename, **kwargs):
+        logout_url = create_logout_url("/")
+        assert("logout_url" not in kwargs)
+        kwargs["logout_url"] = logout_url
         self.response.write(self.jinja2.render_template(filename, **kwargs))
 
 class ErrorHandler(BaseHandler):
