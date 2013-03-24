@@ -9,12 +9,14 @@
                 <option value="youngadult">Young Adult</option>
                 <option value="adult">Adult</option>
             </select>
+            <br>
             Gender:<br>
             <select ng-model="gender">
                 <option value="both">both</option>
                 <option value="Male">male</option>
                 <option value="Female">female</option>
             </select>
+            <br>
             City:<br>
             <select ng-model="city">
                 <option value="any">any</option>
@@ -46,12 +48,12 @@
             People Selected: {{(data.people | filter:okay).length}}<br><br>
             Cost: {{(data.people | filter:okay).length*0.02|currency}}
             <br><br>
-            <button>Send Offer</button>
+            <button class="btn btn-primary">Send Offer</button>
         </div>
         <div class="span10">
             Note: people from one city fav club from another city.. TODO: fix data. Also shuffle data initially.
             <br><br>
-            <table class="people" border="1">
+            <table class="table table-bordered">
                 <tr>
                     <th>age</th>
                     <th>gender</th>

@@ -14,9 +14,6 @@ function MyCtrl1($scope) {
         if ($scope.city !== "any" && $scope.city !== person.city) {
             return 0;
         }
-        if (person.age == 16) {
-            return 0;
-        }
         if ($scope.age != "any") {
             var sa = $scope.age;
             var pa = person.age;
