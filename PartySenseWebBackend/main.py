@@ -14,6 +14,7 @@ import csv
 from datetime import datetime
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api.users import create_logout_url
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -21,6 +22,9 @@ class BaseHandler(webapp2.RequestHandler):
         return jinja2.get_jinja2(app=self.app)
 
     def render_template(self, filename, **kwargs):
+        logout_url = create_logout_url("/")
+        assert("logout_url" not in kwargs)
+        kwargs["logout_url"] = logout_url
         self.response.write(self.jinja2.render_template(filename, **kwargs))
 
 class ErrorHandler(BaseHandler):
@@ -35,6 +39,11 @@ class BrowseDataModel(BaseHandler):
         for kind in kinds:
             models.append("<hr/><h3>" + kind + "</h3>" + "<br/>".join(get_lines(kind)))
         self.response.write('<br/>'.join(models))
+
+class GetUsersJsonHandler(BaseHandler):
+    def get(self):
+        from lib import PEOPLE
+        self.response.write(json.dumps(PEOPLE, sort_keys=True,indent=4))
 
 class ImportClubsHandler(BaseHandler):
     def get(self):
@@ -190,7 +199,8 @@ _routes = [
     RedirectRoute('/admin/image-upload/', ImageUploadHandler, name="image-upload", strict_slash=True),
     RedirectRoute('/admin/image-upload-success/<num>', ImageSuccessHandler, name="admin", strict_slash=True),
     RedirectRoute('/admin/image-manager', ImageManagerHandler, name='image-manager', strict_slash=True),
-    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True)
+    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True),
+    RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True)
 ]
 
 

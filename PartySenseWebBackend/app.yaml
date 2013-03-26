@@ -28,6 +28,19 @@ handlers:
 - url: /scripts
   static_dir: scripts
 
+- url: /club-manager/people
+  script: main.app
+  login: admin
+
+- url: /club-manager/
+  static_files: clubmanager/index.html
+  upload: clubmanager/index\.html
+  login: admin
+
+- url: /club-manager
+  static_dir: clubmanager
+  login: admin
+
 - url: /.*
   script: main.app
 

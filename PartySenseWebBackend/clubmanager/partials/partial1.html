@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <!--Sidebar content-->
+            Age:<br>
+            <select ng-model="age">
+                <option value="any">Any</option>
+                <option value="teen">Teen</option>
+                <option value="youngadult">Young Adult</option>
+                <option value="adult">Adult</option>
+            </select>
+            <br>
+            Gender:<br>
+            <select ng-model="gender">
+                <option value="both">both</option>
+                <option value="Male">male</option>
+                <option value="Female">female</option>
+            </select>
+            <br>
+            City:<br>
+            <select ng-model="city">
+                <option value="any">any</option>
+                <option value="Auckland">Auckland</option>
+                <option value="Christchurch">Christchurch</option>
+                <option value="Wellington">Wellington</option>
+            </select>
+            <br>
+            Music:<br>
+            <select ng-model="music">
+                <option value="any">any</option>
+                <option value="dubstep">dubstep</option>
+                <option value="dnb">dnb</option>
+                <option value="jazz">jazz</option>
+                <option value="disco">disco</option>
+                <option value="funk">funk</option>
+                <option value="pop">pop</option>
+                <option value="house">house</option>
+                <option value="oldschool">oldschool</option>
+                <option value="soul">soul</option>
+                <option value="hiphop">hiphop</option>
+                <option value="electro">electro</option>
+                <option value="lounge">lounge</option>
+                <option value="blues">blues</option>
+                <option value="dutch">dutch</option>
+                <option value="livepercussion">livepercussion</option>
+            </select>
+            <br><br>
+            People Selected: {{(data.people | filter:okay).length}}<br><br>
+            Cost: {{(data.people | filter:okay).length*0.02|currency}}
+            <br><br>
+            <button class="btn btn-primary">Send Offer</button>
+        </div>
+        <div class="span10">
+            Note: people from one city fav club from another city.. TODO: fix data. Also shuffle data initially.
+            <br><br>
+            <table class="table table-bordered">
+                <tr>
+                    <th>age</th>
+                    <th>gender</th>
+                    <th>work</th>
+                    <th>city</th>
+                    <th>friends</th>
+                    <th colspan="2">fav clubs</th>
+                    <th>music</th>
+                </tr>
+                <tr ng-repeat="person in data.people | filter:okay">
+<!--"age": 19, "category": "young professional", "city": "Auckland", "fav_clubs": [ "Hitch", "Flight Lounge" ], "friends": 126, "gender": "Female", "offers_claimed": 3, "tags": [ "" ]-->
+                    <td>{{person.age}}</td>
+                    <td>{{person.gender}}</td>
+                    <td>{{person.category}}</td>
+                    <td>{{person.city}}</td>
+                    <td>{{person.friends}}</td>
+
+                    <td ng-repeat="club in person.fav_clubs">{{club}} </td>
+                    <td><span ng-repeat="tag in person.tags">{{tag.replace("music_", "")}} </span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
