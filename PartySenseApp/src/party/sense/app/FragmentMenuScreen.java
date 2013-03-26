@@ -64,7 +64,11 @@ public class FragmentMenuScreen extends Fragment {
 	    				getActivity().finish();
 	                }
 	                else if (pos == 2){
-	                	startActivity(new Intent("android.intent.action.PartySenseMapActivity"));
+	                	Bundle b = new Bundle();
+	                	Intent i = new Intent("android.intent.action.PartySenseMapActivity");
+	                    b.putParcelableArrayList("party.sense.app.clubsList", clubsList);
+	        			i.putExtras(b);
+	        			startActivity(i);
 	                }
 	                else if (pos == 4){
 	                	Bundle b = new Bundle();
