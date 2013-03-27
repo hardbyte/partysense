@@ -192,6 +192,33 @@ class ImageSuccessHandler(BaseHandler):
     def get(self, num):
         self.response.write("<a href='/admin/'>home</a><br>{0} uploaded".format(num))
 
+class TestPushNotificationHandler(BaseHandler):
+    def get(self):
+        data = self.send_it("APA91bGdDMjyZfJUX6sftsbUCGV9ix8_ULHsGohhksNpGLDjLYT6M0_AAXQOojMtmuO-FLgOZ9X9UMN9RuOW38JsuGeQDeTJ7eoawLNoBFycfbOIXcE_gR8B5h_3LYP-jX2W_gekiwIomzexrUnRPHYn5kY4iunkVQ")
+        self.response.write(data)
+
+    def send_it(self, regId):
+        import urllib2
+
+        json_data = {"data1":"data1", "data2":"data2", "registration_ids": [regId] }
+
+
+        url = 'https://android.googleapis.com/gcm/send'
+        apiKey = "AIzaSyAK_gH3DOwX-wlJMhlkX2gocxLXYboc3LM"
+        myKey = "key=" + apiKey
+        data = json.dumps(json_data)
+        headers = {'Content-Type': 'application/json', 'Authorization': myKey}
+        req = urllib2.Request(url, data, headers)
+        f = urllib2.urlopen(req)
+        #response = json.loads(f.read())
+        #reply = {}
+        #if response ['failure'] == 0:
+        #    reply['error'] = '0'
+        #else:
+        #    response ['error'] = '1'
+        #return json.dumps(reply)
+        return f.read()
+
 _routes = [
     RedirectRoute('/error/<message>/', ErrorHandler, name="error", strict_slash=True),
     RedirectRoute('/admin/browse-data-model', BrowseDataModel, name="browse-data-model", strict_slash=True),
@@ -200,7 +227,8 @@ _routes = [
     RedirectRoute('/admin/image-upload-success/<num>', ImageSuccessHandler, name="admin", strict_slash=True),
     RedirectRoute('/admin/image-manager', ImageManagerHandler, name='image-manager', strict_slash=True),
     RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True),
-    RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True)
+    RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True),
+    RedirectRoute('/test-push', TestPushNotificationHandler, name='test-push', strict_slash=True)
 ]
 
 

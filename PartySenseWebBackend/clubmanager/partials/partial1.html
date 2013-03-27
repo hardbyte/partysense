@@ -1,3 +1,4 @@
+<h2>Select Demographics</h2>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2">
@@ -5,9 +6,9 @@
             Age:<br>
             <select ng-model="age">
                 <option value="any">Any</option>
-                <option value="teen">Teen</option>
-                <option value="youngadult">Young Adult</option>
-                <option value="adult">Adult</option>
+                <option value="teen">18-20</option>
+                <option value="youngadult">20-30</option>
+                <option value="adult">30+</option>
             </select>
             <br>
             Gender:<br>
@@ -44,25 +45,27 @@
                 <option value="dutch">dutch</option>
                 <option value="livepercussion">livepercussion</option>
             </select>
-            <br><br>
-            People Selected: {{(data.people | filter:okay).length}}<br><br>
-            Cost: {{(data.people | filter:okay).length*0.02|currency}}
-            <br><br>
-            <button class="btn btn-primary">Send Offer</button>
+            <div class="hero-unit" style="padding: 10px; width: 120px;">
+                    Count: <span class="label label-success">{{(data.people | filter:okay).length}}</span><br><br>
+                    Cost : <span class="label label-info">{{(data.people | filter:okay).length*0.02|currency}}</span><br><br>
+                    <button class="btn btn-primary">Send Offer</button>
+            </div>
         </div>
-        <div class="span10">
-            Note: people from one city fav club from another city.. TODO: fix data. Also shuffle data initially.
-            <br><br>
+        <div class="span9">
+            <!--Note: people from one city fav club from another city.. TODO: fix data. Also shuffle data initially.-->
+            <br>
             <table class="table table-bordered">
-                <tr>
-                    <th>age</th>
-                    <th>gender</th>
-                    <th>work</th>
-                    <th>city</th>
-                    <th>friends</th>
-                    <th colspan="2">fav clubs</th>
-                    <th>music</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>age</th>
+                        <th>gender</th>
+                        <th>work</th>
+                        <th>city</th>
+                        <th>friends</th>
+                        <th colspan="2">fav clubs</th>
+                        <th>music</th>
+                    </tr>
+                </thead>
                 <tr ng-repeat="person in data.people | filter:okay">
 <!--"age": 19, "category": "young professional", "city": "Auckland", "fav_clubs": [ "Hitch", "Flight Lounge" ], "friends": 126, "gender": "Female", "offers_claimed": 3, "tags": [ "" ]-->
                     <td>{{person.age}}</td>

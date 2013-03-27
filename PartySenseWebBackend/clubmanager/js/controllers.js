@@ -17,20 +17,20 @@ function MyCtrl1($scope) {
         if ($scope.age != "any") {
             var sa = $scope.age;
             var pa = person.age;
-            if (pa == "Unknown") {
+            if (pa == "Unknown" || person.age < 18) {
                 return 0;
             }
-            else if (pa < 23) {
+            else if (pa < 20) {
                 if (sa != "teen") {
                     return 0;
                 }
             }
-            else if (pa < 32) {
+            else if (pa < 31) {
                 if (sa != "youngadult") {
                     return 0;
                 }
             }
-            else if (pa >= 32) {
+            else if (pa >= 31) {
                 if (sa != "adult") {
                     return 0;
                 }
@@ -57,6 +57,10 @@ function MyCtrl1($scope) {
 //MyCtrl1.$inject = [$scope];
 
 
-function MyCtrl2() {
+function MyCtrl2($scope) {
+    $scope.offer = "241";
+    $scope.blurb = "";
+    $scope.desc = "";
+
 }
-MyCtrl2.$inject = [];
+//MyCtrl2.$inject = [];

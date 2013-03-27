@@ -17,7 +17,7 @@ def get_lines(kind):
 
     return chunk
 
-from random import seed, randint, choice
+from random import seed, randint, choice, shuffle
 seed(12435123)
 
 
@@ -81,4 +81,5 @@ PEOPLE.extend(get_people(25, 30, 40))
 PEOPLE.extend(get_people(30, 35, 27))
 PEOPLE.extend(get_people(35, 55, 30))
 PEOPLE.extend(get_people(55, 85, 8))
+shuffle(PEOPLE)
 PEOPLE = {"people": PEOPLE}
