@@ -1,6 +1,8 @@
 package party.sense.app;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.facebook.Session.NewPermissionsRequest;
@@ -12,6 +14,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -29,18 +32,20 @@ public class PartySenseMapActivity extends MapActivity {
 	LocationManager gpsManager,ntwManager;
 	GeoPoint geoP;
 	MapView mapV;
+	ArrayList<Club> clubsList;
 	private static final int TIME_INTV = 1000 * 5; //5 Seconds
 	Location bestLoc = null;
 	Location gpsLoc = null;
 	Location ntwLoc = null;
 	volatile boolean locationThreadFlag = false;
+	SharedPreferences settings;
 	
 	double[] lats = {-43.518245,-43.517871,-43.515444,-43.518929,-43.524157,-43.526398,-43.52926,-43.527518,-43.502869,-43.539776};
 	double[] lons = {172.583885,172.580023,172.569551,172.568521,172.57453,172.566633,172.571611,172.578478,172.571096,172.599421};
 	
 	ArrayList<Location> locList = new ArrayList<Location>();
-	
-	//pinDraw.setBounds(-w / 50, -h, w / 50, 0);
+	NearbyFilter nFilter;
+	LocationListener gpsListener, ntwListener;
     MyLocationItem myLocItemOverlay;
     MyLocationItem clubLocItemOverlay;
     
@@ -60,20 +65,20 @@ public class PartySenseMapActivity extends MapActivity {
 						if(bestLoc == null){
 							if(gpsLoc == null){
 								bestLoc = ntwLoc;
-								draw();
+								draw("NTW");
 							}
 							else if (ntwLoc == null){
 								bestLoc = gpsLoc;
-								draw();
+								draw("GPS");
 							}
 						}
 						else if(gpsLoc == null){
 							bestLoc = ntwLoc;
-							draw();
+							draw("NTW");
 						}
 						else if (ntwLoc == null){
 							bestLoc = gpsLoc;
-							draw();
+							draw("GPS");
 						}
 						else{
 							dGpsTime = gpsLoc.getTime() - bestLoc.getTime();
@@ -92,20 +97,20 @@ public class PartySenseMapActivity extends MapActivity {
 							}
 							if(isGpsValid && !isNtwValid){
 								bestLoc = gpsLoc;
-								draw();
+								draw("GPS");
 							}
 							else if(isNtwValid && !isGpsValid){
 								bestLoc = ntwLoc;
-								draw();
+								draw("NTW");
 							}
 							else if(isNtwValid && isGpsValid){
 								if(gpsLoc.getAccuracy() <= ntwLoc.getAccuracy()){
 									bestLoc = gpsLoc;
-									draw();
+									draw("GPS");
 								}
 								else{
 									bestLoc = ntwLoc;
-									draw();
+									draw("NTW");
 								}
 							}
 							else{
@@ -123,28 +128,63 @@ public class PartySenseMapActivity extends MapActivity {
 			}
 		}
 		
-		public void draw(){
+		public void draw(String hdg){
+			String msg = "";
+			//String hdg = "";
+			if(bestLoc == ntwLoc){
+				hdg += "-Network";
+			}
+			else if(bestLoc == gpsLoc){
+				hdg += "-GPS";
+			}
+			else{
+				
+			}
+			if(ntwLoc != null){
+				Date date = new Date(ntwLoc.getTime());
+				 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+				 String myDate= sdf.format(date);
+				msg += "NTW:\n\tAcc:" + ntwLoc.getAccuracy() + "\tTime:" + myDate + "\n";
+			}
+			if(gpsLoc != null){
+				Date date = new Date(gpsLoc.getTime());
+				 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+				 String myDate= sdf.format(date);
+				msg += "GPS:\n\tAcc:" + gpsLoc.getAccuracy() + "\tTime:" + myDate + "\n";
+			}
 			myLocItemOverlay.clear();
 			clubLocItemOverlay.clear();
 			GeoPoint point = new GeoPoint((int)(bestLoc.getLatitude() * 1E6), (int) (bestLoc.getLongitude() * 1E6));
-			OverlayItem overlayitem = new OverlayItem(point, "", "");
+			OverlayItem overlayitem = new OverlayItem(point, hdg, msg);
 			myLocItemOverlay.addOverlay(overlayitem);
-			double d;
-			for(Location l:locList){
-				d = distanceTo(l, bestLoc);
-				
-				if(d<1){
+			
+			//ArrayList<Club> list = nFilter.getFilteredClubList(bestLoc, 5);
+			
+			for(Club c:clubsList){
+				Location l = c.getLocation();
+				point = new GeoPoint((int)(l.getLatitude() * 1E6), (int) (l.getLongitude() * 1E6));
+				overlayitem = new OverlayItem(point, c.getName(), c.getGenreString());
+				clubLocItemOverlay.addOverlay(overlayitem);
+			}
+			
+			/*double d;
+			for(Club c:clubsList){
+				d = c.distanceTo(bestLoc);
+				Location l = c.getLocation();
+				if(d>1){
 					point = new GeoPoint((int)(l.getLatitude() * 1E6), (int) (l.getLongitude() * 1E6));
-					overlayitem = new OverlayItem(point, "Distance:", Double.toString(d));
+					overlayitem = new OverlayItem(point, c.getName(), c.getGenreString() + "\n" + d);
 					clubLocItemOverlay.addOverlay(overlayitem);
 				}
-			}
+			}*/
 			
 			mapV.postInvalidate();
 		}
 	};
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Bundle b = getIntent().getExtras();
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.layout_club_map);
 	    mapV = (MapView) findViewById(R.id.mapview);
@@ -162,16 +202,13 @@ public class PartySenseMapActivity extends MapActivity {
 	    myLocItemOverlay = new MyLocationItem(pinDraw, this);
 	    clubLocItemOverlay = new MyLocationItem(clubDraw, this);
 	    mapOverlays = mapV.getOverlays();
-	    Location loc;
-	    for(int b = 0; b<lats.length; b++){
-	    	loc = new Location("a");
-			loc.setLatitude(lats[b]);
-			loc.setLongitude(lons[b]);
-			locList.add(loc);
-	    }
+	    clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+	    //nFilter = new NearbyFilter(clubsList);
 	    
 	    
-	    LocationListener gpsListener = new LocationListener() {
+	    
+	    
+	    gpsListener = new LocationListener() {
 	    	
 			public void onStatusChanged(String provider, int status, Bundle extras) {
 				// TODO Auto-generated method stub
@@ -195,7 +232,7 @@ public class PartySenseMapActivity extends MapActivity {
 			}
 		};
 		
-		LocationListener ntwListener = new LocationListener() {
+		ntwListener = new LocationListener() {
 	    	
 			public void onStatusChanged(String provider, int status, Bundle extras) {
 				// TODO Auto-generated method stub
@@ -217,67 +254,33 @@ public class PartySenseMapActivity extends MapActivity {
 			}
 		};
 
-		gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_INTV, 2, gpsListener);
-		ntwManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_INTV, 2, ntwListener);
-		mapOverlays.add(myLocItemOverlay);
+		//gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_INTV, 2, gpsListener);
+		//ntwManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_INTV, 2, ntwListener);
+		
+		
 		mapOverlays.add(clubLocItemOverlay);
-
-		locationThread.start();
+		mapOverlays.add(myLocItemOverlay);
+		//locationThread.start();
 		
 		
 	}
 
 	
-	protected boolean isBetterLocation(Location location, Location currentBestLocation) {
-	    if (currentBestLocation == null) {
-	        // A new location is always better than no location
-	        return true;
-	    }
-
-	    // Check whether the new location fix is newer or older
-	    long timeDelta = location.getTime() - currentBestLocation.getTime();
-	    boolean isSignificantlyNewer = timeDelta > TIME_INTV;
-	    boolean isSignificantlyOlder = timeDelta < -TIME_INTV*2;
-	    boolean isNewer = timeDelta > 0;
-
-	    // If it's been more than two minutes since the current location, use the new location
-	    // because the user has likely moved
-	    if (isSignificantlyNewer) {
-	        return true;
-	    // If the new location is more than two minutes older, it must be worse
-	    } else if (isSignificantlyOlder) {
-	        return false;
-	    }
-
-	    // Check whether the new location fix is more or less accurate
-	    int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
-	    boolean isLessAccurate = accuracyDelta > 0;
-	    boolean isMoreAccurate = accuracyDelta < 0;
-	    boolean isSignificantlyLessAccurate = accuracyDelta > 200;
-
-	    // Check if the old and new location are from the same provider
-	    boolean isFromSameProvider = isSameProvider(location.getProvider(),
-	            currentBestLocation.getProvider());
-
-	    // Determine location quality using a combination of timeliness and accuracy
-	    if (isMoreAccurate) {
-	        return true;
-	    } else if (isNewer && !isLessAccurate) {
-	        return true;
-	    } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
-	        return true;
-	    }
-	    return false;
+	@Override
+	public void onPause() {
+	    super.onPause();  // Always call the superclass method first
+	    gpsManager.removeUpdates(gpsListener);
+	    ntwManager.removeUpdates(ntwListener);
+	    locationThread.stop();
 	}
 	
-	/** Checks whether two providers are the same */
-	private boolean isSameProvider(String provider1, String provider2) {
-	    if (provider1 == null) {
-	      return provider2 == null;
-	    }
-	    return provider1.equals(provider2);
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    gpsManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_INTV, 2, gpsListener);
+		ntwManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_INTV, 2, ntwListener);
+	    locationThread.start();
 	}
-	 
 	
 	@Override
 	protected boolean isRouteDisplayed() {

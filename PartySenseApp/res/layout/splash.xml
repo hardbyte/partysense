@@ -40,17 +40,17 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:orientation="vertical" >
 
                     <Button
                         android:id="@+id/btnLogin"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/transparent"
                         android:visibility="visible"
-                        android:textColor="@color/white"
-                        android:text="You are not logged in. Click here to log in." />
+                        android:background="@color/transparent"
+                        android:textColor="@color/splash_button_txt_colour"
+                        android:text="You are not logged in. &#10; Click here to log in." />
 
                     <TextView
                         android:id="@+id/txtLogin"
@@ -67,7 +67,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="7"
+                    android:layout_weight="6"
                     android:orientation="vertical" />
 
             </LinearLayout>
