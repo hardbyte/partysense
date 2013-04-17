@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+{% block content %}
+
+<article>
+    <h1>{{ event.title }}</h1>
+
+    <aside class="quickstats">
+        <dl>
+            <dt>Where:</dt>
+                <dd>{{ event.location }}</dd>
+            <dt>DJ:</dt>
+                <dd>{{ event.dj.nickname }}</dd>
+        </dl>
+
+    </aside>
+
+    <section id="search">
+        <input type="search" name="s" results="5" placeholder="Search">
+    </section>
+
+    <section id="songs">
+        {% for track in event.track_set.all %}
+            <figure>
+                {{ image.thumbnail|safe}}
+                <p>{{ image.comment }}</p>
+            </figure>
+        {% endfor %}
+    </section>
+
+
+
+</article>
+{% endblock %}
+
+{% block jslibs %}
+
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="{% static "js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js" %}"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="{% static "js/fancybox/source/jquery.fancybox.css" %}" type="text/css" media="screen" />
+    <script type="text/javascript" src="{% static "js/fancybox/source/jquery.fancybox.pack.js" %}"></script>
+
+    <!-- Launch fancyBox -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock %}

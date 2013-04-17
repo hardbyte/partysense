@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+
+{% block style %}
+#map-canvas {
+    margin: 0;
+    padding: 0;
+    height: 400px;
+}
+{% endblock %}
+
+{% block content %}
+
+    <!-- 3 step process -->
+    <section id="quick-start">
+
+        <article id="customer-quick-start">
+            <h2>How it works</h2>
+            <h1>Party Animals!</h1>
+            <ol>
+                <li>
+                    <h3>Blah</h3>
+                    <p>Blah blah blah</p>
+                </li>
+                <li>
+                    <h3>Get </h3>
+                    <p>Nearby parties register their blah blah blah</p>
+                </li>
+                <li>
+                    <h3>Help choose the music for your party!</h3>
+                    <p>Blah blah  help to guide your decision.</p>
+                </li>
+            </ol>
+
+        </article>
+
+        <article id="dj-quick-start">
+            <h2>How it works</h2>
+            <h1>DJ's</h1>
+
+            <ol>
+                <li>
+                    <h3>Register</h3>
+                    <p>Membership is free, we just need to know a few details.</p>
+                </li>
+                <li>
+                    <h3>Create Events</h3>
+                    <p>Share the link on your social networks and see the crowd sourced data pour in!</p>
+                </li>
+                <li>
+                    <h3>Host an awesome party</h3>
+                    <p>Leverage our detailed analytics to cater to your crowd!</p>
+                </li>
+            </ol>
+            {% if user.is_authenticated %}
+                <form action="/event/new">
+                    <button>Host your next event now!</button>
+                </form>
+            {% else %}
+                <form action="/register/">
+                    <button>Register now!</button>
+                </form>
+            {% endif %}
+
+        </article>
+    </section>
+
+    <ul>
+    {% for dj in djs %}
+        <li>{{dj.nickname}}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block jslibs %}
+
+{% endblock %}

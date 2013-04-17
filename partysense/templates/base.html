@@ -1,0 +1,60 @@
+{% load humanize %}
+{% load url from future %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <title>{% block title %}Party Sense{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static "style.css" %}" />
+    <style>
+        {% block style %}
+        {% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Header content -->
+        <img id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
+
+        {% block nav %}
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+
+        {% if user.is_authenticated %}
+            <p id="tagline">Stop wasting time at rubbish parties {{ user.first_name|capfirst }}!</p>
+        {% else %}
+            <p id="tagline">PartySense is the best way to make sure you have a great night out.</p>
+
+            <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <div id="facebook_button">Login with facebook</div>
+            </a>
+        {% endif %}
+
+
+        {% endblock %}
+    </header>
+
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <!-- Footer content -->
+        Brian Thorne. 2013
+    </footer>
+
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    {% block jslibs %}
+
+    {% endblock %}
+</body>
+</html>

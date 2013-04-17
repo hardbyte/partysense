@@ -1,0 +1,14 @@
+{# So I can use the same css I'll asbtract all the forms with this template #}
+{{ form.non_field_errors }}
+{% csrf_token %}
+{% for field in formset %}
+    <p class="form_field">
+        {{ field.label_tag }}: {{ field }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <strong class="errorMessage">{{ error|escape }}</strong>
+            {% endfor %}
+
+        {% endif %}
+    </p>
+{% endfor %}

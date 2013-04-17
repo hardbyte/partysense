@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+{% block content %}
+
+<article>
+    <h1>{{ dj.nickname }}</h1>
+
+    {% if user == dj.user %}
+        <p>looks like this is you!</p>
+
+        <form action="/event/new">
+            <button>Create a new event?</button>
+        </form>
+
+    {% endif %}
+
+
+</article>
+{% endblock %}
+
+{% block jslibs %}
+
+
+{% endblock %}
