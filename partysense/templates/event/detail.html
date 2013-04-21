@@ -18,36 +18,218 @@
     </aside>
 
     <section id="search">
-        <input type="search" name="s" results="5" placeholder="Search">
+        <input type="search" name="s" results="5" placeholder="Search for music to add" autofocus autocomplete="off">
+        <div id="resultContainer">
+            <h3>Tracks found:</h3>
+            <div class="result" id="track-results"></div>
+            <h3>Filter results by artist?</h3><p>TODO!</p>
+            <div class="result" id="artist-results"></div>
+        </div>
     </section>
 
-    <section id="songs">
-        {% for track in event.track_set.all %}
-            <figure>
-                {{ image.thumbnail|safe}}
-                <p>{{ image.comment }}</p>
-            </figure>
-        {% endfor %}
+    <hr>
+
+    <section id="event-tracks">
     </section>
-
-
 
 </article>
 {% endblock %}
 
 {% block jslibs %}
 
-    <!-- Add mousewheel plugin (this is optional) -->
-    <script type="text/javascript" src="{% static "js/fancybox/lib/jquery.mousewheel-3.0.6.pack.js" %}"></script>
+    <script>
+        var trackList = d3.select("#track-results")
+            .append("ul")
+            .attr("id", "track-result-list");
 
-    <!-- Add fancyBox -->
-    <link rel="stylesheet" href="{% static "js/fancybox/source/jquery.fancybox.css" %}" type="text/css" media="screen" />
-    <script type="text/javascript" src="{% static "js/fancybox/source/jquery.fancybox.pack.js" %}"></script>
+        function updateTrackView(){
+            $.getJSON("/api/" + {{ event.pk }}+"/get-track-list/",
+                function(data){
+                    console.log(data);
+                    var tracksForEvent = d3.select("#event-tracks").selectAll("div")
+                        .data(data.tracks);
+                    var div = tracksForEvent.enter().append("div");
+                    function vote(track_pk, up){
+                        $.post("/api/" + {{ event.pk }}+"/track/" + track_pk + "/",
+                            {"vote": up},
+                            function(data){
+                                console.log("Vote logged");
+                                // show the user's vote has been counted by updating the
+                                // vote button that was pressed
+                                if(up){
+                                    // remove the "voted" class from down
+                                    d3.select("#vote-down-" + track_pk).attr("class", "");
+                                    d3.select("#vote-up-" + track_pk).attr("class", "voted");
+                                } else {
+                                    d3.select("#vote-down-" + track_pk).attr("class", "voted");
+                                    d3.select("#vote-up-" + track_pk).attr("class", "");
+                                }
+                            });
+                    }
 
-    <!-- Launch fancyBox -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".fancybox").fancybox();
-        });
-    </script>
+                    div.append("button")
+                        .attr("id", function(d){return "vote-up-"+ d.pk;})
+                        .attr("class", function(d){
+                            if(d.usersVote !== null && d.usersVote === true){
+                                return "voted";
+                            }
+                        })
+                        .text("↑").on("click", function(d){
+                            vote(d.pk, true);
+                        });
+                    div.append("button")
+                        .attr("id", function(d){return "vote-down-"+ d.pk;})
+                        .attr("class", function(d){
+                            if(d.usersVote !== null && d.usersVote === false){
+                                return "voted";
+                            }
+                        })
+                        .text("↓").on("click", function(d){
+                            vote(d.pk, false);
+                        });
+                    tracksForEvent.exit().remove();
+
+                    var a = div.append("a")
+                        .attr("class", "track")
+                        .attr("href", "#");
+
+                    a.append("span")
+                        .attr("class", "track-name")
+                        .text(function(d){return d.name;});
+                    a.append("span")
+                        .attr("class", "track-artist")
+                        .text(function(d){return d.artist;});
+
+                });
+
+        }
+
+        /**
+        Search script
+        Will query spotify for artists and tracks with given query:
+        http://ws.spotify.com/search/1/artist.json?q=foo
+
+        I want to search on keypress after the first 3 letters have been entered, OR
+        when the user presses enter (fires search).
+        **/
+        function processSearchBoxModification(evt) {
+            // Make sure the search results div is visible
+            d3.select("#track-results").style("display", "block");
+            // Get the search box contents
+            var val = $("#search input").val();
+            if (val.length < 5 && evt.which !== 13) {
+                // Only search if the key was enter for small inputs
+                $("#resultContainer").css("display", "none");
+                return;
+            }
+
+            // Search!
+            // Request artists and tracks then after both have been updated
+            // update the view.
+            var received = 0,
+                artistData = [],
+                trackData = [];
+            function fetchComplete(){
+                if(received < 2){
+                    // Still waiting for both the responses
+                    return;
+                }
+                console.log("Time to show some results!");
+                $("#resultContainer").css("display", "block");
+            }
+
+            // Update the search response view
+            $.getJSON("http://ws.spotify.com/search/1/artist.json?q=" + val,
+                function(data){
+                    console.log("Received artist response from spotify!");
+                    artistData = data.artists.slice(0, 3);
+
+                    var artist_buttons = d3.select("#artist-results").selectAll("button")
+                        .data(artistData);
+                    artist_buttons.enter().append("button")
+                        .attr("href", function(d){return d.href;})
+                        .text(function(d){
+                                return d.name;
+                            });
+                    artist_buttons.exit().remove();
+                    received++;
+                    fetchComplete();
+                }
+            );
+            $.getJSON("http://ws.spotify.com/search/1/track.json?q=" + val,
+                function(data){
+                    console.log("Received track response from spotify!");
+                    trackData = data.tracks.slice(0, 10);
+
+                    var tracks = d3.select("#track-result-list").selectAll("li")
+                        .data(trackData);
+                    var track_item = tracks.enter().append("li")
+                        .on("mouseover", function(d, i){
+                            d3.select("#spotify-frame-" + i).style("display", "block");
+                        })
+                        .on("mouseout", function(d, i){
+                            d3.select("#spotify-frame-" + i).style("display", "none");
+                        });
+                    var a = track_item.append("a")
+                        .attr("class", "track")
+                        .attr("href", "#")
+                        .on("click", function(d){
+                            console.log("adding Track '" + d.name + "' to event!");
+                            var postData = {
+                                    "name": d.name,
+                                    "artist": d.artists[0].name,
+                                    "length": d.length,
+                                    "spotifyTrackID": d.href,
+                                    "spotifyArtistID": d.artists[0].href,
+                                    "external-ids": JSON.stringify(d["external-ids"])
+                                };
+                            $.post("/api/" + {{ event.pk }}+"/",
+                                postData,
+                                function(data){
+                                    console.log(data.result);
+                                    // Refresh the event songs view
+                                    updateTrackView();
+                                    // and hide the search results
+                                    d3.select("#track-results").style("display", "none");
+
+                          }, "json");
+                        });
+                    // TODO ask musicbrainz or lastfm for the cover art... json has the ids
+                    //a.append("img")
+                    //        .attr("src", 'todo');
+                    a.append("span")
+                        .attr("class", "track-name")
+                        .text(function(d){return d.name;});
+                    a.append("span")
+                        .attr("class", "track-artist")
+                        // TODO change when we care about showing multiple artists correctly
+                        .text(function(d){return d.artists[0].name;});
+                    track_item.append("div")
+                        // This will initially be hidden to allow the iframe to load from spotify
+                        .attr("id", function(d, i){return "spotify-frame-" + i;})
+                        .style("display", "none")
+                        .html(function(d){
+                            /*
+                            * Spotify options &view=coverart  &theme=white
+                            * Min height is 80px
+                            * https://developer.spotify.com/technologies/spotify-play-button/documentation/
+                            */
+                            return '<iframe src="https://embed.spotify.com/?uri=' + d.href + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
+                            });
+
+                    tracks.exit().remove();
+                    received++;
+                    fetchComplete();
+                }
+            );
+       }
+
+       $("#search input").on("keyup", processSearchBoxModification);
+       $("#search input").on("search", processSearchBoxModification);
+
+        updateTrackView();
+
+   </script>
+
+
 {% endblock %}

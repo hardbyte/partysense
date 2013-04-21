@@ -7,7 +7,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 
 from partysense.dj.models import DJ
-
+from partysense.music.models import Track, Artist
 
 logger = logging.getLogger(__name__)
 logger.debug("Parsing models.py")
@@ -39,7 +39,8 @@ class Location(models.Model):
     address = models.CharField(max_length=92 )
 
     # coordinate as returned by google maps
-    coordinate = models.CharField(max_length=64, editable=False)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     def __unicode__(self):
         return unicode(self.name)
@@ -51,17 +52,19 @@ class Event(TimeStampedModel):
     """
     title = models.CharField("Event name", max_length=70)
     location = models.ForeignKey(Location, help_text="Where is the event?")
-    dj = models.ForeignKey(DJ, editable=False)
+    dj = models.ForeignKey(DJ)
+    users = models.ManyToManyField(User, blank=True)
+    tracks = models.ManyToManyField(Track, blank=True)
 
     # date & time info
     # note we also have a "created" and "modified" attribute
     past_event = models.BooleanField(default=False, editable=False)
-    happening_now = models.BooleanField(default=False)
+    happening_now = models.BooleanField(help_text="Is this event happening right now?", default=False)
 
     start_time = models.DateTimeField()
 
     fb_url = models.URLField(editable=False)
-    slug = models.SlugField()
+    slug = models.SlugField(editable=False)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -72,6 +75,13 @@ class Event(TimeStampedModel):
         return unicode(self.title)
 
 
-    #def tracks(self):
-    #    return Track.objects.filter(events_set=self).count()
+    def tracks(self):
+        return Track.objects.filter()# TODO events_set=self)
 
+
+
+class Vote(models.Model):
+    event = models.ForeignKey(Event, db_index=True)
+    user = models.ForeignKey(User, db_index=True)
+    track = models.ForeignKey(Track, db_index=True)
+    is_positive = models.BooleanField()

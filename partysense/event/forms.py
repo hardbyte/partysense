@@ -1,7 +1,9 @@
 from django.db import models
-from django.forms import ModelForm, Textarea, IntegerField, MultipleChoiceField
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select
+from django.forms import ModelForm,  CharField, DateField
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select, DateTimeInput, HiddenInput
+
 from models import *
+from widgets import GoogleMapsWidget
 
 
 class EventForm(ModelForm):
@@ -10,8 +12,21 @@ class EventForm(ModelForm):
 
         # Explicitly specifying the fields we want
         fields = ('title',
-                  'location',
-                  'start_time',
-                  'happening_now'
+                  'happening_now',
+                  'start_time'
                   )
+
+    # TODO default to next Saturday evening?
+    start_time = DateField(widget=DateTimeInput(
+        attrs={'class':'timepicker', 'type': 'datetime-local'})
+    )
+
+    address = CharField(label="Venue")
+    latitude = CharField(widget = GoogleMapsWidget(
+        attrs={'width': 800, 'height': 400, 'longitude_id':'id_longitude'}),
+        error_messages={'required': 'Please select point from the map.'},
+        help_text="location")
+
+    longitude = CharField(widget = HiddenInput())
+
 

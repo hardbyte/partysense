@@ -1,32 +1,36 @@
 import logging
+import json
+
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
-from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
-from django.shortcuts import  get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic import ListView, DetailView, UpdateView
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.conf import settings
 
 from braces.views import LoginRequiredMixin
 
-from partysense.event.models import Event, Location
+from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
+from partysense.music.models import Artist, Track
 
 from partysense.event.forms import EventForm
 
 logger = logging.getLogger(__name__)
 
-
-class EventDetail(LoginRequiredMixin, DetailView):
+class EventView(LoginRequiredMixin):
     model = Event
+
+
+class EventDetail(EventView, DetailView):
+
     template_name = 'event/detail.html'
-    context_object_name = 'event'
-    pk_url_kwarg = 'event_id'
 
     def get_object(self):
         # TODO add view count here ?
-        return get_object_or_404(Event, pk=self.kwargs['event_id'])
+        return get_object_or_404(Event, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
@@ -34,20 +38,97 @@ class EventDetail(LoginRequiredMixin, DetailView):
         return context
 
 
+@login_required
+def modify_event(request, pk):
+    """
+    Given an event pk and a request:
+        POST: New track added to event
+    TODO the rest:
+        PUT/PATCH: Change the rank of an existing track
+        DELETE: Remove a track (TODO DJ only?)
+    """
+    event = get_object_or_404(Event, pk=pk)
+
+    # First see if the user has been "added" to this event
+    if not Event.objects.filter(users=request.user).exists():
+        logging.info("Adding {} to event {}".format(request.user, event.title))
+        event.users.add(request.user)
+
+    # Artist
+    artist, created = Artist.objects.get_or_create(
+        name=request.POST['artist'],
+        spotify_url=request.POST['spotifyArtistID']
+        )
+
+    # Track
+    track, created = Track.objects.get_or_create(
+        name=request.POST['name'],
+        artist=artist,
+        spotify_url=request.POST['spotifyTrackID'],
+        external_ids=json.loads(request.POST['external-ids']),
+        )
+
+    if not event.tracks().filter(pk=track.pk).exists():
+        logger.info("Adding new track to event: {}".format(track.name))
+        track.events.add(event)
+
+    # Since this user added it they probably want to vote it up
+    return vote_on_track(request, event.pk, track.pk, internal=True)
+
+
+def get_track_list(request, pk):
+    track_data = []
+    event = get_object_or_404(Event, pk=pk)
+    for t in event.tracks():
+        votes = event.vote_set.filter(track=t)
+        if votes.filter(user=request.user).exists():
+            usersVote = votes.get(user=request.user).is_positive
+        else:
+            usersVote = None
+        track_data.append({
+            'pk': t.pk,
+            "name": t.name,
+            "artist": t.artist.name,
+            "spotifyTrackID": t.spotify_url,
+            "spotifyArtistID": t.artist.spotify_url,
+            "external-ids": t.external_ids,
+            "upVotes": votes.filter(is_positive=True).count(),
+            "downVotes": votes.filter(is_positive=False).count(),
+            "usersVote": usersVote
+        })
+    response_data = {"tracks": track_data}
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+@login_required
+def vote_on_track(request, event_pk, track_pk, internal=False):
+    event = get_object_or_404(Event, pk=event_pk)
+    # Check that this user hasn't voted on this event and track
+    vote, created = Vote.objects.get_or_create(
+        event=event,
+        user=request.user,
+        track_id=track_pk,
+        )
+    vote.is_positive = internal or request.POST['vote'] == u"true"
+    vote.save()
+    return HttpResponse(json.dumps({'created': created}), content_type="application/json")
+
+
 # Form Docs https://docs.djangoproject.com/en/dev/topics/forms
-# TODO replace cbv form:
+# TODO replace with cbv CreateView:
 #  https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
-#@login_required
+@login_required
 def create(request):
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
-        form = EventForm(request.POST)
-        if form.is_valid():
+        event_form = EventForm(request.POST)
+
+        if event_form.is_valid():
             # All validation rules pass
             # Process the data in form.cleaned_data and create an
             # instance out of it:
-            event = form.save(commit=False)
+            event = event_form.save(commit=False)
             logger.info("Creating new event to start at: {}".format(event.start_time))
             # Add the automatic fields based on user
             event.dj = DJ.object.get(user=request.user.id)
@@ -69,16 +150,16 @@ def create(request):
         # Partially fill in what we know (if anything)
         prior_information = {}
 
-
         # Otherwise we are left with a completely unbound form
-        formset = EventForm(initial=prior_information)
+        event_form = EventForm(initial=prior_information)
 
-        return render(request,
-                      'event/new.html',
-                      {
-                          "formset": formset,
 
-                      })
+    return render(request,
+                  'event/new.html',
+                  {
+                      "formset": event_form,
+
+                  })
 
 
 def profile(request):

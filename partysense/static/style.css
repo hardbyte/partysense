@@ -221,3 +221,51 @@ footer
     text-decoration: none;
     color: white;
 }
+
+#search {
+    min-height: 50px;
+}
+#search input{
+    width: 600px;
+    font-size: 40px;
+}
+
+#resultContainer {
+    display: none;
+}
+
+div.track {
+    float:left;
+}
+
+.track-name:after
+{
+    content:" - ";
+}
+
+#event-tracks button{
+
+    font-size: 1.6em;
+    text-align: center;
+
+    min-width: 50px;
+
+    margin-left: 2px;
+    margin-right: 2px;
+
+	padding: 5px 10px 5px 10px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+
+}
+
+
+#event-tracks button:hover,button.voted {
+    background-color: #444444;
+    color:#9bcb48;
+    text-decoration:none;
+    -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
+}

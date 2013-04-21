@@ -40,6 +40,31 @@
         {% endblock %}
     </header>
 
+    <!-- Add jQuery library -->
+    <script src="{% static "js/jquery-1.9.0.min.js" %}"></script>
+    <script src="{% static "js/jquery.cookie.js" %}"></script>
+    <script>
+        var csrftoken = $.cookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            crossDomain: true, // obviates need for sameOrigin test
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type)) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+    </script>
+
+    <script src="{% static "js/d3.v3.min.js" %}"></script>
+    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+
 
     <div id="content">
         {% block content %}{% endblock %}
@@ -49,9 +74,6 @@
         <!-- Footer content -->
         Brian Thorne. 2013
     </footer>
-
-    <!-- Add jQuery library -->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
     {% block jslibs %}
 

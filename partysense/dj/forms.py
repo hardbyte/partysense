@@ -11,9 +11,8 @@ class DJForm(ModelForm):
 
         # Explicitly specifying the fields we want
         fields = ('email',
-                  #'mobile_phone',
-                  #'receive_sms',
                   'nickname',
+                  'city_name'
                 )
 
         widgets = {

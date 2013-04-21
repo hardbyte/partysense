@@ -30,7 +30,12 @@
             geocoder = new google.maps.Geocoder();
             var mapDiv = document.getElementById('map-canvas');
 
-            /* Center the map on user's address. */
+            /* Center the map on user's city?.
+            * brian.thorne1/?fields=location
+            *
+            *
+            * https://graph.facebook.com/brian.thorne1/?fields=location&method=GET&format=json&access_token=BAACEdEose0cBACGS4JxaZCbnlpQOA8wJdrL7KdeD0WU8G76PBWUQQ8CjwHtUsVryVSOGM2hBSxoTue06W9XKM5vYz90ZCXxJmHcEddY2NYM9jAc3iYawQBdXyrS7HhdAvCM5n4ZAFP5wX5FwXoDapCAYqZBpNZAJPvp1X3QKfZAqZAVelLGsztejdQBkKZCJZCPIoplYgfcAAEwZDZD
+            * */
             geocoder.geocode( { 'address': "Bush Inn, Riccarton"}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     console.log(results[0].geometry);

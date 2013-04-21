@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required, login_required
 
-from partysense.event.views import EventDetail
+from partysense.event.views import EventDetail, modify_event, get_track_list, vote_on_track
 from partysense.dj.views import EventList
 
 admin.autodiscover()
@@ -26,10 +26,27 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^profile/$', 'profile'),
     url(r'^profile/logout$', 'logout'),
 
-    # the actual main page
-    url(r'^event/(?P<event_id>\d+)/', EventDetail.as_view(), name="event"),
-
     url(r'^event/new$', 'create'),
+
+    # the actual main page
+    url(r'^event/(?P<pk>\d+)/',
+        EventDetail.as_view(),
+        name="event"),
+
+    url(r'^api/(?P<pk>\d+)/$',
+        modify_event,
+        #UpdateEvent.as_view(),
+        name="modify-event"),
+
+    url(r'^api/(?P<pk>\d+)/get-track-list/$',
+        get_track_list,
+        name="get-track-list"),
+
+    url(r'^api/(?P<event_pk>\d+)/track/(?P<track_pk>\d+)/$',
+        vote_on_track,
+        name="vote-on-track"),
+
+
 )
 
 urlpatterns += patterns('partysense.dj.views',

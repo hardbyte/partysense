@@ -20,5 +20,12 @@ class DJ(models.Model):
     # TODO: maybe should be mandatory?
     #business = models.ForeignKey("Club", blank=True)
 
-    location = models.CharField(max_length=70, help_text="What city are you based in?")
+    # DJ will probably have a profile on facebook?
+    #url =
 
+    #picture =
+
+    city_name = models.CharField(max_length=70, help_text="What city are you based in?")
+
+    def __str__(self):
+        return self.nickname
