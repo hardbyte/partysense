@@ -30,7 +30,8 @@ class EventDetail(EventView, DetailView):
     template_name = 'event/detail.html'
 
     def get_object(self):
-        # TODO add view count here ?
+        # add this event to this user now
+
         return get_object_or_404(Event, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
@@ -104,12 +105,17 @@ def get_track_list(request, pk):
 @login_required
 def vote_on_track(request, event_pk, track_pk, internal=False):
     event = get_object_or_404(Event, pk=event_pk)
+
+    if not event.users.filter(pk=request.user.pk).exists():
+        event.users.add(request.user)
+
     # Check that this user hasn't voted on this event and track
+    logger.info("User: {} is voting on track:{}".format(request.user.first_name, track_pk))
     vote, created = Vote.objects.get_or_create(
         event=event,
         user=request.user,
         track_id=track_pk,
-        )
+    )
     vote.is_positive = internal or request.POST['vote'] == u"true"
     vote.save()
     return HttpResponse(json.dumps({'created': created}), content_type="application/json")
@@ -180,7 +186,7 @@ def profile(request):
     img = None
     if request.user.is_authenticated():
         res = fb_request(request, "picture.width(200).type(square)")
-        if 'error' not in res:
+        if 'error' not in res and 'picture' in res:
             img = res['picture']['data']
     return render(request, 'profiles/detail.html', {
         "img": img

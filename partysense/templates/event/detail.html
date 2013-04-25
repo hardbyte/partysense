@@ -22,6 +22,12 @@
     <section id="event-tracks">
     </section>
 
+    <hr>
+    <h2>Play the current set list with Spotify!</h2>
+    <section id="playlist">
+    </section>
+
+
     <aside class="event_details">
         <dl>
             <dt>Where:</dt>
@@ -98,6 +104,32 @@
                     a.append("span")
                         .attr("class", "track-artist")
                         .text(function(d){return d.artist;});
+                    a.append("div")
+                        .attr("class", "spotifyPreview")
+                        .html(function(d){
+                            /*
+                            * Spotify options &view=coverart  &theme=white
+                            * Min height is 80px
+                            * https://developer.spotify.com/technologies/spotify-play-button/documentation/
+                            */
+                            return '<iframe src="http://embed.spotify.com/?uri=' + d.spotifyTrackID + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
+                            });
+
+                    // TODO add a whole playlist
+                    var playlist = d3.select("#playlist");
+                    playlist.append("div")
+                        .html(function(){
+                            var songs = "";
+                            console.log(data.tracks);
+                            for(i=0;i<data.tracks.length;i++){
+                                console.log(songs);
+                                songs += data.tracks[i].spotifyTrackID.slice(14) + ',';
+                            }
+                            // TODO encode the events name in the spotify playlist
+
+                           return '<iframe src="http://embed.spotify.com/?uri=spotify:trackset:Party%20Sense%20Playlist:' + songs + '" frameborder="0" allowtransparency="true" width="640" height="400"></iframe>';
+                        });
+
 
                 });
 
