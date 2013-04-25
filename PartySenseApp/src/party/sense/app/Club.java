@@ -6,6 +6,7 @@ package party.sense.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -30,7 +31,83 @@ public class Club implements Parcelable{
 	private String latitude;
 	private String longitude;
 	
-	private ArrayList<String> photo_urls;
+	private Photos photos;
+	
+	/***
+	 * Class containing the definition of Club Photos in the data model	
+	 * @author Tanmay Bhola (tanmay9@gmail.com)
+	 * @see http://blog.logicexception.com/2012/09/a-parcelable-tutorial-for-android.html
+	 */
+	public static class Photos implements Parcelable{
+		private String photo1;
+		private String photo2;
+		private String photo3;
+		private String photo4;
+		private String photo5;
+		
+		public static final Parcelable.Creator<Photos> CREATOR = new Parcelable.Creator<Photos>() {
+			public Photos createFromParcel(Parcel in) {
+				return new Photos(in);
+			}
+
+			public Photos[] newArray(int size) {
+				return new Photos[size];
+			}
+			
+		};
+		
+		public Photos(Parcel in){
+			this.photo1 = in.readString();
+			this.photo2 = in.readString();
+			this.photo3 = in.readString();
+			this.photo4 = in.readString();
+			this.photo5 = in.readString();
+		}
+		
+		
+		public int describeContents() {
+			return 0;
+		}
+		public void writeToParcel(Parcel out, int flags) {
+			out.writeString(photo1);
+			out.writeString(photo2);
+			out.writeString(photo3);
+			out.writeString(photo4);
+			out.writeString(photo5);
+		}
+		
+		public String getPhoto1() {
+			return photo1;
+		}
+		public void setPhoto1(String photo1) {
+			this.photo1 = photo1;
+		}
+		public String getPhoto2() {
+			return photo2;
+		}
+		public void setPhoto2(String photo2) {
+			this.photo2 = photo2;
+		}
+		public String getPhoto3() {
+			return photo3;
+		}
+		public void setPhoto3(String photo3) {
+			this.photo3 = photo3;
+		}
+		public String getPhoto4() {
+			return photo4;
+		}
+		public void setPhoto4(String photo4) {
+			this.photo4 = photo4;
+		}
+		public String getPhoto5() {
+			return photo5;
+		}
+		public void setPhoto5(String photo5) {
+			this.photo5 = photo5;
+		}
+		
+	}
 	
 	private ArrayList<String> tags;
 	
@@ -45,6 +122,18 @@ public class Club implements Parcelable{
 	private String hours_friday; 
 	private String hours_saturday;
 	private String hours_sunday;
+	
+	public static final Parcelable.Creator<Club> CREATOR = new Parcelable.Creator<Club>() {
+		public Club createFromParcel(Parcel in) {
+			return new Club(in);
+		}
+
+		public Club[] newArray(int size) {
+			return new Club[size];
+		}
+		
+	};
+	
 	
 	public int describeContents() {
 		return 0;
@@ -70,11 +159,11 @@ public class Club implements Parcelable{
 		this.latitude = in.readString();
 		this.longitude = in.readString();
 		
-		this.photo_urls = new ArrayList<String>();
-		in.readList(this.photo_urls,null);
-		this.tags = new ArrayList<String>();
-		in.readList(this.tags, null);
+		this.photos = in.readParcelable(Photos.class.getClassLoader());
 		
+		this.tags = new ArrayList<String>();
+        in.readList(this.tags, null);
+        
 		this.description = in.readString();
 		this.unstructured_data = in.readString();
 		this.hours_default = in.readString();
@@ -100,7 +189,7 @@ public class Club implements Parcelable{
 		out.writeString(latitude);
 		out.writeString(longitude);
 
-		out.writeList(photo_urls);
+		out.writeParcelable(photos, 0);
 		out.writeList(tags);
 		
 		out.writeString(description);
@@ -116,17 +205,6 @@ public class Club implements Parcelable{
 		
 		
 	}
-	
-	public static final Parcelable.Creator<Club> CREATOR = new Parcelable.Creator<Club>() {
-		public Club createFromParcel(Parcel in) {
-			return new Club(in);
-		}
-
-		public Club[] newArray(int size) {
-			return new Club[size];
-		}
-		
-	};
 	
 	public String getName() {
 		return name;
@@ -200,11 +278,11 @@ public class Club implements Parcelable{
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	public ArrayList<String> getPhoto_urls() {
-		return photo_urls;
+	public Photos getPhotos() {
+		return photos;
 	}
-	public void setPhoto_urls(ArrayList<String> photo_urls) {
-		this.photo_urls = photo_urls;
+	public void setPhotos(Photos photos) {
+		this.photos = photos;
 	}
 	public ArrayList<String> getTags() {
 		return tags;
@@ -295,4 +373,53 @@ public class Club implements Parcelable{
 		}
 		return genreString;
 	}
+	
+	public double distanceTo(Location thatLoc){
+		//Algorithm from    http://www.movable-type.co.uk/scripts/latlong.html
+		Location thisLoc = getLocation();
+		double R = 6371.0; // km
+		
+		double dLat = Math.toRadians(thisLoc.getLatitude() - thatLoc.getLatitude());
+		double dLon = Math.toRadians(thisLoc.getLongitude() - thatLoc.getLongitude());
+		
+		double lat1 = Math.toRadians(thatLoc.getLatitude());
+		double lat2 = Math.toRadians(thisLoc.getLatitude());
+
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+		double d =  R * c;
+		return d;
+		
+		/*Location thisLoc = getLocation();
+		return thisLoc.distanceTo(thatLoc);*/
+		
+	}
+	
+	public double distanceTo(Club that){
+		Location thisLoc = getLocation();
+		Location thatLoc = that.getLocation();
+		double R = 6371.0; // km
+		
+		double dLat = Math.toRadians(thisLoc.getLatitude() - thatLoc.getLatitude());
+		double dLon = Math.toRadians(thisLoc.getLongitude() - thatLoc.getLongitude());
+		
+		double lat1 = Math.toRadians(thatLoc.getLatitude());
+		double lat2 = Math.toRadians(thisLoc.getLatitude());
+
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2); 
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+		double d =  R * c;
+		return d;
+	}
+	
+	public Location getLocation(){
+		Location loc = new Location("a");
+		loc.setLatitude(Double.parseDouble(latitude));
+		loc.setLongitude(Double.parseDouble(longitude));
+		return loc;
+	}
+	
+	
 }
+
+

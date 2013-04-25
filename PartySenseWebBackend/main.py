@@ -12,6 +12,9 @@ import json
 from lib import get_lines
 import csv
 from datetime import datetime
+from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import blobstore_handlers
+from google.appengine.api.users import create_logout_url
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
@@ -19,6 +22,9 @@ class BaseHandler(webapp2.RequestHandler):
         return jinja2.get_jinja2(app=self.app)
 
     def render_template(self, filename, **kwargs):
+        logout_url = create_logout_url("/")
+        assert("logout_url" not in kwargs)
+        kwargs["logout_url"] = logout_url
         self.response.write(self.jinja2.render_template(filename, **kwargs))
 
 class ErrorHandler(BaseHandler):
@@ -33,6 +39,11 @@ class BrowseDataModel(BaseHandler):
         for kind in kinds:
             models.append("<hr/><h3>" + kind + "</h3>" + "<br/>".join(get_lines(kind)))
         self.response.write('<br/>'.join(models))
+
+class GetUsersJsonHandler(BaseHandler):
+    def get(self):
+        from lib import PEOPLE
+        self.response.write(json.dumps(PEOPLE, sort_keys=True,indent=4))
 
 class ImportClubsHandler(BaseHandler):
     def get(self):
@@ -69,6 +80,7 @@ class ImportClubsHandler(BaseHandler):
             tags = [t.strip() for t in tags]
             if not club:
                 club = Club(key=ndb.Key('Club', d['Name of Club']))
+                club.image_dict = {}
             props = ['name', 'website', 'tags', 'city', 'description', 'address', 'phone_number', 'longitude', 'latitude']
             olds = [getattr(club, prop, None) for prop in props]
             club.populate(
@@ -123,14 +135,100 @@ class ClubsDeltaJsonHandler(BaseHandler):
                     if val:
                         d[p] = str(val) if p in ('longitude', 'latitude') else val
             assert d
+            d['photos'] = {}
+            if hasattr(club, 'photo1'):
+                d['photos'] = {
+                    "photo1": club.photo1 or "",
+                    "photo2": club.photo2 or "",
+                    "photo3": club.photo3 or "",
+                    "photo4": club.photo4 or "",
+                    "photo5": club.photo5 or ""
+                }
+            for k in d['photos']:
+                if d['photos'][k]:
+                    d['photos'][k] = get_serving_url(d['photos'][k])
+
             json_dicts.append(d)
         self.response.write(json.dumps(json_dicts, sort_keys=True,indent=4))
+
+class ImageManagerHandler(BaseHandler, blobstore_handlers.BlobstoreUploadHandler):
+    def get(self):
+        upload_url = blobstore.create_upload_url(self.uri_for("image-upload"))
+        template = {}
+        clubs = Club.query()
+        if not clubs:
+            return self.redirect("/error/no-clubs-to-mange-image-for")
+        club_names = [club.name for club in clubs]
+        #club name goes to html, so must be HTML ENCODED SAFELY. HOPEFULLY OK CLUB NAMES. no checking!!
+        template = {"club_names": club_names, "upload_url": upload_url}
+        self.render_template("image-manager.html", **template)
+
+class ImageUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
+    def post(self):
+        club_name = self.request.get('club_name', None)
+
+        k = ndb.Key('Club', club_name)
+        club = k.get()
+        if club is None:
+            self.redirect("/error/no-such-club")
+
+        blob_keys = []
+        count = 0
+        for i in range(1, 6):
+            img_i = self.get_uploads("img{0}".format(i))
+
+            if img_i:
+                blob = img_i[0]
+                if blob.size > 0:
+                    setattr(club, "photo{0}".format(i), blob.key())
+                    count +=1
+                else:
+                    blob.delete()
+                    self.redirect("/error/brokenohno")
+        club.put()
+        return self.redirect("/admin/image-upload-success/{0}".format(count))
+
+class ImageSuccessHandler(BaseHandler):
+    def get(self, num):
+        self.response.write("<a href='/admin/'>home</a><br>{0} uploaded".format(num))
+
+class TestPushNotificationHandler(BaseHandler):
+    def get(self):
+        data = self.send_it("APA91bGdDMjyZfJUX6sftsbUCGV9ix8_ULHsGohhksNpGLDjLYT6M0_AAXQOojMtmuO-FLgOZ9X9UMN9RuOW38JsuGeQDeTJ7eoawLNoBFycfbOIXcE_gR8B5h_3LYP-jX2W_gekiwIomzexrUnRPHYn5kY4iunkVQ")
+        self.response.write(data)
+
+    def send_it(self, regId):
+        import urllib2
+
+        json_data = {"data1":"data1", "data2":"data2", "registration_ids": [regId] }
+
+
+        url = 'https://android.googleapis.com/gcm/send'
+        apiKey = "AIzaSyAK_gH3DOwX-wlJMhlkX2gocxLXYboc3LM"
+        myKey = "key=" + apiKey
+        data = json.dumps(json_data)
+        headers = {'Content-Type': 'application/json', 'Authorization': myKey}
+        req = urllib2.Request(url, data, headers)
+        f = urllib2.urlopen(req)
+        #response = json.loads(f.read())
+        #reply = {}
+        #if response ['failure'] == 0:
+        #    reply['error'] = '0'
+        #else:
+        #    response ['error'] = '1'
+        #return json.dumps(reply)
+        return f.read()
 
 _routes = [
     RedirectRoute('/error/<message>/', ErrorHandler, name="error", strict_slash=True),
     RedirectRoute('/admin/browse-data-model', BrowseDataModel, name="browse-data-model", strict_slash=True),
     RedirectRoute('/admin/import-clubs', ImportClubsHandler, name='import-clubs', strict_slash=True),
-    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True)
+    RedirectRoute('/admin/image-upload/', ImageUploadHandler, name="image-upload", strict_slash=True),
+    RedirectRoute('/admin/image-upload-success/<num>', ImageSuccessHandler, name="admin", strict_slash=True),
+    RedirectRoute('/admin/image-manager', ImageManagerHandler, name='image-manager', strict_slash=True),
+    RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True),
+    RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True),
+    RedirectRoute('/test-push', TestPushNotificationHandler, name='test-push', strict_slash=True)
 ]
 
 

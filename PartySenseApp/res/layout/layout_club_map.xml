@@ -64,7 +64,7 @@
                 android:entries="@array/MapItems" />
 
             <ImageButton
-                android:id="@+id/imageButton1"
+                android:id="@+id/btnLocate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
