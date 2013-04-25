@@ -7,23 +7,13 @@
 <article>
     <h1>{{ event.title }}</h1>
 
-    <aside class="quickstats">
-        <dl>
-            <dt>Where:</dt>
-                <dd>{{ event.location }}</dd>
-            <dt>DJ:</dt>
-                <dd>{{ event.dj.nickname }}</dd>
-        </dl>
-
-    </aside>
-
     <section id="search">
         <input type="search" name="s" results="5" placeholder="Search for music to add" autofocus autocomplete="off">
         <div id="resultContainer">
             <h3>Tracks found:</h3>
             <div class="result" id="track-results"></div>
-            <h3>Filter results by artist?</h3><p>TODO!</p>
-            <div class="result" id="artist-results"></div>
+
+            <!--<div class="result" id="artist-results"></div>-->
         </div>
     </section>
 
@@ -32,6 +22,15 @@
     <section id="event-tracks">
     </section>
 
+    <aside class="event_details">
+        <dl>
+            <dt>Where:</dt>
+                <dd>{{ event.location }}</dd>
+            <dt>Host:</dt>
+                <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
+        </dl>
+
+    </aside>
 </article>
 {% endblock %}
 
@@ -130,8 +129,8 @@
                 artistData = [],
                 trackData = [];
             function fetchComplete(){
-                if(received < 2){
-                    // Still waiting for both the responses
+                if(received < 1){
+                    // Still waiting for the response/s
                     return;
                 }
                 console.log("Time to show some results!");
@@ -139,6 +138,7 @@
             }
 
             // Update the search response view
+            /*
             $.getJSON("http://ws.spotify.com/search/1/artist.json?q=" + val,
                 function(data){
                     console.log("Received artist response from spotify!");
@@ -156,6 +156,7 @@
                     fetchComplete();
                 }
             );
+            */
             $.getJSON("http://ws.spotify.com/search/1/track.json?q=" + val,
                 function(data){
                     console.log("Received track response from spotify!");
@@ -214,7 +215,7 @@
                             * Min height is 80px
                             * https://developer.spotify.com/technologies/spotify-play-button/documentation/
                             */
-                            return '<iframe src="https://embed.spotify.com/?uri=' + d.href + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
+                            return '<iframe src="http://embed.spotify.com/?uri=' + d.href + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
                             });
 
                     tracks.exit().remove();

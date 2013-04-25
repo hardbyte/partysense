@@ -36,7 +36,7 @@ class Location(models.Model):
     name = models.CharField(max_length=50, blank=True, help_text="Venue")
 
     # Address as entered
-    address = models.CharField(max_length=92 )
+    address = models.CharField(max_length=92, blank=True)
 
     # coordinate as returned by google maps
     latitude = models.FloatField()
@@ -59,7 +59,7 @@ class Event(TimeStampedModel):
     # date & time info
     # note we also have a "created" and "modified" attribute
     past_event = models.BooleanField(default=False, editable=False)
-    happening_now = models.BooleanField(help_text="Is this event happening right now?", default=False)
+    happening_now = models.BooleanField(default=False)
 
     start_time = models.DateTimeField()
 
@@ -75,8 +75,8 @@ class Event(TimeStampedModel):
         return unicode(self.title)
 
 
-    def tracks(self):
-        return Track.objects.filter()# TODO events_set=self)
+    #def tracks(self):
+    #    return Track.objects.filter()# TODO events_set=self)
 
 
 

@@ -1,4 +1,6 @@
 import logging
+
+
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect
@@ -9,7 +11,7 @@ from django.template import RequestContext
 from django.conf import settings
 
 from braces.views import LoginRequiredMixin
-
+from partysense import fb_request
 from partysense.event.models import Event
 #from partysense.music import Track, Artist
 
@@ -28,11 +30,13 @@ class EventList(ListView):
 
     def get_queryset(self):
         logger.debug("filter out finished events and events that aren't visible to this dj/user")
-        queryset = Event.objects.filter(past=False)
+        dj_id = self.kwargs['dj_id']
+        queryset = Event.objects.filter(past_event=False, dj=dj_id)
+        logger.debug(queryset)
 
         # TODO just get this dj's events
 
-        return queryset.order_by('-date_created')
+        return queryset.order_by('-modified')
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -61,7 +65,7 @@ def register(request):
             dj = form.save(commit=False)
 
             # Add the automatic fields based on user's preferences
-            dj.user = request.user.id
+            dj.user = request.user
 
             dj.save()
 
@@ -72,7 +76,20 @@ def register(request):
             return HttpResponseRedirect('/event/new')
     else:
         # Partially fill in what we know (if anything)
-        prior_information = {}
+        # Get location from fb
+        res = fb_request(request, ["location", "picture.width(200).type(square)"])
+
+        if 'error' not in res and 'location' in res:
+            location = res['location']['name']
+            logger.info("Facebook thinks the user is from " + location)
+        else:
+            location = ""
+
+        prior_information = {
+            'email': request.user.email,
+            'nickname': "DJ " + request.user.first_name,
+            'city_name': location
+            }
 
         # Otherwise we are left with a completely unbound form
         form = DJForm(initial=prior_information)

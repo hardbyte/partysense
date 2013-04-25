@@ -1,5 +1,6 @@
 import logging
 import json
+import datetime
 
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
@@ -7,11 +8,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
-from django.template import RequestContext
-from django.conf import settings
+
 
 from braces.views import LoginRequiredMixin
 
+from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
 from partysense.music.models import Artist, Track
@@ -68,9 +69,9 @@ def modify_event(request, pk):
         external_ids=json.loads(request.POST['external-ids']),
         )
 
-    if not event.tracks().filter(pk=track.pk).exists():
+    if not event.tracks.filter(pk=track.pk).exists():
         logger.info("Adding new track to event: {}".format(track.name))
-        track.events.add(event)
+        event.tracks.add(track)
 
     # Since this user added it they probably want to vote it up
     return vote_on_track(request, event.pk, track.pk, internal=True)
@@ -79,7 +80,7 @@ def modify_event(request, pk):
 def get_track_list(request, pk):
     track_data = []
     event = get_object_or_404(Event, pk=pk)
-    for t in event.tracks():
+    for t in event.tracks.all():
         votes = event.vote_set.filter(track=t)
         if votes.filter(user=request.user).exists():
             usersVote = votes.get(user=request.user).is_positive
@@ -119,6 +120,10 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
 #  https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
 @login_required
 def create(request):
+    # If user hasn't yet registered as a dj get them to do that first...
+    if not DJ.objects.filter(user=request.user).exists():
+        return HttpResponseRedirect('/register')
+
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
@@ -131,10 +136,15 @@ def create(request):
             event = event_form.save(commit=False)
             logger.info("Creating new event to start at: {}".format(event.start_time))
             # Add the automatic fields based on user
-            event.dj = DJ.object.get(user=request.user.id)
+            # assumes the user is already a DJ
+            event.dj = DJ.objects.get(user=request.user.id)
 
-            # TODO create a new location or use existing...
-            location = Location(name="The Bush", address="Bush Inn, Christchurch")
+            # create a new location or use existing...
+            location = Location(
+                name=event_form.cleaned_data['venue'],
+                latitude=event_form.cleaned_data['latitude'],
+                longitude=event_form.cleaned_data['longitude'],
+            )
             location.save()
             event.location = location
 
@@ -144,21 +154,22 @@ def create(request):
             # then commit the new event to our database
             event.save()
 
-            # TODO Redirect to something in particular?
-            return HttpResponseRedirect('/')
+            # TODO Redirect using reverse lookup...
+            return HttpResponseRedirect('/event/{}/{}'.format(event.pk, event.slug))
     else:
         # Partially fill in what we know (if anything)
-        prior_information = {}
+        now = datetime.datetime.now()
+        saturday = now + datetime.timedelta(days=(5 - now.weekday()))
+        next_saturday = datetime.datetime(year=saturday.year, month=saturday.month, day=saturday.day, hour=19)
 
+        prior_information = {'start_time': next_saturday}
         # Otherwise we are left with a completely unbound form
         event_form = EventForm(initial=prior_information)
-
 
     return render(request,
                   'event/new.html',
                   {
-                      "formset": event_form,
-
+                      "formset": event_form
                   })
 
 
@@ -166,7 +177,14 @@ def profile(request):
     if request.user.is_authenticated() and 'next' in request.GET:
         #return HttpResponseRedirect('done')
         logging.info("Maybe should be redireting now? " + request.GET['next'])
-    return render(request, 'profiles/detail.html')
+    img = None
+    if request.user.is_authenticated():
+        res = fb_request(request, "picture.width(200).type(square)")
+        if 'error' not in res:
+            img = res['picture']['data']
+    return render(request, 'profiles/detail.html', {
+        "img": img
+    })
 
 
 def logout(request):

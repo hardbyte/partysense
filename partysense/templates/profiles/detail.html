@@ -19,7 +19,13 @@
             <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
         </table>
 
+    {% if img %}
+        <img src="{{ img.url }}">
+    {% endif %}
+
     </div>
+
+
 
     {% if social_auth.associated %}
         <section>
@@ -28,12 +34,12 @@
                 {% for type, accounts in social_auth.associated.items %}
                     {% for account in accounts %}
                         <li>
-          <span class="disconnect">
-            <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
-                {% csrf_token %}
-                <a href="#">{{ account.provider|title }} (ID {{ account.id }})</a>
-            </form>
-          </span>
+                          <span class="disconnect">
+                            <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+                                {% csrf_token %}
+                                <a href="#">{{ account.provider|title }} (ID {{ account.id }})</a>
+                            </form>
+                          </span>
                         </li>
                     {% endfor %}
                 {% endfor %}

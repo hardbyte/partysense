@@ -55,9 +55,8 @@ urlpatterns += patterns('partysense.dj.views',
 
     # List this dj's events
     # TODO add permission required decorator
-    url(r'^dj/(?P<event_id>\d+)/', EventList.as_view(), name="dj_events"),
+    url(r'^dj/(?P<dj_id>\d+)/', EventList.as_view(), name="dj_events"),
 )
-
 
 if settings.DEBUG:
     # serve user uploaded media

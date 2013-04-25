@@ -69,7 +69,7 @@
     <h2>DJ's hosting events soon:</h2>
     <ul>
     {% for dj in djs %}
-        <li>{{dj.nickname}}</li>
+        <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

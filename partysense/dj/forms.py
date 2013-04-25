@@ -10,9 +10,10 @@ class DJForm(ModelForm):
         model = DJ
 
         # Explicitly specifying the fields we want
-        fields = ('email',
-                  'nickname',
-                  'city_name'
+        fields = ('nickname',
+                  'email',
+                  'city_name',
+                  'url'
                 )
 
         widgets = {

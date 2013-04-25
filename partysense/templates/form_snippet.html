@@ -15,4 +15,9 @@
 
 {% for field in formset.hidden_fields %}
     {{ field }}
+    {% if field.errors %}
+        {% for error in field.errors %}
+        <strong class="errorMessage">{{ error|escape }}</strong>
+        {% endfor %}
+    {% endif %}
 {% endfor %}

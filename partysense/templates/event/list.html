@@ -11,72 +11,13 @@
 {% endblock %}
 
 {% block content %}
-    <p>todo</p>
-
-    <div id="map-canvas"></div>
-
-
+    <ul>
+    {% for event in event_list %}
+        <li><a href="/event/{{ event.pk }}/{{ event.title|slugify }}">{{ event }}</a></li>
+    {% endfor %}
+    </ul>
 
 {% endblock %}
 
 {% block jslibs %}
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=true"></script>
-    <script>
-        /* Map the gigs. */
-
-        var map, geocoder;
-        function initialize() {
-            geocoder = new google.maps.Geocoder();
-            var mapDiv = document.getElementById('map-canvas');
-
-            /* Center the map on user's city?.
-            * brian.thorne1/?fields=location
-            *
-            *
-            * https://graph.facebook.com/brian.thorne1/?fields=location&method=GET&format=json&access_token=BAACEdEose0cBACGS4JxaZCbnlpQOA8wJdrL7KdeD0WU8G76PBWUQQ8CjwHtUsVryVSOGM2hBSxoTue06W9XKM5vYz90ZCXxJmHcEddY2NYM9jAc3iYawQBdXyrS7HhdAvCM5n4ZAFP5wX5FwXoDapCAYqZBpNZAJPvp1X3QKfZAqZAVelLGsztejdQBkKZCJZCPIoplYgfcAAEwZDZD
-            * */
-            geocoder.geocode( { 'address': "Bush Inn, Riccarton"}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    console.log(results[0].geometry);
-
-                    map = new google.maps.Map(mapDiv, {
-                        //center: new google.maps.LatLng(37.4419, -122.1419),
-                        center: results[0].geometry.location,
-                        zoom: 14,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    });
-
-                    google.maps.event.addListenerOnce(map, 'tilesloaded', addMarkers);
-
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location
-                    });
-                } else {
-                    alert("Geocode was not successful for the following reason: " + status);
-                }
-            });
-        }
-
-        function addMarkers() {
-            // Just add 10 random markers for now...
-            var bounds = map.getBounds();
-            var southWest = bounds.getSouthWest();
-            var northEast = bounds.getNorthEast();
-            var lngSpan = northEast.lng() - southWest.lng();
-            var latSpan = northEast.lat() - southWest.lat();
-            for (var i = 0; i < 10; i++) {
-                var latLng = new google.maps.LatLng(southWest.lat() + latSpan * Math.random(),
-                        southWest.lng() + lngSpan * Math.random());
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map
-                });
-            }
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
 {% endblock %}
