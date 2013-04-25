@@ -107,7 +107,8 @@ public class SplashActivity extends Activity {
 	public ArrayList<Club> updateClubs() throws IOException, InterruptedException, ExecutionException {
 		Calendar calendar = Calendar.getInstance();
 		String apiRequestBaseUrl = "http://partysenseapp.appspot.com/api/clubs-delta";
-		String apiRequestParams = "/year/" + calendar.get(Calendar.YEAR) + "/month/" + calendar.get(Calendar.MONTH) + "/day/"+ calendar.get(Calendar.DAY_OF_MONTH);
+		//String apiRequestParams = "/year/" + calendar.get(Calendar.YEAR) + "/month/" + calendar.get(Calendar.MONTH) + "/day/"+ calendar.get(Calendar.DAY_OF_MONTH);
+		String apiRequestParams = "/year/2012/month/04/day/01";
 		String fetchUrl = apiRequestBaseUrl + apiRequestParams;
 		Log.e(TAG, "Going to Execute task");
 		ArrayList<Club> clubs = new GetClubsListTask(this.getApplicationContext(), "").execute(fetchUrl).get();
