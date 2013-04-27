@@ -46,6 +46,7 @@
         var trackList = d3.select("#track-results")
             .append("ul")
             .attr("id", "track-result-list");
+        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
 
         function updateTrackView(){
             $.getJSON("/api/" + {{ event.pk }}+"/get-track-list/",
@@ -101,11 +102,44 @@
                     a.append("span")
                         .attr("class", "track-name")
                         .text(function(d){return d.name;});
+
                     a.append("span")
                         .attr("class", "track-artist")
                         .text(function(d){return d.artist;});
+                    a.append("img")
+                        .attr("class", "lastfmCover")
+                        .attr("id", function(d,i){return "lastfm"+i;})
+                        .html(function(d, i){
+                            $.getJSON(lastfm + "&track=" + encodeURIComponent(d.name) + "&artist=" + encodeURIComponent(d.artist),
+                                function(data){
+                                    /*
+                                        If lastfm cannot find the song the response will be:
+                                        {error: 6, message: "track not found"}
+
+                                        Otherwise the data.track **might** have all of the following fields:
+                                            mbid
+                                            duration
+                                            toptags -> tags -> [0, ..., 4] -> {name: "indie"}
+                                            album -> image -> [smallest, ..., largest] -> {#text: image url, size}
+                                                     mbid
+                                                     artist
+                                            artist -> mbid
+                                                      name
+                                                      url
+                                            wiki
+                                     */
+                                    if(data.hasOwnProperty("track")){
+                                        var albumImages = data.track.album.image;
+                                        d3.select("#lastfm" + i)
+                                            .attr("src", albumImages[albumImages.length - 1]['#text'])
+                                            .style("display", "none");
+                                    }
+                                });
+                        });
+
                     a.append("div")
                         .attr("class", "spotifyPreview")
+
                         .html(function(d){
                             /*
                             * Spotify options &view=coverart  &theme=white
@@ -115,19 +149,17 @@
                             return '<iframe src="http://embed.spotify.com/?uri=' + d.spotifyTrackID + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
                             });
 
-                    // TODO add a whole playlist
+                    // add a whole playlist
                     var playlist = d3.select("#playlist");
                     playlist.append("div")
                         .html(function(){
                             var songs = "";
-                            console.log(data.tracks);
                             for(i=0;i<data.tracks.length;i++){
-                                console.log(songs);
                                 songs += data.tracks[i].spotifyTrackID.slice(14) + ',';
                             }
-                            // TODO encode the events name in the spotify playlist
-
-                           return '<iframe src="http://embed.spotify.com/?uri=spotify:trackset:Party%20Sense%20Playlist:' + songs + '" frameborder="0" allowtransparency="true" width="640" height="400"></iframe>';
+                            // encode the events name in the spotify playlist
+                            var playlistName = encodeURIComponent("Partysense - {{ event.title }}");
+                            return '<iframe src="http://embed.spotify.com/?uri=spotify:trackset:' + playlistName + ':' + songs + '" frameborder="0" allowtransparency="true" width="640" height="400"></iframe>';
                         });
 
 

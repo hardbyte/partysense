@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 
 from braces.views import LoginRequiredMixin
 
+from django.conf import settings
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
@@ -37,6 +38,7 @@ class EventDetail(EventView, DetailView):
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
         # add other context... if required
+        context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
         return context
 
 
@@ -200,9 +202,11 @@ def logout(request):
 
 
 def landing(request):
+    # List upcoming "public" events
+    djs = DJ.objects.filter(event__past_event=False)
     return render(request, 'landing.html',
         {
-            'djs': DJ.objects.all(),
+            'djs': djs,
         })
 
 

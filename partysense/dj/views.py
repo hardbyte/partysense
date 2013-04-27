@@ -32,27 +32,25 @@ class EventList(ListView):
         logger.debug("filter out finished events and events that aren't visible to this dj/user")
         dj_id = self.kwargs['dj_id']
         queryset = Event.objects.filter(past_event=False, dj=dj_id)
-        logger.debug(queryset)
-
-        # TODO just get this dj's events
-
         return queryset.order_by('-modified')
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(EventList, self).get_context_data(**kwargs)
-
-        context['other'] = "todo"
-
+        #context['other'] = "todo"
         return context
 
 
 # Form Docs https://docs.djangoproject.com/en/dev/topics/forms
-# TODO replace cbv form:
+# TODO replace with cbv form:
 #  https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
 @login_required
 def register(request):
-
+    # only show the dj registration form to user's who are not DJ's
+    if DJ.objects.filter(user=request.user).exists():
+        logger.info("Trying to register a second DJ for this user?")
+        # TODO maybe need a DJ update view (as part of profile?)
+        return HttpResponseRedirect('/event/new')
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
@@ -77,10 +75,10 @@ def register(request):
     else:
         # Partially fill in what we know (if anything)
         # Get location from fb
-        res = fb_request(request, ["location", "picture.width(200).type(square)"])
+        res = fb_request(request, ["location"])
 
-        if 'error' not in res and 'location' in res:
-            location = res['location']['name']
+        if u'error' not in res and u'location' in res:
+            location = res[u'location'][u'name']
             logger.info("Facebook thinks the user is from " + location)
         else:
             location = ""
@@ -94,8 +92,9 @@ def register(request):
         # Otherwise we are left with a completely unbound form
         form = DJForm(initial=prior_information)
 
-    return render(request,
-                  'dj/register.html',
-                  {
-                      "formset": form,
-                  })
+    return render(
+        request,
+        'dj/register.html',
+        {
+            "formset": form,
+        })
