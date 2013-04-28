@@ -85,6 +85,7 @@ nav a {
 	height: 25px;
     margin-left: 20px;
     margin-right: 20px;
+    margin-top: 10px;
 
 	background: rgba(0,0,0,0.4);
 	padding: 5px 10px 5px 10px;
@@ -230,34 +231,35 @@ footer
     min-height: 50px;
 }
 #search input{
-    width: 100%;
-    font-size: 30px;
+    width: 90%;
+    font-size: 20px;
+    padding: 10px;
 }
 
 #resultContainer {
     display: none;
 }
 
-div.track {
-    float:left;
+.trackDiv {
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
-.track {
+
+.trackLink {
     margin: 10px;
     color: cornflowerblue;
 }
 
+
 .track-name {
     font-weight: bold;
+    font-size: 22px;
 }
 
-.track-name:after
-{
-    content:" - ";
-}
-
-.spotifyPreview {
-
+.track-artist {
+    font-size: 18px;
+    margin-top: 20px;
 }
 
 .event_details{
@@ -268,23 +270,29 @@ div.track {
     min-height: 300px;
 }
 
+.voteButtonDiv {
+    max-width: 70px;
+    float: left;
+}
+
 #event-tracks button{
 
     font-size: 1.6em;
     text-align: center;
 
     min-width: 50px;
+    min-height: 50px;
 
     margin-left: 2px;
     margin-right: 2px;
-
+    margin-top: 5px;
+    margin-bottom: 5px;
 	padding: 5px 10px 5px 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 
 }
-
 
 #event-tracks button:hover,button.voted {
     background-color: #444444;
@@ -293,4 +301,9 @@ div.track {
     -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
 	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
 	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
+}
+
+#event-tracks .lastfmCover {
+    width: 100%;
+    float: left;
 }

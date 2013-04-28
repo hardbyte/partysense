@@ -58,18 +58,20 @@ def modify_event(request, pk):
         logging.info("Adding {} to event {}".format(request.user, event.title))
         event.users.add(request.user)
 
+    data = json.loads(request.body)
+    #data = request.POST
     # Artist
     artist, created = Artist.objects.get_or_create(
-        name=request.POST['artist'],
-        spotify_url=request.POST['spotifyArtistID']
+        name=data['artist'],
+        spotify_url=data['spotifyArtistID']
         )
 
     # Track
     track, created = Track.objects.get_or_create(
-        name=request.POST['name'],
+        name=data['name'],
         artist=artist,
-        spotify_url=request.POST['spotifyTrackID'],
-        external_ids=json.loads(request.POST['external-ids']),
+        spotify_url=data['spotifyTrackID'],
+        external_ids=json.loads(data['external-ids']),
         )
 
     if not event.tracks.filter(pk=track.pk).exists():

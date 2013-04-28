@@ -33,12 +33,12 @@ urlpatterns += patterns('partysense.event.views',
         EventDetail.as_view(),
         name="event"),
 
-    url(r'^api/(?P<pk>\d+)/$',
+    url(r'^api/(?P<pk>\d+)/modify',
         modify_event,
         #UpdateEvent.as_view(),
         name="modify-event"),
 
-    url(r'^api/(?P<pk>\d+)/get-track-list/$',
+    url(r'^api/(?P<pk>\d+)/get-track-list',
         get_track_list,
         name="get-track-list"),
 

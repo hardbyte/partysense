@@ -1,0 +1,19 @@
+
+    <section id="search" ng-controller="SpotifyCtrl">
+        <input type="search" ng-model="searchTerm" ng-change="doSearch()" results="10" placeholder="Search for music to add" autofocus autocomplete="off">
+        <table class="table" ng-show="spotifyResult.tracks">
+            <thead><tr><th>Track</th><th>Artist</th></tr></thead>
+            <tbody>
+                <tr ng-repeat="track in spotifyResult.tracks | limitTo:10">
+
+                    <td><a href="" ng-click="addTrack(track)">
+                        <i class="icon-plus"></i> {{track.name}}</a></td>
+                    <td>{{track.artists[0].name}}</td>
+
+
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+
