@@ -4,9 +4,6 @@ runtime: python27
 api_version: 1
 threadsafe: true
 
-env_variables:
-   TMP: C:\Users\robert\AppData\Local\Temp
-
 handlers:
 - url: /(.*.txt)
   static_files: stylesheets/\1

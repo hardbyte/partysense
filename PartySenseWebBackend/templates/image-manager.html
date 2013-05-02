@@ -11,7 +11,7 @@
         <option name="{{club_name}}" value="{{club_name}}"/> {{club_name}}</option>
         {% endfor %}
     </select><br />
-
+    Banner Image: <input type="file" name="banner_img"/><br />
     {% for i in range(1,6) %}
     club.photo{{i}}: <input type="file" name="img{{i}}"/><br />
     {% endfor %}
