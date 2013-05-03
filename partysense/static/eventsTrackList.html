@@ -1,0 +1,28 @@
+<section id="event-tracks" ng-controller="SetlistCtrl">
+    <div class="row-fluid trackDiv" ng-repeat="track in setlist">
+        <div class="span1">
+            <button id="vote-up-{{ track.pk }}"
+                    ng-class="{'voted': track.usersVote === true }"
+                    ng-click="vote(track, true)">↑</button>
+            <button id="vote-down-{{ track.pk }}"
+                    ng-class="{'voted': track.usersVote === false }"
+                    ng-click="vote(track, false)">↓</button>
+        </div>
+        <div class="span5">
+            <p class="track-name">{{ track.name }}</p>
+            <p class="track-artist">{{ track.artist }}</p>
+            <p class="track-votes">{{ track.upVotes + track.downVotes }} votes received</p>
+        </div>
+        <div class="span2">
+            <img class="lastfmCover" id="lastfm0" src="{{ track.coverURL }}">
+        </div>
+        <!--
+        <div class="spotifyPreview span4">
+            <iframe src="http://embed.spotify.com/?uri={{ track.spotifyTrackID }}" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>
+        </div>
+        -->
+
+    </div>
+
+</section>
+

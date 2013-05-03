@@ -4,18 +4,21 @@
 {% load staticfiles %}
 {% block content %}
 
-<article class="container-fluid offset1">
+<article class="container-fluid offset1" ng-app="Partysense">
     <h1>{{ event.title }}</h1>
 
-    <div ng-app="Spotify">
-        <div ng-controller="Ctrl">
+    <div>
+        <div ng-controller="SpotifyTemplateCtrl">
             <div ng-include src="template"></div>
         </div>
     </div>
 
     <h2>Vote on the current set list:</h2>
-    <section id="event-tracks" class="container-fluid">
-    </section>
+    <div id="setlist">
+        <div ng-controller="SetlistTemplateCtrl">
+            <div ng-include src="template"></div>
+        </div>
+    </div>
 
     <hr>
     <h2>Play the current set list with Spotify!</h2>
@@ -36,18 +39,19 @@
 {% endblock %}
 
 {% block jslibs %}
-    <script src="{% static "js/angular-1.1.4/angular.min.js" %}"></script>
-    <script src="{% static "js/angular-1.1.4/angular-resource.min.js" %}"></script>
-
-    <script src="{% static "js/spotify.js" %}"></script>
-
     <script>
-
         var ps = {
-            event: {{ event.pk }}
+            event: {{ event.pk }},
+            LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}"
         };
 
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
+    </script>
+    <script src="{% static "js/angular-1.1.4/angular.min.js" %}"></script>
+    <script src="{% static "js/angular-1.1.4/angular-resource.min.js" %}"></script>
+
+    <script src="{% static "js/partysense.js" %}"></script>
+    <script>
 
         function updateTrackView() {
             $.getJSON("/api/" + {{ event.pk }}+"/get-track-list/",
@@ -60,7 +64,7 @@
                         .attr("class", "span1");
 
                     function vote(track_pk, up){
-                        $.post("/api/" + {{ event.pk }}+"/track/" + track_pk + "/",
+                        $.post("/api/" + {{ event.pk }}+"/vote/" + track_pk + "/",
                             {"vote": up},
                             function(data){
                                 console.log("Vote logged");
@@ -181,7 +185,7 @@
                 });
         }
 
-        updateTrackView();
+        //updateTrackView();
 
    </script>
 

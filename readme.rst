@@ -13,8 +13,6 @@ Deployment for now while I don't have south
 - ssh into server and run python2.7 manage.py syncdb
 - python2.7 manage.py collectstatic
 
-ma
-
 TODO:
     - Implement Reviews!
     - style

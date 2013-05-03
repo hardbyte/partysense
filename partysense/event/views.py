@@ -102,9 +102,9 @@ def get_track_list(request, pk):
             "downVotes": votes.filter(is_positive=False).count(),
             "usersVote": usersVote
         })
-    response_data = {"tracks": track_data}
+    #response_data = {"tracks": track_data}
 
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    return HttpResponse(json.dumps(track_data), content_type="application/json")
 
 @login_required
 def vote_on_track(request, event_pk, track_pk, internal=False):

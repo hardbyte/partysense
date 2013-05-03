@@ -42,7 +42,7 @@ urlpatterns += patterns('partysense.event.views',
         get_track_list,
         name="get-track-list"),
 
-    url(r'^api/(?P<event_pk>\d+)/track/(?P<track_pk>\d+)/$',
+    url(r'^api/(?P<event_pk>\d+)/vote/(?P<track_pk>\d+)',
         vote_on_track,
         name="vote-on-track"),
 
