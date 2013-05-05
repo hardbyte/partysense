@@ -15,8 +15,25 @@
 #pragma mark -
 #pragma mark Application lifecycle
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self.window addSubview:self.navigationController.view];
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{    
+    /*
+    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSURL* localDataPath = [paths objectAtIndex: 0];
+    NSData* localData = [NSData dataWithContentsOfFile: [NSString stringWithContentsOfURL:[localDataPath URLByAppendingPathComponent: @"local.json"] encoding:NSASCIIStringEncoding error:nil ]];
+    
+    if(localData)
+    */
+    {
+        [self.window addSubview: self.navigationController.view];
+    }
+    /*
+    else
+    {
+        // Do facebook login.
+    }
+     */
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -1,6 +1,9 @@
 #import "HomeViewController.h"
 #import "PSPageView.h"
 #import "MainMenuPageView.h"
+#import "PSCentral.h"
+#import "RecommendedClubsPageView.h"
+#import "NearbyClubsPageView.h"
 
 @implementation HomeViewController
 
@@ -18,7 +21,8 @@
 #pragma mark ATPagingViewDelegate methods
 
 - (void)loadView {
-
+    
+    
     [super loadView];
 
     UIImage* headerBg = [UIImage imageNamed:@"Data/header_bg.png"];
@@ -38,9 +42,35 @@
         {
             mainMenuPageView = [[[MainMenuPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
             mainMenuPageView.pagingView = self.pagingView;
+            mainMenuPageView.delegate = self;
         }
         
         return mainMenuPageView;
+    }
+    else
+    {
+        switch (selectedIndex) {
+            case 0:
+                if(recommendedPageView == nil)
+                {
+                    recommendedPageView = [[[RecommendedClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+                    recommendedPageView.pagingView = self.pagingView;
+                }
+                
+                return recommendedPageView;
+            case 1:
+                if(nearbyPageView == nil)
+                {
+                    nearbyPageView = [[[NearbyClubsPageView alloc] initWithFrame: [pagingView bounds]] autorelease];
+                    nearbyPageView.pagingView = self.pagingView;
+                }
+                
+                return nearbyPageView;
+
+            default:
+                break;
+        }
+        
     }
     
     PSPageView* view = (PSPageView*)[pagingView dequeueReusablePage];
@@ -51,6 +81,12 @@
     }
     
     return view;
+}
+
+- (void)onPageSelected:(NSInteger)index
+{
+    selectedIndex = index;
+    self.pagingView.currentPageIndex = 1;
 }
 
 - (void)currentPageDidChangeInPagingView:(ATPagingView *)pagingView

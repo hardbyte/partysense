@@ -6,6 +6,7 @@
 
 @implementation PSMenuItem
 @synthesize title;
+@synthesize detail;
 @end
 
 @implementation MenuItemListView
@@ -37,6 +38,8 @@
 		[items removeAllObjects];
 		[items addObjectsFromArray:itemsIn];
 	}
+    
+    [self reloadData];
 }
 
 - (NSArray*)items {
@@ -63,7 +66,7 @@
     
     if(cell == nil)
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdent] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdent] autorelease];
         [tableView setSeparatorColor:[UIColor whiteColor]];
     }
     
@@ -74,7 +77,7 @@
 	
 	cell.textLabel.textColor = [UIColor whiteColor];
 	cell.textLabel.text = [menuItem title];
-	cell.detailTextLabel.text = @"Blah";
+	cell.detailTextLabel.text = [menuItem detail];
     cell.detailTextLabel.textColor = [UIColor whiteColor];
 	cell.textLabel.textAlignment = NSTextAlignmentLeft;
 	cell.accessoryType = UITableViewCellAccessoryNone;

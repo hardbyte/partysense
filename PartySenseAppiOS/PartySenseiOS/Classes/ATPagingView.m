@@ -184,7 +184,8 @@
 
     // add missing pages
     for (int index = firstPage; index <= lastPage; index++) {
-        if ([self viewForPageAtIndex:index] == nil) {
+        //if ([self viewForPageAtIndex:index] == nil)
+        {
             // only preload visible pages in quick mode
             if (quickMode && (index < firstVisiblePage || index > lastVisiblePage))
                 continue;
