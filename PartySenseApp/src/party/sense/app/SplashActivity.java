@@ -64,13 +64,18 @@ public class SplashActivity extends Activity {
 		});
 		
 		try {
+			
+
 			clubs = this.updateClubs();
 			while( clubs == null){
 				Log.e("Splash Activity","Waiting for Clubs List from Task");
 			}
+			
+			Log.e("Splash Activity",Integer.toString(clubs.size()));
+			
 			Bundle b = new Bundle();
 			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
-			i = new Intent(this, PartySenseMainActivity.class);
+			i = new Intent(this, SetupActivity.class);
 			i.putExtras(b);
 			
 			//Logic to set login

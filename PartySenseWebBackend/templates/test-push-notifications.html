@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if apikey %}
+        apikey = {{apikey}}<br>
+        <br>
+        json data: {{json_data}}
+        <br>
+        <br>
+        response: {{resp}}
+        <br>
+        <br>
+        <a href="">back</a>
+{% else %}
+<form action="" method="post" >
+    API KEY:<br>
+    <input style="width:1300px;" type="text" name="apikey" value="AIzaSyAK_gH3DOwX-wlJMhlkX2gocxLXYboc3LM">
+    <br>
+    <br>
+    Json Data:<br>
+    <textarea  style="width:1400px; height: 400px;" name="json_data">
+{
+    "registration_ids": [
+        "APA91bGdDMjyZfJUX6sftsbUCGV9ix8_ULHsGohhksNpGLDjLYT6M0_AAXQOojMtmuO-FLgOZ9X9UMN9RuOW38JsuGeQDeTJ7eoawLNoBFycfbOIXcE_gR8B5h_3LYP-jX2W_gekiwIomzexrUnRPHYn5kY4iunkVQ"
+        ],
+    "data": {"hello": "world"}
+}
+    </textarea>
+    <br>
+    <input type="submit" value="Send Push Notification">
+</form>
+{% endif %}
+{% endblock %}

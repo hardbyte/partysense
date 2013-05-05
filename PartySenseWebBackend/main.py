@@ -135,18 +135,16 @@ class ClubsDeltaJsonHandler(BaseHandler):
                     if val:
                         d[p] = str(val) if p in ('longitude', 'latitude') else val
             assert d
-            d['photos'] = {}
-            if hasattr(club, 'photo1'):
-                d['photos'] = {
-                    "photo1": club.photo1 or "",
-                    "photo2": club.photo2 or "",
-                    "photo3": club.photo3 or "",
-                    "photo4": club.photo4 or "",
-                    "photo5": club.photo5 or ""
-                }
-            for k in d['photos']:
-                if d['photos'][k]:
-                    d['photos'][k] = get_serving_url(d['photos'][k])
+            d['images'] = []
+            d["banner_image"] = ""
+            if hasattr(club, "images"):
+                d["images"] = club.images
+            if hasattr(club, "banner_img"):
+                d["banner_image"] = club.banner_img
+            for i in range(len(d["images"])):
+                d['images'][i] = get_serving_url(d['images'][i])
+            if d["banner_image"]:
+                d["banner_image"] = get_serving_url(d['banner_image'])
 
             json_dicts.append(d)
         self.response.write(json.dumps(json_dicts, sort_keys=True,indent=4))
@@ -171,16 +169,28 @@ class ImageUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
         club = k.get()
         if club is None:
             self.redirect("/error/no-such-club")
-
-        blob_keys = []
         count = 0
+        banner_img = self.get_uploads("banner_img")
+        if banner_img:
+            blob = banner_img[0]
+            if blob.size > 0:
+                club.banner_img = blob.key()
+                count +=1
+            else:
+                blob.delete()
+                self.redirect("/error/brokenohno")
+
+
+        club.images = []
+        blob_keys = []
+
         for i in range(1, 6):
             img_i = self.get_uploads("img{0}".format(i))
-
             if img_i:
                 blob = img_i[0]
                 if blob.size > 0:
-                    setattr(club, "photo{0}".format(i), blob.key())
+                    #setattr(club, "photo{0}".format(i), blob.key())
+                    club.images.append(blob.key())
                     count +=1
                 else:
                     blob.delete()
@@ -194,17 +204,36 @@ class ImageSuccessHandler(BaseHandler):
 
 class TestPushNotificationHandler(BaseHandler):
     def get(self):
-        data = self.send_it("APA91bGdDMjyZfJUX6sftsbUCGV9ix8_ULHsGohhksNpGLDjLYT6M0_AAXQOojMtmuO-FLgOZ9X9UMN9RuOW38JsuGeQDeTJ7eoawLNoBFycfbOIXcE_gR8B5h_3LYP-jX2W_gekiwIomzexrUnRPHYn5kY4iunkVQ")
-        self.response.write(data)
+        self.render_template("test-push-notifications.html")
 
-    def send_it(self, regId):
+    def post(self):
+        apikey = self.request.get("apikey")
+        json_data = self.request.get("json_data")
+        if not apikey:
+            return self.redirect("/error/no-api-key-or-no-regid")
+        #self.response.write(json_data)
+        #return
+        try:
+            import json
+            json_data = json.loads(json_data)
+            if "registration_ids" not in json_data:
+                return self.redirect("/error/no-registration_ids-in-json")
+        except:
+            return self.redirect("/error/invalid-json-data")
+
+        resp = self.send_it(apikey, json_data)
+        template = {"apikey": apikey, "resp": resp, "json_data": json_data}
+        self.render_template("test-push-notifications.html", **template)
+
+
+    def send_it(self, apikey, json_data):
         import urllib2
 
-        json_data = {"data1":"data1", "data2":"data2", "registration_ids": [regId] }
-
+        json_data = json_data
 
         url = 'https://android.googleapis.com/gcm/send'
-        apiKey = "AIzaSyAK_gH3DOwX-wlJMhlkX2gocxLXYboc3LM"
+        #apiKey = "AIzaSyAK_gH3DOwX-wlJMhlkX2gocxLXYboc3LM"
+        apiKey = apikey
         myKey = "key=" + apiKey
         data = json.dumps(json_data)
         headers = {'Content-Type': 'application/json', 'Authorization': myKey}
@@ -228,7 +257,7 @@ _routes = [
     RedirectRoute('/admin/image-manager', ImageManagerHandler, name='image-manager', strict_slash=True),
     RedirectRoute('/api/clubs-delta/year/<year>/month/<month>/day/<day>', ClubsDeltaJsonHandler, name='clubs-dump', strict_slash=True),
     RedirectRoute('/club-manager/people', GetUsersJsonHandler, name='people', strict_slash=True),
-    RedirectRoute('/test-push', TestPushNotificationHandler, name='test-push', strict_slash=True)
+    RedirectRoute('/admin/test-push-notifications', TestPushNotificationHandler, name='test-push', strict_slash=True)
 ]
 
 

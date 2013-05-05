@@ -20,11 +20,8 @@ class Club(ndb.Model):
     latitude = ndb.FloatProperty()
     longitude = ndb.FloatProperty()
 
-    photo1 = ndb.BlobKeyProperty()
-    photo2 = ndb.BlobKeyProperty()
-    photo3 = ndb.BlobKeyProperty()
-    photo4 = ndb.BlobKeyProperty()
-    photo5 = ndb.BlobKeyProperty()
+    images = ndb.BlobKeyProperty(repeated=True)
+    banner_img = ndb.BlobKeyProperty()
 
     tags = ndb.StringProperty(repeated=True)
 
