@@ -71,7 +71,7 @@ class GetClubsListTask extends AsyncTask<String, Void, ArrayList<Club>> {
             Log.e(TAG , "Finished Writing to json File");
     		
     		
-    		
+    		// Create a Connection to the local storage
     		URLConnection localConnection = new URL("file:///data/data/party.sense.app/files/clubDbTest.json").openConnection();
     		localConnection.connect();
     		JsonReader reader = new JsonReader(
