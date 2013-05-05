@@ -10,19 +10,28 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends FragmentActivity {
 	SharedPreferences settings;
 	private static final String TAG = "com.partysense.app.SplashActivity";
 	public static final String BUNDLE_ID_CLUBS_LIST = "party.sense.app.clubsList";
+	Fragment fragWelcom = new FragSplashLogged();
+	Fragment fragLogin = new FragFBLogin();
 	Intent i;
 	Button btnLogin;
 	TextView txtLogin;
+	
+	FragmentManager fm;
+	
 	/** Called when the activity is first created. */
 	@Override
 
@@ -31,10 +40,10 @@ public class SplashActivity extends Activity {
 		setContentView(R.layout.splash);
 		ArrayList<Club> clubs = new ArrayList<Club>();
 		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
-		txtLogin = (TextView) findViewById(R.id.txtLogin);
-		btnLogin = (Button) findViewById(R.id.btnLogin);
+		//btnLogin = (Button) findViewById(R.id.btnLogin);
 		
 		String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
+		
 		final Thread splashTimerThread = new Thread(){
 			public void run(){
 				try{
@@ -54,7 +63,7 @@ public class SplashActivity extends Activity {
 			}
 		};
 		
-		
+		/*
 		btnLogin.setOnClickListener(new OnClickListener() {
 					
 					public void onClick(View v) {
@@ -62,6 +71,8 @@ public class SplashActivity extends Activity {
 						
 					}
 		});
+		
+		*/
 		
 		try {
 			
@@ -79,17 +90,6 @@ public class SplashActivity extends Activity {
 			i.putExtras(b);
 			
 			//Logic to set login
-			if (loginName != "null"){
-				txtLogin.setVisibility(View.INVISIBLE);
-				btnLogin.setVisibility(View.VISIBLE);
-			}
-			else{
-				txtLogin.setText("You are logged in as:" + loginName);
-				txtLogin.setVisibility(View.VISIBLE);
-				btnLogin.setVisibility(View.INVISIBLE);
-				splashTimerThread.start();
-			}
-			
 			
 
 		} catch(IOException exception){
@@ -99,6 +99,20 @@ public class SplashActivity extends Activity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+		
+		fm = getSupportFragmentManager();
+    	FragmentTransaction ft = fm.beginTransaction();
+    	
+    	
+		if(loginName != null){
+			ft.add(R.id.fragLoginLayout, fragWelcom);
+		}
+		else{
+			ft.add(R.id.fragLoginLayout, fragLogin);
+		}
+		
+		ft.commit();
+		
 
 	}
 
