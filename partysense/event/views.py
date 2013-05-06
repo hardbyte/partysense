@@ -118,9 +118,14 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
     vote, created = Vote.objects.get_or_create(
         event=event,
         user=request.user,
-        track_id=track_pk,
+        track_id=track_pk
     )
-    vote.is_positive = internal or request.POST['vote'] == u"true"
+    if internal:
+        voteDirection = True
+    else:
+        data = json.loads(request.body)
+        voteDirection = data['vote']
+    vote.is_positive = voteDirection
     vote.save()
     return HttpResponse(json.dumps({'created': created}), content_type="application/json")
 

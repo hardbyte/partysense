@@ -46,11 +46,7 @@ function SetlistCtrl($scope, $http, $resource) {
 
     var Track = $resource("/api/:event/:action/:track/",
         {action: "get-track-list", event: ps.event},
-        {vote: {
-            method: 'POST',
-            params: { action: "vote", track: '@pk'}
-               }
-        }
+        { }
     );
 
     var lastfmTrack = $resource("http://ws.audioscrobbler.com/2.0/?method=track.:action&api_key="+ps.LAST_FM_API_KEY+"&format=json",
@@ -65,10 +61,22 @@ function SetlistCtrl($scope, $http, $resource) {
         }
     });
 
-    $scope.vote = function(track, isUpVote) {
+    $scope.vote = function (track, isUpVote) {
         console.log("Got a vote!");
-        track.$vote({vote: isUpVote});
-    }
+        console.log(track);
+        $http.post("/api/" + ps.event + "/vote/" + track.pk + "/",
+          {vote: isUpVote}).success(function(response){
+            track.usersVote = isUpVote;
+            if(response.created) {
+                if(isUpVote){
+                    track.upVotes += 1;
+                } else {
+                    track.downVotes += 1;
+                }
+            }
+        });
+
+    };
 
     function findCover(track){
         lastfmTrack.get(

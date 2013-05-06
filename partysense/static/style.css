@@ -255,6 +255,7 @@ footer
 .track-name {
     font-weight: bold;
     font-size: 22px;
+    padding: 10px;
 }
 
 .track-artist {
