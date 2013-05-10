@@ -197,8 +197,23 @@ def profile(request):
         res = fb_request(request, "picture.width(200).type(square)")
         if 'error' not in res and 'picture' in res:
             img = res['picture']['data']
+
+    # Get past_events
+    past_events = Event.objects.filter(users=request.user, past_event=True)
+
+    # Upcoming events
+    upcoming_events = Event.objects.filter(users=request.user, past_event=False)
+
+    # TODO: Also show events by dj's this user has attended events of in the past
+
+    djs = DJ.objects.filter(event__past_event=False)
+
     return render(request, 'profiles/detail.html', {
-        "img": img
+        "img": img,
+        "djs": djs,
+        "past_events": past_events,
+        "upcoming_events": upcoming_events
+
     })
 
 
@@ -210,10 +225,9 @@ def logout(request):
 
 def landing(request):
     # List upcoming "public" events
-    djs = DJ.objects.filter(event__past_event=False)
+
     return render(request, 'landing.html',
         {
-            'djs': djs,
         })
 
 

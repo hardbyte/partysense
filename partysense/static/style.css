@@ -19,8 +19,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#content {
-    overflow: auto;
+.leftSideBar {
+    padding-right: 50px;
 }
 
 header {
@@ -229,11 +229,11 @@ footer
 
 #search {
     min-height: 50px;
+    padding: 20px;
 }
 #search input{
-    width: 90%;
     font-size: 20px;
-    padding: 10px;
+    min-width: 515px;
 }
 
 #resultContainer {
@@ -241,8 +241,8 @@ footer
 }
 
 .trackDiv {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 
@@ -251,20 +251,20 @@ footer
     color: cornflowerblue;
 }
 
-
-.track-name {
-    font-weight: bold;
-    font-size: 22px;
+.track-info {
     padding: 10px;
 }
 
+.track-name {
+
+}
+
 .track-artist {
-    font-size: 18px;
-    margin-top: 20px;
+    color: #2ba6cb;
 }
 
 .event_details{
-    float: right;
+    padding: 10px;
 }
 
 #event-tracks {
@@ -272,33 +272,27 @@ footer
 }
 
 .voteButtonDiv {
-    max-width: 70px;
-    float: left;
+   padding-top: 18px;
+    padding-left: 5px;
 }
 
 #event-tracks button{
-
-    font-size: 1.6em;
-    text-align: center;
-
-    min-width: 50px;
-    min-height: 50px;
-
-    margin-left: 2px;
-    margin-right: 2px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-	padding: 5px 10px 5px 10px;
+    margin-top: 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 
+    -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
 }
 
-#event-tracks button:hover,button.voted {
-    background-color: #444444;
-    color:#9bcb48;
-    text-decoration:none;
+#event-tracks button.voted {
+    background-color: rgba(44, 184, 222, 0.54);
+}
+
+#event-tracks button:hover {
+    background-color: #9bcb48;
     -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
 	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
 	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);

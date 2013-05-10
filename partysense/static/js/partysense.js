@@ -1,7 +1,15 @@
 angular.module('Partysense', ['ngResource']);
 
+
 function SpotifyTemplateCtrl($scope) {
     $scope.template = "/static/spotifyResultList.html";
+}
+function PreviewTemplateCtrl($scope) {
+    $scope.template = "/static/spotifyPreview.html";
+}
+
+function SetlistTemplateCtrl($scope) {
+    $scope.template = "/static/eventsTrackList.html";
 }
 
 function SpotifyCtrl($scope, $http, $resource) {
@@ -36,9 +44,6 @@ function SpotifyCtrl($scope, $http, $resource) {
     };
 }
 
-function SetlistTemplateCtrl($scope) {
-    $scope.template = "/static/eventsTrackList.html";
-}
 
 function SetlistCtrl($scope, $http, $resource) {
     /* Protection against cross site scripting attacks. */
@@ -56,10 +61,20 @@ function SetlistCtrl($scope, $http, $resource) {
     // GET: /api/123/get-track-list
     $scope.setlist = Track.query({}, function(data){
         console.log("Received setlist, asking last.fm for covers...");
+        var songs = "";
         for(i=0; i<data.length; i++){
             findCover(data[i]);
+            songs += data[i].spotifyTrackID.slice(14) + ',';
         }
+        $scope.playlistSongs = songs;
     });
+
+
+    for(i=0; i < $scope.setlist.length; i++){
+
+    }
+    // encode the events name in the spotify playlist
+    $scope.playlistName = encodeURIComponent("Partysense - " + ps.eventTitle);
 
     $scope.vote = function (track, isUpVote) {
         console.log("Got a vote!");
@@ -98,7 +113,7 @@ function SetlistCtrl($scope, $http, $resource) {
                                   url
                         wiki
                 */
-                if(data.hasOwnProperty("track")){
+                if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
                     var albumImages = data.track.album.image;
                     // Select the largest one...
                     track.coverURL = albumImages[albumImages.length - 1]['#text'];

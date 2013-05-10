@@ -24,7 +24,7 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile/">Profile</a></li>
             </ul>
         </nav>
         <p id="tagline" class=".hidden-phone">
@@ -40,8 +40,6 @@
                 <div id="facebook_button">Login with facebook</div>
             </a>
         {% endif %}
-
-
         {% endblock %}
     </header>
 
@@ -68,10 +66,9 @@
     </script>
 
     <script src="{% static "js/d3.v3.min.js" %}"></script>
-    <!--<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
 
-
-    <div id="content">
+    <div id="content" class="">
         {% block content %}{% endblock %}
     </div>
 

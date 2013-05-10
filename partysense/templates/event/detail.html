@@ -4,44 +4,63 @@
 {% load staticfiles %}
 {% block content %}
 
-<article class="container-fluid offset1" ng-app="Partysense">
-    <h1>{{ event.title }}</h1>
+<div class="row-fluid">
 
-    <div>
-        <div ng-controller="SpotifyTemplateCtrl">
-            <div ng-include src="template"></div>
+    <div class="span3 leftSideBar">
+        <div class="">
+            <h4>{{ event.title }}</h4>
+            <div class="event_details">
+                <dl>
+                    <dt>Where:</dt>
+                        <dd>{{ event.location }}</dd>
+                    <dt>Host:</dt>
+                        <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="">
+            <h5>Recent Music </h5>
+            <table class="table">
+            <tr><td>TODO</td><td>Blah...</td></tr>
+            <tr><td>Blah</td><td>Blah...</td></tr>
+            <tr><td>Blah</td><td>Blah...</td></tr>
+            </table>
         </div>
     </div>
 
-    <h2>Vote on the current set list:</h2>
-    <div id="setlist">
-        <div ng-controller="SetlistTemplateCtrl">
-            <div ng-include src="template"></div>
+
+    <div ng-app="Partysense">
+
+        <div class="span6">
+            <div ng-controller="SpotifyTemplateCtrl">
+                <div ng-include src="template"></div>
+            </div>
+
+            <div id="setlist">
+                <div ng-controller="SetlistTemplateCtrl">
+                    <div ng-include src="template"></div>
+                </div>
+            </div>
         </div>
+
+
+        <div class="span3">
+            <div ng-controller="PreviewTemplateCtrl">
+                <div ng-include src="template"></div>
+            </div>
+         </div>
+
     </div>
 
-    <hr>
-    <h2>Play the current set list with Spotify!</h2>
-    <section id="playlist">
-    </section>
-
-
-    <aside class="event_details">
-        <dl>
-            <dt>Where:</dt>
-                <dd>{{ event.location }}</dd>
-            <dt>Host:</dt>
-                <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
-        </dl>
-
-    </aside>
-</article>
+</div>
 {% endblock %}
 
 {% block jslibs %}
     <script>
         var ps = {
             event: {{ event.pk }},
+            eventTitle: "{{ event.title }}",
             LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}"
         };
 
@@ -51,142 +70,5 @@
     <script src="{% static "js/angular-1.1.4/angular-resource.min.js" %}"></script>
 
     <script src="{% static "js/partysense.js" %}"></script>
-    <script>
-
-        function updateTrackView() {
-            $.getJSON("/api/" + {{ event.pk }}+"/get-track-list/",
-                function(data){
-                    var tracksForEvent = d3.select("#event-tracks").selectAll("trackDiv")
-                        .data(data.tracks);
-                    var div = tracksForEvent.enter().append("div").attr("class", "row-fluid trackDiv");
-
-                    var buttonDiv = div.append("div")
-                        .attr("class", "span1");
-
-                    function vote(track_pk, up){
-                        $.post("/api/" + {{ event.pk }}+"/vote/" + track_pk + "/",
-                            {"vote": up},
-                            function(data){
-                                console.log("Vote logged");
-                                // show the user's vote has been counted by updating the
-                                // vote button that was pressed
-                                if(up){
-                                    // remove the "voted" class from down
-                                    d3.select("#vote-down-" + track_pk).attr("class", "");
-                                    d3.select("#vote-up-" + track_pk).attr("class", "voted");
-                                } else {
-                                    d3.select("#vote-down-" + track_pk).attr("class", "voted");
-                                    d3.select("#vote-up-" + track_pk).attr("class", "");
-                                }
-                            });
-                    }
-
-                    buttonDiv.append("button")
-                        .attr("id", function(d){return "vote-up-"+ d.pk;})
-                        .attr("class", function(d){
-                            if(d.usersVote !== null && d.usersVote === true){
-                                return "voted";
-                            }
-                        })
-                        .text("↑")
-                        .on("click", function(d){
-                            vote(d.pk, true);
-                        });
-
-                    buttonDiv.append("button")
-                        .attr("id", function(d){return "vote-down-"+ d.pk;})
-                        .attr("class", function(d){
-                            if(d.usersVote !== null && d.usersVote === false){
-                                return "voted";
-                            }
-                        })
-                        .text("↓").on("click", function(d){
-                            vote(d.pk, false);
-                        });
-
-                    tracksForEvent.exit().remove();
-
-
-                    var descriptionDiv = div.append("div")
-                        .attr("class", "span5");
-
-                    var imgDiv = div.append("div")
-                        .attr("class", "span2");
-
-
-                    imgDiv.append("img")
-                        .attr("class", "lastfmCover")
-                        .attr("id", function(d,i){return "lastfm"+i;})
-                        .html(function(d, i){
-                            $.getJSON(lastfm + "&track=" + encodeURIComponent(d.name) + "&artist=" + encodeURIComponent(d.artist),
-                                function(data){
-                                    /*
-                                        If lastfm cannot find the song the response will be:
-                                        {error: 6, message: "track not found"}
-
-                                        Otherwise the data.track **might** have all of the following fields:
-                                            mbid
-                                            duration
-                                            toptags -> tags -> [0, ..., 4] -> {name: "indie"}
-                                            album -> image -> [smallest, ..., largest] -> {#text: image url, size}
-                                                     mbid
-                                                     artist
-                                            artist -> mbid
-                                                      name
-                                                      url
-                                            wiki
-                                     */
-                                    if(data.hasOwnProperty("track")){
-                                        var albumImages = data.track.album.image;
-                                        d3.select("#lastfm" + i)
-                                            .attr("src", albumImages[albumImages.length - 1]['#text']);
-                                    }
-                                });
-                        });
-
-                    descriptionDiv.append("p")
-                        .attr("class", "track-name")
-                        .text(function(d){return d.name;});
-
-                    descriptionDiv.append("p")
-                        .attr("class", "track-artist")
-                        .text(function(d){return d.artist;});
-
-                    descriptionDiv.append("p")
-                        .attr("class", "track-votes")
-                        .text(function(d){
-                            return (d.upVotes + d.downVotes) + " votes received";
-                        });
-
-                    div.append("div")
-                        .attr("class", "spotifyPreview span4")
-
-                        .html(function(d){
-                            /*
-                            * Spotify options &view=coverart  &theme=white
-                            * Min height is 80px
-                            * https://developer.spotify.com/technologies/spotify-play-button/documentation/
-                            */
-                            return '<iframe src="http://embed.spotify.com/?uri=' + d.spotifyTrackID + '" frameborder="0" allowtransparency="true" width="300" height="80"></iframe>';
-                            });
-
-                    // add a whole playlist
-                    var playlist = d3.select("#playlist");
-                    playlist.append("div")
-                        .html(function(){
-                            var songs = "";
-                            for(i=0;i<data.tracks.length;i++){
-                                songs += data.tracks[i].spotifyTrackID.slice(14) + ',';
-                            }
-                            // encode the events name in the spotify playlist
-                            var playlistName = encodeURIComponent("Partysense - {{ event.title }}");
-                            return '<iframe src="http://embed.spotify.com/?uri=spotify:trackset:' + playlistName + ':' + songs + '" frameborder="0" allowtransparency="true" width="640" height="400"></iframe>';
-                        });
-                });
-        }
-
-        //updateTrackView();
-
-   </script>
 
 {% endblock %}

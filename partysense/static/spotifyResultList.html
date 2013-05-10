@@ -1,5 +1,11 @@
-<section id="search" ng-controller="SpotifyCtrl">
-    <input type="search" ng-model="searchTerm" ng-change="doSearch()" results="10" placeholder="Search for music to add" autofocus autocomplete="off">
+<section id="search" ng-controller="SpotifyCtrl" >
+    <div class="input-append">
+        <input class="form-search" type="search" ng-model="searchTerm" ng-change="doSearch()"
+           results="10" placeholder="Search for music to add"
+           autofocus autocomplete="off">
+        <button class="btn" type="button">Clear</button>
+    </div>
+
     <table class="table" ng-show="spotifyResult.tracks">
         <thead><tr><th>Track</th><th>Artist</th></tr></thead>
         <tbody>
