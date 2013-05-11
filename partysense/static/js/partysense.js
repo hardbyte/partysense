@@ -29,6 +29,10 @@ function SpotifyCtrl($scope, $http, $resource) {
         $scope.spotifyResult = $scope.spotify.get({q: $scope.searchTerm});
     };
 
+    $scope.clear = function() {
+        $scope.spotifyResult = "";
+        $scope.searchTerm = "";
+    };
     $scope.addTrack = function(track) {
         var newTrack = new Track({
                         "name": track.name,
