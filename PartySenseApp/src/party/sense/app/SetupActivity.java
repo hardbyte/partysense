@@ -1,6 +1,10 @@
 package party.sense.app;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,6 +24,12 @@ public class SetupActivity extends FragmentActivity {
 	static Fragment fragConfirm = new FragSetupConfim();
 	Button btnNext;
 	Button btnBack;
+	ArrayList<Club> clubs = new ArrayList<Club>();
+	ArrayList<Boolean> selectionValues = new ArrayList<Boolean>();
+	SharedPreferences settings;
+	SharedPreferences.Editor edit;
+	ArrayList<String> genres = new ArrayList<String>();
+	String userName = "";
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +40,13 @@ public class SetupActivity extends FragmentActivity {
     	FragmentTransaction ft = fm.beginTransaction();
     	ft.add(R.id.fragSetUp, getFragment(pageID));
     	ft.commit();
-	    // TODO Auto-generated method stub
+	    
+    	settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+	    edit = settings.edit();
+    	
+    	Bundle b = getIntent().getExtras();
+    	this.userName = b.getString("login_name");
+        this.clubs = b.getParcelableArrayList("party.sense.app.clubsList");
     	
     	btnNext = (Button) findViewById(R.id.btnNext);
     	btnBack = (Button) findViewById(R.id.btnBack);
@@ -41,21 +57,31 @@ public class SetupActivity extends FragmentActivity {
 				// TODO Auto-generated method stub
 				//Toast.makeText(getApplicationContext(), Integer.toString(pageID), Toast.LENGTH_LONG).show();
 				if(pageID == 0){
-					if(((FragmentLogIn)fragLogIn).isLoggedIn()){
-						changeFragment(1);
-					}
-					else{
-						Toast.makeText(getApplicationContext(), "Please Log In first", Toast.LENGTH_LONG).show();
-					}
-				}
-				else if(pageID == 1){
-					if(((FragmentGenreSetUp)fragGenre).writeGenre()){
+					selectionValues = ((FragmentGenreSetUp)fragGenre).genresSelected();
+					if(selectionValues.size()>0){
 						Toast.makeText(getApplicationContext(), "Selection Stored", Toast.LENGTH_LONG).show();
-						changeFragment(2);
+						changeFragment(1);
 					}
 					else{
 						Toast.makeText(getApplicationContext(), "Please Choose Genres", Toast.LENGTH_LONG).show();
 					}
+				}
+				else if (pageID == 1){
+					genres = FragmentGenreSetUp.genres;
+					for (int i = 0; i < selectionValues.size(); i++) {
+				        edit.putBoolean(genres.get(i), selectionValues.get(i));
+				    }
+					edit.putString(getResources().getString(R.string.pref_name_on_facebook), userName);
+					
+					edit.commit();
+					
+					Bundle b = new Bundle();
+					b.putParcelableArrayList("party.sense.app.clubsList", clubs);
+					Intent i = new Intent(getApplicationContext(), PartySenseMainActivity.class);
+					i.putExtras(b);
+					startActivity(i);
+					finish();
+					Toast.makeText(getApplicationContext(), userName, Toast.LENGTH_SHORT).show();
 				}
 				else{}
 				
@@ -65,7 +91,7 @@ public class SetupActivity extends FragmentActivity {
 	}
 
 	public void changeFragment(int i){
-		if(i<2){
+		if(i<1){
 			btnNext.setText("Next");
 		}
 		else{
@@ -81,9 +107,8 @@ public class SetupActivity extends FragmentActivity {
 	
 	private Fragment getFragment(int i){
 		switch (i){
-		case 0:	return fragLogIn;
-		case 1: return fragGenre;
-		case 2: return fragConfirm;
+		case 0: return fragGenre;
+		case 1: return fragConfirm;
 		}
 		return null;
 	}

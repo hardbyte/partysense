@@ -105,9 +105,11 @@ public class SplashActivity extends FragmentActivity {
     	
     	
 		if(loginName != null){
+			((FragSplashLogged)fragWelcom).setClubArr(clubs);
 			ft.add(R.id.fragLoginLayout, fragWelcom);
 		}
 		else{
+			((FragFBLogin)fragLogin).setClubArr(clubs);
 			ft.add(R.id.fragLoginLayout, fragLogin);
 		}
 		

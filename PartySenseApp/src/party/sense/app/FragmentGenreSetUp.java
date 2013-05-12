@@ -22,6 +22,7 @@ public class FragmentGenreSetUp extends Fragment {
 	SharedPreferences.Editor edit;
 	static ArrayList<String> genres = new ArrayList<String>();
 	
+	
 	static{
 		genres.add("Blues");
 		genres.add("Country");
@@ -80,6 +81,18 @@ public class FragmentGenreSetUp extends Fragment {
 	    }
 	    
 	}
+	
+	public ArrayList<Boolean>genresSelected(){
+		SparseBooleanArray checked = lView.getCheckedItemPositions();
+		ArrayList<Boolean> selectionValues = new ArrayList<Boolean>();
+		selectionValues.clear();
+	    for (int i = 0; i < checked.size(); i++) {
+	    	selectionValues.add(checked.get(checked.keyAt(i)));
+	    }
+	    return selectionValues;
+	    
+	}
+	
 	
 	
 }
