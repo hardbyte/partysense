@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,17 +14,34 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+
 public class SplashActivity extends FragmentActivity {
+	
 	SharedPreferences settings;
-	private static final String TAG = "com.partysense.app.SplashActivity";
+	private static final String TAG = "SplashActivity";
 	public static final String BUNDLE_ID_CLUBS_LIST = "party.sense.app.clubsList";
-	Fragment fragWelcom = new FragSplashLogged();
-	Fragment fragLogin = new FragFBLogin();
+	
+	private static final int LOGIN = 0;
+	private static final int WELCOME = 1;
+	private static final int FRAGMENT_COUNT = WELCOME + 1;
+	private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
+	
+	private boolean isResumed = false;
+	
+	private UiLifecycleHelper uiHelper;
+	private Session.StatusCallback callback = new Session.StatusCallback() {
+
+		public void call(Session session, SessionState state, Exception exception) {
+			onSessionStateChange(session, state, exception);
+		}
+	};
+	
 	Intent i;
 	Button btnLogin;
 	TextView txtLogin;
@@ -37,13 +53,27 @@ public class SplashActivity extends FragmentActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash);
+		setContentView(R.layout.layout_splash_activity);
 		ArrayList<Club> clubs = new ArrayList<Club>();
 		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
-		//btnLogin = (Button) findViewById(R.id.btnLogin);
 		
-		String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
+		uiHelper = new UiLifecycleHelper(this, callback);
+		uiHelper.onCreate(savedInstanceState);
+		FragmentManager fm = getSupportFragmentManager();
+		fragments[LOGIN] = fm.findFragmentById(R.id.facebookLoginFragment);
+		fragments[WELCOME] = fm.findFragmentById(R.id.welcomeFragment);
 		
+		FragmentTransaction transaction = fm.beginTransaction();
+		for(int i = 0; i< fragments.length;  i++){
+			transaction.hide(fragments[i]);
+		}
+		
+		Log.d(TAG, "onCreate: Hiding all Fragments");
+		transaction.commit();
+		
+		//String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
+		
+		/*
 		final Thread splashTimerThread = new Thread(){
 			public void run(){
 				try{
@@ -63,7 +93,7 @@ public class SplashActivity extends FragmentActivity {
 			}
 		};
 		
-		/*
+		
 		btnLogin.setOnClickListener(new OnClickListener() {
 					
 					public void onClick(View v) {
@@ -72,7 +102,7 @@ public class SplashActivity extends FragmentActivity {
 					}
 		});
 		
-		*/
+		
 		
 		try {
 			
@@ -99,8 +129,9 @@ public class SplashActivity extends FragmentActivity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+	  */
 		
-		fm = getSupportFragmentManager();
+	  /*fm = getSupportFragmentManager();
     	FragmentTransaction ft = fm.beginTransaction();
     	
     	
@@ -109,11 +140,11 @@ public class SplashActivity extends FragmentActivity {
 			ft.add(R.id.fragLoginLayout, fragWelcom);
 		}
 		else{
-			((FragFBLogin)fragLogin).setClubArr(clubs);
+			((FacebookLoginFragment)fragLogin).setClubArr(clubs);
 			ft.add(R.id.fragLoginLayout, fragLogin);
 		}
 		
-		ft.commit();
+		ft.commit();*/
 		
 
 	}
@@ -145,6 +176,98 @@ public class SplashActivity extends FragmentActivity {
 		}
 		Log.e(TAG, "Got Clubs List : " + clubInfo);
 		return clubs;
+	}
+	
+	@Override
+	public void onResume() {	
+		Log.d(TAG, "onResume");
+		super.onResume();
+		uiHelper.onResume();
+		isResumed = true;
+	}
+	
+	@Override
+	public void onPause() {
+		Log.d(TAG, "onPause");
+		super.onPause();
+		uiHelper.onPause();
+		isResumed = false;
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		uiHelper.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		uiHelper.onDestroy();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		uiHelper.onSaveInstanceState(outState);
+	}
+	
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+		Log.i(TAG, "onSessionStateChange: " + state.name());
+		
+		// Only make changes if the activity is visible
+		if (isResumed) {
+			FragmentManager manager = getSupportFragmentManager();
+			// Get number of entries in back stack
+			int backStackSize = manager.getBackStackEntryCount();
+			// Clear the back stack
+			for (int i = 0; i < backStackSize; i++) {
+				manager.popBackStack();
+			}
+			if (state.isOpened()) {
+				
+				Log.i(TAG, "isOpened: Calling show fragment");
+				showFragment(WELCOME, false);
+			} else if (state.isClosed()) {
+				
+				Log.i(TAG, "isClosed: Calling show fragment");
+				showFragment(LOGIN, false);
+			}
+		}
+	}
+	
+	private void showFragment(int fragmentIndex, boolean addToBackStack) {
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction transaction = fm.beginTransaction();
+		
+		for (int i = 0; i < fragments.length; i++) {
+			if (i == fragmentIndex) {
+				transaction.show(fragments[i]);
+			}else {
+				transaction.hide(fragments[i]);
+			}
+		}
+		if (addToBackStack){
+			transaction.addToBackStack(null);
+		}
+			
+		Log.i(TAG, "showFragment: Trying to commit");
+		transaction.commit();
+		
+	}
+	
+	@Override
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+		Session session = Session.getActiveSession();
+		
+		if (session != null && session.isOpened()){
+			Log.i(TAG, "Calling ShowFragments for Selection Screen: Session is not null and isOpened");
+			showFragment(WELCOME, false);
+		} else {
+			Log.i(TAG, "Calling ShowFragments for SplashScreen: Session is not null and isOpened");
+			showFragment(LOGIN, false);
+		}
 	}
 }
 

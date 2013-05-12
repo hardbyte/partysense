@@ -11,21 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class FragFBLogin extends Fragment{
+public class FacebookLoginFragment extends Fragment{
 	View view;
 	Intent i;
 	ArrayList<Club> clubs = new ArrayList<Club>();
 	private String userName;
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		view = inflater.inflate(R.layout.frag_fb_login, container,false);
-		Button b = (Button) view.findViewById(R.id.btnLogin);
+		view = inflater.inflate(R.layout.layout_facebook_login_fragment, container,false);
+		/*Button b = (Button) view.findViewById(R.id.btnLogin);
 		
 		b.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				userName = "DEVA";
-				
+
+                // Handle FB Login Button logic here
+
+                // Get user name from Facebook (not facebook ID)
+                userName = "DEVA";
+
 				Bundle b = new Bundle();
 				b.putString("login_name", userName);
 				b.putParcelableArrayList("party.sense.app.clubsList", clubs);
@@ -35,7 +44,7 @@ public class FragFBLogin extends Fragment{
 				getActivity().finish();
 			}
 		});
-		
+		*/
 		return view;
 	}
 

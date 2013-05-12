@@ -10,14 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-public class FragSplashLogged extends Fragment {
+public class WelcomeFragment extends Fragment {
 	View view;
 	ArrayList<Club> clubs = new ArrayList<Club>();
 	Intent i;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		view = inflater.inflate(R.layout.splash_logged, container,false);
-		Toast.makeText(getActivity(), Integer.toString(clubs.size()) + " clubs loaded!", Toast.LENGTH_LONG).show();
+		view = inflater.inflate(R.layout.layout_welcome_fragment, container,false);
+		/*Toast.makeText(getActivity(), Integer.toString(clubs.size()) + " clubs loaded!", Toast.LENGTH_LONG).show();
 		
 		Bundle b = new Bundle();
 		b.putParcelableArrayList("party.sense.app.clubsList", clubs);
@@ -42,7 +42,7 @@ public class FragSplashLogged extends Fragment {
 				}
 			}
 		};
-		splashTimerThread.start();
+		splashTimerThread.start();*/
 		return view;
 	}
 	
