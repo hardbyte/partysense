@@ -6,7 +6,7 @@
 
 <div class="row-fluid">
 
-    <div class="span3 leftSideBar">
+    <div class="span2 leftSideBar">
         <div class="">
             <h4>{{ event.title }}</h4>
             <div class="event_details">
@@ -32,7 +32,7 @@
 
     <div ng-app="Partysense">
 
-        <div class="span6">
+        <div class="span6 offset3">
             <div ng-controller="SpotifyTemplateCtrl">
                 <div ng-include src="template"></div>
             </div>
@@ -45,7 +45,7 @@
         </div>
 
 
-        <div class="span3">
+        <div class="offset9">
             <div ng-controller="PreviewTemplateCtrl">
                 <div ng-include src="template"></div>
             </div>
@@ -68,7 +68,8 @@
     </script>
     <script src="{% static "js/angular-1.1.4/angular.min.js" %}"></script>
     <script src="{% static "js/angular-1.1.4/angular-resource.min.js" %}"></script>
-
+    <script src="{% static "js/filters.js" %}"></script>
+    <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
 
 {% endblock %}

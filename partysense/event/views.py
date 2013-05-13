@@ -192,17 +192,21 @@ def profile(request):
     if request.user.is_authenticated() and 'next' in request.GET:
         #return HttpResponseRedirect('done')
         logging.info("Maybe should be redireting now? " + request.GET['next'])
+
     img = None
+    past_events = []
+    upcoming_events = []
+
     if request.user.is_authenticated():
         res = fb_request(request, "picture.width(200).type(square)")
         if 'error' not in res and 'picture' in res:
             img = res['picture']['data']
 
-    # Get past_events
-    past_events = Event.objects.filter(users=request.user, past_event=True)
+        # Get past_events
+        past_events = Event.objects.filter(users=request.user, past_event=True)
 
-    # Upcoming events
-    upcoming_events = Event.objects.filter(users=request.user, past_event=False)
+        # Upcoming events
+        upcoming_events = Event.objects.filter(users=request.user, past_event=False)
 
     # TODO: Also show events by dj's this user has attended events of in the past
 

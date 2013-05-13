@@ -3,17 +3,17 @@
         <input class="form-search" type="search" ng-model="searchTerm" ng-change="doSearch()"
            results="10" placeholder="Search for music to add"
            autofocus autocomplete="off">
-        <button class="btn" type="button">Clear</button>
+        <button class="btn" type="button" ng-click="clear()">Clear</button>
     </div>
 
-    <table class="table" ng-show="spotifyResult.tracks">
+    <table class="table table-hover" ng-show="spotifyResult.tracks">
         <thead><tr><th>Track</th><th>Artist</th></tr></thead>
         <tbody>
-            <tr ng-repeat="track in spotifyResult.tracks | limitTo:10">
-
-                <td><a href="" ng-click="addTrack(track)">
+            <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:10"
+                ng-click="addTrack(track)">
+                <td><a href="" class="track-name">
                     <i class="icon-plus"></i> {{track.name}}</a></td>
-                <td>{{track.artists[0].name}}</td>
+                <td class="track-artist">{{track.artists[0].name}}</td>
             </tr>
         </tbody>
     </table>
