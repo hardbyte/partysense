@@ -16,6 +16,7 @@
                     <dt>Host:</dt>
                         <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
                 </dl>
+                <div id="map_canvas" style="width: 100%; height: 200px;"></div>
             </div>
         </div>
 
@@ -56,13 +57,14 @@
             recentTracks: [
             {% for track in recent_tracks %}
                 {
-                    name: "{{ track.name }}",
-                    artist: "{{ track.artist }}",
-                    spotify_url: "{{ track.spotify_url }}"
+                    name: "{{ track.name|safe|escape }}",
+                    artist: "{{ track.artist|safe|escape }}",
+                    spotify_url: "{{ track.spotify_url|safe|escape }}"
                 },
             {% endfor %}
             ]
         };
+
 
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
     </script>
@@ -71,5 +73,27 @@
     <script src="{% static "js/filters.js" %}"></script>
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
+    {% if event.location.latitude and event.location.longitude %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=false"></script>
+    <script type="text/javascript">
+    function initialize() {
+        var loc = new google.maps.LatLng({{ event.location.latitude }}, {{ event.location.longitude }});
 
+        var mapOptions = {
+            center: loc,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true, // disable the overlay because we don't have room
+            draggable: true
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        var my_point = new google.maps.Marker({
+            position: loc,
+            map: map,
+            draggable: false
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    {% endif %}
 {% endblock %}
