@@ -3,7 +3,7 @@ body, html { /* set size of body to full page and remove margins */
     height: 100%;
     padding: 0;
     margin: 0;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', Helvetica, sans-serif;
 }
 
 body {
@@ -14,10 +14,14 @@ body {
 
     background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
     background-attachment: fixed;
-	color: #fff;
-
-    font-family: Arial, Helvetica, sans-serif;
+	background-color: #333333;
 }
+
+h1, h2, h3, h4, h5 {
+    color: #2ba6cb;
+}
+
+
 
 .leftSideBar {
     position: fixed;
@@ -29,27 +33,36 @@ body {
 }
 
 #content {
-    padding-top: 100px;
+    padding-top: 70px;
 }
 
 header {
     display:block;
     position: fixed;
-	left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.86);
+
+    background-color: #212121;
     z-index: 400;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+section {
+    background-color: #212121;
+    padding: 5px;
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 #logo {
-	display: block;
-	padding-left: 450px;
-	height: 71px;
-	background: url(http://partysenseapp.appspot.com/images/logo.png) no-repeat;
+    float:left;
+    margin-top: 5px;
+	height: 40px;
 }
 
 nav {
-    padding: 10px;
+    padding: 5px;
     overflow: hidden;
 }
 
@@ -85,7 +98,6 @@ nav a {
     margin-right: 20px;
     margin-top: 10px;
 
-	background: rgba(0,0,0,0.4);
 	padding: 5px 10px 5px 10px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;

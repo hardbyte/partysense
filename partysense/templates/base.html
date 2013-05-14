@@ -19,20 +19,26 @@
 <body>
     <header>
         <!-- Header content -->
-        <div id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
+        <img id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
 
         {% block nav %}
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/profile/">Profile</a></li>
+                <li><a href="#">Clubs</a></li>
+                <li><a href="/">Music</a></li>
+                <li><a href="#">Deals</a></li>
+                {% if not user.is_authenticated %}
+                    <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                        <div id="facebook_button">Login with facebook</div>
+                    </a></li>
+                {% else %}
+                    <li><a href="/profile/">DJ {{ user.first_name }}<i class="icon-list"></i></a> </li>
+                {% endif %}
+
             </ul>
         </nav>
-        {% if not user.is_authenticated %}
-            <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                <div id="facebook_button">Login with facebook</div>
-            </a>
-        {% endif %}
+
         {% endblock %}
     </header>
 
