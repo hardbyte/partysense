@@ -4,7 +4,7 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="row-fluid">
+<div class="row-fluid" ng-app="Partysense">
 
     <div class="span2 leftSideBar">
         <div class="">
@@ -19,39 +19,30 @@
             </div>
         </div>
 
-        <div class="">
-            <h5>Recent Music </h5>
-            <table class="table">
-            <tr><td>TODO</td><td>Blah...</td></tr>
-            <tr><td>Blah</td><td>Blah...</td></tr>
-            <tr><td>Blah</td><td>Blah...</td></tr>
-            </table>
+        <div ng-controller="RecentTracksTemplateCtrl">
+            <div ng-include src="template"></div>
+        </div>
+
+    </div>
+
+    <div class="span6 offset3">
+        <div ng-controller="SpotifyTemplateCtrl">
+            <div ng-include src="template"></div>
+        </div>
+
+        <div id="setlist">
+            <div ng-controller="SetlistTemplateCtrl">
+                <div ng-include src="template"></div>
+            </div>
         </div>
     </div>
 
 
-    <div ng-app="Partysense">
-
-        <div class="span6 offset3">
-            <div ng-controller="SpotifyTemplateCtrl">
-                <div ng-include src="template"></div>
-            </div>
-
-            <div id="setlist">
-                <div ng-controller="SetlistTemplateCtrl">
-                    <div ng-include src="template"></div>
-                </div>
-            </div>
+    <div class="offset9">
+        <div ng-controller="PreviewTemplateCtrl">
+            <div ng-include src="template"></div>
         </div>
-
-
-        <div class="offset9">
-            <div ng-controller="PreviewTemplateCtrl">
-                <div ng-include src="template"></div>
-            </div>
-         </div>
-
-    </div>
+     </div>
 
 </div>
 {% endblock %}
@@ -61,7 +52,16 @@
         var ps = {
             event: {{ event.pk }},
             eventTitle: "{{ event.title }}",
-            LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}"
+            LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}",
+            recentTracks: [
+            {% for track in recent_tracks %}
+                {
+                    name: "{{ track.name }}",
+                    artist: "{{ track.artist }}",
+                    spotify_url: "{{ track.spotify_url }}"
+                },
+            {% endfor %}
+            ]
         };
 
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";

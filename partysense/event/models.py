@@ -75,10 +75,6 @@ class Event(TimeStampedModel):
         return unicode(self.title)
 
 
-    #def tracks(self):
-    #    return Track.objects.filter()# TODO events_set=self)
-
-
 class Vote(models.Model):
     event = models.ForeignKey(Event, db_index=True)
     user = models.ForeignKey(User, db_index=True)

@@ -1,0 +1,9 @@
+<div id="recentTracks" ng-controller="RecentTrackCtrl" ng-show="recentTracks">
+    <h4>Recent Music</h4>
+    <div class="" ng-repeat="track in recentTracks">
+        <a title="Click to add Track" href="#" ng-click="addTrack(track)">
+            <strong class="white">{{track.artist}}</strong>
+            <span class="muted"> / {{track.name}}</span>
+        </a>
+    </div>
+</div>

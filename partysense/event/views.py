@@ -22,6 +22,7 @@ from partysense.event.forms import EventForm
 
 logger = logging.getLogger(__name__)
 
+
 class EventView(LoginRequiredMixin):
     model = Event
 
@@ -39,6 +40,15 @@ class EventDetail(EventView, DetailView):
         context = super(EventDetail, self).get_context_data(**kwargs)
         # add other context... if required
         context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
+
+        # add recently upvoted tracks
+        u = self.request.user
+        tracks = [v.track for v in u.vote_set.all()
+                                   .filter(is_positive=True)
+                                   .exclude(event=context['event'])[0:10]]
+
+        context['recent_tracks'] = tracks
+
         return context
 
 
@@ -63,15 +73,16 @@ def modify_event(request, pk):
     # Artist
     artist, created = Artist.objects.get_or_create(
         name=data['artist'],
-        spotify_url=data['spotifyArtistID']
         )
+    if created:
+        artist.spotify_url = data['spotifyArtistID']
+        artist.save()
 
     # Track
     track, created = Track.objects.get_or_create(
         name=data['name'],
         artist=artist,
         spotify_url=data['spotifyTrackID'],
-        external_ids=json.loads(data['external-ids']),
         )
 
     if not event.tracks.filter(pk=track.pk).exists():

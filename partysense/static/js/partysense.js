@@ -1,8 +1,5 @@
 angular.module('Partysense', ['ngResource', 'ps.filters', 'ps.services']);
 
-
-
-
 /* Templating Controllers */
 function SpotifyTemplateCtrl($scope) {
     $scope.template = "/static/spotifyResultList.html";
@@ -14,6 +11,10 @@ function PreviewTemplateCtrl($scope) {
 
 function SetlistTemplateCtrl($scope) {
     $scope.template = "/static/eventsTrackList.html";
+}
+
+function RecentTracksTemplateCtrl($scope) {
+    $scope.template = "/static/recentTrackList.html";
 }
 
 function SpotifyCtrl($scope, SpotifySearch, Track, updateService) {
@@ -118,3 +119,23 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     }
 }
 
+function RecentTrackCtrl($scope, Track, updateService) {
+    $scope.recentTracks = ps.recentTracks;
+
+    $scope.addTrack = function(track) {
+        console.log("Adding previously used track");
+        console.log(track);
+
+        // GET Track from db, then POST to this event?
+        var newTrack = new Track({
+                        "name": track.name,
+                        "artist": track.artist,
+                        "spotifyTrackID": track.spotify_url
+                    });
+        newTrack.$save(function(track, putResponseHeaders){
+            console.log("sending event to update the set list");
+            updateService.update("setlist");
+        });
+
+    };
+}

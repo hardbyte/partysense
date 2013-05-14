@@ -4,7 +4,7 @@
 {% for field in formset.visible_fields %}
 
     <p class="form_field">
-        {{ field.label_tag }}: {{ field }}
+        {{ field.label_tag }} {{ field }}
     {% if field.errors %}
         {% for error in field.errors %}
         <strong class="errorMessage">{{ error|escape }}</strong>
