@@ -112,7 +112,14 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
                 if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
                     var albumImages = data.track.album.image;
                     // Select the largest one...
-                    track.coverURL = albumImages[albumImages.length - 1]['#text'];
+                    //track.coverURL = albumImages[albumImages.length - 1]['#text'];
+                    // The "medium" sized image
+                    track.coverURL = albumImages[1]['#text'];
+                }
+                if(data.hasOwnProperty("track") &&
+                   data.track.hasOwnProperty("toptags") &&
+                   data.track.toptags.hasOwnProperty("tag") ) {
+                    track.tag = data.track.toptags.tag[0].name;
                 }
             }
         );

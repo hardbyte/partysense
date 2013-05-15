@@ -1,9 +1,12 @@
 <div ng-controller="SetlistCtrl">
     <div class="">
-        <h3>Vote on the current set list:</h3>
-        <section id="event-tracks">
+        <div class="header">
+            <h3>Party Playlist <small>Vote on the current set list</small></h3>
+        </div>
+
+        <div id="event-tracks">
             <div class="row-fluid trackDiv" ng-repeat="track in setlist">
-                <div class="span1 voteButtonDiv">
+                <div class="span2 voteButtonDiv">
                     <button id="vote-up-{{ track.pk }}"
                             ng-class="{'voted': track.usersVote === true }"
                             ng-click="vote(track, true)">
@@ -17,20 +20,25 @@
                     <i class="icon-thumbs-down"></i>
                     </button>
                 </div>
+
                 <div class="span7 track-info">
-                    <h4 class="track-name">{{ track.name }}</h4>
+                    <h5 class="track-name">{{ track.name }}</h5>
                     <p class="track-artist">{{ track.artist }}</p>
-                    <p class="muted track-votes">
+                    <span class="muted track-votes">
                         <ng-pluralize count="track.upVotes + track.downVotes"
                             when="{'0': 'Nobody has',
                                    '1': '1 person has',
                                    'other': '{} people have'}">
-                        </ng-pluralize> voted.</p>
+                        </ng-pluralize> voted.
+                    </span>
+                </div>
+                <div class="span1">
+                    <em class="track-genre pull-right">{{ track.tag }}</em>
                 </div>
                 <div class="span2">
                     <img class="lastfmCover" id="lastfm0" src="{{ track.coverURL }}">
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 </div>

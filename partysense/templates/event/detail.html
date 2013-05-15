@@ -4,29 +4,32 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="row-fluid" ng-app="Partysense">
+<div class="row" ng-app="Partysense">
 
-    <section class="span2 leftSideBar">
-        <div class="">
-            <h4>{{ event.title }}</h4>
+    <div class="span3 affix">
+        <section class="">
+            <h4>Current Event</h4>
+            <strong id="event-name">{{ event.title }}</strong>
             <div class="event_details">
                 <dl>
-                    <dt>Where:</dt>
+                    <dt>Venue:</dt>
                         <dd>{{ event.location }}</dd>
                     <dt>Host:</dt>
                         <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
+                    <dt>When:</dt>
+                        <dd>{{ event.start_time }}</dd>
                 </dl>
                 <div id="map_canvas" style="width: 100%; height: 200px;"></div>
             </div>
-        </div>
+        </section>
 
-        <div ng-controller="RecentTracksTemplateCtrl">
+        <section ng-controller="RecentTracksTemplateCtrl">
             <div ng-include src="template"></div>
-        </div>
+        </section>
 
-    </section>
+    </div>
 
-    <div class="span6 offset3">
+    <section class="span8 offset3">
         <div ng-controller="SpotifyTemplateCtrl">
             <div ng-include src="template"></div>
         </div>
@@ -36,10 +39,10 @@
                 <div ng-include src="template"></div>
             </div>
         </div>
-    </div>
+    </section>
 
 
-    <div class="offset9">
+    <div class="offset11 affix">
         <div ng-controller="PreviewTemplateCtrl">
             <div ng-include src="template"></div>
         </div>
