@@ -23,7 +23,7 @@ from partysense.event.forms import EventForm
 logger = logging.getLogger(__name__)
 
 
-class EventView(LoginRequiredMixin):
+class EventView():
     model = Event
 
 
@@ -33,7 +33,6 @@ class EventDetail(EventView, DetailView):
 
     def get_object(self):
         # add this event to this user now
-
         return get_object_or_404(Event, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
@@ -41,13 +40,15 @@ class EventDetail(EventView, DetailView):
         # add other context... if required
         context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
 
-        # add recently upvoted tracks
+        # add recently up-voted tracks
         u = self.request.user
-        tracks = [v.track for v in u.vote_set.all()
+        if not u.is_anonymous():
+            # TODO need to exclude ALL songs from this event, not just the upvotes from this event...
+            tracks = [v.track for v in u.vote_set.all()
                                    .filter(is_positive=True)
                                    .exclude(event=context['event'])[0:10]]
 
-        context['recent_tracks'] = tracks
+            context['recent_tracks'] = tracks
 
         return context
 
@@ -98,7 +99,7 @@ def get_track_list(request, pk):
     event = get_object_or_404(Event, pk=pk)
     for t in event.tracks.all():
         votes = event.vote_set.filter(track=t)
-        if votes.filter(user=request.user).exists():
+        if not request.user.is_anonymous() and votes.filter(user=request.user).exists():
             usersVote = votes.get(user=request.user).is_positive
         else:
             usersVote = None
