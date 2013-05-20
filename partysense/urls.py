@@ -26,7 +26,7 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^profile/$', 'profile'),
     url(r'^profile/logout$', 'logout'),
 
-    url(r'^event/new$', 'create'),
+    url(r'^event/new/$', 'create'),
 
     # the actual main page
     url(r'^event/(?P<pk>\d+)/',
