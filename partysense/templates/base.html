@@ -9,7 +9,7 @@
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
     <link rel="stylesheet" href="{% static "style.css" %}" />
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
     <style>
         {% block style %}
@@ -29,11 +29,11 @@
                 <li><a href="/">Music</a></li>
                 <li><a href="#">Deals</a></li>
             {% if not user.is_authenticated %}
-                <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     <div id="facebook_button">Login</div>
-                </a></li>
+                </a>
             {% else %}
-                <li><a href="/profile/">DJ {{ user.first_name }}<i class="icon-list"></i></a> </li>
+                <li><a href="/profile/">DJ {{ user.first_name }}</a> </li>
             {% endif %}
 
             </ul>

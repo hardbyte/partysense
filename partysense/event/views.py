@@ -221,7 +221,7 @@ def profile(request):
 
     # TODO: Also show events by dj's this user has attended events of in the past
 
-    djs = DJ.objects.filter(event__past_event=False)
+    djs = DJ.objects.filter(event__past_event=False).distinct()
 
     return render(request, 'profiles/detail.html', {
         "img": img,

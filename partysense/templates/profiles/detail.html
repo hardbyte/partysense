@@ -5,10 +5,11 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-    <p>Welcome {{ user.first_name|capfirst }}, thanks for logging in. This is your profile page, it
-    will show your event history and lets you remove your account associations.</p>
+    <div class="row">
+    <div class="span10 offset2">
     <p>Would you like to <a href="logout">logout</a>?</p>
-
+        </div>
+    </div>
     {% if past_events %}
         <h2>Past Events</h2>
         <ul>
@@ -18,17 +19,9 @@
         </ul>
     {% endif %}
 
-    {% if djs %}
-        <h2>DJ's hosting events soon:</h2>
-        <ul>
-        {% for dj in djs %}
-            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    <div
-    <div class="span4">
-        <h3>User data:</h3>
+    <div class="row">
+    <section class="span4">
+        <h3>Account info:</h3>
         <table class="table">
             <tr><th>Id:</th> <td>{{ user.id }}</td></tr>
             <tr><th>Username:</th> <td>{{ user.username }}</td></tr>
@@ -40,30 +33,36 @@
     {% if img %}
         <img src="{{ img.url }}">
     {% endif %}
-
-    </div>
-
-    <div class="span4 offset4">
     {% if social_auth.associated %}
-        <section>
-            <h3>Disconnect accounts</h3>
-            <ul>
-                {% for type, accounts in social_auth.associated.items %}
-                    {% for account in accounts %}
-                        <li>
-                          <span class="disconnect">
-                            <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
-                                {% csrf_token %}
-                                <a href="#">{{ account.provider|title }} (ID {{ account.id }})</a>
-                            </form>
-                          </span>
-                        </li>
-                    {% endfor %}
+        <h3>Disconnect accounts</h3>
+        <ul>
+            {% for type, accounts in social_auth.associated.items %}
+                {% for account in accounts %}
+                    <li>
+                      <span class="disconnect">
+                        <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+                            {% csrf_token %}
+                            <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
+                        </form>
+                      </span>
+                    </li>
                 {% endfor %}
-            </ul>
-        </section>
+            {% endfor %}
+        </ul>
     {% endif %}
-    </div>
+    </section>
+
+    {% if djs %}
+    <section class="span6">
+        <h3>DJ's hosting soon:</h3>
+        <ul>
+        {% for dj in djs %}
+            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+</div>
 {% else %}
 
     <div>
