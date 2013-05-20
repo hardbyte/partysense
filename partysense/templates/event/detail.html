@@ -89,6 +89,7 @@
             disableDefaultUI: true, // disable the overlay because we don't have room
             draggable: true
         };
+        google.maps.visualRefresh = true;
         var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         var my_point = new google.maps.Marker({
             position: loc,
