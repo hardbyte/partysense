@@ -18,7 +18,7 @@ function RecentTracksTemplateCtrl($scope) {
 }
 
 function SpotifyCtrl($scope, SpotifySearch, Track, updateService) {
-
+    $scope.loggedIn = ps.loggedIn;
 
     $scope.doSearch = function() {
         $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm});
@@ -47,6 +47,9 @@ function SpotifyCtrl($scope, SpotifySearch, Track, updateService) {
 
 
 function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
+
+    $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
+    $scope.loggedIn = ps.loggedIn;
 
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
@@ -128,7 +131,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
 
 function RecentTrackCtrl($scope, Track, updateService) {
     $scope.recentTracks = ps.recentTracks;
-
+    $scope.loggedIn = ps.loggedIn;
     $scope.addTrack = function(track) {
         console.log("Adding previously used track");
         console.log(track);

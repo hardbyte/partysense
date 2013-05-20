@@ -87,7 +87,7 @@ def modify_event(request, pk):
         )
 
     if not event.tracks.filter(pk=track.pk).exists():
-        logger.info("Adding new track to event: {}".format(track.name))
+        #logger.info("Adding new track to event: {}".format(track.name))
         event.tracks.add(track)
 
     # Since this user added it they probably want to vote it up

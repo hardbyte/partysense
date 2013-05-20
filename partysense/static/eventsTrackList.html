@@ -5,26 +5,26 @@
         </div>
 
         <div id="event-tracks">
-            <div  ng-show="setlist.length === 0">
+            <div ng-show="setlist.length === 0">
                 <p>It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
             </div>
-            <div class="row-fluid trackDiv" ng-repeat="track in setlist">
-                <div class="span2 voteButtonDiv">
+            <div class="row-fluid trackDiv"
+                 ng-repeat="track in setlist">
+
+                <div class="span2 voteButtonDiv" ng-show="loggedIn">
                     <button id="vote-up-{{ track.pk }}"
                             ng-class="{'voted': track.usersVote === true }"
                             ng-click="vote(track, true)">
-                        <!--↑-->
                         <i class="icon-thumbs-up"></i>
                     </button>
                     <button id="vote-down-{{ track.pk }}"
                             ng-class="{'voted': track.usersVote === false }"
                             ng-click="vote(track, false)">
-                        <!--↓-->
                     <i class="icon-thumbs-down"></i>
                     </button>
                 </div>
 
-                <div class="span7 track-info">
+                <div class="track-info" ng-class="infoWidth">
                     <h5 class="track-name">{{ track.name }}</h5>
                     <p class="track-artist">{{ track.artist }}</p>
                     <span class="muted track-votes">
