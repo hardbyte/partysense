@@ -109,23 +109,37 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         wiki
 */
     function findCover(track){
-        LastfmTrack.get(
-            {track: track.name, artist: track.artist},
-            function(data){
-                if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
-                    var albumImages = data.track.album.image;
-                    // Select the largest one...
-                    //track.coverURL = albumImages[albumImages.length - 1]['#text'];
-                    // The "medium" sized image
-                    track.coverURL = albumImages[1]['#text'];
-                }
-                if(data.hasOwnProperty("track") &&
-                   data.track.hasOwnProperty("toptags") &&
-                   data.track.toptags.hasOwnProperty("tag") ) {
-                    track.tag = data.track.toptags.tag[0].name;
-                }
+        var updateCover = function(data){
+            if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
+                var albumImages = data.track.album.image;
+                // Select the largest one...
+                //track.coverURL = albumImages[albumImages.length - 1]['#text'];
+                // The "medium" sized image
+                track.coverURL = albumImages[1]['#text'];
             }
-        );
+            if(data.hasOwnProperty("track") &&
+               data.track.hasOwnProperty("toptags") &&
+               data.track.toptags.hasOwnProperty("tag") ) {
+                track.tag = data.track.toptags.tag[0].name;
+            }
+        };
+
+        var cacheCover = function(track, data) {
+            localStorage[track.spotifyTrackID] = JSON.stringify(data);
+        };
+        // See if we have localStorage and if this track has been stored
+        if(supports_html5_storage() && track.spotifyTrackID in localStorage) {
+            updateCover(JSON.parse(localStorage[track.spotifyTrackID]));
+            return;
+        }
+        // Otherwise we need to query lastfm about this track
+        LastfmTrack.get({track: track.name, artist: track.artist},
+          function(data) {
+              if(supports_html5_storage()) {
+                  cacheCover(track, data);
+              }
+              updateCover(data);
+          });
     }
 }
 
@@ -147,5 +161,12 @@ function RecentTrackCtrl($scope, Track, updateService) {
             updateService.update("setlist");
         });
 
+        // Remove this track from the recentTracks list
+
+        var i = ps.recentTracks.indexOf(track);
+        if(i != -1) {
+            ps.recentTracks.splice(i, 1);
+        }
+        $scope.recentTracks = ps.recentTracks;
     };
 }
