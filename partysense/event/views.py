@@ -46,6 +46,7 @@ class EventDetail(EventView, DetailView):
             # TODO need to exclude ALL songs from this event, not just the upvotes from this event...
             tracks = [v.track for v in u.vote_set.all()
                                    .filter(is_positive=True)
+                                   .exclude(track__in=[t.id for t in context['event'].tracks.all()])
                                    .exclude(event=context['event'])[0:10]]
 
             context['recent_tracks'] = tracks

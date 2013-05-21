@@ -1,13 +1,14 @@
 <div id="recentTracks" ng-controller="RecentTrackCtrl" ng-show="recentTracks">
-    <h4>Recent Music</h4>
-    <div class="" ng-repeat="track in recentTracks">
+    <h4>Your Recent Music</h4>
+    <div class="recentTrack" ng-repeat="track in recentTracks">
+        <i class="icon-chevron-right"></i>
         <a title="Click to add Track" href="#" ng-click="addTrack(track)">
             <strong class="white">{{track.artist}}</strong>
             <span class="muted"> / {{track.name}}</span>
-            <i class="icon-chevron-right"></i>
+
         </a>
     </div>
-</div>
-<div ng-hide="loggedIn">
-    <p>Login to add music to this event!</p>
+    <div ng-hide="loggedIn">
+        <p>Login to add music to this event!</p>
+    </div>
 </div>
