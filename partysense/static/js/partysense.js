@@ -119,8 +119,13 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
             }
             if(data.hasOwnProperty("track") &&
                data.track.hasOwnProperty("toptags") &&
-               data.track.toptags.hasOwnProperty("tag") ) {
-                track.tag = data.track.toptags.tag[0].name;
+               data.track.toptags.hasOwnProperty("tag")) {
+                if(Array.isArray(data.track.toptags.tag)) {
+                    track.tag = data.track.toptags.tag[0].name;
+                } else {
+                    // could just be a string "pop rap"
+                    track.tag = data.track.toptags.tag.name.split(" ")[0];
+                }
             }
         };
 
