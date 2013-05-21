@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% block content %}
+
+<h2>Tell us about this gig {{ user.dj_set.get.nickname }}</h2>
+
+<form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    {% include "form_snippet.html" %}
+
+    <br style="clear:left;">
+
+    <input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
+
+{% block jslibs %}
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock %}

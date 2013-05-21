@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+<title>User Details</title>
+
+{% block content %}
+{% if user.is_authenticated %}
+
+    <div class="row">
+    <div class="span10 offset2">
+    <p>Would you like to <a href="logout">logout</a>?</p>
+        </div>
+    </div>
+    {% if past_events %}
+        <h2>Past Events</h2>
+        <ul>
+        {% for e in past_events %}
+             <li><a href="/event/{{ event.pk }}/{{ event.title|slugify }}">{{ event }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="row">
+    <section class="span4">
+        <h3>Account info:</h3>
+        <table class="table">
+            <tr><th>Id:</th> <td>{{ user.id }}</td></tr>
+            <tr><th>Username:</th> <td>{{ user.username }}</td></tr>
+            <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+            <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+            <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+        </table>
+
+    {% if img %}
+        <img src="{{ img.url }}">
+    {% endif %}
+    {% if social_auth.associated %}
+        <h3>Disconnect accounts</h3>
+        <ul>
+            {% for type, accounts in social_auth.associated.items %}
+                {% for account in accounts %}
+                    <li>
+                      <span class="disconnect">
+                        <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+                            {% csrf_token %}
+                            <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
+                        </form>
+                      </span>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </section>
+
+    {% if djs %}
+    <section class="span6">
+        <h3>DJ's hosting soon:</h3>
+        <ul>
+        {% for dj in djs %}
+            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+</div>
+{% else %}
+
+    <div>
+        <h3>You can login using:</h3>
+        <ul>
+            {% for name in social_auth.backends.oauth2 %}
+                <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% endblock %}

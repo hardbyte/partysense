@@ -1,0 +1,7 @@
+django>=1.5
+python-openid
+oauth2
+pillow
+django-social-auth
+django-braces
+beautifulsoup
