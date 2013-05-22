@@ -40,4 +40,5 @@
 		<item>RnB</item>
 		<item>Rock</item>
     </string-array>
+	<string name="pref_completed_app_setup">completed_app_setup</string>
 </resources>

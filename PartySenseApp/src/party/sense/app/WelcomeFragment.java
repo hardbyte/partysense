@@ -5,21 +5,22 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class WelcomeFragment extends Fragment {
+	
+	public static final String TAG = "WelcomeFragment"; 
 	View view;
 	ArrayList<Club> clubs = new ArrayList<Club>();
 	Intent i;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		view = inflater.inflate(R.layout.layout_welcome_fragment, container,false);
-		/*Toast.makeText(getActivity(), Integer.toString(clubs.size()) + " clubs loaded!", Toast.LENGTH_LONG).show();
 		
-		Bundle b = new Bundle();
+		/*Bundle b = new Bundle();
 		b.putParcelableArrayList("party.sense.app.clubsList", clubs);
 		i = new Intent(getActivity(), PartySenseMainActivity.class);
 		i.putExtras(b);
@@ -35,6 +36,7 @@ public class WelcomeFragment extends Fragment {
 					}
 				}
 				catch(Exception e){
+					Log.d(TAG, "Exception : " + e.getMessage());
 				}
 				finally{
 					startActivity(i);
@@ -46,7 +48,11 @@ public class WelcomeFragment extends Fragment {
 		return view;
 	}
 	
-	public void setClubArr(ArrayList<Club> clubs){
+	/**
+	 * Setter method for setting the Clubs List
+	 * @param clubs The ArrayList containing the clubs to be added
+	 */
+	public void setClubsList(ArrayList<Club> clubs){
 		this.clubs = clubs;
 	}
 }

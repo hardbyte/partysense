@@ -32,7 +32,7 @@ public class FragmentSongsScreen extends Fragment {
 		Bundle b = this.getArguments();
 		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
 		
-		settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 		String d = "";
 		
 		for(String s : PartySenseGenreSelectActivity.genres){

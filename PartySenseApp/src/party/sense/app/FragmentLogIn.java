@@ -22,7 +22,7 @@ public class FragmentLogIn extends Fragment {
 		TextView tv = (TextView) view.findViewById(R.id.tvMsg);
 		final EditText txtLogin = (EditText) view.findViewById(R.id.txtLogin);
 		Button b = (Button) view.findViewById(R.id.tstButton);
-		settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    loginName = settings.getString("login_name", "");
 	    if (loginName == ""){

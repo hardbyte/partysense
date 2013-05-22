@@ -20,7 +20,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class FragmentMenuScreen extends Fragment {
-	public static final String PREFS_NAME = "PartySenseSharedPreff";
+	
 	View view;
 	ListView lvMenu;
 	ArrayList<Club> clubsList = new ArrayList<Club>();

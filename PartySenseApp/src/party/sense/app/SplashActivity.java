@@ -23,14 +23,19 @@ import com.facebook.UiLifecycleHelper;
 
 public class SplashActivity extends FragmentActivity {
 	
-	SharedPreferences settings;
 	private static final String TAG = "SplashActivity";
+	public static final String PREFS_NAME = "PartySenseSharedPreferences";
 	public static final String BUNDLE_ID_CLUBS_LIST = "party.sense.app.clubsList";
+	private SharedPreferences settings;
+	private SharedPreferences.Editor edit;
 	
 	private static final int LOGIN = 0;
 	private static final int WELCOME = 1;
 	private static final int FRAGMENT_COUNT = WELCOME + 1;
 	private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
+	private FragmentManager fm;
+	
+	private Intent i;
 	
 	private boolean isResumed = false;
 	
@@ -42,11 +47,26 @@ public class SplashActivity extends FragmentActivity {
 		}
 	};
 	
-	Intent i;
-	Button btnLogin;
-	TextView txtLogin;
 	
-	FragmentManager fm;
+	private final Thread splashTimerThread = new Thread(){
+		public void run(){
+			try{
+				int counter = 0;
+				// Keep looping until timer expires and next activity intent is set
+				while(counter<1)
+				{
+					Thread.sleep(2000);
+					counter += 1;
+				}
+			}
+			catch(Exception e){
+			}
+			finally{
+				startActivity(i);
+				finish();
+			}
+		}
+	};
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -55,73 +75,56 @@ public class SplashActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_splash_activity);
 		ArrayList<Club> clubs = new ArrayList<Club>();
-		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
 		
+		settings = getSharedPreferences(this.PREFS_NAME, 0);
+		
+		// This creates a Facebook session and opens is automatically if a 
+		// cached token is available
 		uiHelper = new UiLifecycleHelper(this, callback);
 		uiHelper.onCreate(savedInstanceState);
+		
 		FragmentManager fm = getSupportFragmentManager();
 		fragments[LOGIN] = fm.findFragmentById(R.id.facebookLoginFragment);
 		fragments[WELCOME] = fm.findFragmentById(R.id.welcomeFragment);
 		
+		// Initially, hide all fragments,  till the logic is run to set the correct one
 		FragmentTransaction transaction = fm.beginTransaction();
-		for(int i = 0; i< fragments.length;  i++){
-			transaction.hide(fragments[i]);
+		for(int fragmentIndex = 0; fragmentIndex< fragments.length;  fragmentIndex++){
+			transaction.hide(fragments[fragmentIndex]);
 		}
 		
 		Log.d(TAG, "onCreate: Hiding all Fragments");
 		transaction.commit();
 		
-		//String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),null);
-		
-		/*
-		final Thread splashTimerThread = new Thread(){
-			public void run(){
-				try{
-					int counter = 0;
-					while(counter<1)
-					{
-						Thread.sleep(1000);
-						counter += 1;
-					}
-				}
-				catch(Exception e){
-				}
-				finally{
-					startActivity(i);
-					finish();
-				}
-			}
-		};
-		
-		
-		btnLogin.setOnClickListener(new OnClickListener() {
-					
-					public void onClick(View v) {
-						splashTimerThread.start();
-						
-					}
-		});
-		
-		
-		
+		String loginName = settings.getString(getResources().getString(R.string.pref_name_on_facebook),"");
+		Boolean isAppSetupCompleted = settings.getBoolean(getResources().getString(R.string.pref_completed_app_setup),false);
+		// Load the clubs list
 		try {
 			
-
 			clubs = this.updateClubs();
 			while( clubs == null){
 				Log.e("Splash Activity","Waiting for Clubs List from Task");
+				Thread.sleep(100);
 			}
 			
-			Log.e("Splash Activity",Integer.toString(clubs.size()));
+			Log.e("Splash Activity","Added " + Integer.toString(clubs.size()) + "Clubs");
 			
-			Bundle b = new Bundle();
+		    
+		    Bundle b = new Bundle();
 			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
-			i = new Intent(this, SetupActivity.class);
-			i.putExtras(b);
-			
-			//Logic to set login
-			
 
+			if (isAppSetupCompleted == false){
+				// Go through Setup
+				i = new Intent(this, SetupActivity.class);
+				i.putExtras(b);
+		    }else{
+		    	// Go Directly to Main Activity
+		    	i = new Intent(this, PartySenseMainActivity.class);
+		    	i.putExtras(b);
+		    }
+			
+			
+			
 		} catch(IOException exception){
 			Log.e(TAG, exception.getMessage());
 		} catch (InterruptedException e) {
@@ -129,24 +132,21 @@ public class SplashActivity extends FragmentActivity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-	  */
+	  
 		
 	  /*fm = getSupportFragmentManager();
     	FragmentTransaction ft = fm.beginTransaction();
     	
     	
 		if(loginName != null){
-			((FragSplashLogged)fragWelcom).setClubArr(clubs);
-			ft.add(R.id.fragLoginLayout, fragWelcom);
+			WelcomeFragment welcomeFragment = (WelcomeFragment) fm.findFragmentById(R.id.welcomeFragment);
+			welcomeFragment.setClubsList(clubs);
 		}
 		else{
-			((FacebookLoginFragment)fragLogin).setClubArr(clubs);
-			ft.add(R.id.fragLoginLayout, fragLogin);
-		}
+			FacebookLoginFragment facebookLoginFragment = (FacebookLoginFragment) fm.findFragmentById(R.id.facebookLoginFragment);
+			facebookLoginFragment.setClubsList(clubs);
+		}*/
 		
-		ft.commit();*/
-		
-
 	}
 
 	/**
@@ -221,13 +221,14 @@ public class SplashActivity extends FragmentActivity {
 			// Get number of entries in back stack
 			int backStackSize = manager.getBackStackEntryCount();
 			// Clear the back stack
-			for (int i = 0; i < backStackSize; i++) {
+			for (int backStackIterator = 0; backStackIterator < backStackSize; backStackIterator++) {
 				manager.popBackStack();
 			}
 			if (state.isOpened()) {
 				
 				Log.i(TAG, "isOpened: Calling show fragment");
 				showFragment(WELCOME, false);
+				splashTimerThread.start();
 			} else if (state.isClosed()) {
 				
 				Log.i(TAG, "isClosed: Calling show fragment");
@@ -240,11 +241,11 @@ public class SplashActivity extends FragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction transaction = fm.beginTransaction();
 		
-		for (int i = 0; i < fragments.length; i++) {
-			if (i == fragmentIndex) {
-				transaction.show(fragments[i]);
+		for (int fragmentIter = 0; fragmentIter < fragments.length; fragmentIter++) {
+			if (fragmentIter == fragmentIndex) {
+				transaction.show(fragments[fragmentIter]);
 			}else {
-				transaction.hide(fragments[i]);
+				transaction.hide(fragments[fragmentIter]);
 			}
 		}
 		if (addToBackStack){
@@ -268,6 +269,10 @@ public class SplashActivity extends FragmentActivity {
 			Log.i(TAG, "Calling ShowFragments for SplashScreen: Session is not null and isOpened");
 			showFragment(LOGIN, false);
 		}
+	}
+	
+	public void setSplashWelcomeTimerStatus( boolean status) {
+		
 	}
 }
 

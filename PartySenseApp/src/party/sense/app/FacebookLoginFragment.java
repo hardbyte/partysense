@@ -3,56 +3,50 @@ package party.sense.app;
 import java.util.ArrayList;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+/**
+ * Fragment showing the Facebook Login Button on the splash screen
+ * @author Tanmay Bhola [tanmay9@gmail.com]
+ *
+ */
 public class FacebookLoginFragment extends Fragment{
+	
+	public static final String TAG = "FacebookLoginFragment";
+	
 	View view;
 	Intent i;
 	ArrayList<Club> clubs = new ArrayList<Club>();
-	private String userName;
+	private String facebookUserName;
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(TAG, "onCreateView");
 		view = inflater.inflate(R.layout.layout_facebook_login_fragment, container,false);
-		/*Button b = (Button) view.findViewById(R.id.btnLogin);
-		
-		b.setOnClickListener(new View.OnClickListener() {
-			
-			public void onClick(View v) {
-
-                // Handle FB Login Button logic here
-
-                // Get user name from Facebook (not facebook ID)
-                userName = "DEVA";
-
-				Bundle b = new Bundle();
-				b.putString("login_name", userName);
-				b.putParcelableArrayList("party.sense.app.clubsList", clubs);
-				i = new Intent(getActivity(), SetupActivity.class);
-				i.putExtras(b);
-				startActivity(i);
-				getActivity().finish();
-			}
-		});
-		*/
 		return view;
 	}
 
-	public void setClubArr(ArrayList<Club> clubs){
+	/**
+	 * Setter method for setting the Clubs List
+	 * @param clubs The ArrayList containing the clubs to be added
+	 */
+	public void setClubsList(ArrayList<Club> clubs){
 		this.clubs = clubs;
 	}
 
-	public String getName(){
-		return userName;
+	/**
+	 * Getter method for returning User's facebook name 
+	 * @return String containing the users facebook name
+	 */
+	public String getFacebookUserName(){
+		return facebookUserName;
 	}
 }

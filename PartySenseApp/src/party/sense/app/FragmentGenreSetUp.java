@@ -45,7 +45,7 @@ public class FragmentGenreSetUp extends Fragment {
 		lView.setAdapter(new ArrayAdapter<String>(getActivity(),
 	            android.R.layout.simple_list_item_multiple_choice, genres));
 	    lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-	    settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+	    settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    refreshList();
 	    Map<String, ?> m = settings.getAll();

@@ -41,11 +41,16 @@ public class SetupActivity extends FragmentActivity {
     	ft.add(R.id.fragSetUp, getFragment(pageID));
     	ft.commit();
 	    
-    	settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+    	settings = getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
+	    
+	    // TODO Remove this : Temporary declaration 
+	    userName = "Tanmay";
+	    edit.putString(getResources().getString(R.string.pref_name_on_facebook), userName);
+	    edit.commit();
     	
     	Bundle b = getIntent().getExtras();
-    	this.userName = b.getString("login_name");
+    	//this.userName = b.getString("login_name");
         this.clubs = b.getParcelableArrayList("party.sense.app.clubsList");
     	
     	btnNext = (Button) findViewById(R.id.btnNext);
@@ -71,8 +76,7 @@ public class SetupActivity extends FragmentActivity {
 					for (int i = 0; i < selectionValues.size(); i++) {
 				        edit.putBoolean(genres.get(i), selectionValues.get(i));
 				    }
-					edit.putString(getResources().getString(R.string.pref_name_on_facebook), userName);
-					
+					edit.putBoolean(getResources().getString(R.string.pref_completed_app_setup), true);
 					edit.commit();
 					
 					Bundle b = new Bundle();
@@ -83,7 +87,9 @@ public class SetupActivity extends FragmentActivity {
 					finish();
 					Toast.makeText(getApplicationContext(), userName, Toast.LENGTH_SHORT).show();
 				}
-				else{}
+				else{
+					
+				}
 				
 			}
 		});

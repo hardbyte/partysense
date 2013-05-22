@@ -33,7 +33,7 @@ public class PartySenseLoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_login_screen);
 		
-		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		settings = getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    
 		ImageView facebookLoginButton = (ImageView)findViewById(R.id.imageView_login_facebook);
