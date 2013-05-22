@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -75,6 +76,9 @@ public class SplashActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_splash_activity);
 		ArrayList<Club> clubs = new ArrayList<Club>();
+		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		//btnLogin = (Button) findViewById(R.id.btnLogin);
+		DBactions db = new DBactions(getApplicationContext());
 		
 		settings = getSharedPreferences(this.PREFS_NAME, 0);
 		
@@ -106,11 +110,20 @@ public class SplashActivity extends FragmentActivity {
 				Log.e("Splash Activity","Waiting for Clubs List from Task");
 				Thread.sleep(100);
 			}
+			db.open();
+			Log.e("clubs", Integer.toString(clubs.size()));
+			for(Club c: clubs){
+				
+				db.write(c);	
+			}
+			db.close();
+			for(Club c: clubs){
+				Log.e("Club",c.getName());
+			}
 			
-			Log.e("Splash Activity","Added " + Integer.toString(clubs.size()) + "Clubs");
 			
-		    
-		    Bundle b = new Bundle();
+			
+			Bundle b = new Bundle();
 			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
 
 			if (isAppSetupCompleted == false){
@@ -132,7 +145,12 @@ public class SplashActivity extends FragmentActivity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-	  
+		int c = 0;
+		for (int i = 0; i < FragmentGenreSetUp.genres.size(); i++) {
+	        if(settings.getBoolean(FragmentGenreSetUp.genres.get(i), false)){
+	        	c++;
+	        }
+	    }
 		
 	  /*fm = getSupportFragmentManager();
     	FragmentTransaction ft = fm.beginTransaction();

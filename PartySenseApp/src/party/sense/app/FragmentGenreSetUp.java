@@ -48,10 +48,10 @@ public class FragmentGenreSetUp extends Fragment {
 	    settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    refreshList();
-	    Map<String, ?> m = settings.getAll();
+	    /*Map<String, ?> m = settings.getAll();
 	    for(Map.Entry<String,?> ms : m.entrySet()){
 	    	Log.d("PREF",ms.getKey());
-	    }
+	    }*/
 		return view;
 	}
 	
@@ -91,6 +91,13 @@ public class FragmentGenreSetUp extends Fragment {
 	    }
 	    return selectionValues;
 	    
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		refreshList();
 	}
 	
 	
