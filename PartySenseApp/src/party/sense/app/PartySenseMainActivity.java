@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PartySenseMainActivity extends FragmentActivity {
 
@@ -41,6 +42,21 @@ public class PartySenseMainActivity extends FragmentActivity {
         
         Bundle b = getIntent().getExtras();
         this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        DBactions db = new DBactions(getApplicationContext());
+        db.open();
+        this.clubsList = db.getData("");
+        
+        //db.getData("");
+        db.close();
+        String s = "";
+        for(Club c: clubsList){
+        	s = "";
+        	for(String a : c.getTags()){
+        		s += " " + a;
+        	}
+        	Log.e("MainAct",c.getName() + "-" + s);
+		}
+        
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);

@@ -54,7 +54,6 @@ public class SetupActivity extends FragmentActivity {
     	btnNext.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				//Toast.makeText(getApplicationContext(), Integer.toString(pageID), Toast.LENGTH_LONG).show();
 				if(pageID == 0){
 					selectionValues = ((FragmentGenreSetUp)fragGenre).genresSelected();
