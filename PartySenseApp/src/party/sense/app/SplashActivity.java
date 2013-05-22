@@ -56,7 +56,7 @@ public class SplashActivity extends FragmentActivity {
 				// Keep looping until timer expires and next activity intent is set
 				while(counter<1)
 				{
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 					counter += 1;
 				}
 			}
