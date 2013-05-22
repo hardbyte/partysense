@@ -42,13 +42,14 @@
         google.maps.event.addListener(my_point, 'dragend', function(event){
             $('#id_latitude').val(event.latLng.lat());
             $('#id_longitude').val(event.latLng.lng());
+            $('#id_venue').val($('#id_address').val());
         });
 
     });
 
     function codeAddress(){
         var address = $('#id_address').val() + ', ' + $('#city_country').val();
-        console.log("Asking google where to find: " + address);
+        //console.log("Asking google where to find: " + address);
         geocoder.geocode( { 'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 var results_len = results.length;

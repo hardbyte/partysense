@@ -13,12 +13,13 @@ class GoogleMapsWidget(forms.HiddenInput):
         self.attrs['country_city'] = self.attrs.get('country_city', u'Christchurch, New Zealand')
 
         t = loader.get_template("map_snippet.html")
-        c = Context({'latitude': 'latitude_id',
-             'longitude': 'longitude_id',
-             'base_point' : self.attrs['base_point'],
-             'width': self.attrs['width'],
-             'height': self.attrs['height'],
-             'country_city': self.attrs['country_city']})
+        c = Context({
+            'latitude': 'latitude_id',
+            'longitude': 'longitude_id',
+            'base_point' : self.attrs['base_point'],
+            'width': self.attrs['width'],
+            'height': self.attrs['height'],
+            'country_city': self.attrs['country_city']})
         maps_html = t.render(c)
 
         rendered = super(GoogleMapsWidget, self).render(name, value, attrs)

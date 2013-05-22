@@ -17,16 +17,19 @@ function RecentTracksTemplateCtrl($scope) {
     $scope.template = "/static/recentTrackList.html";
 }
 
-function SpotifyCtrl($scope, SpotifySearch, Track, updateService) {
+function SpotifyCtrl($scope, $timeout, SpotifySearch, Track, updateService) {
     $scope.loggedIn = ps.loggedIn;
 
     $scope.doSearch = function() {
-        $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm});
+        if($scope.searchTerm.length > 2) {
+            $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm});
+        }
     };
 
     $scope.clear = function(){
         $scope.spotifyResult = "";
         $scope.searchTerm = "";
+        $scope.addTrackResult = false;
     };
 
     $scope.addTrack = function(track) {
@@ -41,6 +44,11 @@ function SpotifyCtrl($scope, SpotifySearch, Track, updateService) {
         newTrack.$save(function(track, putResponseHeaders){
             console.log("sending event to update the set list");
             updateService.update("setlist");
+            $scope.addTrackResult = true;
+            $timeout(function() { $scope.addTrackResult = false; }, 2000);
+
+        }, function(){
+            $scope.addTrackResult = false;
         });
     };
 }
@@ -50,6 +58,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
 
     $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
     $scope.loggedIn = ps.loggedIn;
+    $scope.spotifyPlaylistURL = "";
 
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
@@ -60,6 +69,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
                 songs += data[i].spotifyTrackID.slice(14) + ',';
             }
             $scope.playlistSongs = songs;
+            $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
         });
     };
 

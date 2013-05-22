@@ -1,7 +1,7 @@
 <!--<h4>Preview with Spotify</h4>-->
 <div id="playlist" ng-controller="SetlistCtrl">
-    <div>
-        <iframe ng:src="http://embed.spotify.com/?uri=spotify:trackset:{{ playlistName }}:{{ playlistSongs }}&view=list"
+    <div ng-show="playlistSongs.length">
+        <iframe ng:src="{{ spotifyPlaylistURL }}"
                 frameborder="0" allowtransparency="true" width="320" height="380"></iframe>
     </div>
 </div>

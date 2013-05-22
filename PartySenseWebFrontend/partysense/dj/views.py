@@ -50,7 +50,7 @@ def register(request):
     if DJ.objects.filter(user=request.user).exists():
         logger.info("Trying to register a second DJ for this user?")
         # TODO maybe need a DJ update view (as part of profile?)
-        return HttpResponseRedirect('/event/new')
+        return HttpResponseRedirect('/event/new/')
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
@@ -71,7 +71,7 @@ def register(request):
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
             # Redirect to a thanks for joining page
-            return HttpResponseRedirect('/event/new')
+            return HttpResponseRedirect('/event/new/')
     else:
         # Partially fill in what we know (if anything)
         # Get location from fb

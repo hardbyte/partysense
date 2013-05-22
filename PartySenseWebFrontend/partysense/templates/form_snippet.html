@@ -3,21 +3,27 @@
 {% csrf_token %}
 {% for field in formset.visible_fields %}
 
-    <p class="form_field">
+    <div class="control-group {% if field.errors %}warning{% endif %}">
         {{ field.label_tag }} {{ field }}
-    {% if field.errors %}
-        {% for error in field.errors %}
-        <strong class="errorMessage">{{ error|escape }}</strong>
-        {% endfor %}
-    {% endif %}
-    </p>
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="help-inline">
+                    <strong>{{ error|escape }}</strong>
+                </span>
+            {% endfor %}
+        {% endif %}
+
+
+    </div>
 {% endfor %}
 
 {% for field in formset.hidden_fields %}
     {{ field }}
     {% if field.errors %}
         {% for error in field.errors %}
-        <strong class="errorMessage">{{ error|escape }}</strong>
+            <div class="alert">
+                <strong class="errorMessage">{{ error|escape }}</strong>
+            </div>
         {% endfor %}
     {% endif %}
 {% endfor %}

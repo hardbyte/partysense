@@ -150,7 +150,7 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
 def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
     if not DJ.objects.filter(user=request.user).exists():
-        return HttpResponseRedirect('/register')
+        return HttpResponseRedirect('/register/')
 
     if request.method == 'POST':
         # If the form has been submitted...
