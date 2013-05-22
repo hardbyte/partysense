@@ -76,7 +76,6 @@ public class SplashActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_splash_activity);
 		ArrayList<Club> clubs = new ArrayList<Club>();
-		settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
 		//btnLogin = (Button) findViewById(R.id.btnLogin);
 		DBactions db = new DBactions(getApplicationContext());
 		
