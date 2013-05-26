@@ -13,7 +13,7 @@ from django.conf import settings
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
-from partysense.music.models import Artist, Track
+from partysense.music.models import Artist, Track, IDType
 
 from partysense.event.forms import EventForm
 
@@ -56,8 +56,7 @@ def modify_event(request, pk):
     """
     Given an event pk and a request:
         POST: New track added to event
-    TODO the rest:
-        PUT/PATCH: Change the rank of an existing track
+    TODO:
         DELETE: Remove a track (TODO DJ only?)
     """
     event = get_object_or_404(Event, pk=pk)
@@ -68,7 +67,7 @@ def modify_event(request, pk):
         event.users.add(request.user)
 
     data = json.loads(request.body)
-    #data = request.POST
+
     # Artist
     artist, created = Artist.objects.get_or_create(
         name=data['artist'],
@@ -80,9 +79,14 @@ def modify_event(request, pk):
     # Track
     track, created = Track.objects.get_or_create(
         name=data['name'],
-        artist=artist,
-        spotify_url=data['spotifyTrackID'],
+        artist=artist
         )
+    if created:
+        track.spotify_url = data['spotifyTrackID']
+
+        for external_id_data in json.loads(data['external-ids']):
+            id_type, created = IDType.objects.get_or_create(name=external_id_data['type'])
+            track._external_ids.create(id_type=id_type, value=external_id_data['id'])
 
     if not event.tracks.filter(pk=track.pk).exists():
         #logger.info("Adding new track to event: {}".format(track.name))
@@ -112,7 +116,6 @@ def get_track_list(request, pk):
             "downVotes": votes.filter(is_positive=False).count(),
             "usersVote": usersVote
         })
-    #response_data = {"tracks": track_data}
 
     return HttpResponse(json.dumps(track_data), content_type="application/json")
 
@@ -184,7 +187,11 @@ def create(request):
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()
-        saturday = now + datetime.timedelta(days=(5 - now.weekday()))
+        if now.weekday < 6:
+            saturday = now + datetime.timedelta(days=(5 - now.weekday()))
+        else:
+            # its sunday
+            saturday = now + datetime.timedelta(days=6)
         next_saturday = datetime.datetime(year=saturday.year, month=saturday.month, day=saturday.day, hour=19)
 
         prior_information = {'start_time': next_saturday}

@@ -1,0 +1,30 @@
+[
+  {
+    "model": "music.IDType",
+    "pk": 1,
+    "fields": {
+      "name": "spotify"
+    }
+  },
+  {
+    "model": "music.IDType",
+    "pk": 2,
+    "fields": {
+      "name": "lastfm"
+    }
+  },
+  {
+    "model": "music.IDType",
+    "pk": 3,
+    "fields": {
+      "name": "isrc"
+    }
+  },
+  {
+    "model": "music.IDType",
+    "pk": 4,
+    "fields": {
+      "name": "mb"
+    }
+  }
+]
