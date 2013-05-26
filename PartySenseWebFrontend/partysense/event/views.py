@@ -9,9 +9,6 @@ from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 
-
-from braces.views import LoginRequiredMixin
-
 from django.conf import settings
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
@@ -50,7 +47,7 @@ class EventDetail(EventView, DetailView):
                                    .exclude(event=context['event'])[0:10]]
 
             context['recent_tracks'] = tracks
-
+        self.request.GET.next = reverse('event-detail', args=(context['event'].pk,))
         return context
 
 

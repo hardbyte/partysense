@@ -59,7 +59,9 @@ class Event(TimeStampedModel):
     # date & time info
     # note we also have a "created" and "modified" attribute
     past_event = models.BooleanField(default=False, editable=False)
-    happening_now = models.BooleanField(default=False)
+
+    # The DJ can choose all the music or users can add too
+    user_editable = models.BooleanField(default=True, help_text="Can any user add music to this event?")
 
     start_time = models.DateTimeField()
 

@@ -24,7 +24,8 @@ class DJ(models.Model):
 
     #picture =
 
-    city_name = models.CharField(verbose_name="Location", max_length=70, help_text="What city are you based in?")
+    city_name = models.CharField(verbose_name="Location", max_length=70,
+                                 help_text="What city are you based in?")
 
     def __str__(self):
         return self.nickname

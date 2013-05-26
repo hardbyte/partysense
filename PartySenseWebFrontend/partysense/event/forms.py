@@ -25,7 +25,7 @@ class EventForm(ModelForm):
 
         # Explicitly specifying the fields we want
         fields = ('title',
-                  #'happening_now',
+                  'user_editable',
                   'start_time'
                   )
 

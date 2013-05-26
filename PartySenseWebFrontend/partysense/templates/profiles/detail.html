@@ -6,8 +6,8 @@
 {% if user.is_authenticated %}
 
     <div class="row">
-    <div class="span10 offset2">
-    <p>Would you like to <a href="logout">logout</a>?</p>
+        <div class="span10 offset2">
+
         </div>
     </div>
     {% if past_events %}
@@ -34,7 +34,9 @@
         <img src="{{ img.url }}">
     {% endif %}
     {% if social_auth.associated %}
+        <a href="logout" class="btn btn-large">Logout</a>
         <h3>Disconnect accounts</h3>
+        <p class="alert">This will remove the connection to your facebook account entirely.</p>
         <ul>
             {% for type, accounts in social_auth.associated.items %}
                 {% for account in accounts %}
@@ -65,8 +67,9 @@
 </div>
 {% else %}
 
-    <div>
-        <h3>You can login using:</h3>
+    <div class="alert">
+        <p>The action you have requested requires you to be logged in!</p>
+        <h4>You can login using:</h4>
         <ul>
             {% for name in social_auth.backends.oauth2 %}
                 <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>

@@ -31,7 +31,7 @@ urlpatterns += patterns('partysense.event.views',
     # the actual main page
     url(r'^event/(?P<pk>\d+)/',
         EventDetail.as_view(),
-        name="event"),
+        name="event-detail"),
 
     url(r'^api/(?P<pk>\d+)/modify',
         modify_event,

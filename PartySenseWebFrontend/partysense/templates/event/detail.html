@@ -14,7 +14,7 @@
             <div class="event_details">
                 <dl>
                     <dt>Host:</dt>
-                    <dd><a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">{{event.dj.nickname}}</a></dd>
+                    <dd>{% if event.dj.url  %}<a href="{{ event.dj.url }}">{{ event.dj.nickname }}</a> {% else %} {{ event.dj.nickname }} {% endif %} (<a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">other events</a>)</dd>
                     <dt>When:</dt>
                     <dd>{{ event.start_time }}</dd>
                     <dt>Venue:</dt>
@@ -31,9 +31,11 @@
     </div>
 
     <section class="span6 offset3">
+      {% if event.user_editable or event.dj.user == user %}
         <div ng-controller="SpotifyTemplateCtrl">
             <div ng-include src="template"></div>
         </div>
+      {% endif %}
 
         <div id="setlist">
             <div ng-controller="SetlistTemplateCtrl">

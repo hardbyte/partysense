@@ -58,11 +58,11 @@
                 </li>
             </ol>
             {% if user.is_authenticated %}
-                <form action="/event/new/">
+                <form action="{% url "event.views.create" %}">
                     <button>Host your next event now!</button>
                 </form>
             {% else %}
-                <form action="/register/">
+                <form action="{% url "dj.views.register" %}">
                     <button>Register now!</button>
                 </form>
             {% endif %}
