@@ -76,7 +76,7 @@ nav ul
 
 nav li { float:left; }
 
-nav a:link, nav a:visited {
+nav a.regularActive:link, nav a.regularActive:visited {
 
     font-weight: bold;
     color: #FFFFFF;
@@ -85,7 +85,7 @@ nav a:link, nav a:visited {
     text-transform: uppercase;
 }
 
-nav a {
+nav a.regularActive {
     display: block;
 	font-size: 1.6em;
     text-align: center;
@@ -104,7 +104,7 @@ nav a {
 	border-radius: 5px;
 }
 
-nav a.active:hover, nav a.active:active
+nav a.regularActive:hover, nav a.active:active
 {
     background-color: #444444;
     color:#9bcb48;
@@ -116,6 +116,14 @@ nav a.active:hover, nav a.active:active
 	-moz-transition-duration: 0.25s;
 	transition-duration: 0.25s;
 }
+
+/* Drop down */
+nav ul li ul {position:absolute;width:110px;background:#FFF;}
+nav ul li ul li {margin:0;padding:0;width:110px;}
+nav ul li ul li a {display:block;padding:15px 10px;color:#444;}
+nav ul li ul li:hover a {background:#F7F7F7;}
+nav ul li ul.fallback {display:none;}
+nav ul li:hover ul.fallback {display:block;}
 
 footer
 {

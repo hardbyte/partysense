@@ -7,7 +7,7 @@
 
     <title>{% block title %}Party Sense{% endblock %}</title>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" />
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" media="screen"/>
     <link rel="stylesheet" href="{% static "style.css" %}" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 
@@ -15,6 +15,7 @@
         {% block style %}
         {% endblock %}
     </style>
+
 </head>
 <body>
     <header>
@@ -24,16 +25,27 @@
         {% block nav %}
         <nav class="nav nav-list">
             <ul>
-                <li><a class="active" href="/">Home</a></li>
-                <li><a class="active" href="#">Clubs</a></li>
-                <li><a class="active" href="/">Music</a></li>
-                <li><a class="active" href="#">Deals</a></li>
+                <li><a class="regularActive" href="/">Home</a></li>
+                <li><a class="regularActive" href="#">Clubs</a></li>
+                <li><a class="regularActive" href="/">Music</a></li>
+                <li><a class="regularActive" href="#">Deals</a></li>
             {% if not user.is_authenticated %}
                 <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     <div id="facebook_button">Login</div>
                 </a></li>
             {% else %}
-                <li><a class="active" href="/profile/">DJ {{ user.first_name }}</a> </li>
+                <li>
+                    <a class="regularActive" href="#">
+                        {{ user.first_name }}
+                        <span class="caret"></span>
+                    </a>
+                    <!-- Drop down for nav bar -->
+                    <ul class="fallback">
+                        <li><a class="" href="/profile/"><i class="icon-user"></i>Profile</a></li>
+                        <li><a href="logout" class=""><i class="icon-remove"></i>Logout</a></li>
+                    </ul>
+
+                </li>
             {% endif %}
 
             </ul>
@@ -61,12 +73,11 @@
                 }
             }
         });
-
     </script>
-
     <script src="{% static "js/d3.v3.min.js" %}"></script>
     <script src="{% static "js/util.js" %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
 
     <div id="content" class="">
         {% block content %}{% endblock %}
@@ -91,5 +102,13 @@
       ga('send', 'pageview');
 
     </script>
+    <script>
+	$(function () {
+		$('nav li ul').hide().removeClass('fallback');
+		$('nav li').hover(function () {
+			$('ul', this).stop().slideToggle(200);
+		});
+	});
+	</script>
 </body>
 </html>
