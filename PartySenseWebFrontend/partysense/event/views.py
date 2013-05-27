@@ -234,7 +234,6 @@ def profile(request):
         "djs": djs,
         "past_events": past_events,
         "upcoming_events": upcoming_events
-
     })
 
 
@@ -247,9 +246,7 @@ def logout(request):
 def landing(request):
     # List upcoming "public" events
 
-    return render(request, 'landing.html',
-        {
-        })
+    return render(request, 'landing.html', {})
 
 
 @permission_required("can_change_past_event")

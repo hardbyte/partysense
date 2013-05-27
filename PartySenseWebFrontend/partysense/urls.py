@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required, login_required
-
+from django.views.decorators.csrf import ensure_csrf_cookie
 from partysense.event.views import EventDetail, modify_event, get_track_list, vote_on_track
 from partysense.dj.views import EventList
 
@@ -30,12 +30,11 @@ urlpatterns += patterns('partysense.event.views',
 
     # the actual main page
     url(r'^event/(?P<pk>\d+)/',
-        EventDetail.as_view(),
+        ensure_csrf_cookie(EventDetail.as_view()),
         name="event-detail"),
 
     url(r'^api/(?P<pk>\d+)/modify',
         modify_event,
-        #UpdateEvent.as_view(),
         name="modify-event"),
 
     url(r'^api/(?P<pk>\d+)/get-track-list',
@@ -54,7 +53,6 @@ urlpatterns += patterns('partysense.dj.views',
     url(r'^register/$', 'register', name="register"),
 
     # List this dj's events
-    # TODO add permission required decorator
     url(r'^dj/(?P<dj_id>\d+)/', EventList.as_view(), name="dj_events"),
 )
 
