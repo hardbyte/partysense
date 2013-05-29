@@ -69,6 +69,8 @@ public class SplashActivity extends FragmentActivity {
 		}
 	};
 	
+	
+	
 	/** Called when the activity is first created. */
 	@Override
 
@@ -89,7 +91,6 @@ public class SplashActivity extends FragmentActivity {
 		FragmentManager fm = getSupportFragmentManager();
 		fragments[LOGIN] = fm.findFragmentById(R.id.facebookLoginFragment);
 		fragments[WELCOME] = fm.findFragmentById(R.id.welcomeFragment);
-		
 		// Initially, hide all fragments,  till the logic is run to set the correct one
 		FragmentTransaction transaction = fm.beginTransaction();
 		for(int fragmentIndex = 0; fragmentIndex< fragments.length;  fragmentIndex++){
@@ -122,17 +123,17 @@ public class SplashActivity extends FragmentActivity {
 			
 			
 			
-			Bundle b = new Bundle();
-			b.putParcelableArrayList("party.sense.app.clubsList", clubs);
+			/*Bundle b = new Bundle();
+			b.putParcelableArrayList("party.sense.app.clubsList", clubs);*/
 
 			if (isAppSetupCompleted == false){
 				// Go through Setup
 				i = new Intent(this, SetupActivity.class);
-				i.putExtras(b);
+				//i.putExtras(b);
 		    }else{
 		    	// Go Directly to Main Activity
 		    	i = new Intent(this, PartySenseMainActivity.class);
-		    	i.putExtras(b);
+		    	//i.putExtras(b);
 		    }
 			
 			
@@ -198,9 +199,11 @@ public class SplashActivity extends FragmentActivity {
 	@Override
 	public void onResume() {	
 		Log.d(TAG, "onResume");
+
 		super.onResume();
 		uiHelper.onResume();
 		isResumed = true;
+		
 	}
 	
 	@Override
@@ -245,6 +248,7 @@ public class SplashActivity extends FragmentActivity {
 				
 				Log.i(TAG, "isOpened: Calling show fragment");
 				showFragment(WELCOME, false);
+				
 				splashTimerThread.start();
 			} else if (state.isClosed()) {
 				
@@ -277,8 +281,11 @@ public class SplashActivity extends FragmentActivity {
 	@Override
 	protected void onResumeFragments() {
 		super.onResumeFragments();
+		Log.d(TAG, "Welcome Sceen is visible:" + Boolean.toString(fragments[WELCOME].isVisible()));
 		Session session = Session.getActiveSession();
-		
+		if(fragments[WELCOME].isVisible()){
+			splashTimerThread.start();
+		}
 		if (session != null && session.isOpened()){
 			Log.i(TAG, "Calling ShowFragments for Selection Screen: Session is not null and isOpened");
 			showFragment(WELCOME, false);

@@ -34,33 +34,14 @@ public class PartySenseMainActivity extends FragmentActivity {
      */
     public static ViewPager mViewPager;
     public String[] segmentTitles = {"Menu","Recommended","Map View"}; 
-    ArrayList<Club> clubsList = new ArrayList<Club>();   
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_sense_main);
         
-        Bundle b = getIntent().getExtras();
-        this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
-        DBactions db = new DBactions(getApplicationContext());
-        db.open();
-        this.clubsList = db.getData("");
-        
-        //db.getData("");
-        db.close();
         String s = "";
-        for(Club c: clubsList){
-        	s = "";
-        	for(String a : c.getTags()){
-        		s += " " + a;
-        	}
-        	Log.e("MainAct",c.getName() + "-" + s);
-		}
         
-        Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
-        
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);
-        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),null);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -94,19 +75,15 @@ public class PartySenseMainActivity extends FragmentActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    	ArrayList<Club> clubsList = new ArrayList<Club>();
-    	
-        public SectionsPagerAdapter(FragmentManager fm, ArrayList<Club> clubsList) {
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.clubsList = clubsList;
-            
         }
         
         @Override
         public Fragment getItem(int i) {
             Fragment fragment; //DummySectionFragment();
             Bundle b = new Bundle();
-            b.putParcelableArrayList("party.sense.app.clubsList", this.clubsList);
+            
             if(i ==0){
             	b.putInt("menuCnt", 0);
             	fragment = new FragmentMenuScreen();

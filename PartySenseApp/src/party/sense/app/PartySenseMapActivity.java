@@ -184,7 +184,7 @@ public class PartySenseMapActivity extends MapActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Bundle b = getIntent().getExtras();
+		//Bundle b = getIntent().getExtras();
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.layout_club_map);
 	    mapV = (MapView) findViewById(R.id.mapview);
@@ -202,7 +202,11 @@ public class PartySenseMapActivity extends MapActivity {
 	    myLocItemOverlay = new MyLocationItem(pinDraw, this);
 	    clubLocItemOverlay = new MyLocationItem(clubDraw, this);
 	    mapOverlays = mapV.getOverlays();
-	    clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+	    DBactions db = new DBactions(getApplicationContext());
+        db.open();
+        this.clubsList = db.getData("");
+        db.close();
+	    //clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
 	    //nFilter = new NearbyFilter(clubsList);
 	    
 	    

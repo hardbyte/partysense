@@ -121,8 +121,14 @@ public class FragmentClubScreen extends Fragment {
 		
 		view = inflater.inflate(R.layout.layout_club_screen, container,false);
 		//edtView.setInputType(0);
-		Bundle b = this.getArguments();
-		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+		
+		DBactions db = new DBactions(getActivity());
+        db.open();
+        this.clubsList = db.getData("");
+        db.close();
+		
+		/*Bundle b = this.getArguments();
+		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");*/
 		lvClubList = (ListView) view.findViewById(R.id.nearby_club_listview);
 		btnTest = (Button) view.findViewById(R.id.btnTest);
 		//locThd = new LocationThread(this.getActivity());

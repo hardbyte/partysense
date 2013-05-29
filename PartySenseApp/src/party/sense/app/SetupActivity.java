@@ -51,7 +51,7 @@ public class SetupActivity extends FragmentActivity {
     	
     	Bundle b = getIntent().getExtras();
     	//this.userName = b.getString("login_name");
-        this.clubs = b.getParcelableArrayList("party.sense.app.clubsList");
+        //this.clubs = b.getParcelableArrayList("party.sense.app.clubsList");
     	
     	btnNext = (Button) findViewById(R.id.btnNext);
     	btnBack = (Button) findViewById(R.id.btnBack);
