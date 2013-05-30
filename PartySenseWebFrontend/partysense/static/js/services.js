@@ -21,9 +21,10 @@ angular.module('ps.services', ['ngResource'])
   })
   .factory('updateService', function($rootScope) {
       return {
-          update: function(event){
+          update: function(event, args){
               console.log("Passing on event: " + event);
-              $rootScope.$broadcast(event);
+              console.log(args);
+              $rootScope.$broadcast(event, args);
           }
       };
   });

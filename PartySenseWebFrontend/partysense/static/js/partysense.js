@@ -38,9 +38,12 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
                 });
             });
         }
+        /* Scroll up to the search box to show the new results. */
+        document.getElementById("search").scrollIntoView(false);
     }
     $scope.msg = "";
     $scope.loggedIn = ps.loggedIn;
+
     $scope.doSearch = function(force, append) {
         $scope.msg = "";
         $scope.correction = "";
@@ -70,6 +73,7 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
             } else {
                 $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm}, filterResults);
             }
+
         }
     };
 
@@ -86,11 +90,16 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
         // replace the search with this artist's name
         $scope.searchTerm = "artist:" + artist.name;
 
-        // Filter the existing tracks for this artist
-        $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track){
-            "use strict";
-            return track.artists[0].href === artist.href;
-        });
+        // Filter the existing tracks for this artist (if there ary any results)
+        if($scope.spotifyResult) {
+            $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track){
+                "use strict";
+                return track.artists[0].href === artist.href;
+            });
+        } else {
+            /* There were no results so just search */
+            return $scope.doSearch(true);
+        }
 
         if ($scope.spotifyResult.tracks.length > 10) {
             // If there aren't many tracks don't bother scrolling
@@ -103,6 +112,11 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
 
     };
 
+    $scope.$on("searchByArtistName", function(evt, artist){
+        console.log("Searching for tracks by");
+        console.log(artist);
+        $scope.searchArtist(artist);
+    });
     $scope.addTrack = function(track) {
         var newTrack = new Track({
                         "name": track.name,
@@ -135,6 +149,16 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
 
+    $scope.searchByArtist = function(track) {
+        "use strict";
+        console.log("want to search for an artist do you?");
+        console.log(track);
+        var artist = {
+            name: track.artist,
+            href: track.spotifyArtistID
+        };
+        updateService.update("searchByArtistName", artist);
+    };
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
@@ -150,7 +174,9 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
 
     $scope.updateSetlist();
 
-    $scope.$on("setlist", function(){
+    $scope.$on("setlist", function(evt, track){
+        console.log("It appears you're adding a track");
+        console.log(track);
         $scope.updateSetlist();
     });
 
@@ -246,9 +272,9 @@ function RecentTrackCtrl($scope, Track, updateService) {
                         "artist": track.artist,
                         "spotifyTrackID": track.spotify_url
                     });
-        newTrack.$save(function(track, putResponseHeaders){
+        newTrack.$save(function(t, putResponseHeaders){
             console.log("sending event to update the set list");
-            updateService.update("setlist");
+            updateService.update("setlist", track);
         });
 
         // Remove this track from the recentTracks list

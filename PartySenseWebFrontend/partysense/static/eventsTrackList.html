@@ -29,7 +29,8 @@
 
                 <div class="track-info" ng-class="infoWidth">
                     <h5 class="track-name">{{ track.name }}</h5>
-                    <p class="track-artist">{{ track.artist }}</p>
+                    <p class="track-artist"
+                       ng-click="searchByArtist(track);">{{ track.artist }}</p>
                     <span class="muted track-votes">
                         <ng-pluralize count="track.upVotes + track.downVotes"
                             when="{'0': 'Nobody has',
