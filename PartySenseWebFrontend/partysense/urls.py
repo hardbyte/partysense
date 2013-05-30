@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required, login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
-from partysense.event.views import EventDetail, modify_event, get_track_list, vote_on_track
+from partysense.event.views import EventDetail, modify_event, get_track_list, vote_on_track, did_you_mean
 from partysense.dj.views import EventList
 
 admin.autodiscover()
@@ -44,6 +44,10 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^api/(?P<event_pk>\d+)/vote/(?P<track_pk>\d+)',
         vote_on_track,
         name="vote-on-track"),
+
+    url(r'^did-you-mean',
+        did_you_mean,
+        name="did-you-mean"),
 
 
 )

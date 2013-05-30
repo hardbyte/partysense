@@ -1,26 +1,38 @@
 <div id="search" ng-controller="SpotifyCtrl" ng-show="loggedIn">
-    <div class="input-append">
-        <input class="form-search" type="search" ng-model="searchTerm" ng-change="doSearch()"
-           results="10" placeholder="Search for music to add"
-           autofocus autocomplete="off">
+    <form class="input-append" ng-submit="doSearch(true)">
+        <input class="form-search" type="search"
+               ng-model="searchTerm"
+               ng-change="doSearch(false)"
+               results="10"
+               placeholder="Search for music to add"
+               autofocus autocomplete="off">
         <button class="btn" type="button" ng-click="clear()">Clear</button>
+    </form>
+
+    <div ng-class="scrollableClass">
+        <div class="alert fade in" ng-show="msg" ng-class="msgClass">
+            <strong>{{ msg }}</strong>
+        </div>
+
+        <table class="table my-hover" ng-show="spotifyResult.tracks">
+            <thead><tr><th>Track</th><th>Artist</th></tr></thead>
+            <tbody>
+                <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:50"
+                    ng-hide="track.added">
+                    <td class="track-name" ng-click="addTrack(track); track.added=true;">
+                        <span>
+                            <i ng-hide="track.added" class="icon-plus icon-white"></i>
+                            {{track.name}}
+                        </span>
+                    </td>
+                    <td class="track-artist" ng-click="searchArtist(track.artists[0])">
+                        <span>
+                            <i class="icon-search"></i> {{track.artists[0].name}}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-
-    <div class="alert alert-success fade in" ng-show="addTrackResult">
-        <strong>Track added!</strong>
-    </div>
-
-    <table class="table my-hover" ng-show="spotifyResult.tracks">
-        <thead><tr><th>Track</th><th>Artist</th></tr></thead>
-        <tbody>
-            <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:10"
-                ng-click="addTrack(track)">
-                <td><span class="track-name">
-                    <i class="icon-plus"></i> {{track.name}}</span></td>
-                <td class="track-artist">{{track.artists[0].name}}</td>
-            </tr>
-        </tbody>
-    </table>
-
 </div>
 

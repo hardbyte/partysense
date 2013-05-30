@@ -17,12 +17,57 @@ function RecentTracksTemplateCtrl($scope) {
     $scope.template = "/static/recentTrackList.html";
 }
 
-function SpotifyCtrl($scope, $timeout, SpotifySearch, Track, updateService) {
-    $scope.loggedIn = ps.loggedIn;
 
-    $scope.doSearch = function() {
-        if($scope.searchTerm.length > 2) {
-            $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm});
+
+function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateService) {
+    "use strict";
+
+    function filterResults(data){
+        // If there aren't many tracks don't bother scrolling
+        if($scope.spotifyResult.tracks) {
+            $scope.scrollableClass = $scope.spotifyResult.tracks.length > 10 ? "pre-scrollable" : "";
+
+            // If the track has the same artist, the name can't be too similar?
+            // Artists like Mumford & Sons release "Little Lion Man" on multiple
+            // albums and Spotify has seperate instances of those tracks.
+            // The external ids and the names match though.
+            // Also want to ensure we keep one of them!
+            $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track, i, array){
+                return !array.some(function(innerTrack, j){
+                    return i > j && i != j && track.name === innerTrack.name;
+                });
+            });
+        }
+    }
+    $scope.msg = "";
+    $scope.loggedIn = ps.loggedIn;
+    $scope.doSearch = function(force, append) {
+        if($scope.searchTerm.length > 3 || force) {
+            // TODO only do this spelling check if the user has paused
+            // because Google does a severe limit and its server side.
+            // Send the search term to our server to query google
+            $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
+                if(data.changed) {
+                    $scope.msg = 'Did you mean ' + data.changed + '?';
+                    $scope.msgClass = "alert-info";
+                    /*
+                    $scope.searchTerm = data.changed;
+                    $scope.doSearch(true);
+                    */
+                } else {
+                    $scope.msg = "";
+                }
+            });
+
+            if(append) {
+                SpotifySearch.get({q: $scope.searchTerm}, function(data){
+                    console.log("Adding new tracks");
+                    $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.concat(data.tracks);
+                    filterResults();
+                });
+            } else {
+                $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm}, filterResults);
+            }
         }
     };
 
@@ -30,6 +75,30 @@ function SpotifyCtrl($scope, $timeout, SpotifySearch, Track, updateService) {
         $scope.spotifyResult = "";
         $scope.searchTerm = "";
         $scope.addTrackResult = false;
+        $scope.msg = "";
+    };
+
+    $scope.searchArtist = function(artist){
+        console.log("It appears you want to search for an artist:");
+        console.log(artist.name);
+        // replace the search with this artist's name
+        $scope.searchTerm = "artist:" + artist.name;
+
+        // Filter the existing tracks for this artist
+        $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track){
+            "use strict";
+            return track.artists[0].href === artist.href;
+        });
+
+        if ($scope.spotifyResult.tracks.length > 10) {
+            // If there aren't many tracks don't bother scrolling
+            $scope.scrollableClass = "pre-scrollable";
+        } else {
+            // If there weren't enough (>10) conduct another search
+            // search for tracks by this artist
+            $scope.doSearch(true, true);
+        }
+
     };
 
     $scope.addTrack = function(track) {
@@ -41,14 +110,18 @@ function SpotifyCtrl($scope, $timeout, SpotifySearch, Track, updateService) {
                         "spotifyArtistID": track.artists[0].href,
                         "external-ids": JSON.stringify(track["external-ids"])
                     });
-        newTrack.$save(function(track, putResponseHeaders){
-            console.log("sending event to update the set list");
+        newTrack.$save(function(t, putResponseHeaders){
             updateService.update("setlist");
             $scope.addTrackResult = true;
-            $timeout(function() { $scope.addTrackResult = false; }, 2000);
-
+            $scope.msg = "Added " + track.name + " to the setlist!";
+            $scope.msgClass = "alert-success";
+            track.added = true;
+            $timeout(function() { $scope.msg = ""; }, 5000);
         }, function(){
-            $scope.addTrackResult = false;
+            // failure case
+            $scope.msgClass = "alert-error";
+            track.msg = "Opps, something went wrong adding " + track.name;
+            $timeout(function() { $scope.msg = ""; }, 5000);
         });
     };
 }

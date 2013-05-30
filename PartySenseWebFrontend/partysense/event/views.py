@@ -17,6 +17,7 @@ from partysense.music.models import Artist, Track, IDType
 
 from partysense.event.forms import EventForm
 
+import dym
 logger = logging.getLogger(__name__)
 
 
@@ -118,6 +119,13 @@ def get_track_list(request, pk):
         })
 
     return HttpResponse(json.dumps(track_data), content_type="application/json")
+
+@login_required
+def did_you_mean(request):
+    logging.info("Checking spelling")
+    q = request.GET["q"]
+    return HttpResponse(json.dumps({'changed': dym.didYouMean(q)}),
+                        content_type="application/json")
 
 @login_required
 def vote_on_track(request, event_pk, track_pk, internal=False):

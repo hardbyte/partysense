@@ -5,7 +5,7 @@ angular.module('ps.services', ['ngResource'])
         /* Protection against cross site scripting attacks. */
         $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
         return $resource("http://ws.spotify.com/search/1/:action",
-            {action: 'track.json', q:'Gaga'}
+            {action: 'track.json', q:'artist:Gaga'}
         );
     })
   .factory('Track', function($http, $resource){
