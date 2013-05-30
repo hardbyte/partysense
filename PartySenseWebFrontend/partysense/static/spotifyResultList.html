@@ -1,4 +1,5 @@
 <div id="search" ng-controller="SpotifyCtrl" ng-show="loggedIn">
+
     <form class="input-append" ng-submit="doSearch(true)">
         <input class="form-search" type="search"
                ng-model="searchTerm"
@@ -9,11 +10,17 @@
         <button class="btn" type="button" ng-click="clear()">Clear</button>
     </form>
 
-    <div ng-class="scrollableClass">
-        <div class="alert fade in" ng-show="msg" ng-class="msgClass">
-            <strong>{{ msg }}</strong>
-        </div>
+    <div class="alert fade in" ng-show="msg" ng-class="msgClass">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>{{ msg }}</strong>
+    </div>
 
+    <div class="alert fade in" ng-show="correction">
+        Did you mean <b><a ng-click="searchTerm=correction; doSearch(true);"
+                           href="#">{{ correction }}</b></em>?
+    </div>
+
+    <div ng-class="scrollableClass">
         <table class="table my-hover" ng-show="spotifyResult.tracks">
             <thead><tr><th>Track</th><th>Artist</th></tr></thead>
             <tbody>

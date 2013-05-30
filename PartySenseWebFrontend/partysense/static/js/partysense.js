@@ -42,14 +42,16 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
     $scope.msg = "";
     $scope.loggedIn = ps.loggedIn;
     $scope.doSearch = function(force, append) {
+        $scope.msg = "";
+        $scope.correction = "";
+
         if($scope.searchTerm.length > 3 || force) {
             // TODO only do this spelling check if the user has paused
-            // because Google does a severe limit and its server side.
             // Send the search term to our server to query google
             $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
                 if(data.changed) {
-                    $scope.msg = 'Did you mean ' + data.changed + '?';
-                    $scope.msgClass = "alert-info";
+                    $scope.correction = data.changed;
+
                     /*
                     $scope.searchTerm = data.changed;
                     $scope.doSearch(true);
