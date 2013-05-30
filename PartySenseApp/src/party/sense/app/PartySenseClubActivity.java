@@ -47,7 +47,12 @@ public class PartySenseClubActivity extends FragmentActivity {
         setContentView(R.layout.activity_party_sense_main);
         
         Bundle b = getIntent().getExtras();
-        this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        //this.clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+        
+        DBactions db = new DBactions(getApplicationContext());
+        db.open();
+        this.clubsList = db.getData("");
+        db.close();
         Log.e("PartySenseMainActivity", "Club Name: " + clubsList.get(0).getName());
         
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),clubsList);

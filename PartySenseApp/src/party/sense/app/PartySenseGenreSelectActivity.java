@@ -55,7 +55,7 @@ public class PartySenseGenreSelectActivity extends Activity {
 	    lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	    
 	    
-	    settings = getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+	    settings = getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    
 	    for(int i = 0; i<lView.getCount(); i++){

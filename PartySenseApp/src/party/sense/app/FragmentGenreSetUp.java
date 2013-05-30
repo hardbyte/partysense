@@ -22,6 +22,7 @@ public class FragmentGenreSetUp extends Fragment {
 	SharedPreferences.Editor edit;
 	static ArrayList<String> genres = new ArrayList<String>();
 	
+	
 	static{
 		genres.add("Blues");
 		genres.add("Country");
@@ -44,13 +45,13 @@ public class FragmentGenreSetUp extends Fragment {
 		lView.setAdapter(new ArrayAdapter<String>(getActivity(),
 	            android.R.layout.simple_list_item_multiple_choice, genres));
 	    lView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-	    settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+	    settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 	    edit = settings.edit();
 	    refreshList();
-	    Map<String, ?> m = settings.getAll();
+	    /*Map<String, ?> m = settings.getAll();
 	    for(Map.Entry<String,?> ms : m.entrySet()){
 	    	Log.d("PREF",ms.getKey());
-	    }
+	    }*/
 		return view;
 	}
 	
@@ -80,6 +81,25 @@ public class FragmentGenreSetUp extends Fragment {
 	    }
 	    
 	}
+	
+	public ArrayList<Boolean>genresSelected(){
+		SparseBooleanArray checked = lView.getCheckedItemPositions();
+		ArrayList<Boolean> selectionValues = new ArrayList<Boolean>();
+		selectionValues.clear();
+	    for (int i = 0; i < checked.size(); i++) {
+	    	selectionValues.add(checked.get(checked.keyAt(i)));
+	    }
+	    return selectionValues;
+	    
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		refreshList();
+	}
+	
 	
 	
 }

@@ -29,10 +29,12 @@ public class FragmentSongsScreen extends Fragment {
 	{
 		
 		view = inflater.inflate(R.layout.layout_songs_screen, container,false);
-		Bundle b = this.getArguments();
-		clubsList = b.getParcelableArrayList("party.sense.app.clubsList");
+		DBactions db = new DBactions(getActivity());
+        db.open();
+        this.clubsList = db.getData("");
+        db.close();
 		
-		settings = getActivity().getSharedPreferences(FragmentMenuScreen.PREFS_NAME, 0);
+		settings = getActivity().getSharedPreferences(SplashActivity.PREFS_NAME, 0);
 		String d = "";
 		
 		for(String s : PartySenseGenreSelectActivity.genres){

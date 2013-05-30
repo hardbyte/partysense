@@ -24,7 +24,7 @@ public class Club implements Parcelable{
 	private String twitter;
 	private String facebook;
 	private String google_plus;
-	
+	private String city;
 	private String time_created;
 	private String time_updated;
 	
@@ -158,6 +158,7 @@ public class Club implements Parcelable{
 		this.time_updated = in.readString();
 		this.latitude = in.readString();
 		this.longitude = in.readString();
+		this.city = in.readString();
 		
 		this.photos = in.readParcelable(Photos.class.getClassLoader());
 		
@@ -188,6 +189,7 @@ public class Club implements Parcelable{
 		out.writeString(time_updated);
 		out.writeString(latitude);
 		out.writeString(longitude);
+		out.writeString(city);
 
 		out.writeParcelable(photos, 0);
 		out.writeList(tags);
@@ -204,6 +206,10 @@ public class Club implements Parcelable{
 		out.writeString(hours_sunday);
 		
 		
+	}
+	
+	public String getCity(){
+		return city;
 	}
 	
 	public String getName() {
