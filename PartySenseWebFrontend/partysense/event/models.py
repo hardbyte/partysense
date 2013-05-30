@@ -50,7 +50,7 @@ class Event(TimeStampedModel):
     """
     The core of the system
     """
-    title = models.CharField("Event name", max_length=70)
+    title = models.CharField("Event name", max_length=70, help_text="Keep it simple")
     location = models.ForeignKey(Location, help_text="Where is the event?")
     dj = models.ForeignKey(DJ)
     users = models.ManyToManyField(User, blank=True)
@@ -61,7 +61,9 @@ class Event(TimeStampedModel):
     past_event = models.BooleanField(default=False, editable=False)
 
     # The DJ can choose all the music or users can add too
-    user_editable = models.BooleanField(default=True, help_text="Can any user add music to this event?")
+    user_editable = models.BooleanField(default=True,
+                                        verbose_name="Anyone can add new music?",
+                                        help_text="Otherwise you add the music, and everyone else votes.")
 
     start_time = models.DateTimeField()
 

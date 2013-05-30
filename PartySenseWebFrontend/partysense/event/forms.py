@@ -52,6 +52,12 @@ class EventForm(ModelForm):
         cleaned_data = super(EventForm, self).clean()
         return cleaned_data
 
+    def clean_title(self):
+        words = self.cleaned_data['title'].split()
+
+        if len(words) > 20 or any(len(w) > 17 for w in words):
+            raise ValidationError("How about a shorter event name?")
+
     def clean_start_time(self):
         date = self.cleaned_data['start_time'].date()
         logger.info("date: {}".format(date))
