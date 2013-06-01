@@ -69,6 +69,7 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
         $scope.searchTerm = "";
         $scope.addTrackResult = false;
         $scope.msg = "";
+        $scope.correction = "";
     };
 
     $scope.searchArtist = function(artist){

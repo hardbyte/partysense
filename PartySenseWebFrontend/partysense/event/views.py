@@ -262,9 +262,10 @@ def logout(request):
 
 def landing(request):
     # List upcoming "public" events
-
     return render(request, 'landing.html', {})
 
+def privacy(request):
+    return render(request, 'privacy.html')
 
 @permission_required("can_change_past_event")
 def mark_over(request, pk):

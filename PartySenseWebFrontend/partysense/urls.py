@@ -21,6 +21,7 @@ urlpatterns += patterns('partysense.event.views',
 
     # static landing page
     url(r'^$', 'landing', name='home'),
+    url(r'^privacy/$', 'privacy', name='privacy'),
 
     # profile worth having (me thinks no)?
     url(r'^profile/$', 'profile'),
