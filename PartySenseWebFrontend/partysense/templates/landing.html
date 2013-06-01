@@ -14,9 +14,8 @@
     <div class="">
         <p class="lead">PartySense is the best way to make sure you have a great night out.</p>
     </div>
-    <div class="row" id="quick-start">
-        <!-- 3 step process -->
 
+    <div class="row" id="quick-start">
         <section id="customer-quick-start" class="span6">
             <h2>How it works</h2>
             <h1>Party Animals!</h1>
@@ -40,7 +39,7 @@
             </ol>
 
             <form action="{% url "event-detail" 1 %}">
-                <button class="button btn-primary">Take a look at our preview event</button>
+                <button class="button btn-primary">Preview Party</button>
             </form>
 
         </section>
@@ -78,8 +77,34 @@
         </section>
     </div>
 
+    <div class="row">
+        <div class="">
+            <div class="span2"></div>
+            <div class="span3">
+                <div class="g-plusone" data-annotation="inline" data-width="300"></div>
+            </div>
+            <div class="span4">
+               <div class="fb-like" data-href="http://partysen.se" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></div>
+            </div>
+            <div class="span3">
+                <div class=""><a href="https://twitter.com/share" class="twitter-share-button" data-via="thorneynz" data-hashtags="partysense">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
+            </div>
+        </div>
+    </div>
+
+<div id="fb-root"></div>
+
 {% endblock %}
 
 {% block jslibs %}
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=386541278102635";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
