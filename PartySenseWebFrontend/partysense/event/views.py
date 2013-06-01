@@ -237,10 +237,19 @@ def profile(request):
 
     djs = DJ.objects.filter(event__past_event=False).distinct()
 
+    """See what we can get from facebook
+    Some users have "music", some who use spotify have "music.listens" and "music.playlists"
+    Many (such as myself) have nothing available.
+
+    listens have data.song.title
+    """
+    listens = fb_request(request, ["music.listens"])["music.listens"]['data']
+
     return render(request, 'profiles/detail.html', {
         "img": img,
         "djs": djs,
         "past_events": past_events,
+        "listens": listens,
         "upcoming_events": upcoming_events
     })
 

@@ -26,17 +26,7 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
         // If there aren't many tracks don't bother scrolling
         if($scope.spotifyResult.tracks) {
             $scope.scrollableClass = $scope.spotifyResult.tracks.length > 10 ? "pre-scrollable" : "";
-
-            // If the track has the same artist, the name can't be too similar?
-            // Artists like Mumford & Sons release "Little Lion Man" on multiple
-            // albums and Spotify has seperate instances of those tracks.
-            // The external ids and the names match though.
-            // Also want to ensure we keep one of them!
-            $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track, i, array){
-                return !array.some(function(innerTrack, j){
-                    return i > j && i != j && track.name === innerTrack.name;
-                });
-            });
+            $scope.msg = "";
         }
         /* Scroll up to the search box to show the new results. */
         document.getElementById("search").scrollIntoView(false);
@@ -44,41 +34,38 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
     $scope.msg = "";
     $scope.loggedIn = ps.loggedIn;
 
-    $scope.doSearch = function(force, append) {
-        $scope.msg = "";
+    $scope.doSearch = function(force, append, skipSpellCheck) {
+        console.log("doSearch called");
+        console.log($scope.searchTerm);
         $scope.correction = "";
 
         if($scope.searchTerm.length > 3 || force) {
-            // TODO only do this spelling check if the user has paused
-            // Send the search term to our server to query google
-            $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
-                if(data.changed) {
-                    $scope.correction = data.changed;
-
-                    /*
-                    $scope.searchTerm = data.changed;
-                    $scope.doSearch(true);
-                    */
-                } else {
-                    $scope.msg = "";
-                }
-            });
-
-            if(append) {
+            $scope.msg = 'searching for "' + $scope.searchTerm + '"';
+            console.log($scope.msg);
+            if (!skipSpellCheck) {
+                // Send the search term to our server to query google
+                $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
+                    if(data.changed) {
+                        $scope.correction = data.changed;
+                    }
+                });
+            }
+            if(append){
                 SpotifySearch.get({q: $scope.searchTerm}, function(data){
-                    console.log("Adding new tracks");
+                    console.log("Adding " + data.tracks.length + " new tracks to existing results");
                     $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.concat(data.tracks);
                     filterResults();
                 });
             } else {
+                console.log("Received new search results for query:"  + $scope.searchTerm );
                 $scope.spotifyResult = SpotifySearch.get({q: $scope.searchTerm}, filterResults);
             }
-
         }
     };
 
     $scope.clear = function(){
-        $scope.spotifyResult = "";
+        console.log("Clearing search");
+        $scope.spotifyResult = false;
         $scope.searchTerm = "";
         $scope.addTrackResult = false;
         $scope.msg = "";
@@ -92,22 +79,27 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
 
         // Filter the existing tracks for this artist (if there ary any results)
         if($scope.spotifyResult) {
-            $scope.spotifyResult.tracks = $scope.spotifyResult.tracks.filter(function(track){
-                "use strict";
+            console.log("Since we already have search results, filter for this artist");
+            console.log("Looking for matches to " + artist.href);
+
+            var filtered_tracks = $scope.spotifyResult.tracks.filter(function(track){
                 return track.artists[0].href === artist.href;
             });
+            console.log("Found " + filtered_tracks.length + " tracks.");
+            $scope.spotifyResult.tracks = filtered_tracks;
         } else {
-            /* There were no results so just search */
-            return $scope.doSearch(true);
+            console.log("There were no prior results so just search");
+            return $scope.doSearch(true, false, true);
         }
-
-        if ($scope.spotifyResult.tracks.length > 10) {
+        // Note the number of results shown may be less than this due to filtering
+        if ($scope.spotifyResult.tracks.length > 15) {
             // If there aren't many tracks don't bother scrolling
             $scope.scrollableClass = "pre-scrollable";
         } else {
-            // If there weren't enough (>10) conduct another search
+            console.log("There weren't enough tracks by this artist so conducting another search");
+
             // search for tracks by this artist
-            $scope.doSearch(true, true);
+            $scope.doSearch(true, true, false);
         }
 
     };
@@ -117,7 +109,9 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
         console.log(artist);
         $scope.searchArtist(artist);
     });
+
     $scope.addTrack = function(track) {
+        console.log("Adding track from search result");
         var newTrack = new Track({
                         "name": track.name,
                         "artist": track.artists[0].name,
@@ -134,7 +128,7 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
             track.added = true;
             $timeout(function() { $scope.msg = ""; }, 5000);
         }, function(){
-            // failure case
+            console.log("failure to add track");
             $scope.msgClass = "alert-error";
             track.msg = "Opps, something went wrong adding " + track.name;
             $timeout(function() { $scope.msg = ""; }, 5000);
@@ -144,13 +138,13 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateServic
 
 
 function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
-
+    "use strict";
     $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
 
     $scope.searchByArtist = function(track) {
-        "use strict";
+
         console.log("want to search for an artist do you?");
         console.log(track);
         var artist = {
@@ -163,6 +157,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         // GET: /api/123/get-track-list
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
             var songs = "";
+            var i;
             for(i=0; i<data.length; i++){
                 findCover(data[i]);
                 songs += data[i].spotifyTrackID.slice(14) + ',';

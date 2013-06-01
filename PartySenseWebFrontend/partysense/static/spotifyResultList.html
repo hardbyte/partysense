@@ -17,14 +17,14 @@
 
     <div class="alert fade in" ng-show="correction">
         Did you mean <b><a ng-click="searchTerm=correction; doSearch(true);"
-                           href="#">{{ correction }}</b></em>?
+                           href="#">{{ correction }}</a></b>?
     </div>
 
     <div ng-class="scrollableClass">
         <table class="table my-hover" ng-show="spotifyResult.tracks">
             <thead><tr><th>Track</th><th>Artist</th></tr></thead>
             <tbody>
-                <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:50"
+                <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:100"
                     ng-hide="track.added">
                     <td class="track-name" ng-click="addTrack(track); track.added=true;">
                         <span>
@@ -32,7 +32,7 @@
                             {{track.name}}
                         </span>
                     </td>
-                    <td class="track-artist" ng-click="searchArtist(track.artists[0])">
+                    <td class="track-artist" ng-click="searchArtist(track.artists[0]);">
                         <span>
                             <i class="icon-search"></i> {{track.artists[0].name}}
                         </span>
