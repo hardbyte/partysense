@@ -145,7 +145,6 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     $scope.spotifyPlaylistURL = "";
 
     $scope.searchByArtist = function(track) {
-
         console.log("want to search for an artist do you?");
         console.log(track);
         var artist = {
@@ -154,6 +153,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         };
         updateService.update("searchByArtistName", artist);
     };
+
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
@@ -178,6 +178,15 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
 
     // encode the events name in the spotify playlist
     $scope.playlistName = encodeURIComponent("Partysense - " + ps.eventTitle);
+
+    $scope.removeTrack = function(track) {
+        $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
+        $http.post("/api/" + ps.event + "/remove/" + track.pk + "/").success(
+          function(response){
+            console.log(response);
+            $scope.updateSetlist();
+          });
+    };
 
     $scope.vote = function (track, isUpVote) {
         console.log("Got a vote!");

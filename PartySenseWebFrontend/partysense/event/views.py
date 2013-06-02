@@ -41,12 +41,10 @@ class EventDetail(EventView, DetailView):
         # add recently up-voted tracks
         u = self.request.user
         if not u.is_anonymous():
-            # TODO need to exclude ALL songs from this event, not just the upvotes from this event...
-            tracks = [v.track for v in u.vote_set.all()
+            tracks = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=[t.id for t in context['event'].tracks.all()])
-                                   .exclude(event=context['event'])[0:10]]
-
+                                   .exclude(event=context['event'])})[0:10]
             context['recent_tracks'] = tracks
         self.request.GET.next = reverse('event-detail', args=(context['event'].pk,))
         return context
@@ -100,12 +98,15 @@ def modify_event(request, pk):
 def get_track_list(request, pk):
     track_data = []
     event = get_object_or_404(Event, pk=pk)
+    # For now the dj can remove tracks, but maybe later the user who added it could as well.
+    removable = request.user == event.dj.user
     for t in event.tracks.all():
         votes = event.vote_set.filter(track=t)
         if not request.user.is_anonymous() and votes.filter(user=request.user).exists():
             usersVote = votes.get(user=request.user).is_positive
         else:
             usersVote = None
+
         track_data.append({
             'pk': t.pk,
             "name": t.name,
@@ -115,7 +116,8 @@ def get_track_list(request, pk):
             "external-ids": t.external_ids,
             "upVotes": votes.filter(is_positive=True).count(),
             "downVotes": votes.filter(is_positive=False).count(),
-            "usersVote": usersVote
+            "usersVote": usersVote,
+            "removable": removable
         })
 
     return HttpResponse(json.dumps(track_data), content_type="application/json")
@@ -126,6 +128,22 @@ def did_you_mean(request):
     q = request.GET["q"]
     return HttpResponse(json.dumps({'changed': dym.didYouMean(q)}),
                         content_type="application/json")
+
+
+@login_required
+def remove_track(request, event_pk, track_pk):
+    event = get_object_or_404(Event, pk=event_pk)
+    track = event.tracks.get(id=track_pk)
+    response = "Permission Denied"
+    if request.user == event.dj.user:
+        event.tracks.remove(track)
+        response = "Track removed"
+    else:
+        # TODO ensure this track hasn't been up voted by anyone else
+        votes = Vote.objects.filter(event=event, track_id=track_pk, is_positive=True)
+        #
+
+    return HttpResponse(json.dumps({'response': response}), content_type="application/json")
 
 @login_required
 def vote_on_track(request, event_pk, track_pk, internal=False):
@@ -243,13 +261,12 @@ def profile(request):
 
     listens have data.song.title
     """
-    listens = fb_request(request, ["music.listens"])["music.listens"]['data']
+    #listens = fb_request(request, ["music.listens"])["music.listens"]['data']
 
     return render(request, 'profiles/detail.html', {
         "img": img,
         "djs": djs,
         "past_events": past_events,
-        "listens": listens,
         "upcoming_events": upcoming_events
     })
 

@@ -25,6 +25,11 @@
                             ng-click="vote(track, false)">
                     <i class="icon-thumbs-down"></i>
                     </button>
+                    <button class="muted"
+                          ng-show="track.removable"
+                          ng-click="removeTrack(track);">
+                        <i class="icon-remove"></i>
+                    </button>
                 </div>
 
                 <div class="track-info" ng-class="infoWidth">

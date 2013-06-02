@@ -67,7 +67,7 @@ class ExternallyDefinedIDModel(models.Model):
 class Artist(ExternallyDefinedIDModel):
     name = models.CharField(max_length=80)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
     def track_count(self):
@@ -82,5 +82,5 @@ class Track(ExternallyDefinedIDModel):
     artist = models.ForeignKey('Artist')
     name = models.CharField(max_length=80)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.artist.name + ": " + self.name

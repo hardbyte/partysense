@@ -70,8 +70,8 @@ header {
             recentTracks: [
             {% for track in recent_tracks %}
                 {
-                    name: "{{ track.name|safe|escape }}",
-                    artist: "{{ track.artist|safe|escape }}",
+                    name: "{{ track.name }}",
+                    artist: "{{ track.artist }}",
                     spotify_url: "{{ track.spotify_url|safe|escape }}"
                 },
             {% endfor %}
