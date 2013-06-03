@@ -40,7 +40,8 @@ class EventForm(ModelForm):
     venue = CharField(label="Venue", widget=GoogleMapsWidget(
         attrs={'width': 800,
                'height': 400,
-               'country_city': "Christchurch, NZ"
+               'country_city': "Christchurch, NZ",
+
               }),
         error_messages={'required': 'Please select point from the map.'},
         help_text="location")
@@ -57,6 +58,13 @@ class EventForm(ModelForm):
 
         if len(words) > 20 or any(len(w) > 17 for w in words):
             raise ValidationError("How about a shorter event name?")
+
+        return " ".join(words)
+
+    def clean_venue(self):
+        if "venue" not in self.cleaned_data:
+            raise ValidationError("Please provide a venue name or address")
+        return self.cleaned_data['venue']
 
     def clean_start_time(self):
         date = self.cleaned_data['start_time'].date()

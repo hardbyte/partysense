@@ -78,6 +78,8 @@ class Event(TimeStampedModel):
     def __unicode__(self):
         return unicode(self.title)
 
+    def __str__(self):
+        return str(self.title)
 
 class Vote(models.Model):
     event = models.ForeignKey(Event, db_index=True)

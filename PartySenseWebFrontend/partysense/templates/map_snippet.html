@@ -8,23 +8,33 @@
 
     var map, my_point;
 
-    /* Try to center the map on user's address. */
+
+    /* Try to center the map on user's city. */
     geocoder.geocode( { 'address': "{{ country_city }}" }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             base_point = results[0].geometry.location;
 
-            // force move
-            set_center(base_point.lat(), base_point.lng())
+            if($('#id_latitude').val() == '')
+            {
+                // force move
+                set_center(base_point.lat(), base_point.lng())
+            }
         }
     });
 
 
     $(document).ready(function(){
+        $('#id_address').change(function(){
+            $('#id_venue').val($('#id_address').val());
+        });
+
+
         if($('#id_latitude').val()!=''){
             center = new google.maps.LatLng($('#id_latitude').val(), $('#id_longitude').val());
         }else{
             center = base_point
         }
+
         var myOptions = {
             zoom: 15,
             center: center,
@@ -42,7 +52,6 @@
         google.maps.event.addListener(my_point, 'dragend', function(event){
             $('#id_latitude').val(event.latLng.lat());
             $('#id_longitude').val(event.latLng.lng());
-            $('#id_venue').val($('#id_address').val());
         });
 
     });
@@ -83,11 +92,9 @@
         latlng = new google.maps.LatLng(lat, lng);
         my_point.setPosition(latlng)
         map.setCenter(latlng);
-
         // Save this as our location
         $('#id_latitude').val(lat);
         $('#id_longitude').val(lng);
-        $('#id_venue').val($('#id_address').val());
     }
 
 </script>

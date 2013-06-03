@@ -34,3 +34,11 @@ Vote on track
     http://partysense.hardbyte.webfactional.com:8000/api/2/vote/4/
 
 Also requires authentication.
+
+Remove track
+------------
+
+    POST to the URL:
+    http://partysense.hardbyte.webfactional.com:8000/api/{event}/remove/{track}/
+
+As the dj.

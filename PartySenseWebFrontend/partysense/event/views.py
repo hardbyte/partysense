@@ -46,7 +46,7 @@ class EventDetail(EventView, DetailView):
                                    .exclude(track__in=[t.id for t in context['event'].tracks.all()])
                                    .exclude(event=context['event'])})[0:10]
             context['recent_tracks'] = tracks
-        self.request.GET.next = reverse('event-detail', args=(context['event'].pk,))
+        self.request.GET.next = reverse('event-detail', args=(context['event'].pk, context['event'].slug))
         return context
 
 
@@ -176,7 +176,7 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
 def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
     if not DJ.objects.filter(user=request.user).exists():
-        return HttpResponseRedirect('/register/')
+        return HttpResponseRedirect(reverse("register"))
 
     if request.method == 'POST':
         # If the form has been submitted...
@@ -203,13 +203,13 @@ def create(request):
             event.location = location
 
             # todo get fb event url from incoming link?
+            # or ask for it?
             event.fb_url = "http://facebook.com/event"
 
             # then commit the new event to our database
             event.save()
 
-            # TODO Redirect using reverse lookup...
-            return HttpResponseRedirect('/event/{}/{}'.format(event.pk, event.slug))
+            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="">
+    <div class="span12">
         <p class="lead">PartySense is the best way to make sure you have a great night out.</p>
     </div>
 
@@ -34,7 +34,7 @@
                 </li>
             </ol>
 
-            <form action="{% url "event-detail" 1 %}">
+            <form action="{% url "event-detail" 1 "preview-party" %}">
                 <button class="button btn-primary">Preview Party</button>
             </form>
 
