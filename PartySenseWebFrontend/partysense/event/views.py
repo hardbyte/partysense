@@ -8,7 +8,6 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
-
 from django.conf import settings
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
@@ -30,8 +29,17 @@ class EventDetail(EventView, DetailView):
     template_name = 'event/detail.html'
 
     def get_object(self):
-        # add this event to this user now
-        return get_object_or_404(Event, pk=self.kwargs['pk'])
+        # add this event to this user now if logged in
+
+        event = get_object_or_404(Event, pk=self.kwargs['pk'])
+
+        # check that the event isn't in the past
+
+        if not event.past_event and event.timedelta().days < -2:
+            event.past_event = True
+            event.save()
+
+        return event
 
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
@@ -41,11 +49,10 @@ class EventDetail(EventView, DetailView):
         # add recently up-voted tracks
         u = self.request.user
         if not u.is_anonymous():
-            tracks = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
+            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=[t.id for t in context['event'].tracks.all()])
                                    .exclude(event=context['event'])})[0:10]
-            context['recent_tracks'] = tracks
         self.request.GET.next = reverse('event-detail', args=(context['event'].pk, context['event'].slug))
         return context
 
@@ -55,8 +62,6 @@ def modify_event(request, pk):
     """
     Given an event pk and a request:
         POST: New track added to event
-    TODO:
-        DELETE: Remove a track (TODO DJ only?)
     """
     event = get_object_or_404(Event, pk=pk)
 

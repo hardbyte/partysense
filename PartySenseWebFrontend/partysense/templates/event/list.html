@@ -2,18 +2,10 @@
 {% load humanize %}
 {% load url from future %}
 
-{% block style %}
-#map-canvas {
-    margin: 0;
-    padding: 0;
-    height: 400px;
-}
-{% endblock %}
-
 {% block content %}
     <ul>
     {% for event in event_list %}
-        <li><a href="/event/{{ event.pk }}/{{ event.title|slugify }}">{{ event }}</a></li>
+        <li><a href="{% url "event-detail" event.pk event.slug %} ">{{ event }} at {{ event.location.name }}</a></li>
     {% endfor %}
     </ul>
 

@@ -11,6 +11,14 @@ header {
 {% endblock %}
 {% block content %}
 
+<div class="row">
+    {% if event.dj.user == user  %}
+        <div class="span12">
+            <p>As DJ you can add and remove tracks.</p>
+
+        </div>
+    {% endif %}
+</div>
 <div class="row" ng-app="Partysense">
 
     <div class="span3 affix">
@@ -20,7 +28,8 @@ header {
             </h4>
             <div class="event_details">
                 <dl>
-                    <dt>Host:</dt>
+                    <dt>Host: {% if event.dj.user == user %} <em>(you)</em>{% endif %}</dt>
+
                     <dd>{% if event.dj.url  %}<a href="{{ event.dj.url }}">{{ event.dj.nickname }}</a> {% else %} {{ event.dj.nickname }} {% endif %} (<a href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}">other events</a>)</dd>
                     <dt>When:</dt>
                     <dd>{{ event.start_time }}</dd>
@@ -66,6 +75,7 @@ header {
         var ps = {
             event: {{ event.pk }},
             eventTitle: "{{ event.title }}",
+            eventPast: {% if event.past_event %} true {% else %} false {% endif %},
             LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}",
             recentTracks: [
             {% for track in recent_tracks %}

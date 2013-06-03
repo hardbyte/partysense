@@ -1,9 +1,11 @@
 import logging
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
+from django.utils.timezone import utc
 from django.db.models.signals import post_save
 
 from partysense.dj.models import DJ
@@ -80,6 +82,9 @@ class Event(TimeStampedModel):
 
     def __str__(self):
         return str(self.title)
+
+    def timedelta(self):
+        return self.start_time - datetime.datetime.utcnow().replace(tzinfo=utc)
 
 class Vote(models.Model):
     event = models.ForeignKey(Event, db_index=True)
