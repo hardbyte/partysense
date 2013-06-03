@@ -38,14 +38,14 @@
                 </a></li>
             {% else %}
                 <li>
-                    <a class="regularActive" href="/profile/">
+                    <a class="regularActive" href="{% url "profile" %}">
                         {{ user.first_name }}
                         <span class="caret"></span>
                     </a>
                     <!-- Drop down for nav bar -->
                     <ul class="fallback">
-                        <li><a class="" href="/profile/"><i class="icon-user"></i>Profile</a></li>
-                        <li><a href="logout" class=""><i class="icon-remove"></i>Logout</a></li>
+                        <li><a class="" href="{% url "profile" %}"><i class="icon-user"></i>Profile</a></li>
+                        <li><a href="{% url "logout" %}" class=""><i class="icon-remove"></i>Logout</a></li>
                     </ul>
 
                 </li>
@@ -85,7 +85,7 @@
     <div id="content" class="">
         {% block content %}{% endblock %}
     </div>
-
+    <div id="fb-root"></div>
     <footer>
         <!-- Footer content -->
         <a href="/privacy/">Privacy Policy</a>. Made in New Zealand by PartySense Ltd. © 2013

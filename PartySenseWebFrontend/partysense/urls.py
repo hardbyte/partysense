@@ -24,8 +24,8 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^privacy/$', 'privacy', name='privacy'),
 
     # profile worth having (me thinks no)?
-    url(r'^profile/$', 'profile'),
-    url(r'^profile/logout$', 'logout'),
+    url(r'^profile/$', 'profile', name="profile"),
+    url(r'^profile/logout/$', 'logout', name='logout'),
 
     url(r'^event/new/$', 'create', name="create-event"),
 

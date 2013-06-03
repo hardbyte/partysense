@@ -218,7 +218,7 @@ def create(request):
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()
-        if now.weekday < 6:
+        if now.weekday() < 6:
             saturday = now + datetime.timedelta(days=(5 - now.weekday()))
         else:
             # its sunday
@@ -237,10 +237,6 @@ def create(request):
 
 
 def profile(request):
-    if request.user.is_authenticated() and 'next' in request.GET:
-        #return HttpResponseRedirect('done')
-        logging.info("Maybe should be redireting now? " + request.GET['next'])
-
     img = None
     past_events = []
     upcoming_events = []
@@ -255,18 +251,18 @@ def profile(request):
 
         # Upcoming events
         upcoming_events = Event.objects.filter(users=request.user, past_event=False)
+        users_events = {e.pk for e in upcoming_events}
+        for e in past_events:
+            users_events.add(e.pk)
+        djs = DJ.objects.filter(event__in=users_events).distinct()
 
-    # TODO: Also show events by dj's this user has attended events of in the past
+        """See what we can get from facebook
+        Some users have "music", some who use spotify have "music.listens" and "music.playlists"
+        Many (such as myself) have nothing available.
 
-    djs = DJ.objects.filter(event__past_event=False).distinct()
-
-    """See what we can get from facebook
-    Some users have "music", some who use spotify have "music.listens" and "music.playlists"
-    Many (such as myself) have nothing available.
-
-    listens have data.song.title
-    """
-    #listens = fb_request(request, ["music.listens"])["music.listens"]['data']
+        listens have data.song.title
+        """
+        #listens = fb_request(request, ["music.listens"])["music.listens"]['data']
 
     return render(request, 'profiles/detail.html', {
         "img": img,

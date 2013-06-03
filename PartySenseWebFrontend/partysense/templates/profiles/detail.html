@@ -21,7 +21,7 @@
     {% endif %}
     {% if social_auth.associated %}
         <p>
-            <a href="logout" class="btn btn-block">Logout</a>
+            <a href="{% url "logout" %}" class="btn btn-block">Logout</a>
         </p>
         <div class="hide">
         <h3>Disconnect</h3>
