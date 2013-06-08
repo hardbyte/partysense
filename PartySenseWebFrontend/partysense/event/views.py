@@ -240,6 +240,7 @@ def profile(request):
     img = None
     past_events = []
     upcoming_events = []
+    djs = []
 
     if request.user.is_authenticated():
         res = fb_request(request, "picture.width(200).type(square)")
