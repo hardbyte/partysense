@@ -49,10 +49,14 @@ class EventDetail(EventView, DetailView):
         # add recently up-voted tracks
         u = self.request.user
         if not u.is_anonymous():
-            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
+            # context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
+            #                        .filter(is_positive=True)
+            #                        .exclude(track__in=[t.id for t in context['event'].tracks.all()])
+            #                        .exclude(event=context['event'])})[0:10]
+            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.select_related().all()
                                    .filter(is_positive=True)
-                                   .exclude(track__in=[t.id for t in context['event'].tracks.all()])
-                                   .exclude(event=context['event'])})[0:10]
+                                   .exclude(track__in=context['event'].tracks.all())
+                                   .exclude(event=context['event'])}).select_related()[0:10]
         self.request.GET.next = reverse('event-detail', args=(context['event'].pk, context['event'].slug))
         return context
 
