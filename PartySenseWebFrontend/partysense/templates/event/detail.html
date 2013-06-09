@@ -11,7 +11,7 @@ header {
 {% endblock %}
 {% block content %}
 
-<div class="row" ng-app="Partysense">
+<div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
 
     <div class="span3 affix">
         <section class="">
@@ -32,8 +32,8 @@ header {
             </div>
         </section>
 
-        <section ng-controller="RecentTracksTemplateCtrl">
-            <div ng-include src="template"></div>
+        <section>
+            <div ng-include src="recentTracksTemplate"></div>
         </section>
 
     </div>
@@ -52,21 +52,21 @@ header {
     <section class="span6 offset3">
 
       {% if event.user_editable or event.dj.user == user %}
-        <div ng-controller="SpotifyTemplateCtrl">
-            <div ng-include src="template"></div>
+        <div>
+            <div ng-include src="resultListTemplate"></div>
         </div>
       {% endif %}
 
         <div id="setlist">
-            <div ng-controller="SetlistTemplateCtrl">
-                <div ng-include src="template"></div>
+            <div>
+                <div ng-include src="setlistTemplate"></div>
             </div>
         </div>
     </section>
 
     <div class="offset9 affix">
-        <div ng-controller="PreviewTemplateCtrl">
-            <div ng-include src="template"></div>
+        <div>
+            <div ng-include src="previewTemplate"></div>
         </div>
 
         <section class="span4">

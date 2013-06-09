@@ -8,7 +8,7 @@ ROOT_DIR = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-COMPRESS_ENABLED = False
+#COMPRESS_ENABLED = False
 
 DATABASES = {
     'default': {

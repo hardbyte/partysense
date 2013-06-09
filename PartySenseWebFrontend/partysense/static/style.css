@@ -125,10 +125,21 @@ nav ul li ul li:hover a {background:#F7F7F7;}
 nav ul li ul.fallback {display:none;}
 nav ul li:hover ul.fallback {display:block;}
 
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
 footer
 {
     text-align: center;
-    font-size: 11px;
+    font-size: 12px;
+
+    height: 50px;   /* Height of the footer */
 }
 
 #quick-start {
@@ -306,4 +317,12 @@ footer
 .event_details dl {
     /* Remove the normal margin because we are short on vertical space */
     margin-bottom: 2px;
+}
+
+#musicImporter {
+    padding: 5px;
+}
+
+.indicate-drop {
+  border: 2px dashed black;
 }
