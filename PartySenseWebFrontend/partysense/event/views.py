@@ -30,7 +30,7 @@ class EventDetail(EventView, DetailView):
 
     def get_object(self):
         # add this event to this user now if logged in
-
+        logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
         event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
         # check that the event isn't in the past

@@ -1,7 +1,11 @@
 django>=1.5
 python-openid
+django_compressor
 oauth2
 pillow
 django-social-auth
 django-braces
 beautifulsoup4
+lxml
+html5lib
+django-debug-toolbar

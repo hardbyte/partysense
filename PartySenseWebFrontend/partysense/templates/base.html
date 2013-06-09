@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load url from future %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,89 +8,94 @@
 
     <title>{% block title %}Party Sense{% endblock %}</title>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" media="screen"/>
-    <link rel="stylesheet" href="{% static "style.css" %}" />
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}" media="screen"/>
+        <link rel="stylesheet" href="{% static "style.css" %}" />
 
-    <style>
-        {% block style %}
-        {% endblock %}
-    </style>
+
+        <style>
+            {% block style %}
+            {% endblock %}
+        </style>
+    {% endcompress %}
 
 </head>
 <body>
     <div class="row">
-    <header>
-        <!-- Header content -->
-        <a href="/">
-            <img id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
-        </a>
+        <header>
+            <!-- Header content -->
+            <a href="/">
+                <img id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
+            </a>
 
-        {% block nav %}
-        <nav class="nav nav-list">
-            <ul>
-                <li><a class="regularActive" href="/">Home</a></li>
-                <li><a class="regularActive" href="#">Clubs</a></li>
-                <li><a class="regularActive" href="/">Music</a></li>
-                <li><a class="regularActive" href="#">Deals</a></li>
-            {% if not user.is_authenticated %}
-                <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                    <div id="facebook_button">Login</div>
-                </a></li>
-            {% else %}
-                <li>
-                    <a class="regularActive" href="{% url "profile" %}">
-                        {{ user.first_name }}
-                        <span class="caret"></span>
-                    </a>
-                    <!-- Drop down for nav bar -->
-                    <ul class="fallback">
-                        <li><a class="" href="{% url "profile" %}"><i class="icon-user"></i>Profile</a></li>
-                        <li><a href="{% url "logout" %}" class=""><i class="icon-remove"></i>Logout</a></li>
-                    </ul>
+            {% block nav %}
+            <nav class="nav nav-list">
+                <ul>
+                    <li><a class="regularActive" href="/">Home</a></li>
+                    <li><a class="regularActive" href="#">Clubs</a></li>
+                    <li><a class="regularActive" href="/">Music</a></li>
+                    <li><a class="regularActive" href="#">Deals</a></li>
+                {% if not user.is_authenticated %}
+                    <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                        <div id="facebook_button">Login</div>
+                    </a></li>
+                {% else %}
+                    <li>
+                        <a class="regularActive" href="{% url "profile" %}">
+                            {{ user.first_name }}
+                            <span class="caret"></span>
+                        </a>
+                        <!-- Drop down for nav bar -->
+                        <ul class="fallback">
+                            <li><a class="" href="{% url "profile" %}"><i class="icon-user"></i>Profile</a></li>
+                            <li><a href="{% url "logout" %}" class=""><i class="icon-remove"></i>Logout</a></li>
+                        </ul>
 
-                </li>
-            {% endif %}
+                    </li>
+                {% endif %}
 
-            </ul>
-        </nav>
+                </ul>
+            </nav>
 
-        {% endblock %}
-    </header>
+            {% endblock %}
+        </header>
 
-    <!-- Add jQuery library -->
-    <script src="{% static "js/jquery-1.9.0.min.js" %}"></script>
-    <script src="{% static "js/jquery.cookie.js" %}"></script>
-    <script>
-        var csrftoken = $.cookie('csrftoken');
+        <div id="content" class="">
+            {% block content %}{% endblock %}
+        </div>
 
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
+        <footer>
+            <!-- Footer content -->
+            <a href="/privacy/">Privacy Policy</a>. Made in New Zealand by PartySense Ltd. © 2013
+        </footer>
 
-        $.ajaxSetup({
-            crossDomain: true, // obviates need for sameOrigin test
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type)) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-    </script>
-    <script src="{% static "js/d3.v3.min.js" %}"></script>
-    <script src="{% static "js/util.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-
-
-    <div id="content" class="">
-        {% block content %}{% endblock %}
     </div>
-    <div id="fb-root"></div>
-    <footer>
-        <!-- Footer content -->
-        <a href="/privacy/">Privacy Policy</a>. Made in New Zealand by PartySense Ltd. © 2013
-    </footer>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.1.6/d3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js"></script>
+    {% compress js %}
+        <script>
+            var csrftoken = $.cookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            $.ajaxSetup({
+                crossDomain: true, // obviates need for sameOrigin test
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type)) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+        </script>
+        <script src="{% static "js/util.js" %}"></script>
+        <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    {% endcompress %}
 
     {% block jslibs %}
 
@@ -113,6 +119,7 @@
 		});
 	});
 	</script>
-    </div>
+
 </body>
+<div id="fb-root"></div>
 </html>

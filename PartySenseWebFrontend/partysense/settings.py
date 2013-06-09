@@ -9,6 +9,7 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
      ('Brian Thorne', 'hardbyte@gmail.com'),
 )
+DOMAIN = "http://partysense.hardbyte.webfactional.com"
 
 ALLOWED_HOSTS = ['.hardbyte.webfactional.com']
 
@@ -49,6 +50,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     )
 
+COMPRESS_ENABLED = True
 
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'mailbox_username'
@@ -99,7 +101,7 @@ MEDIA_ROOT = '/home/hardbyte/webapps/media_partysense/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'http://partysense.hardbyte.webfactional.com/media/'
+MEDIA_URL = DOMAIN + '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -109,7 +111,7 @@ STATIC_ROOT = '/home/hardbyte/webapps/static_partysense/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://partysense.hardbyte.webfactional.com/static/'
+STATIC_URL = DOMAIN + '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -124,7 +126,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -187,6 +189,9 @@ INSTALLED_APPS = (
     # enable the admin and admin documentation:
     'django.contrib.admin',
     'django.contrib.admindocs',
+
+    # for compressing js and css files
+    "compressor",
 
     # for database migrations http://south.readthedocs.org
     #'south',
