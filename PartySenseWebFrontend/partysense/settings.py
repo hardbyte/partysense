@@ -9,9 +9,9 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
      ('Brian Thorne', 'hardbyte@gmail.com'),
 )
-DOMAIN = "http://partysense.hardbyte.webfactional.com"
+DOMAIN = "http://partysen.se"
 
-ALLOWED_HOSTS = ['.hardbyte.webfactional.com']
+ALLOWED_HOSTS = ['.hardbyte.webfactional.com', 'partysen.se']
 
 TWITTER_CONSUMER_KEY         = ''
 TWITTER_CONSUMER_SECRET      = ''

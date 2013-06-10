@@ -6,7 +6,7 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.utils.timezone import utc
-from django.db.models.signals import post_save
+from django.core.urlresolvers import reverse
 
 from partysense.dj.models import DJ
 from partysense.music.models import Track, Artist
@@ -85,6 +85,10 @@ class Event(TimeStampedModel):
 
     def timedelta(self):
         return self.start_time - datetime.datetime.utcnow().replace(tzinfo=utc)
+
+    def get_absolute_url(self):
+        return reverse('event-detail', args=[str(self.id), self.slug])
+
 
 class Vote(models.Model):
     event = models.ForeignKey(Event, db_index=True)

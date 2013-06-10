@@ -2,7 +2,7 @@ body, html { /* set size of body to full page and remove margins */
     width: 100%;
     height: 100%;
     padding: 0;
-    font-family: 'Lato', Helvetica, sans-serif;
+
 }
 
 body {
@@ -13,12 +13,13 @@ body {
 
     background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
     background-attachment: fixed;
-	background-color: #333333;
-    color: white;
+	/*background-color: #333333;
+    color: white;*/
 }
 
 h1, h2, h3, h4, h5 {
     color: #2ba6cb;
+    font-family: 'Lato', Helvetica, sans-serif;
 }
 
 .my-hover .track-name:hover, .track-artist:hover {
@@ -29,41 +30,19 @@ h1, h2, h3, h4, h5 {
 
 
 #content {
-    padding-top: 60px;
+    padding-top: 85px;
     overflow: hidden;
-}
-
-header {
-    display:block;
-    position: fixed;
-
-    background-color: #212121;
-    z-index: 400;
-    -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-    width: 960px;
 }
 
 section {
-    background-color: #212121;
+    background-color: rgba(33, 33, 33, 0.75);
+    color: #fff;
     padding: 10px;
     padding-top: 1px;
-    margin-bottom: 20px;
-    -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
 }
 
 #logo {
-    float:left;
-    margin-top: 1px;
-	height: 40px;
-}
-
-nav {
-    padding-bottom: 2px;
-    overflow: hidden;
+	height: 30px;
 }
 
 nav ul
@@ -73,8 +52,6 @@ nav ul
     padding:0;
     white-space: nowrap;
 }
-
-nav li { float:left; }
 
 nav a.regularActive:link, nav a.regularActive:visited {
 
@@ -138,7 +115,7 @@ footer
 {
     text-align: center;
     font-size: 12px;
-
+    margin-top: 50px;
     height: 50px;   /* Height of the footer */
 }
 
@@ -234,26 +211,26 @@ footer
 }
 #search input{
     font-size: 20px;
-    min-width: 355px;
+    min-width: 250px;
+}
+
+.input-append input {
+    float:left;
+    width:80%
 }
 
 #resultContainer {
     display: none;
 }
 
-/* This is the spotify preview column */
-#playlist {
-    margin-left: 20px;
-
-}
 .trackDiv {
     margin-bottom: 15px;
-    background-color: #333333;
+    background-color: rgba(51, 51, 51, 0.5);
     padding: 1px;
 
-    -webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .recentTrack {
@@ -308,10 +285,10 @@ footer
 
 #event-tracks .lastfmCover {
     float: right;
-    max-height: 100px;
-    -webkit-border-radius: 0px 5px 5px 0px;
-    -moz-border-radius: 0px 5px 5px 0px;
-    border-radius: 0px 5px 5px 0px;
+    max-height: 150px;
+    -webkit-border-radius: 0px 2px 2px 0px;
+    -moz-border-radius: 0px 2px 2px 0px;
+    border-radius: 0px 2px 2px 0px;
 }
 
 .event_details dl {
@@ -324,5 +301,5 @@ footer
 }
 
 .indicate-drop {
-  border: 2px dashed black;
+  border: 5px dashed #f5f5f5;
 }

@@ -31,7 +31,9 @@ class EventDetail(EventView, DetailView):
     def get_object(self):
         # add this event to this user now if logged in
         logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
-        event = get_object_or_404(Event, pk=self.kwargs['pk'])
+        event = get_object_or_404(Event,
+                                  pk=self.kwargs['pk'],
+                                  slug=self.kwargs['slug'])
 
         # check that the event isn't in the past
 
@@ -45,19 +47,24 @@ class EventDetail(EventView, DetailView):
         context = super(EventDetail, self).get_context_data(**kwargs)
         # add other context... if required
         context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
+        context['djsOtherEvents'] = Event.objects.exclude(
+                id=context['event'].pk
+            ).filter(
+                past_event=False,
+                 dj=context['event'].dj.pk
+            ).order_by('-modified')
 
         # add recently up-voted tracks
         u = self.request.user
         if not u.is_anonymous():
-            # context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.all()
-            #                        .filter(is_positive=True)
-            #                        .exclude(track__in=[t.id for t in context['event'].tracks.all()])
-            #                        .exclude(event=context['event'])})[0:10]
             context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.select_related().all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())
                                    .exclude(event=context['event'])}).select_related()[0:10]
-        self.request.GET.next = reverse('event-detail', args=(context['event'].pk, context['event'].slug))
+            context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
+            context['past_events'] = Event.objects.filter(users=u, past_event=True)
+        self.request.GET.next = reverse('event-detail',
+                                        args=(context['event'].pk, context['event'].slug))
         return context
 
 
@@ -128,6 +135,9 @@ def get_track_list(request, pk):
             "usersVote": usersVote,
             "removable": removable
         })
+
+    # Sort by most popular
+    track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
 
     return HttpResponse(json.dumps(track_data), content_type="application/json")
 
@@ -239,7 +249,6 @@ def create(request):
                       "formset": event_form
                   })
 
-
 def profile(request):
     img = None
     past_events = []
@@ -289,6 +298,9 @@ def landing(request):
 
 def privacy(request):
     return render(request, 'privacy.html')
+
+def clubs(request):
+    return render(request, 'clubs.html')
 
 @permission_required("can_change_past_event")
 def mark_over(request, pk):

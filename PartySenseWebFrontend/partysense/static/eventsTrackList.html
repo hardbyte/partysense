@@ -1,5 +1,5 @@
 <div ng-controller="SetlistCtrl">
-    <div class="">
+    <div class="" id="musicImporter" droppable>
         <div class="header">
             <h3>Party Playlist <small ng-show="loggedIn">Vote on the current set list</small></h3>
         </div>
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="track-info" ng-class="infoWidth">
-                    <h5 class="track-name">{{ track.name }}</h5>
+                    <h4 class="track-name">{{ track.name }}</h4>
                     <p class="track-artist"
                        ng-click="searchByArtist(track);">{{ track.artist }}</p>
                     <span class="muted track-votes">

@@ -1,23 +1,83 @@
-angular.module('Partysense', ['ngResource', 'ps.filters', 'ps.services']);
+var App = angular.module('Partysense',
+  ['ngResource', 'ps.filters', 'ps.services']);
 
-/* Templating Controllers */
-function SpotifyTemplateCtrl($scope) {
-    $scope.template = "/static/spotifyResultList.html";
+App.directive('droppable', function($compile) {
+    "use strict";
+    return {
+        restrict: "A",
+        //The link function is responsible for registering DOM listeners as well as updating the DOM.
+        link: function(scope, element, attrs){
+
+            element.context.ondragover = function(event, ui) {
+                // TODO maybe we can work out if this is from spotify here?
+                if(true){
+                    // Do something to show we can deal with items dropped on this
+                    element.addClass("indicate-drop");
+                    return false;
+                } else {
+                    console.log("I don't know how to deal with that... should I?");
+                    console.log(event);
+                }
+            };
+
+            element.context.ondragleave = function(event){
+                attrs.$set('class', '');
+            };
+
+            element.context.ondrop = function (event) {
+                console.log("Something was dropped onto this element");
+                console.log(event);
+                // work out if this is something we can deal with...
+                // get an open url:
+                //http://open.spotify.com/user/1242959390/playlist/4rN0f6C22Mz9dUX5lcbG5F
+                var open_url = event.dataTransfer.getData("text/plain");
+                console.log(open_url);
+                if(/.*spotify.*/.test(open_url)){
+
+                    console.log("Looks like a spotify url of some sort...");
+                    var uri = event.dataTransfer.getData("text/uri-list");
+                    //spotify:user:1242959390:playlist:4rN0f6C22Mz9dUX5lcbG5F
+
+                    console.log(event.dataTransfer.getData("text/html"));
+                    // <a href="http://open.spotify.com/user/1242959390/playlist/4rN0f6C22Mz9dUX5lcbG5F">Trial</a>
+
+                    var type = "";
+                    // Todo work out if this is a playlist, search, track or artist...
+                    if(/spotify[:].*playlist:.*/g.test(uri)) {
+                        console.log("Looks like " + uri + " is a playlist");
+                        type = "playlist";
+                        // TODO import from playlist
+                    }
+                    if(/spotify[:].*artist:.*/.test(uri)) {
+                        console.log("Looks like " + uri + " is an artist");
+                        type = "artist";
+                        updateService.update("searchByArtistName", artist);
+                    }
+                    if(/spotify[:].*track:.*/.test(uri)) {
+                        console.log("Looks like " + uri + " is a track");
+                        type = "track";
+                    }
+
+                    element.html("<p>Importing Spotify " + type + " - " + event.dataTransfer.getData("text/html") + ".</p>");
+
+                    event.preventDefault();
+                    return false;
+                }
+            };
+        }
+    };
+});
+
+/* Template Controller will pull in all the other HTML fragments
+ * and the other Angular Controllers */
+function TemplateCtrl($scope) {
+    "use strict";
+    $scope.oneAtATime = true;
+    $scope.resultListTemplate = "/static/spotifyResultList.html";
+    $scope.previewTemplate = "/static/spotifyPreview.html";
+    $scope.setlistTemplate = "/static/eventsTrackList.html";
+    $scope.recentTracksTemplate = "/static/recentTrackList.html";
 }
-
-function PreviewTemplateCtrl($scope) {
-    $scope.template = "/static/spotifyPreview.html";
-}
-
-function SetlistTemplateCtrl($scope) {
-    $scope.template = "/static/eventsTrackList.html";
-}
-
-function RecentTracksTemplateCtrl($scope) {
-    $scope.template = "/static/recentTrackList.html";
-}
-
-
 
 function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, Track, updateService) {
     "use strict";

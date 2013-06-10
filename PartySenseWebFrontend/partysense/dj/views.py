@@ -31,8 +31,8 @@ class EventList(ListView):
     def get_queryset(self):
         logger.debug("filter out finished events and events that aren't visible to this dj/user")
         dj_id = self.kwargs['dj_id']
-        queryset = Event.objects.filter(past_event=False, dj=dj_id)
-        return queryset.order_by('-modified')
+        queryset = Event.objects.filter(past_event=False, dj=dj_id).order_by('-modified')
+        return queryset
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -71,7 +71,7 @@ def register(request):
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
             # Redirect to a thanks for joining page
-            return HttpResponseRedirect(reverse('create-event'))
+            return HttpResponseRedirect(reverse('profile'))
     else:
         # Partially fill in what we know (if anything)
         # Get location from fb

@@ -1,5 +1,5 @@
-<div id="recentTracks" ng-controller="RecentTrackCtrl" >
-    <h4>Your Recent Music</h4>
+<section id="recentTracks" ng-controller="RecentTrackCtrl" >
+    <h3>Your Recent Music</h3>
     <div class="recentTrack" ng-show="recentTracks" ng-repeat="track in recentTracks">
         <i class="icon-chevron-right"></i>
         <a title="Click to add Track" href="#" ng-click="addTrack(track)">
@@ -14,5 +14,5 @@
     <div ng-show="recentTracks.length==0">
         <p class="info">Over time we get to know what sort of music you really enjoy and they will show up here.</p>
     </div>
-</div>
+</section>
 

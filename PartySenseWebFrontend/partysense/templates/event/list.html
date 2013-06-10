@@ -3,11 +3,17 @@
 {% load url from future %}
 
 {% block content %}
-    <ul>
-    {% for event in event_list %}
-        <li><a href="{% url "event-detail" event.pk event.slug %} ">{{ event }} at {{ event.location.name }}</a></li>
-    {% endfor %}
-    </ul>
+<div class="row">
+
+    <section class="span12">
+        <p>Upcoming events:</p>
+        <ul>
+        {% for event in event_list %}
+            <li><a href="{% url "event-detail" event.pk event.slug %} ">{{ event }} at {{ event.location.name }}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+</div>
 
 {% endblock %}
 

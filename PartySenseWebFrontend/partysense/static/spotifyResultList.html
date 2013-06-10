@@ -1,14 +1,16 @@
 <div id="search" ng-controller="SpotifyCtrl" ng-show="loggedIn">
+    <div class="row-fluid">
+        <form class="input-append span12" ng-submit="doSearch(true)">
 
-    <form class="input-append" ng-submit="doSearch(true)">
-        <input class="form-search" type="search"
-               ng-model="searchTerm"
-               ng-change="doSearch(false)"
-               results="10"
-               placeholder="Search for music to add"
-               autofocus autocomplete="off">
-        <button class="btn" type="button" ng-click="clear()">Clear</button>
-    </form>
+            <input class="form-search" type="search"
+                   ng-model="searchTerm"
+                   ng-change="doSearch(false)"
+                   results="10"
+                   placeholder="Search for music to add"
+                   autofocus autocomplete="off">
+            <button class="btn" type="button" ng-click="clear()">Clear</button>
+        </form>
+    </div>
 
     <div class="alert fade in" ng-show="msg" ng-class="msgClass">
         <a href="#" class="close" data-dismiss="alert">&times;</a>

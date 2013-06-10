@@ -7,71 +7,79 @@
 {% endblock %}
 
 {% block content %}
-    <div class="span12">
-        <p class="lead">PartySense is the best way to make sure you have a great night out.</p>
+
+    <div class="hero-unit">
+        <div>
+            <h1>PartySense</h1>
+            <p class="lead"> the best way to make sure you have a great night out.</p>
+        </div>
     </div>
 
     <div class="row" id="quick-start">
-        <section id="customer-quick-start" class="span6">
-            <h2>How it works</h2>
-            <h1>Party Animals!</h1>
-            <ol>
-                <li>
-                    <h3>Event Invite</h3>
-                    <p>Your DJ creates an event on partysen.se and puts the link on facebook</p>
-                </li>
-                <li>
-                    <h3>Vote on the tracks</h3>
-                    <p>The DJ will start by adding a selection of tracks to the event. Tell them
-                    what tracks you like by voting on them!</p>
-                </li>
-                <li>
-                    <h3>Help choose the party music!</h3>
-                    <p>Add music to the setlist - if the host has allowed it you can search for tracks from the
-                       extremely large <strong>Spotify</strong> music library.</p>
-                    <p>The DJ will see how popular each of the tracks are.
-                   </p>
-                </li>
-            </ol>
+        <div class="span6">
+            <section id="customer-quick-start">
+                <h2>How it works</h2>
+                <h1>Party Animals!</h1>
+                <ol>
+                    <li>
+                        <h3>Event Invite</h3>
+                        <p>Your DJ creates an event on partysen.se and puts the link on facebook</p>
+                    </li>
+                    <li>
+                        <h3>Vote on the tracks</h3>
+                        <p>The DJ will start by adding a selection of tracks to the event. Tell them
+                        what tracks you like by voting on them!</p>
+                    </li>
+                    <li>
+                        <h3>Help choose the party music!</h3>
+                        <p>Add music to the setlist - if the host has allowed it you can search for tracks from the
+                           extremely large <strong>Spotify</strong> music library.</p>
+                        <p>The DJ will see how popular each of the tracks are.
+                       </p>
+                    </li>
+                </ol>
 
-            <form action="{% url "event-detail" 1 "preview-party" %}">
-                <button class="button btn-primary">Preview Party</button>
-            </form>
-
-        </section>
-
-        <section id="dj-quick-start" class="span6">
-            <h2>How it works</h2>
-            <h1>DJ's and Hosts</h1>
-
-            <ol>
-                <li>
-                    <h3>Register</h3>
-                    <p>Membership is free, we just need to know a few details.</p>
-                </li>
-                <li>
-                    <h3>Create Events</h3>
-                    <p>Share the link on your social networks and see the crowd sourced data pour in!</p>
-                    <p>You can choose all the available music yourself, or allow anyone to add music
-                       to the event.</p>
-                </li>
-                <li>
-                    <h3>Host an awesome party</h3>
-                    <p>Leverage our detailed analytics to cater to your crowd!</p>
-                </li>
-            </ol>
-            {% if user.is_authenticated %}
-                <form action="{% url "event.views.create" %}">
-                    <button>Host your next event now!</button>
+                <form action="{% url "event-detail" 2 "preview-party" %}">
+                    <button class="button btn-primary">Preview Party</button>
                 </form>
-            {% else %}
-                <form action="{% url "dj.views.register" %}">
-                    <button>Register now!</button>
-                </form>
-            {% endif %}
 
-        </section>
+            </section>
+        </div>
+        <div class="span6">
+            <section id="dj-quick-start">
+                <h2>How it works</h2>
+                <h1>DJ's and Hosts</h1>
+
+                <ol>
+                    <li>
+                        <h3>Register</h3>
+                        <p>Membership is free, we just need to know a few details.</p>
+                    </li>
+                    <li>
+                        <h3>Create Events</h3>
+                        <p>Share the link on your social networks and see the crowd sourced data pour in!</p>
+                        <p>You can choose all the available music yourself, or allow anyone to add music
+                           to the event.</p>
+                    </li>
+                    <li>
+                        <h3>Host an awesome party</h3>
+                        <p>Leverage our detailed analytics to cater to your crowd!</p>
+                    </li>
+                </ol>
+                {% if user.is_authenticated %}
+                    <form action="{% url "event.views.create" %}">
+                        <button>Host your next event now!</button>
+                    </form>
+                {% else %}
+                    <form action="{% url "dj.views.register" %}">
+                        <button>Register now!</button>
+                    </form>
+                {% endif %}
+
+            </section>
+        </div>
     </div>
+
 
     <div class="row">
         <div class="">
@@ -81,10 +89,6 @@
             </div>
             <div class="span4">
                <div class="fb-like" data-href="http://partysen.se" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></div>
-            </div>
-            <div class="span3">
-                <div class=""><a href="https://twitter.com/share" class="twitter-share-button" data-via="thorneynz" data-hashtags="partysense">Tweet</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
             </div>
         </div>
     </div>
