@@ -14,7 +14,7 @@
 
     <div class="alert fade in" ng-show="msg" ng-class="msgClass">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>{{ msg }}</strong>
+        <strong ng-model="msg">{{ msg }}</strong>
     </div>
 
     <div class="alert fade in" ng-show="correction">
@@ -26,7 +26,7 @@
         <table class="table my-hover" ng-show="spotifyResult.tracks">
             <thead><tr><th>Track</th><th>Artist</th></tr></thead>
             <tbody>
-                <tr ng-repeat="track in spotifyResult.tracks | removeAddedTracks | limitTo:100"
+                <tr ng-repeat="track in spotifyResult.tracks | limitTo:100 | removeAddedTracks"
                     ng-hide="track.added">
                     <td class="track-name" ng-click="addTrack(track); track.added=true;">
                         <span>

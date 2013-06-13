@@ -6,6 +6,7 @@ angular.module('ps.filters', [])
   .filter('removeAddedTracks', function() {
   return function(allTracks) {
       if(allTracks) {
+          // TODO this is quite expensive!
           // If the track has the same artist, the name can't be too similar?
           // Artists like Mumford & Sons release "Little Lion Man" on multiple
           // albums and Spotify has seperate instances of those tracks.

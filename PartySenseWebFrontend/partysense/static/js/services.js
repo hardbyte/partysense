@@ -8,6 +8,13 @@ angular.module('ps.services', ['ngResource'])
             {action: 'track.json', q:'artist:Gaga'}
         );
     })
+   .factory('SpotifyLookup', function($http, $resource){
+        /* Protection against cross site scripting attacks. */
+        $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
+        return $resource("http://ws.spotify.com/lookup/1/:action",
+            {action: '.json', extras:'', uri:'spotify:track:7d40ltmahMLJKA8HhzX9xe'}
+        );
+    })
   .factory('Track', function($http, $resource){
       /* Protection against cross site scripting attacks. */
       $http.defaults.headers.post['X-CSRFToken'] = csrftoken;

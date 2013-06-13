@@ -298,8 +298,9 @@ footer
 
 #musicImporter {
     padding: 5px;
+    margin: 2px;
 }
 
 .indicate-drop {
-  border: 5px dashed #f5f5f5;
+  border: 2px dashed #f5f5f5;
 }
