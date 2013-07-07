@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load url from future %}
+{% load compress %}
+{% load staticfiles %}
 {% block content %}
 
     <section class="span12">
@@ -25,9 +27,22 @@
 {% endblock %}
 
 {% block jslibs %}
+    {% compress js %}
+        <script src="{% static "js/datepicker/js/bootstrap-datepicker.js" %}"></script>
+    {% endcompress %}
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        var e = document.getElementById("id_start_time_0");
+        if (e.type === "text") {
+            // No native date picker support :(
+            // Use bootstrap-datepicker to create one,
+            // then dynamically replace that <input> element.
+            console.log("Adding datepicker support");
+            $("#id_start_time_0").datepicker({format: "yyy-mm-dd"});
+          }
 
-</script>
+
+
+    </script>
 
 {% endblock %}
