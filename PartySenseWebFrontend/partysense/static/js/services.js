@@ -8,7 +8,9 @@ angular.module('ps.services', ['ngResource'])
             {action: 'track.json', q:'artist:Gaga'}
         );
     })
+   /*.factory('SoundCloud')*/
    .factory('SpotifyLookup', function($http, $resource){
+      /* When we know exactly what we're after from spotify. */
         /* Protection against cross site scripting attacks. */
         $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
         return $resource("http://ws.spotify.com/lookup/1/:action",
@@ -16,6 +18,7 @@ angular.module('ps.services', ['ngResource'])
         );
     })
   .factory('Track', function($http, $resource){
+      /* This is the partysen.se api */
       /* Protection against cross site scripting attacks. */
       $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
       return $resource("/api/:event/:action/:track",

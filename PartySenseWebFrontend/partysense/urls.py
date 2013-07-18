@@ -36,6 +36,11 @@ urlpatterns += patterns('partysense.event.views',
         ensure_csrf_cookie(EventDetail.as_view()),
         name="event-detail"),
 
+    # statistics page
+    url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/stats/$',
+        ensure_csrf_cookie(EventStatsDetail.as_view()),
+        name="event-stats"),
+
     url(r'^api/(?P<pk>\d+)/modify',
         modify_event,
         name="modify-event"),

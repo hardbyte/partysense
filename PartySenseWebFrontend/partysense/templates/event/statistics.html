@@ -69,19 +69,7 @@
                     </section>
                 </div>
             </div>
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                       data-toggle="collapse"
-                       data-parent="#leftAccordion"
-                       href="#collapseTwo">
-                        Import Recent Music
-                    </span>
-                </button>
-                <div id="collapseTwo" class="accordion-body collapse">
-                    <div ng-include src="recentTracksTemplate"></div>
-                </div>
-            </div>
+
             <div class="accordion-group">
                 <button class="accordion-heading btn btn-block btn-primary">
                     <span class="accordion-toggle"
@@ -125,24 +113,20 @@
     </div>
 
     <div class="span6 offset3">
-        <section>
+        <div>
 
-            {% if event.dj.user == user %}
-                <div class="alert-box">Hey as DJ you might be interested in the <a href="./stats/">analytics</a></div>
-            {% endif %}
-
-          {% if event.user_editable or event.dj.user == user %}
+          {% if event.dj.user == user %}
             <div>
-                <div ng-include src="resultListTemplate"></div>
+                <div ng-include src="eventStatisticsTemplate"></div>
             </div>
           {% endif %}
 
             <div id="setlist">
                 <div>
-                    <div ng-include src="setlistTemplate"></div>
+{#                    <div ng-include src="setlistTemplate"></div>#}
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <div class="offset9 affix hidden-phone">

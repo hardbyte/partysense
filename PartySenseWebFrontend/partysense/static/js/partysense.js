@@ -103,6 +103,66 @@ function TemplateCtrl($scope) {
     $scope.previewTemplate = "/static/spotifyPreview.html";
     $scope.setlistTemplate = "/static/eventsTrackList.html";
     $scope.recentTracksTemplate = "/static/recentTrackList.html";
+    $scope.eventStatisticsTemplate = "/static/eventStatistics.html";
+}
+
+function EventStatsCtrl($scope, Track, updateService){
+    "use strict";
+
+    $scope.refreshTracks = function(){
+        // GET: /api/123/get-track-list
+        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
+            console.log("Received setlist");
+            var artists = [];
+
+            // TODO!
+            data.forEach(function(track){
+                console.log(track.artist);
+                track.votes = track.upVotes - track.downVotes;
+                // Is this artist in our list?
+                if(!artists.some(function(a, i, artists){
+                    var res = a.name === track.artist;
+                    if(res){
+                        // Seen it before add the votes
+                        artists[i].votes += track.votes;
+                        if(track.votes > 0){
+                            artists[i].numberOfTracks++;
+                        }
+                    }
+                    return res;
+                })){
+                    // no -> add it
+                    var a = {name: track.artist};
+                    a.votes = track.votes;
+                    // Only record the track if its got a positive rank
+                    if(a.votes > 0){
+                        a.numberOfTracks = 1;
+                    } else {
+                        a.numberOfTracks = 0;
+                    }
+                    artists.push(a);
+                }
+
+            });
+
+            $scope.mostPopularArtists = artists.sort(function(a, b){
+                return b.votes - a.votes;
+            }).slice(0, Math.min(5, artists.length));
+
+            $scope.artistsWithMostTracks = artists.sort(function(a, b){
+                return b.numberOfTracks - a.numberOfTracks;
+            }).slice(0, Math.min(5, artists.length));
+
+
+            $scope.popularTracks = data.sort(function(b, a){
+                return (a.upVotes - a.downVotes) - (b.upVotes - b.downVotes);
+            }).slice(0, Math.min(5, data.length));
+
+
+        });
+    };
+
+    $scope.refreshTracks();
 }
 
 function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {

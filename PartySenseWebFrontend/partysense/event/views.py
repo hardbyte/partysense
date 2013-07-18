@@ -23,7 +23,6 @@ logger = logging.getLogger(__name__)
 class EventView():
     model = Event
 
-
 class EventDetail(EventView, DetailView):
 
     template_name = 'event/detail.html'
@@ -67,6 +66,8 @@ class EventDetail(EventView, DetailView):
                                         args=(context['event'].pk, context['event'].slug))
         return context
 
+class EventStatsDetail(EventDetail):
+    template_name = 'event/statistics.html'
 
 @login_required
 def modify_event(request, pk):
