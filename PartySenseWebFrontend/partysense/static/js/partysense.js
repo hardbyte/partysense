@@ -3,6 +3,19 @@ var App = angular.module('Partysense',
    'ps.filters', 
   'ps.services']);
 
+App.directive('backImg', function(){
+    return function(scope, element, attrs){
+        attrs.$observe('backImg', function(value) {
+            element.css({
+                'background-image': 'url(' + value +')',
+                //'background-size' : 'cover',
+                'background-position' : 'right',
+                'background-repeat' : 'no-repeat'
+            });
+        });
+    };
+});
+
 App.directive('droppable', function($compile, $rootScope, updateService) {
     "use strict";
     return {

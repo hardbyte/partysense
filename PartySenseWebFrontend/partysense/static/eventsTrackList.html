@@ -12,7 +12,8 @@
                 <p>It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
             </div>
             <div class="row-fluid trackDiv"
-                 ng-repeat="track in setlist">
+                 ng-repeat="track in setlist"
+                 back-img="{{ track.coverURL }}">
 
                 <div class="span2 voteButtonDiv" ng-show="loggedIn">
                     <button id="vote-up-{{ track.pk }}"
@@ -43,13 +44,11 @@
                                    'other': '{} people have'}">
                         </ng-pluralize> voted.
                     </span>
+                    <div class="">
+                        <em class="track-genre">{{ track.tag }}</em>
+                    </div>
                 </div>
-                <div class="span1">
-                    <em class="track-genre pull-right">{{ track.tag }}</em>
-                </div>
-                <div class="span2">
-                    <img class="lastfmCover" id="lastfm0" ng-src="{{ track.coverURL }}">
-                </div>
+
             </div>
         </div>
     </div>

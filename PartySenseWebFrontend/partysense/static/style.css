@@ -240,6 +240,7 @@ footer
 .track-info {
     padding-left: 10px;
     padding-right: 10px;
+    float:left;
 }
 
 .track-name {
