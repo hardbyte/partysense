@@ -30,8 +30,13 @@ h1, h2, h3, h4, h5 {
 
 
 #content {
-    padding-top: 85px;
     overflow: hidden;
+}
+
+@media (min-width: 979px){
+    #content {
+        padding-top: 85px;
+    }
 }
 
 section {

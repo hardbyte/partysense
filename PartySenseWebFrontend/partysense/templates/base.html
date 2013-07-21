@@ -57,7 +57,7 @@
                                 {{ user.first_name }}
                             </a>
                             <!-- Drop down for nav bar -->
-                            <ul class="fallback">
+                            <ul class="fallback hidden-phone">
                                 <li><a class="" href="{% url "profile" %}"><i class="icon-user"></i>Profile</a></li>
                                 <li><a href="{% url "logout" %}" class=""><i class="icon-remove"></i>Logout</a></li>
                             </ul>
@@ -132,6 +132,7 @@
     </script>
     <script>
 	$(function () {
+        // Provide the drop down for the profile button
 		$('nav li ul').hide().removeClass('fallback');
 		$('nav li').hover(function () {
 			$('ul', this).stop().slideToggle(200);

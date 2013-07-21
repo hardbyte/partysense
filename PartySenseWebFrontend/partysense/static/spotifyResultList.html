@@ -8,7 +8,7 @@
                    results="10"
                    placeholder="Search for music to add"
                    autofocus autocomplete="off">
-            <button class="btn" type="button" ng-click="clear()">Clear</button>
+            <button class="btn btn-primary" ng-show="spotifyResult.tracks" type="button" ng-click="clear()">Clear</button>
         </form>
     </div>
 
@@ -22,19 +22,19 @@
                            href="#">{{ correction }}</a></b>?
     </div>
 
-    <div ng-class="scrollableClass">
+    <div ng-class="scrollableClass" class="row-fluid">
         <table class="table my-hover" ng-show="spotifyResult.tracks">
             <thead><tr><th>Track</th><th>Artist</th></tr></thead>
             <tbody>
                 <tr ng-repeat="track in spotifyResult.tracks | limitTo:100 | removeAddedTracks"
                     ng-hide="track.added">
-                    <td class="track-name" ng-click="addTrack(track); track.added=true;">
+                    <td class="track-name span6" ng-click="addTrack(track); track.added=true;">
                         <span>
                             <i ng-hide="track.added" class="icon-plus icon-white"></i>
                             {{track.name}}
                         </span>
                     </td>
-                    <td class="track-artist" ng-click="searchArtist(track.artists[0]);">
+                    <td class="track-artist span6" ng-click="searchArtist(track.artists[0]);">
                         <span>
                             <i class="icon-search"></i> {{track.artists[0].name}}
                         </span>

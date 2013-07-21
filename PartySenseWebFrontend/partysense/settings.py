@@ -11,7 +11,7 @@ ADMINS = (
 )
 DOMAIN = "http://partysen.se"
 
-ALLOWED_HOSTS = ['.hardbyte.webfactional.com', 'partysen.se']
+ALLOWED_HOSTS = ['partysen.se']
 
 TWITTER_CONSUMER_KEY         = ''
 TWITTER_CONSUMER_SECRET      = ''
@@ -233,9 +233,8 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
-            #'formatter': 'simple'
         },
     },
     'loggers': {

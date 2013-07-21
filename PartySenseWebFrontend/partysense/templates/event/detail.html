@@ -128,7 +128,16 @@
         <section>
 
             {% if event.dj.user == user %}
-                <div class="alert-box">Hey as DJ you might be interested in the <a href="./stats/">analytics</a></div>
+                <section class="">
+                    <p class="text-center">Hey as DJ you might be interested in the
+                    <a href="{% url "event-stats" event.pk event.slug %}">analytics</a></p>
+                </section>
+            {% endif %}
+
+            {% if not user.is_authenticated %}
+                <section class="alert-box">
+                    <h4>Login with facebook to vote on the music!</h4>
+                </section>
             {% endif %}
 
           {% if event.user_editable or event.dj.user == user %}
