@@ -135,9 +135,9 @@
             {% endif %}
 
             {% if not user.is_authenticated %}
-                <section class="alert-box">
-                    <h4>Login with facebook to vote on the music!</h4>
-                </section>
+                <a class="btn btn-primary btn-block btn-large" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                    Login with facebook to vote on the music!
+                </a>
             {% endif %}
 
           {% if event.user_editable or event.dj.user == user %}
