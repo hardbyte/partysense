@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+<title>User Details</title>
+
+{% block content %}
+{% if user.is_authenticated %}
+
+    <div class="row">
+    <section class="span3">
+        <h3>Account info:</h3>
+        <table class="table">
+            <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
+            <tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
+            <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+            <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+            <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+        </table>
+
+    {% if img %}
+        <div><img src="{{ img.url }}"></div>
+    {% endif %}
+    {% if social_auth.associated %}
+        <p>
+            <a href="{% url "logout" %}" class="btn btn-block">Logout</a>
+        </p>
+        <div class="hide">
+        <h3>Disconnect</h3>
+        <p class="alert">This will remove the connection to your facebook account entirely.</p>
+
+        {% for type, accounts in social_auth.associated.items %}
+            {% for account in accounts %}
+
+              <span class="disconnect">
+                <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+                    {% csrf_token %}
+                    <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
+                </form>
+              </span>
+
+            {% endfor %}
+        {% endfor %}
+        </div>
+    {% endif %}
+    </section>
+
+    <div class="span5">
+        <section>
+            <h3>Upcoming</h3>
+            <ul>
+            {% for e in upcoming_events %}
+                <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+            {% endfor %}
+            </ul>
+            <form action="{% url "event.views.create" %}">
+                <button class="btn btn-primary btn-block">Host your next event now!</button>
+            </form>
+        </section>
+
+    {% if past_events %}
+        <section>
+            <h3>Recent</h3>
+            <ul>
+            {% for e in past_events %}
+                 <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+    </div>
+
+    {% if djs %}
+    <section class="span3">
+        <h3>Your DJ's:</h3>
+        <ul>
+        {% for dj in djs %}
+            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
+</div>
+{% else %}
+
+    <div class="alert">
+        <p>The action you have requested requires you to be logged in!</p>
+        <h4>You can login using:</h4>
+        <ul>
+            {% for name in social_auth.backends.oauth2 %}
+                <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% endblock %}

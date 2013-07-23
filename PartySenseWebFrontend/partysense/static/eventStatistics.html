@@ -1,0 +1,43 @@
+<div ng-controller="EventStatsCtrl" >
+
+    <section>
+        <h3>Artists with the most tracks</h3>
+        <div class="" ng-repeat="artist in artistsWithMostTracks">
+            <i class="icon-chevron-right"></i>
+            <span>
+                <strong class="white">{{artist.name}}</strong>
+                <span class="muted">featuring
+                    <ng-pluralize count="artist.numberOfTracks"
+                                  when="{'0': 'no tracks (seems suspicious...)',
+                                        'one': 'a track',
+                                        'other': '{} tracks'}">
+                    </ng-pluralize>
+                </span>
+            </span>
+        </div>
+    </section>
+
+    <section>
+        <h3>Most popular artist</h3>
+        <div ng-repeat="artist in mostPopularArtists">
+            <span>
+                <strong class="white">{{artist.name}}</strong>
+                <span class="muted">{{artist.votes}} up votes</span>
+            </span>
+        </div>
+    </section>
+
+    <section>
+        <h3>Most up-voted tracks</h3>
+        <div class="recentTrack" ng-repeat="track in popularTracks">
+            <i class="icon-chevron-right"></i>
+            <span>
+                <strong class="white">{{track.artist}}</strong>
+                <span class="muted"> / {{track.name}} / </span>
+                <span class="white">{{ track.upVotes - track.downVotes }}</span>
+            </span>
+        </div>
+    </section>
+
+</div>
+

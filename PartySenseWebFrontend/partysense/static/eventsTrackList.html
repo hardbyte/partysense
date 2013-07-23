@@ -1,0 +1,55 @@
+<div ng-controller="SetlistCtrl">
+    <div class="" id="musicImporter" droppable>
+        <div class="header">
+            <h3>Party Playlist <small ng-show="loggedIn">Vote on the current set list</small></h3>
+        </div>
+
+        <div id="event-tracks">
+            <div ng-show="setlist.length === 0">
+                    <div class="progress">
+                        <div class="bar" style="width: 95%;"></div>
+                    </div>
+                <p>It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
+            </div>
+            <div class="row-fluid trackDiv"
+                 ng-repeat="track in setlist"
+                 back-img="{{ track.coverURL }}">
+
+                <div class="span2 voteButtonDiv" ng-show="loggedIn">
+                    <button id="vote-up-{{ track.pk }}"
+                            ng-class="{'voted': track.usersVote === true }"
+                            ng-click="vote(track, true)">
+                        <i class="icon-thumbs-up"></i>
+                    </button>
+                    <button id="vote-down-{{ track.pk }}"
+                            ng-class="{'voted': track.usersVote === false }"
+                            ng-click="vote(track, false)">
+                    <i class="icon-thumbs-down"></i>
+                    </button>
+                    <button class="muted"
+                          ng-show="track.removable"
+                          ng-click="removeTrack(track);">
+                        <i class="icon-remove"></i>
+                    </button>
+                </div>
+
+                <div class="track-info" ng-class="infoWidth">
+                    <h4 class="track-name">{{ track.name }}</h4>
+                    <p class="track-artist"
+                       ng-click="searchArtistFromTrack(track);">{{ track.artist }}</p>
+                    <span class="muted track-votes">
+                        <ng-pluralize count="track.upVotes + track.downVotes"
+                            when="{'0': 'Nobody has',
+                                   '1': '1 person has',
+                                   'other': '{} people have'}">
+                        </ng-pluralize> voted.
+                    </span>
+                    <div class="">
+                        <em class="track-genre">{{ track.tag }}</em>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
