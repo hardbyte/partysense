@@ -24,6 +24,7 @@ def getPage(url):
 
 
 def didYouMean(q):
+    original = q
     q = str(q.lower()).strip()
     url = "http://www.google.com/search?q=" + urllib.quote(q)
     html = getPage(url)
@@ -37,8 +38,13 @@ def didYouMean(q):
         result = result.replace("<i>","")
         result = re.sub('[^A-Za-z0-9\s]+', '', result)
         result = re.sub(' +',' ', result)
+
+        if result.lower() == original.lower():
+            # don't bother with case changes
+            result = False
     except AttributeError:
         result = False
+
     return result
 
 if __name__ == "__main__":
