@@ -66,8 +66,27 @@ class EventDetail(EventView, DetailView):
                                         args=(context['event'].pk, context['event'].slug))
         return context
 
+
+
 class EventStatsDetail(EventDetail):
     template_name = 'event/statistics.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        # add other context
+        event_users = context['event'].users
+        event_votes = Vote.objects.filter(event=context['event'])
+
+        context['number_of_users'] = event_users.count()
+        context['number_of_votes'] = event_votes.count()
+
+        # set(votes.users)
+        context['voting_users'] = len({v.user for v in event_votes.all()})
+
+        context['number_of_tracks'] = context['event'].tracks.count()
+
+        return context
+
 
 @login_required
 def modify_event(request, pk):

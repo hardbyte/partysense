@@ -128,7 +128,7 @@ function EventStatsCtrl($scope, Track, updateService){
             console.log("Received setlist");
             var artists = [];
 
-            // TODO!
+            // TODO - consider doing this server side!
             data.forEach(function(track){
                 console.log(track.artist);
                 track.votes = track.upVotes - track.downVotes;
@@ -155,7 +155,6 @@ function EventStatsCtrl($scope, Track, updateService){
                     }
                     artists.push(a);
                 }
-
             });
 
             $scope.mostPopularArtists = artists.sort(function(a, b){
