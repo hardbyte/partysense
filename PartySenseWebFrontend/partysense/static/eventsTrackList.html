@@ -9,7 +9,10 @@
                     <div class="progress">
                         <div class="bar" style="width: 95%;"></div>
                     </div>
-                <p>It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
+
+                <p ng-show="numberOfTracks == 0">It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
+                <p ng-show="numberOfTracks > 0">Loading {{ numberOfTracks }} tracks</p>
+
             </div>
             <div class="row-fluid trackDiv"
                  ng-repeat="track in setlist"
