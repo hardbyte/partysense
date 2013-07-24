@@ -112,6 +112,7 @@ App.directive('droppable', function($compile, $rootScope, updateService) {
 function TemplateCtrl($scope) {
     "use strict";
     $scope.oneAtATime = true;
+    $scope.loggedIn = ps.loggedIn;
     $scope.resultListTemplate = "/static/spotifyResultList.html";
     $scope.previewTemplate = "/static/spotifyPreview.html";
     $scope.setlistTemplate = "/static/eventsTrackList.html";
@@ -201,13 +202,17 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Trac
         console.log($scope.searchTerm);
         $scope.correction = "";
 
+        if($scope.searchTerm.length === 0){
+            $scope.clear();
+        }
+
         if($scope.searchTerm.length > 3 || force) {
             $scope.msg = 'searching for "' + $scope.searchTerm + '"';
             console.log($scope.msg);
             if (!skipSpellCheck) {
                 // Send the search term to our server to query google
                 $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
-                    if(data.changed) {
+                    if(data.changed && data.changed !== $scope.searchTerm ) {
                         $scope.correction = data.changed;
                     }
                 });
@@ -328,6 +333,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
+    $scope.numberOfTracks = ps.numberOfTracks;
 
     $scope.searchArtistFromTrack = function(track) {
         console.log("want to search for an artist do you?");
