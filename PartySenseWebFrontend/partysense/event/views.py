@@ -53,6 +53,8 @@ class EventDetail(EventView, DetailView):
                  dj=context['event'].dj.pk
             ).order_by('-modified')
 
+        context['number_of_tracks'] = context['event'].tracks.count()
+
         # add recently up-voted tracks
         u = self.request.user
         if not u.is_anonymous():
@@ -72,18 +74,21 @@ class EventStatsDetail(EventDetail):
     template_name = 'event/statistics.html'
 
     def get_context_data(self, **kwargs):
-        context = super(EventDetail, self).get_context_data(**kwargs)
+        context = super(EventStatsDetail, self).get_context_data(**kwargs)
         # add other context
-        event_users = context['event'].users
-        event_votes = Vote.objects.filter(event=context['event'])
+        event = context['event']
+        event_votes = Vote.objects.filter(event=event)
 
-        context['number_of_users'] = event_users.count()
+        context['number_of_users'] = event.users.count()
         context['number_of_votes'] = event_votes.count()
+        context['voting_users'] = len({v.user.pk for v in event_votes.all()})
 
-        # set(votes.users)
-        context['voting_users'] = len({v.user for v in event_votes.all()})
 
-        context['number_of_tracks'] = context['event'].tracks.count()
+        # Number of People Who Have Added Songs
+        # For each song - find all votes, order by pk, get user associated with oldest record
+        users_who_added_tracks = {track.vote_set.filter(event=event).order_by("pk")[0].user.pk
+                                                      for track in event.tracks.all()}
+        context['number_of_users_who_added_songs'] = len(users_who_added_tracks)
 
         return context
 
