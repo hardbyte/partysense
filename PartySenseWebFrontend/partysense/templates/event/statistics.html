@@ -114,12 +114,18 @@
 
     <div class="span9 offset3">
         <div>
+            <a class="btn btn-large btn-block"
+               href="{% url "event-detail" event.pk event.slug %}">
+                <i class="icon-backward"></i> Back to event
+            </a>
             <section>
+
                 {# Note some of the stats are calculated on the server #}
                 <h3>Summary</h3>
 
                 <p>Number of people that have logged in to see this event: {{ number_of_users }}</p>
                 <p>Number of people that have voted on the setlist: {{ voting_users }}</p>
+                <p>Number of people who have added tracks: {{ number_of_users_who_added_songs }}</p>
                 <p>Total votes received: {{number_of_votes}}</p>
                 <p>Tracks added to the setlist {{ number_of_tracks }}</p>
             </section>
