@@ -8,7 +8,8 @@ ROOT_DIR = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-#COMPRESS_ENABLED = False
+INTERCEPT_REDIRECTS = False
+COMPRESS_ENABLED = False
 
 DATABASES = {
     'default': {
@@ -85,7 +86,7 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
@@ -93,7 +94,7 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['console', 'mail_admins'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         '': {

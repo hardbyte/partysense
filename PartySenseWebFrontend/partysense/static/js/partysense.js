@@ -179,6 +179,7 @@ function EventStatsCtrl($scope, Track, updateService){
 }
 
 function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {
+    /* This is really the search controller (currently spotify) */
     "use strict";
 
     function filterResults(data) {
@@ -350,7 +351,8 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
             var songs = "";
             var i;
-            for(i=0; i<data.length; i++){
+            // TODO should be 1000
+            for(i=0; i<Math.min(80, data.length);i++){
                 findCover(data[i]);
                 songs += data[i].spotifyTrackID.slice(14) + ',';
             }
@@ -417,10 +419,12 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         wiki
 */
     function findCover(track){
+        // and genre
         var updateCover = function(data){
             if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
                 var albumImages = data.track.album.image;
-                // Select the largest one...
+                // Select the cover from what last.fm provides
+                // Largest:
                 //track.coverURL = albumImages[albumImages.length - 1]['#text'];
                 // The "medium" sized image
                 track.coverURL = albumImages[1]['#text'];
