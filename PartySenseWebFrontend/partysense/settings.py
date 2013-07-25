@@ -34,7 +34,7 @@ FACEBOOK_EXTENDED_PERMISSIONS = [
     'user_location',
     #'friends_actions.music'
 ]
-APPEND_SLASH = False
+APPEND_SLASH = True
 MANAGERS = ADMINS
 
 # http://django-social-auth.readthedocs.org/
