@@ -126,18 +126,17 @@ function EventStatsCtrl($scope, Track, updateService){
     $scope.refreshTracks = function(){
         // GET: /api/123/get-track-list
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
-            console.log("Received setlist");
+            $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];
 
             // TODO - consider doing this server side!
             data.forEach(function(track){
-                console.log(track.artist);
                 track.votes = track.upVotes - track.downVotes;
-                // Is this artist in our list?
+                // Is this tracks' artist in our list?
                 if(!artists.some(function(a, i, artists){
                     var res = a.name === track.artist;
                     if(res){
-                        // Seen it before add the votes
+                        // Seen this artist before so add the votes
                         artists[i].votes += track.votes;
                         if(track.votes > 0){
                             artists[i].numberOfTracks++;
@@ -146,8 +145,8 @@ function EventStatsCtrl($scope, Track, updateService){
                     return res;
                 })){
                     // no -> add it
-                    var a = {name: track.artist};
-                    a.votes = track.votes;
+                    var a = {name: track.artist, votes: track.votes};
+
                     // Only record the track if its got a positive rank
                     if(a.votes > 0){
                         a.numberOfTracks = 1;
@@ -160,18 +159,16 @@ function EventStatsCtrl($scope, Track, updateService){
 
             $scope.mostPopularArtists = artists.sort(function(a, b){
                 return b.votes - a.votes;
-            }).slice(0, Math.min(5, artists.length));
+            }).slice();
 
             $scope.artistsWithMostTracks = artists.sort(function(a, b){
                 return b.numberOfTracks - a.numberOfTracks;
-            }).slice(0, Math.min(5, artists.length));
+            }).slice();
 
 
             $scope.popularTracks = data.sort(function(b, a){
                 return (a.upVotes - a.downVotes) - (b.upVotes - b.downVotes);
-            }).slice(0, Math.min(5, data.length));
-
-
+            });
         });
     };
 

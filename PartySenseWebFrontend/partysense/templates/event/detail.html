@@ -136,8 +136,6 @@
 
         <section>
 
-
-
             {% if not user.is_authenticated %}
                 <a class="btn btn-primary btn-block btn-large" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     Login with facebook to vote on the music!
