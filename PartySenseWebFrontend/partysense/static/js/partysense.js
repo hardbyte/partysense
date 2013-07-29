@@ -348,9 +348,12 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         $scope.setlist = Track.query({action: "get-track-list"}, function(data){
             var songs = "";
             var i;
-            // TODO should be 1000
+            for (var j = 0; j < data.length; j++) {
+                data[j].coverURL = "/static/images/defaultCover.png";
+                findCover(data[j]);
+            }
+
             for(i=0; i<Math.min(80, data.length);i++){
-                findCover(data[i]);
                 songs += data[i].spotifyTrackID.slice(14) + ',';
             }
             $scope.playlistSongs = songs;
