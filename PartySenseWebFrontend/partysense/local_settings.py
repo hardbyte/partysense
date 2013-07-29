@@ -49,10 +49,9 @@ STATICFILES_DIRS = (
     os.path.join(ROOT_DIR, 'static'),
 )
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', 'partysen.se:8000')
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-
 INSTALLED_APPS += ('debug_toolbar',)
 
 TEMPLATE_DIRS = (
