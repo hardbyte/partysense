@@ -162,15 +162,17 @@
         </div>
 
         <div id="GoogleAdvert">
-<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Party Sense - Med Rect -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:300px;height:250px"
-     data-ad-client="ca-pub-6160731913142438"
-     data-ad-slot="5621308889"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+            {% if not debug %}
+            <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Party Sense - Med Rect -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-6160731913142438"
+                 data-ad-slot="5621308889"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            {% endif %}
         </div>
 
      </div>
@@ -200,7 +202,8 @@
                 },
             {% endfor %}
             ],
-            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %}
+            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %},
+            setlist: {{ setlist|safe|escape }}
         };
 
 

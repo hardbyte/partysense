@@ -343,25 +343,29 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
+    function refreshSetlist(data){
+        var songs = "";
+        var i;
+        for (var j = 0; j < data.length; j++) {
+            data[j].coverURL = "/static/images/defaultCover.png";
+            findCover(data[j]);
+        }
+
+        for(i=0; i<Math.min(80, data.length);i++){
+            songs += data[i].spotifyTrackID.slice(14) + ',';
+        }
+        $scope.playlistSongs = songs;
+        $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
+        return data;
+    }
+
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
-            var songs = "";
-            var i;
-            for (var j = 0; j < data.length; j++) {
-                data[j].coverURL = "/static/images/defaultCover.png";
-                findCover(data[j]);
-            }
-
-            for(i=0; i<Math.min(80, data.length);i++){
-                songs += data[i].spotifyTrackID.slice(14) + ',';
-            }
-            $scope.playlistSongs = songs;
-            $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
-        });
+        $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
-    $scope.updateSetlist();
+    //$scope.updateSetlist();
+    $scope.setlist = refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
         console.log("It appears you're adding a track to the setlist");

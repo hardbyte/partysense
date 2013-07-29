@@ -64,6 +64,10 @@ class EventDetail(EventView, DetailView):
                                    .exclude(event=context['event'])}).select_related()[0:10]
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
+
+        # Add the setlist
+        context['setlist'] = json_track_list(context['event'], u)
+
         self.request.GET.next = reverse('event-detail',
                                         args=(context['event'].pk, context['event'].slug))
         return context
@@ -136,15 +140,14 @@ def modify_event(request, pk):
     return vote_on_track(request, event.pk, track.pk, internal=True)
 
 
-def get_track_list(request, pk):
+def json_track_list(event, user):
     track_data = []
-    event = get_object_or_404(Event, pk=pk)
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
-    removable = request.user == event.dj.user
+    removable = user == event.dj.user
     for t in event.tracks.all():
         votes = event.vote_set.filter(track=t)
-        if not request.user.is_anonymous() and votes.filter(user=request.user).exists():
-            usersVote = votes.get(user=request.user).is_positive
+        if not user.is_anonymous() and votes.filter(user=user).exists():
+            usersVote = votes.get(user=user).is_positive
         else:
             usersVote = None
 
@@ -153,8 +156,8 @@ def get_track_list(request, pk):
             "name": t.name,
             "artist": t.artist.name,
             "spotifyTrackID": t.spotify_url,
-            "spotifyArtistID": t.artist.spotify_url,
-            "external-ids": t.external_ids,
+            #"spotifyArtistID": t.artist.spotify_url,
+            #"external-ids": t.external_ids,
             "upVotes": votes.filter(is_positive=True).count(),
             "downVotes": votes.filter(is_positive=False).count(),
             "usersVote": usersVote,
@@ -163,8 +166,15 @@ def get_track_list(request, pk):
 
     # Sort by most popular
     track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
+    return json.dumps(track_data)
 
-    return HttpResponse(json.dumps(track_data), content_type="application/json")
+
+def get_track_list(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    user = request.user
+    setlist = json_track_list(event, user)
+
+    return HttpResponse(setlist, content_type="application/json")
 
 @login_required
 def did_you_mean(request):
