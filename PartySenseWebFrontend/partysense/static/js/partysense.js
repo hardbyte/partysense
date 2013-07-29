@@ -122,10 +122,15 @@ function TemplateCtrl($scope) {
 
 function EventStatsCtrl($scope, Track, updateService){
     "use strict";
+    $scope.setlist = ps.setlist;
 
     $scope.refreshTracks = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
+        //$scope.setlist = Track.query({action: "get-track-list"}, function(data){
+
+            var data = ps.setlist;
+
+
             $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];
 
@@ -169,7 +174,7 @@ function EventStatsCtrl($scope, Track, updateService){
             $scope.popularTracks = data.sort(function(b, a){
                 return (a.upVotes - a.downVotes) - (b.upVotes - b.downVotes);
             });
-        });
+        //});
     };
 
     $scope.refreshTracks();

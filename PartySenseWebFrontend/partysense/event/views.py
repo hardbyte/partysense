@@ -87,6 +87,7 @@ class EventStatsDetail(EventDetail):
         context['number_of_votes'] = event_votes.count()
         context['voting_users'] = len({v.user.pk for v in event_votes.all()})
 
+        context['setlist'] = json_track_list(event, self.request.user)
 
         # Number of People Who Have Added Songs
         # For each song - find all votes, order by pk, get user associated with oldest record
