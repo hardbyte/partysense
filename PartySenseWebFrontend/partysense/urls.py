@@ -31,7 +31,7 @@ urlpatterns += patterns('partysense.event.views',
 
     url(r'^event/new/$', 'create', name="create-event"),
 
-    # the actual main page
+    # the actual main event page
     url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/$',
         ensure_csrf_cookie(EventDetail.as_view()),
         name="event-detail"),
@@ -40,6 +40,12 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/stats/$',
         login_required(EventStatsDetail.as_view()),
         name="event-stats"),
+
+    # edit view
+    url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/edit/$',
+        'update',
+        name="event-update"),
+    # These next urls form the javascript API
 
     url(r'^api/(?P<pk>\d+)/modify',
         modify_event,

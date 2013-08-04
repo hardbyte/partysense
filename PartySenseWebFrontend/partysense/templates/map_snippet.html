@@ -8,7 +8,6 @@
 
     var map, my_point;
 
-
     /* Try to center the map on user's city. */
     geocoder.geocode( { 'address': "{{ country_city }}" }, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -24,6 +23,9 @@
 
 
     $(document).ready(function(){
+        // If we are editing the form the id_venue will be set by the server
+        $('#id_address').val($('#id_venue').val());
+
         $('#id_address').change(function(){
             $('#id_venue').val($('#id_address').val());
         });

@@ -21,6 +21,7 @@ class TimeStampedModel(models.Model):
     ``created`` and ``modified`` fields.
 
     Taken from Two Scoops of Django
+    TODO: django-model-utils could provide this
     """
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

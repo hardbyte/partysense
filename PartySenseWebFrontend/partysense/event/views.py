@@ -2,6 +2,7 @@ import logging
 import json
 import datetime
 
+from django.http import Http404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect, HttpResponse
@@ -30,12 +31,13 @@ class EventDetail(EventView, DetailView):
     def get_object(self):
         # add this event to this user now if logged in
         logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
-        event = get_object_or_404(Event,
-                                  pk=self.kwargs['pk'],
-                                  slug=self.kwargs['slug'])
+        event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
+        # if we are not in debug mode check that the slug was correct
+        if not settings.DEBUG:
+            if not event.slug == self.kwargs['slug']:
+                raise Http404
         # check that the event isn't in the past
-
         if not event.past_event and event.timedelta().days < -2:
             event.past_event = True
             event.save()
@@ -71,7 +73,6 @@ class EventDetail(EventView, DetailView):
         self.request.GET.next = reverse('event-detail',
                                         args=(context['event'].pk, context['event'].slug))
         return context
-
 
 
 class EventStatsDetail(EventDetail):
@@ -225,8 +226,7 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
 
 
 # Form Docs https://docs.djangoproject.com/en/dev/topics/forms
-# TODO replace with cbv CreateView:
-#  https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
+# https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
 @login_required
 def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
@@ -284,6 +284,64 @@ def create(request):
                   {
                       "formset": event_form
                   })
+
+
+def update(request, pk, slug):
+    event = get_object_or_404(Event, pk=pk)
+
+    response = "Permission Denied"
+
+    if not request.user == event.dj.user:
+        return 404
+
+    if request.method == 'POST':
+        # If the form has been submitted...
+        # A form bound to the POST data
+        event_form = EventForm(request.POST, instance=event)
+
+        if event_form.is_valid():
+            # All validation rules pass
+            # Process the data in form.cleaned_data and create an
+            # instance out of it:
+            event = event_form.save()
+            logger.info("Updating event to start at: {}".format(event.start_time))
+
+            # Update existing location
+            event.location.name = event_form.cleaned_data['venue']
+            event.location.latitude = event_form.cleaned_data['latitude']
+            event.location.longitude = event_form.cleaned_data['longitude']
+
+            event.location.save()
+
+            # todo get fb event url from incoming link?
+            # or ask for it?
+            event.fb_url = "http://facebook.com/event"
+
+            # then commit the new event to our database
+            event.save()
+
+            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+    else:
+        # Fill in from the event instance
+
+        prior_information = {
+            'start_time': event.start_time,
+            'title': event.title,
+            'venue': event.location.name,
+            'latitude': event.location.latitude,
+            'longitude': event.location.longitude,
+
+
+        }
+        # Otherwise we are left with a completely unbound form
+        event_form = EventForm(initial=prior_information)
+
+    return render(request,
+                  'event/new.html',
+                  {
+                      "formset": event_form
+                  })
+
 
 def profile(request):
     img = None
