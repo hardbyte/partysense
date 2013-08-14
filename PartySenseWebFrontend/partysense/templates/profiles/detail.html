@@ -6,44 +6,67 @@
 {% if user.is_authenticated %}
 
     <div class="row">
-    <section class="span3">
-        <h3>Account info:</h3>
-        <table class="table">
-            <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
-            <tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
-            <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
-            <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
-            <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
-        </table>
+		<div class="span4">
+			<section>
+				<h3>Account info:</h3>
+				<table class="table">
+					<tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
+					<tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
+					<tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+					<tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
+					<tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
+				</table>
+			{% if social_auth.associated %}
+				<p>
+					<a href="{% url "logout" %}" class="btn btn-block">Logout</a>
+				</p>
+				<div class="hide">
+				<h3>Disconnect</h3>
+				<p class="alert">This will remove the connection to your facebook account entirely.</p>
 
-    {% if img %}
-        <div><img src="{{ img.url }}"></div>
-    {% endif %}
-    {% if social_auth.associated %}
-        <p>
-            <a href="{% url "logout" %}" class="btn btn-block">Logout</a>
-        </p>
-        <div class="hide">
-        <h3>Disconnect</h3>
-        <p class="alert">This will remove the connection to your facebook account entirely.</p>
+				{% for type, accounts in social_auth.associated.items %}
+					{% for account in accounts %}
 
-        {% for type, accounts in social_auth.associated.items %}
-            {% for account in accounts %}
+					  <span class="disconnect">
+						<form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+							{% csrf_token %}
+							<a href="#">{{ account.provider|title }} ({{ user.username }})</a>
+						</form>
+					  </span>
 
-              <span class="disconnect">
-                <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
-                </form>
-              </span>
-
-            {% endfor %}
-        {% endfor %}
-        </div>
-    {% endif %}
-    </section>
-
-    <div class="span5">
+					{% endfor %}
+				{% endfor %}
+				</div>
+				<br>
+				<div class="span12">
+				<p>
+					<a href="#" class="btn btn-block">MyEvents</a>
+				</p>
+				<p>
+					<a href="#" class="btn btn-block">MyDJs</a>
+				</p>
+				<p>
+					<a href="#" class="btn btn-block">MyMusic</a>
+				</p>
+			{% endif %}
+			</section>
+			
+			
+		</div>
+	
+    <div class="span8" style="margin: 0px;padding: 0px;">
+	
+		<section style="display:none">
+			<h3>Your DJ's:</h3>
+			<ul>
+				{% if djs %}
+					{% for dj in djs %}
+						<li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
+					{% endfor %}
+				{% endif %}
+			</ul>
+		</section>
+			
         <section>
             <h3>Upcoming</h3>
             <ul>
@@ -68,20 +91,12 @@
     {% endif %}
     </div>
 
-    {% if djs %}
-    <section class="span3">
-        <h3>Your DJ's:</h3>
-        <ul>
-        {% for dj in djs %}
-            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
-        {% endfor %}
-        </ul>
-    </section>
-    {% endif %}
+    
+    
+    
 
 </div>
 {% else %}
-
     <div class="alert">
         <p>The action you have requested requires you to be logged in!</p>
         <h4>You can login using:</h4>

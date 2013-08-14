@@ -9,3 +9,5 @@ beautifulsoup4
 lxml
 html5lib
 django-debug-toolbar
+django-appconf
+beautifulsoup4

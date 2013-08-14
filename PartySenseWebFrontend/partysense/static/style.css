@@ -11,7 +11,7 @@ body {
     margin-right: auto;
     max-width: 1280px;
 
-    background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
+    background: #000000;
     background-attachment: fixed;
 	/*background-color: #333333;
     color: white;*/
@@ -50,6 +50,8 @@ section {
 	height: 30px;
 }
 
+
+
 nav ul
 {
     list-style-type: none;
@@ -80,7 +82,8 @@ nav a.regularActive {
     margin-top: 6px;
 
     padding: 4px;
-
+	
+	
     -webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -88,9 +91,9 @@ nav a.regularActive {
 
 nav a.regularActive:hover, nav a.active:active
 {
+	text-decoration:overline;
     background-color: #444444;
     color:#9bcb48;
-    text-decoration:none;
     -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
 	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
 	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
@@ -143,6 +146,10 @@ footer
 #quick-start h3, p {
     margin-top: 3px;
     margin-bottom: 3px;
+}
+
+#quick-start h4{
+    font-size: 12px;
 }
 
 #quick-start ol {
@@ -310,3 +317,50 @@ footer
 .indicate-drop {
   border: 2px dashed #f5f5f5;
 }
+
+.icon-bar {
+	background-color: #9bcb48;
+}
+
+
+.hoverImgBk{
+	max-width:200px;
+	left:0;
+	top:0;
+	z-index:1;
+}
+
+.hoverImg{
+	left:0;
+	top:0;
+	z-index:5;
+}
+
+.navbar 
+  .navbar-inner {
+    background-color: #1b6880;
+    background-image: none;
+  }
+
+.container
+  .btn {
+    background-color: #1b6880;
+    background-image: none;
+  }
+  
+ .container
+  .btn:hover {
+    background-color: #1b6880;
+    background-image: none;
+  }
+  
+  .brand{
+	margin- left:10px;
+  }
+  
+/*.hoverImgBk, .hoverImgLink:hover .hoverImg{
+   visibility:hidden;
+}
+.hoverImg, .hoverImgLink:hover .hoverImgBk{
+   visibility:visible;
+}*/
