@@ -41,4 +41,10 @@ Remove track
     POST to the URL:
     /api/{event}/remove/{track}/
 
-As the dj.
+Note only the dj currently has permission to do this.
+
+TODO
+----
+
+Angular directive for <track upVotes="3" downVotes="0 ...>
+
