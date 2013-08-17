@@ -1,7 +1,7 @@
 Party Sense Sync
 ================
 
-A Python application for scanning a hosts music collection and pointing out
+An application for scanning a hosts music collection and pointing out
 what music they have and don't have for a particular event.
 
 Primary flow

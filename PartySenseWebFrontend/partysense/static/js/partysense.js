@@ -408,7 +408,6 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
                 }
             }
         });
-
     };
 
  /*
@@ -488,7 +487,6 @@ function RecentTrackCtrl($scope, Track, updateService) {
         });
 
         // Remove this track from the recentTracks list
-
         var i = ps.recentTracks.indexOf(track);
         if(i != -1) {
             ps.recentTracks.splice(i, 1);
