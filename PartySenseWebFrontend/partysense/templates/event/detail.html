@@ -11,10 +11,9 @@
     <meta property="og:url"             content="http://partysen.se{% url "event-detail" event.pk event.slug %}" />
     <meta property="og:site_name"       content="Partysense"/>
     <meta property="og:title"           content="partysen.se" />
-    <meta property="og:description"     content="Vote on the dj's setlist for {% event.title %}"
+    <meta property="og:description"     content="Vote on the dj's setlist for {{ event.title }}"
     <meta property="og:image"           content="{% static "images/ps.png" %}" />
 {% endblock %}
-
 
 {% block content %}
 
