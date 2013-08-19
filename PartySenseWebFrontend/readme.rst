@@ -4,7 +4,28 @@ Developer Documentation
 > partysen.se
 
 
-The api is in progress, these should work:
+Testing Procedure
+-----------------
+
+As a minimum before pushing a change run the site locally with:
+
+    python manage.py runserver
+
+And make sure you can see the main page, the profile page and the event page.
+
+On the event page make sure you can search for tracks, add a track, and vote on a track.
+Ideally we would also create a new event but that takes too long.
+
+
+Python dependencies are all listed in requirements.txt. All the javascript dependencies
+are in the static/lib folder. At the moment I'm using django 1.5 and python 2.7. I'd
+like to switch to python3, which is installed on the server...
+
+
+API
+===
+
+While the restfull api is in progress, these should work:
 
 Event Setlist
 --------------
