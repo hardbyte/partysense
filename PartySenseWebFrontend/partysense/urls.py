@@ -15,6 +15,9 @@ urlpatterns = patterns('',
     # Enable the socialauth links
     url(r'', include('social_auth.urls')),
 
+    # add a page that purposely errors to test logging etc
+    url(r'^500$', 'unknown')
+
 )
 
 urlpatterns += patterns('partysense.event.views',

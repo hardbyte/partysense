@@ -9,7 +9,7 @@ angular.module('ps.filters', [])
           // TODO this is quite expensive!
           // If the track has the same artist, the name can't be too similar?
           // Artists like Mumford & Sons release "Little Lion Man" on multiple
-          // albums and Spotify has seperate instances of those tracks.
+          // albums and Spotify has separate instances of those tracks.
           // The external ids and the names match though.
           // Also want to ensure we keep one of them!
           console.log("Removing duplicates. Original length = " + allTracks.length);

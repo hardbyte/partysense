@@ -8,7 +8,6 @@ angular.module('ps.services', ['ngResource'])
             {action: 'track.json', q:'artist:Gaga'}
         );
     })
-   /*.factory('SoundCloud')*/
    .factory('SpotifyLookup', function($http, $resource){
       /* When we know exactly what we're after from spotify. */
         /* Protection against cross site scripting attacks. */
