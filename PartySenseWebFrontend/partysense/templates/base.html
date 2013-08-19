@@ -11,10 +11,12 @@
     {% block fb %}
         <meta property="fb:app_id"          content="386541278102635" />
         <meta property="og:url"             content="http://partysen.se" />
-        <meta property="og:site_name"       content="Partysense"/>
-        <meta property="og:title"           content="Partysen.se" />
-        <meta property="og:description"     content="the best way to make sure you have a great night out" />
-        <meta property="og:image"           content="{% static "images/ps.png" %}" />
+        <meta property="og:type"            content="website" />
+        <meta property="og:site_name"       content="partysen.se" />
+        {# The title of the object as it should appear in the graph#}
+        <meta property="og:title"           content="Partysense" />
+        <meta property="og:description"     content="The best way to make sure you have a great night out!" />
+        <meta property="og:image"           content="{% static "images/fblink.png" %}" />
     {% endblock %}
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
