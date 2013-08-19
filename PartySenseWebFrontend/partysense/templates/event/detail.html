@@ -13,7 +13,7 @@
 
     <div class="span3 hidden-phone affix">
 
-        <h4 id="event-name">{{ event.title }}</h4>
+
         <div class="accordian" id="leftAccordion">
             <div class="accordion-group">
                 <button class="accordion-heading btn btn-block btn-primary">
@@ -26,6 +26,14 @@
                 </button>
                 <div id="collapseOne" class="event_details accordion-body collapse in">
                     <section class="accordion-inner">
+                        <h4 id="event-name">{{ event.title }}</h4>
+
+                        {% if event.dj.user == user %}
+                            <a class="btn btn-block"
+                               href="{% url "event-update" event.pk event.slug %}">
+                                <i class="icon-edit"></i> Edit Event Details
+                            </a>
+                        {% endif %}
 
                         <div class=""
                              onclick="document.getElementById('eventURL').select();">
@@ -55,7 +63,7 @@
                                        id="dLabel">other events</a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                         {% for event in djsOtherEvents %}
-                                            <li><a href="{% url "event-detail" event.pk event.slug %} ">{{ event }} at {{ event.location.name }}</a></li>
+                                            <li><a href="{% url "event-detail" event.pk event.slug %}">{{ event }} at {{ event.location.name }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </span>)
@@ -66,6 +74,7 @@
                             <dd>{{ event.location }}</dd>
                         </dl>
                         <div id="map_canvas" style="width: 100%; height: 200px;"></div>
+
                     </section>
                 </div>
             </div>
@@ -125,14 +134,15 @@
     </div>
 
     <div class="span6 offset3">
-        <section>
 
-            {% if event.dj.user == user %}
-                <section class="">
-                    <p class="text-center">Hey as DJ you might be interested in the
-                    <a href="{% url "event-stats" event.pk event.slug %}">analytics</a></p>
-                </section>
-            {% endif %}
+        {% if event.dj.user == user %}
+            <a class="btn btn-large btn-block"
+               href="{% url "event-stats" event.pk event.slug %}">
+                <i class="icon-signal"></i> Event Analytics
+            </a>
+        {% endif %}
+
+        <section>
 
             {% if not user.is_authenticated %}
                 <a class="btn btn-primary btn-block btn-large" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
@@ -159,6 +169,20 @@
             <div ng-include src="previewTemplate"></div>
         </div>
 
+        <div id="GoogleAdvert">
+            {% if not debug %}
+            <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- Party Sense - Med Rect -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:300px;height:250px"
+                 data-ad-client="ca-pub-6160731913142438"
+                 data-ad-slot="5621308889"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+            {% endif %}
+        </div>
+
      </div>
 
 </div>
@@ -173,6 +197,7 @@
     <script>
         var ps = {
             event: {{ event.pk }},
+            numberOfTracks: {{ number_of_tracks }},
             eventTitle: "{{ event.title }}",
             eventPast: {% if event.past_event %} true {% else %} false {% endif %},
             LAST_FM_API_KEY: "{{ LAST_FM_API_KEY }}",
@@ -185,7 +210,8 @@
                 },
             {% endfor %}
             ],
-            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %}
+            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %},
+            setlist: {{ setlist|safe|escape }}
         };
 
 

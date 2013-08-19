@@ -1,43 +1,55 @@
-<div ng-controller="EventStatsCtrl" >
+<section ng-controller="EventStatsCtrl" >
 
-    <section>
-        <h3>Artists with the most tracks</h3>
-        <div class="" ng-repeat="artist in artistsWithMostTracks">
-            <i class="icon-chevron-right"></i>
-            <span>
-                <strong class="white">{{artist.name}}</strong>
-                <span class="muted">featuring
-                    <ng-pluralize count="artist.numberOfTracks"
-                                  when="{'0': 'no tracks (seems suspicious...)',
-                                        'one': 'a track',
-                                        'other': '{} tracks'}">
-                    </ng-pluralize>
+    <div class="alert alert-block">
+        <div>
+            Filter tracks: <input ng-model="searchText">
+            Show more results? <input type="range" min="3" max="50" ng-model="numberOfResults">
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <article class="span6">
+            <h3>Artists with the most tracks</h3>
+            <div class="" ng-repeat="artist in artistsWithMostTracks.slice(0, numberOfResults) | filter:searchText">
+                <i class="icon-chevron-right"></i>
+                <span>
+                    <strong class="white">{{artist.name}}</strong>
+                    <span class="muted">featuring
+                        <ng-pluralize count="artist.numberOfTracks"
+                                      when="{'0': 'no upvoted tracks',
+                                            'one': 'a track',
+                                            'other': '{} tracks'}">
+                        </ng-pluralize>
+                    </span>
                 </span>
-            </span>
-        </div>
-    </section>
+            </div>
+        </article>
 
-    <section>
-        <h3>Most popular artist</h3>
-        <div ng-repeat="artist in mostPopularArtists">
-            <span>
-                <strong class="white">{{artist.name}}</strong>
-                <span class="muted">{{artist.votes}} up votes</span>
-            </span>
-        </div>
-    </section>
+        <article class="span6">
+            <h3>Most popular artist</h3>
+            <div ng-repeat="artist in mostPopularArtists.slice(0, numberOfResults) | filter:searchText">
+                <i class="icon-chevron-right"></i>
+                <span>
+                    <strong class="white">{{artist.name}}</strong>
+                    <span class="muted">with {{artist.votes}} up votes</span>
+                </span>
+            </div>
+        </article>
+    </div>
+    <div class="row-fluid">
 
-    <section>
-        <h3>Most up-voted tracks</h3>
-        <div class="recentTrack" ng-repeat="track in popularTracks">
-            <i class="icon-chevron-right"></i>
-            <span>
-                <strong class="white">{{track.artist}}</strong>
-                <span class="muted"> / {{track.name}} / </span>
-                <span class="white">{{ track.upVotes - track.downVotes }}</span>
-            </span>
-        </div>
-    </section>
+        <article class="span6">
+            <h3>Most up-voted tracks</h3>
+            <div class="recentTrack" ng-repeat="track in popularTracks.slice(0, numberOfResults) | filter:searchText">
+                <i class="icon-chevron-right"></i>
+                <span>
+                    <strong class="white">{{track.artist}}</strong>
+                    <span class="muted"> / {{track.name}} / </span>
+                    <span class="white">{{ track.upVotes - track.downVotes }}</span>
+                </span>
+            </div>
+        </article>
+    </div>
 
-</div>
+</section>
 

@@ -112,6 +112,7 @@ App.directive('droppable', function($compile, $rootScope, updateService) {
 function TemplateCtrl($scope) {
     "use strict";
     $scope.oneAtATime = true;
+    $scope.loggedIn = ps.loggedIn;
     $scope.resultListTemplate = "/static/spotifyResultList.html";
     $scope.previewTemplate = "/static/spotifyPreview.html";
     $scope.setlistTemplate = "/static/eventsTrackList.html";
@@ -121,22 +122,26 @@ function TemplateCtrl($scope) {
 
 function EventStatsCtrl($scope, Track, updateService){
     "use strict";
+    $scope.setlist = ps.setlist;
 
     $scope.refreshTracks = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
-            console.log("Received setlist");
+        //$scope.setlist = Track.query({action: "get-track-list"}, function(data){
+
+            var data = ps.setlist;
+
+
+            $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];
 
             // TODO - consider doing this server side!
             data.forEach(function(track){
-                console.log(track.artist);
                 track.votes = track.upVotes - track.downVotes;
-                // Is this artist in our list?
+                // Is this tracks' artist in our list?
                 if(!artists.some(function(a, i, artists){
                     var res = a.name === track.artist;
                     if(res){
-                        // Seen it before add the votes
+                        // Seen this artist before so add the votes
                         artists[i].votes += track.votes;
                         if(track.votes > 0){
                             artists[i].numberOfTracks++;
@@ -145,8 +150,8 @@ function EventStatsCtrl($scope, Track, updateService){
                     return res;
                 })){
                     // no -> add it
-                    var a = {name: track.artist};
-                    a.votes = track.votes;
+                    var a = {name: track.artist, votes: track.votes};
+
                     // Only record the track if its got a positive rank
                     if(a.votes > 0){
                         a.numberOfTracks = 1;
@@ -159,25 +164,24 @@ function EventStatsCtrl($scope, Track, updateService){
 
             $scope.mostPopularArtists = artists.sort(function(a, b){
                 return b.votes - a.votes;
-            }).slice(0, Math.min(5, artists.length));
+            }).slice();
 
             $scope.artistsWithMostTracks = artists.sort(function(a, b){
                 return b.numberOfTracks - a.numberOfTracks;
-            }).slice(0, Math.min(5, artists.length));
+            }).slice();
 
 
             $scope.popularTracks = data.sort(function(b, a){
                 return (a.upVotes - a.downVotes) - (b.upVotes - b.downVotes);
-            }).slice(0, Math.min(5, data.length));
-
-
-        });
+            });
+        //});
     };
 
     $scope.refreshTracks();
 }
 
 function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {
+    /* This is really the search controller (currently spotify) */
     "use strict";
 
     function filterResults(data) {
@@ -201,13 +205,17 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Trac
         console.log($scope.searchTerm);
         $scope.correction = "";
 
+        if($scope.searchTerm.length === 0){
+            $scope.clear();
+        }
+
         if($scope.searchTerm.length > 3 || force) {
             $scope.msg = 'searching for "' + $scope.searchTerm + '"';
             console.log($scope.msg);
             if (!skipSpellCheck) {
                 // Send the search term to our server to query google
                 $http.get("/did-you-mean?q=" + $scope.searchTerm).success(function(data) {
-                    if(data.changed) {
+                    if(data.changed && data.changed !== $scope.searchTerm ) {
                         $scope.correction = data.changed;
                     }
                 });
@@ -328,6 +336,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
+    $scope.numberOfTracks = ps.numberOfTracks;
 
     $scope.searchArtistFromTrack = function(track) {
         console.log("want to search for an artist do you?");
@@ -339,21 +348,29 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
+    function refreshSetlist(data){
+        var songs = "";
+        var i;
+        for (var j = 0; j < data.length; j++) {
+            data[j].coverURL = "/static/images/defaultCover.png";
+            findCover(data[j]);
+        }
+
+        for(i=0; i<Math.min(80, data.length);i++){
+            songs += data[i].spotifyTrackID.slice(14) + ',';
+        }
+        $scope.playlistSongs = songs;
+        $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
+        return data;
+    }
+
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
-            var songs = "";
-            var i;
-            for(i=0; i<data.length; i++){
-                findCover(data[i]);
-                songs += data[i].spotifyTrackID.slice(14) + ',';
-            }
-            $scope.playlistSongs = songs;
-            $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
-        });
+        $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
-    $scope.updateSetlist();
+    //$scope.updateSetlist();
+    $scope.setlist = refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
         console.log("It appears you're adding a track to the setlist");
@@ -411,10 +428,12 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         wiki
 */
     function findCover(track){
+        // and genre
         var updateCover = function(data){
             if(data.hasOwnProperty("track") && data.track.hasOwnProperty("album")){
                 var albumImages = data.track.album.image;
-                // Select the largest one...
+                // Select the cover from what last.fm provides
+                // Largest:
                 //track.coverURL = albumImages[albumImages.length - 1]['#text'];
                 // The "medium" sized image
                 track.coverURL = albumImages[1]['#text'];

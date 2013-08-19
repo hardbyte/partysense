@@ -8,7 +8,8 @@ ROOT_DIR = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-#COMPRESS_ENABLED = False
+INTERCEPT_REDIRECTS = False
+COMPRESS_ENABLED = False
 
 DATABASES = {
     'default': {
@@ -48,10 +49,9 @@ STATICFILES_DIRS = (
     os.path.join(ROOT_DIR, 'static'),
 )
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1', 'partysen.se:8000')
 
 MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-
 INSTALLED_APPS += ('debug_toolbar',)
 
 TEMPLATE_DIRS = (
@@ -85,7 +85,7 @@ LOGGING = {
             'class': 'django.utils.log.AdminEmailHandler'
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
@@ -93,7 +93,7 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['console', 'mail_admins'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
         '': {
