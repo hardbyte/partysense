@@ -8,6 +8,11 @@
 
 {% block content %}
 
+		<div align="center" id="major-logo" class="hero-background hero-logo">
+			<img src="static/logo.png" alt="Party Sense"/>
+			<p>the best way to make sure you have a great night out</p>
+		</div>
+
         <div id="myCarousel" class="carousel slide">
 		  <ol class="carousel-indicators">
 			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -18,7 +23,7 @@
 		  <!-- Carousel items -->
 		  <div class="carousel-inner">
 			<div class="item active">
-				<img src="/static/bootstrap/img/IMG1.jpg" alt="">
+				<img src="/static/bootstrap/img/IMG3.jpg" alt="">
 				<div class="carousel-caption">
 				  <h3>Partying Made Awesomer</h3>
 				  <p>Take your music choices with you to parties and nightclubs</p>
@@ -52,24 +57,6 @@
 		</div>
 
     <div class="row" id="quick-start">
-		<!-- <div class="span4">
-			<a class="hoverImgLink">
-				<img src="/static/bootstrap/img/FEAT_1.png" class="hoverImg"/>
-				<img src="/static/bootstrap/img/FEAT_1BK.png" class="hoverImgBk" />
-			</a>
-		</div>
-		<div class="span4">
-			<a class="hoverImgLink">
-				<img src="/static/bootstrap/img/FEAT_2.png" class="hoverImg"/>
-				<img src="/static/bootstrap/img/FEAT_2BK.png" class="hoverImgBk" />
-			</a>
-		</div>
-		<div class="span4">
-			<a class="hoverImgLink">
-				<img src="/static/bootstrap/img/FEAT_3.png" class="hoverImg"/>
-				<img src="/static/bootstrap/img/FEAT_3BK.png" class="hoverImgBk" />
-			</a>
-		</div> -->
         <div class="span6">
             <section id="customer-quick-start">
                 <h2>How it works</h2>
@@ -134,11 +121,6 @@
         </div>
 		
     </div>
-
-	<div class="hero-unit" style="background-color:#111111" align="center">
-			<iframe src="https://www.facebook.com/video/embed?video_id=10153074819730447" frameborder="0"></iframe>
-    </div>
-	
 	<div class="hero-unit" style="background-color:#111111">
         <div align="center">
             <h2>"We all like listening to music of our choice</h2>
@@ -167,14 +149,19 @@
 	$('.carousel').carousel({
   			interval: 3000
 	})
-	/*
-	$(".hoveImgLink").mouseover(function(){
-		$(this).css("opacity","1");
-	  });
-	  $(".hoveImgLink").mouseout(function(){
-		$(this).css("opacity","0.5");
-	  });
-	*/
+	$( document ).ready(function() {
+		$('#logo').hide();
+	});
+	$(window).scroll(
+		function(){
+			if(($(window).scrollTop() - $('#major-logo').offset().top)>0){
+				$('#logo').animate({width:'show'},200);
+			}
+			else{
+				$('#logo').animate({width:'hide'},200);
+			}
+		}
+	)
 </script>
 
 

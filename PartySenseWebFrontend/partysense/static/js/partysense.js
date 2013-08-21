@@ -122,10 +122,15 @@ function TemplateCtrl($scope) {
 
 function EventStatsCtrl($scope, Track, updateService){
     "use strict";
+    $scope.setlist = ps.setlist;
 
     $scope.refreshTracks = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
+        //$scope.setlist = Track.query({action: "get-track-list"}, function(data){
+
+            var data = ps.setlist;
+
+
             $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];
 
@@ -169,7 +174,7 @@ function EventStatsCtrl($scope, Track, updateService){
             $scope.popularTracks = data.sort(function(b, a){
                 return (a.upVotes - a.downVotes) - (b.upVotes - b.downVotes);
             });
-        });
+        //});
     };
 
     $scope.refreshTracks();
@@ -343,22 +348,29 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
+    function refreshSetlist(data){
+        var songs = "";
+        var i;
+        for (var j = 0; j < data.length; j++) {
+            data[j].coverURL = "/static/images/defaultCover.png";
+            findCover(data[j]);
+        }
+
+        for(i=0; i<Math.min(80, data.length);i++){
+            songs += data[i].spotifyTrackID.slice(14) + ',';
+        }
+        $scope.playlistSongs = songs;
+        $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
+        return data;
+    }
+
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
-        $scope.setlist = Track.query({action: "get-track-list"}, function(data){
-            var songs = "";
-            var i;
-            // TODO should be 1000
-            for(i=0; i<Math.min(80, data.length);i++){
-                findCover(data[i]);
-                songs += data[i].spotifyTrackID.slice(14) + ',';
-            }
-            $scope.playlistSongs = songs;
-            $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
-        });
+        $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
-    $scope.updateSetlist();
+    //$scope.updateSetlist();
+    $scope.setlist = refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
         console.log("It appears you're adding a track to the setlist");

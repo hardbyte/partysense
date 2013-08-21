@@ -146,7 +146,8 @@
                 },
             {% endfor %}
             ],
-            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %}
+            loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %},
+            setlist: {{ setlist|safe|escape }}
         };
 
 

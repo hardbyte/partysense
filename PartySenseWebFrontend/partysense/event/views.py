@@ -2,6 +2,7 @@ import logging
 import json
 import datetime
 
+from django.http import Http404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
 from django.http import HttpResponseRedirect, HttpResponse
@@ -30,12 +31,13 @@ class EventDetail(EventView, DetailView):
     def get_object(self):
         # add this event to this user now if logged in
         logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
-        event = get_object_or_404(Event,
-                                  pk=self.kwargs['pk'],
-                                  slug=self.kwargs['slug'])
+        event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
+        # if we are not in debug mode check that the slug was correct
+        if not settings.DEBUG:
+            if not event.slug == self.kwargs['slug']:
+                raise Http404
         # check that the event isn't in the past
-
         if not event.past_event and event.timedelta().days < -2:
             event.past_event = True
             event.save()
@@ -64,10 +66,13 @@ class EventDetail(EventView, DetailView):
                                    .exclude(event=context['event'])}).select_related()[0:10]
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
+
+        # Add the setlist
+        context['setlist'] = json_track_list(context['event'], u)
+
         self.request.GET.next = reverse('event-detail',
                                         args=(context['event'].pk, context['event'].slug))
         return context
-
 
 
 class EventStatsDetail(EventDetail):
@@ -83,6 +88,7 @@ class EventStatsDetail(EventDetail):
         context['number_of_votes'] = event_votes.count()
         context['voting_users'] = len({v.user.pk for v in event_votes.all()})
 
+        context['setlist'] = json_track_list(event, self.request.user)
 
         # Number of People Who Have Added Songs
         # For each song - find all votes, order by pk, get user associated with oldest record
@@ -136,15 +142,14 @@ def modify_event(request, pk):
     return vote_on_track(request, event.pk, track.pk, internal=True)
 
 
-def get_track_list(request, pk):
+def json_track_list(event, user):
     track_data = []
-    event = get_object_or_404(Event, pk=pk)
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
-    removable = request.user == event.dj.user
+    removable = user == event.dj.user
     for t in event.tracks.all():
         votes = event.vote_set.filter(track=t)
-        if not request.user.is_anonymous() and votes.filter(user=request.user).exists():
-            usersVote = votes.get(user=request.user).is_positive
+        if not user.is_anonymous() and votes.filter(user=user).exists():
+            usersVote = votes.get(user=user).is_positive
         else:
             usersVote = None
 
@@ -153,8 +158,8 @@ def get_track_list(request, pk):
             "name": t.name,
             "artist": t.artist.name,
             "spotifyTrackID": t.spotify_url,
-            "spotifyArtistID": t.artist.spotify_url,
-            "external-ids": t.external_ids,
+            #"spotifyArtistID": t.artist.spotify_url,
+            #"external-ids": t.external_ids,
             "upVotes": votes.filter(is_positive=True).count(),
             "downVotes": votes.filter(is_positive=False).count(),
             "usersVote": usersVote,
@@ -163,8 +168,15 @@ def get_track_list(request, pk):
 
     # Sort by most popular
     track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
+    return json.dumps(track_data)
 
-    return HttpResponse(json.dumps(track_data), content_type="application/json")
+
+def get_track_list(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    user = request.user
+    setlist = json_track_list(event, user)
+
+    return HttpResponse(setlist, content_type="application/json")
 
 @login_required
 def did_you_mean(request):
@@ -214,8 +226,7 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
 
 
 # Form Docs https://docs.djangoproject.com/en/dev/topics/forms
-# TODO replace with cbv CreateView:
-#  https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
+# https://docs.djangoproject.com/en/1.5/topics/class-based-views/generic-editing/
 @login_required
 def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
@@ -273,6 +284,64 @@ def create(request):
                   {
                       "formset": event_form
                   })
+
+
+def update(request, pk, slug):
+    event = get_object_or_404(Event, pk=pk)
+
+    response = "Permission Denied"
+
+    if not request.user == event.dj.user:
+        return 404
+
+    if request.method == 'POST':
+        # If the form has been submitted...
+        # A form bound to the POST data
+        event_form = EventForm(request.POST, instance=event)
+
+        if event_form.is_valid():
+            # All validation rules pass
+            # Process the data in form.cleaned_data and create an
+            # instance out of it:
+            event = event_form.save()
+            logger.info("Updating event to start at: {}".format(event.start_time))
+
+            # Update existing location
+            event.location.name = event_form.cleaned_data['venue']
+            event.location.latitude = event_form.cleaned_data['latitude']
+            event.location.longitude = event_form.cleaned_data['longitude']
+
+            event.location.save()
+
+            # todo get fb event url from incoming link?
+            # or ask for it?
+            event.fb_url = "http://facebook.com/event"
+
+            # then commit the new event to our database
+            event.save()
+
+            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+    else:
+        # Fill in from the event instance
+
+        prior_information = {
+            'start_time': event.start_time,
+            'title': event.title,
+            'venue': event.location.name,
+            'latitude': event.location.latitude,
+            'longitude': event.location.longitude,
+
+
+        }
+        # Otherwise we are left with a completely unbound form
+        event_form = EventForm(initial=prior_information)
+
+    return render(request,
+                  'event/new.html',
+                  {
+                      "formset": event_form
+                  })
+
 
 def profile(request):
     img = None

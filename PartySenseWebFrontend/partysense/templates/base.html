@@ -8,7 +8,14 @@
     <meta name="viewport" content="initial-scale=1.0,width=device-width,user-scalable=no" />
 
     <title>{% block title %}Party Sense{% endblock %}</title>
-
+    {% block fb %}
+        <meta property="fb:app_id"          content="386541278102635" />
+        <meta property="og:url"             content="http://partysen.se" />
+        <meta property="og:site_name"       content="Partysense"/>
+        <meta property="og:title"           content="Partysen.se" />
+        <meta property="og:description"     content="the best way to make sure you have a great night out" />
+        <meta property="og:image"           content="{% static "images/ps.png" %}" />
+    {% endblock %}
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="{% static "favicon.ico" %}" />
     {% compress css %}
@@ -38,8 +45,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-
-                <a class="brand" href="/">
+				
+                <a class="brand" href="/" >
                     <img id="logo" src="{% static "logo.png" %}" alt="Party Sense"/>
                 </a>
 

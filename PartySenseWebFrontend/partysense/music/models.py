@@ -38,17 +38,15 @@ class ExternalID(models.Model):
 
 
 class ExternallyDefinedIDModel(models.Model):
-
+    _spotify_type = IDType.objects.get(pk=1)
     _external_ids = models.ManyToManyField(ExternalID)
 
     def get_spotify_url(self):
         # Look up the external ids and find the "spotify" one
-        spotify_type = IDType.objects.get(pk=1)
-        return self._external_ids.filter(id_type=spotify_type)[0].value
+        return self._external_ids.filter(id_type=self._spotify_type)[0].value
 
     def set_spotify_url(self, value):
-        spotify_type = IDType.objects.get(pk=1)
-        self._external_ids.create(id_type=spotify_type, value=value)
+        self._external_ids.create(id_type=self._spotify_type, value=value)
 
     spotify_url = property(get_spotify_url, set_spotify_url)
 
