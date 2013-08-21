@@ -229,7 +229,7 @@ function SearchCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track
 
 function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     "use strict";
-    $scope.infoWidth = ps.loggedIn ? 'span7' : 'span9';
+    $scope.infoWidth = ps.loggedIn ? 'col-md-7' : 'col-md-9';
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
     $scope.numberOfTracks = ps.numberOfTracks;

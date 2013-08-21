@@ -21,8 +21,8 @@
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
     {% compress css %}
-        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-custom.min.css" %}" media="screen"/>
-        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-responsive.min.css" %}" media="screen"/>
+        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.min.css" %}" media="screen"/>
+        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-theme.min.css" %}" media="screen"/>
         <link rel="stylesheet" href="{% static "style.css" %}" />
 
         <style>
@@ -37,17 +37,17 @@
     <header class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a 	class="btn btn-navbar collapsed" 
+                <a 	class="btn navbar-btn collapsed"
 					data-toggle="collapse" 
 					data-target=".nav-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-                <a class="brand" href="/">
+                <a class="navbar-brand" href="/">
                     <img id="logo" src="{% static "images/logo.png" %}" alt="Party Sense"/>
                 </a>
-                <nav class="nav-collapse collapse">
+                <nav class="navbar-collapse collapse">
                     <ul class="nav">
                         <li><a class="regularActive" href="/">Home</a></li>
                         <li><a class="regularActive" href="{% url "clubs" %}">Clubs</a></li>

@@ -315,20 +315,18 @@ footer
 #GoogleAdvert {
     margin-top: 20px;
 }
+
+
 .icon-bar {
 	background-color: #9bcb48;
 }
 
-.hero-unit {
+.jumbotron {
     background-color:#111111;
 }
 
 .navbar-inner {
     background: #1b6880 none;
-}
-
-.brand{
-    margin-left: 10px;
 }
 
 .navbar-inner{
