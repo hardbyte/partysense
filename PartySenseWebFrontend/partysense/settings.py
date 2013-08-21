@@ -8,6 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
      ('Brian Thorne', 'hardbyte@gmail.com'),
+     ('Tanmay Bhola', 'tanmay9@gmail.com')
 )
 DOMAIN = "http://partysen.se"
 
@@ -53,10 +54,10 @@ AUTHENTICATION_BACKENDS = (
 COMPRESS_ENABLED = True
 
 EMAIL_HOST = 'smtp.webfaction.com'
-EMAIL_HOST_USER = 'mailbox_username'
-EMAIL_HOST_PASSWORD = 'mailbox_password'
-DEFAULT_FROM_EMAIL = 'valid_email_address'
-SERVER_EMAIL = 'valid_email_address'
+EMAIL_HOST_USER = 'partysense'
+EMAIL_HOST_PASSWORD = 'PV$CHEeO00aUIf3'
+DEFAULT_FROM_EMAIL = 'partysense@partysen.se'
+SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 
@@ -146,7 +147,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     #'django.core.context_processors.i18n',
     #'django.core.context_processors.media',
-    #'django.contrib.messages.context_processors.messages',
+    'django.contrib.messages.context_processors.messages',
 
     'social_auth.context_processors.social_auth_by_type_backends',
     # Adds a social_auth dict where each key is a provider name and its value is a UserSocialAuth instance if user

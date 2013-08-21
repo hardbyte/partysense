@@ -2,14 +2,10 @@
 {% load humanize %}
 {% load url from future %}
 
-{% block style %}
-
-{% endblock %}
-
 {% block content %}
 
 		<div align="center" id="major-logo" class="hero-background hero-logo">
-			<img src="static/logo.png" alt="Party Sense"/>
+			<img src="static/images/logo.png" alt="Party Sense"/>
 			<p>the best way to make sure you have a great night out</p>
 		</div>
 
@@ -105,6 +101,7 @@
                     <li>
                         <h3>Host an awesome party</h3>
                         <p>Leverage our detailed analytics to cater to your crowd!</p>
+                        <br>
                     </li>
                 </ol>
                 {% if user.is_authenticated %}
@@ -121,12 +118,10 @@
         </div>
 		
     </div>
-	<div class="hero-unit" style="background-color:#111111">
-        <div align="center">
-            <h2>"We all like listening to music of our choice</h2>
-			<h2>when we are at home, at work or jogging</h2>
-			<h2>then why should this stop when we go out to party?"</h2>
-        </div>
+	<div class="hero-unit">
+            <h2>We all like listening to music of our choice
+                when we are at home, at work or jogging
+                so why should this stop when we go out to party?</h2>
     </div>
 	
     <div class="row">
@@ -147,47 +142,9 @@
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 <script type="text/javascript">
 	$('.carousel').carousel({
-  			interval: 3000
-	})
-	$( document ).ready(function() {
-		$('#logo').hide();
+  			interval: 5000
 	});
-	$(window).scroll(
-		function(){
-			if(($(window).scrollTop() - $('#major-logo').offset().top)>0){
-				$('#logo').animate({width:'show'},200);
-			}
-			else{
-				$('#logo').animate({width:'hide'},200);
-			}
-		}
-	)
 </script>
-
-
-<style>
-.wrapper p{
-position:relative;
-top:61px;
-left:0px;
-visibility:hidden;
-font-size:15px;
-font-color:white;
-background:rgba(25, 25, 25, .85);
-
-}
-
-.wrapper h3{
-position:relative;
-top:65px;
-background:rgba(25, 25, 25, .85);
-left:0px;
-visibility:visible;
-}
-
-
-</style>
-
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

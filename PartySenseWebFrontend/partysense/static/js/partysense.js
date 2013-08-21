@@ -1,111 +1,8 @@
 var App = angular.module('Partysense',
   ['ngResource', 
    'ps.filters', 
-  'ps.services']);
-
-App.directive('backImg', function(){
-    return function(scope, element, attrs){
-        attrs.$observe('backImg', function(value) {
-            element.css({
-                'background-image': 'url(' + value +')',
-                //'background-size' : 'cover',
-                'background-position' : 'right',
-                'background-repeat' : 'no-repeat'
-            });
-        });
-    };
-});
-
-App.directive('droppable', function($compile, $rootScope, updateService) {
-    "use strict";
-    return {
-        restrict: "A",
-        //The link function is responsible for registering DOM listeners as well as updating the DOM.
-        link: function(scope, element, attrs){
-
-            element.context.ondragover = function(event) {
-                // TODO maybe we can work out if this is from spotify here?
-                if(true){
-                    // Do something to show we can deal with items dropped on this
-                    element.addClass("indicate-drop");
-                    return false;
-                } else {
-                    console.log("I don't know how to deal with that... should I?");
-                    console.log(event);
-                }
-            };
-
-            element.context.ondragleave = function(event){
-                attrs.$set('class', '');
-            };
-
-            element.context.ondrop = function (event) {
-                // work out if this is something we can deal with...
-                // get an open url:
-                //http://open.spotify.com/user/1242959390/playlist/4rN0f6C22Mz9dUX5lcbG5F
-                var open_url = event.dataTransfer.getData("text/plain");
-                console.log(open_url);
-                if(/.*spotify.*/.test(open_url)){
-
-                    var uri = event.dataTransfer.getData("text/uri-list");
-                    //spotify:user:1242959390:playlist:4rN0f6C22Mz9dUX5lcbG5F
-
-                    //console.log(event.dataTransfer.getData("text/html"));
-                    // <a href="http://open.spotify.com/user/1242959390/playlist/4rN0f6C22Mz9dUX5lcbG5F">Trial</a>
-
-                    var el = document.createElement( 'div' );
-                    el.innerHTML = event.dataTransfer.getData("text/html");
-                    var name = el.innerText;
-
-                    var type = "";
-                    
-                    if(/spotify[:].*playlist:.*/g.test(uri)){
-                        console.log("Looks like " + uri + " is a playlist");
-                        type = "playlist - I can't import that from spotify sorry";
-                    } 
-                    if(/spotify[:].*album:.*/g.test(uri)) {
-                        type = "album";
-                        $rootScope.$apply(function(){
-                            updateService.update("importAlbumBySpotifyURI", uri);
-                        });
-                    }
-                    if(/spotify[:].*artist:.*/.test(uri)) {
-                        //console.log("Looks like " + uri + " is an artist");
-                        type = "artist";
-                        /* The html already has the artist name, so lets just use that... (is that a hack?)*/
-                        
-                        var artist = {name: name, href: uri};
-                        // IMPORTANT to call $apply to force AngularJS to notice that we change stuff!
-                        $rootScope.$apply(function(){
-                            updateService.update("searchByArtist", artist);
-                        });
-                        
-                    }
-                    if(/spotify[:].*track:.*/.test(uri)) {
-                        console.log("Looks like " + uri + " is a track");
-                        type = "track";
-                        $rootScope.$apply(function(){
-                            updateService.update("addTrackBySpotifyURI", uri);
-                        });
-                    }
-
-                    // Send a message letting the user know what we are doing
-                    $rootScope.$apply(function(){
-                        updateService.update("showMsg",
-                            "Importing Spotify " + type + " - " + name + ".");
-                    });
-
-                    // Seems if I don't preventDefault then spotify will start playing...
-                    event.preventDefault();
-
-                    // Remove the extra class we added to show this accepts dropping stuff
-                    attrs.$set('class', '');
-                    //return false;
-                }
-            };
-        }
-    };
-});
+   'ps.services',
+   'ps.directives']);
 
 /* Template Controller will pull in all the other HTML fragments
  * and the other Angular Controllers */
@@ -113,11 +10,11 @@ function TemplateCtrl($scope) {
     "use strict";
     $scope.oneAtATime = true;
     $scope.loggedIn = ps.loggedIn;
-    $scope.resultListTemplate = "/static/spotifyResultList.html";
-    $scope.previewTemplate = "/static/spotifyPreview.html";
-    $scope.setlistTemplate = "/static/eventsTrackList.html";
-    $scope.recentTracksTemplate = "/static/recentTrackList.html";
-    $scope.eventStatisticsTemplate = "/static/eventStatistics.html";
+    $scope.resultListTemplate = "/static/partials/searchResults.html";
+    $scope.previewTemplate = "/static/partials/spotifyPreview.html";
+    $scope.setlistTemplate = "/static/partials/eventsTrackList.html";
+    $scope.recentTracksTemplate = "/static/partials/recentTrackList.html";
+    $scope.eventStatisticsTemplate = "/static/partials/eventStatistics.html";
 }
 
 function EventStatsCtrl($scope, Track, updateService){
@@ -180,7 +77,7 @@ function EventStatsCtrl($scope, Track, updateService){
     $scope.refreshTracks();
 }
 
-function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {
+function SearchCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {
     /* This is really the search controller (currently spotify) */
     "use strict";
 
@@ -329,7 +226,6 @@ function SpotifyCtrl($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Trac
         });
     };
 }
-
 
 function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     "use strict";

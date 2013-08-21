@@ -206,7 +206,7 @@ footer
     line-height: 20px;
     padding-left: 25px;
     padding-right: 4px;
-    background: url('social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
+    background: url('images/social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
     border: 1px solid #1A356E;
     text-decoration: none;
     color: white;
@@ -319,27 +319,19 @@ footer
 	background-color: #9bcb48;
 }
 
-.navbar 
-  .navbar-inner {
-    background-color: #1b6880;
-    background-image: none;
-  }
+.hero-unit {
+    background-color:#111111;
+}
 
-  .brand{
-	margin-left:10px;
-  }
-  
-  .hero-background{
-	background-color:#111111;
-  }
-  
-  .hero-logo{
-	max-height:110px;
-	padding:10px;
-	margin-bottom:10px
-  }
-  
-  .navbar-inner{
-	min-height:60px;
-  }
+.navbar-inner {
+    background: #1b6880 none;
+}
+
+.brand{
+    margin-left: 10px;
+}
+
+.navbar-inner{
+    min-height: 60px;
+}
   
