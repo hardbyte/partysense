@@ -333,3 +333,31 @@ footer
     min-height: 60px;
 }
   
+.carousel-caption{
+	background-color:  rgba(0, 0, 0, 0.8);
+	left:0%;
+	right:0%;
+	bottom:0px;
+}
+
+.carousel-indicators{
+	bottom:0px;
+}
+
+.brand{
+margin-left:10px;
+}
+
+.hero-background{
+background-color:#111111;
+}
+
+.hero-logo{
+max-height:110px;
+padding:10px;
+margin-bottom:10px
+}
+
+.navbar-inner{
+min-height:60px;
+}
