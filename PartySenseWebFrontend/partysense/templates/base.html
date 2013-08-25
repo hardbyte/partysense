@@ -18,7 +18,7 @@
         <meta property="og:description"     content="The best way to make sure you have a great night out!" />
         <meta property="og:image"           content="{% static "images/fblink.png" %}" />
     {% endblock %}
-    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
     {% compress css %}
         <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-custom.min.css" %}" media="screen"/>
@@ -89,6 +89,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+
                 {% block content %}{% endblock %}
             </div>
         </div>
