@@ -53,8 +53,9 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     {% if not user.is_authenticated %}
-                        <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                            <div id="facebook_button"><h4 class="nav-pill">Login</h4></div>
+                        <li>
+							<a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+								<div id="facebook_button">Login</div>
                             </a>
                         </li>
                     {% else %}
