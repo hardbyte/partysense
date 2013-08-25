@@ -32,12 +32,7 @@ h1, h2, h3, h4, h5 {
 
 #content {
     overflow: hidden;
-}
-
-@media (min-width: 979px){
-    #content {
-        padding-top: 85px;
-    }
+	padding-top: 85px;
 }
 
 section {
@@ -71,6 +66,8 @@ nav a.regularActive:link, nav a.regularActive:visited {
 nav a.regularActive {
     display: block;
 	font-size: 1.6em;
+	
+	
     text-align: center;
 
     min-width: 50px;
@@ -360,4 +357,9 @@ margin-bottom:10px
 
 .navbar-inner{
 min-height:60px;
+}
+
+.nav-pill{
+	color:#FFFFFF;
+	font-weight: bold;
 }

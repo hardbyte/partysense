@@ -37,38 +37,36 @@
     <header class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a 	class="btn navbar-btn collapsed"
-					data-toggle="collapse" 
-					data-target=".nav-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
                 <a class="navbar-brand" href="/">
                     <img id="logo" src="{% static "images/logo.png" %}" alt="Party Sense"/>
                 </a>
                 <nav class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a class="regularActive" href="/"><h4>Home</h4></a></li>
-                        <li><a class="regularActive" href="{% url "clubs" %}"><h4>Clubs</h4></a></li>
-                        <li><a class="regularActive" href="{% url "profile" %}"><h4>Playlists</h4></a></li>
+                        <li><a class="regularActive" href="/"><h4 class="nav-pill">Home</h4></a></li>
+                        <li><a class="regularActive" href="{% url "clubs" %}"><h4 class="nav-pill">Clubs</h4></a></li>
+                        <li><a class="regularActive" href="{% url "profile" %}"><h4 class="nav-pill">Playlists</h4></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     {% if not user.is_authenticated %}
                         <li><a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                            <div id="facebook_button">Login</div>
+                            <div id="facebook_button"><h4 class="nav-pill">Login</h4></div>
                             </a>
                         </li>
                     {% else %}
                         <li>
 						
 							<a class="regularActive" href="{% url "profile" %}">
-                                <h4>{{ user.first_name }}</h4>
+                                <h4 class="nav-pill">{{ user.first_name }} <span class="glyphicon glyphicon-chevron-down"/></h4>
                             </a>
                             <!-- Drop down for nav bar -->
                             <ul class="fallback hidden-phone">
-                                <li><a class="" href="{% url "profile" %}"><i class="icon-user"></i>Profile</a></li>
-                                <li><a href="{% url "logout" %}" class=""><i class="icon-remove"></i>Logout</a></li>
+                                <li><a class="" href="{% url "profile" %}"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                                <li><a href="{% url "logout" %}" class=""><i class="glyphicon glyphicon-remove"></i> Logout</a></li>
                             </ul>
 
                         </li>
