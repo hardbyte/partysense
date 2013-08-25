@@ -71,5 +71,5 @@ class EventForm(ModelForm):
         logger.info("date: {}".format(date))
         if date < datetime.date.today():
             raise ValidationError("The date must be in the future!")
-        return date
+        return self.cleaned_data['start_time']
 

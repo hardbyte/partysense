@@ -8,6 +8,9 @@
     <div class="row">
     <section class="span3">
         <h3>Account info:</h3>
+        {% if user.is_staff %}
+            <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
+        {% endif %}
         <table class="table">
             <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
             <tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
@@ -19,6 +22,7 @@
     {% if img %}
         <div><img src="{{ img.url }}"></div>
     {% endif %}
+
     {% if social_auth.associated %}
         <p>
             <a href="{% url "logout" %}" class="btn btn-block">Logout</a>

@@ -13,8 +13,6 @@ body {
 
     background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
     background-attachment: fixed;
-	/*background-color: #333333;
-    color: white;*/
 }
 
 h1, h2, h3, h4, h5 {
@@ -205,7 +203,7 @@ footer
     line-height: 20px;
     padding-left: 25px;
     padding-right: 4px;
-    background: url('social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
+    background: url('images/social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
     border: 1px solid #1A356E;
     text-decoration: none;
     color: white;
