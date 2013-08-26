@@ -5,7 +5,7 @@
 {% block content %}
 
 		<div align="center" id="major-logo" class="hero-background hero-logo">
-			<img src="static/images/logo.png" alt="Party Sense"/>
+			<img src="static/images/logo.png" style="width:70%; max-width:450px;" alt="Party Sense"/>
 			<p style="color:white">the best way to make sure you have a great night out</p>
 		</div>
 
@@ -145,6 +145,19 @@
 	$('.carousel').carousel({
   			interval: 5000
 	});
+	$( document ).ready(function() {
+		$('#logo').hide();
+	});
+	$(window).scroll(
+		function(){
+			if(($(window).scrollTop() - $('#major-logo').offset().top)>0){
+				$('#logo').animate({width:'show'},200);
+			}
+			else{
+				$('#logo').animate({width:'hide'},200);
+			}
+		}
+	);
 </script>
 
 <script>(function(d, s, id) {

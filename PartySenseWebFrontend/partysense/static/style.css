@@ -315,7 +315,8 @@ footer
 
 
 .icon-bar {
-	background-color: #9bcb48;
+	background-color: #FFFFFF;
+	font-weight: bold;
 }
 
 .jumbotron {
@@ -362,4 +363,27 @@ min-height:60px;
 .nav-pill{
 	color:#FFFFFF;
 	font-weight: bold;
+}
+
+.navbar-nav>li>a{
+	margin-top:5px;
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a:hover{
+	background-color:#074458;
+	border-radius:5px;
+}
+
+.dropdown-menu>li{
+	width:100%;
+}
+
+.dropdown-menu>li:hover{
+	background-color:#000000;
+}
+
+.dropdown.open a.dropdown-toggle .caret {
+	color:#FFFFFF;
 }
