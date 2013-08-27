@@ -25,8 +25,7 @@ function EventStatsCtrl($scope, Track, updateService){
         // GET: /api/123/get-track-list
         //$scope.setlist = Track.query({action: "get-track-list"}, function(data){
 
-            var data = ps.setlist;
-
+        var data = ps.setlist;
 
             $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];

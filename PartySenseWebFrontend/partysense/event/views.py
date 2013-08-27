@@ -161,19 +161,25 @@ def json_track_list(event, user):
         if len(track_ids) == 0:
             track_ids = (None,)
         cursor = connection.cursor()
-        cursor.execute("""SELECT "event_vote"."track_id", COUNT("event_vote"."is_positive" = TRUE), COUNT("event_vote"."is_positive" = FALSE)
+        cursor.execute("""
+            SELECT
+                "event_vote"."track_id",
+                count(nullif("event_vote"."is_positive", 't')),
+                count(nullif("event_vote"."is_positive", 'f'))
             FROM "event_vote"
             WHERE (
                 "event_vote"."event_id" = %s  AND
                 "event_vote"."track_id" IN %s )
             GROUP BY "event_vote"."track_id"
-                """, [event.pk, track_ids])
+            """, [event.pk, track_ids])
 
         for track_id, upVotes, downVotes in cursor.fetchall():
             track_votes[int(track_id)] = (int(upVotes), int(downVotes))
 
+        # External IDS (eg spotify id)
         cursor.execute("""
-        SELECT "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
+        SELECT
+            "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
         FROM "music_externalid"
         INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
         WHERE "music_track__external_ids"."track_id" IN %s
@@ -199,7 +205,7 @@ def json_track_list(event, user):
             "artist": t.artist.name,
             "spotifyTrackID": spotify_ids[t.pk],
             "upVotes": track_votes[t.pk][0],
-            "downVotes": track_votes[t.pk][0],
+            "downVotes": track_votes[t.pk][1],
             "usersVote": usersVote,
             "removable": removable
         })
