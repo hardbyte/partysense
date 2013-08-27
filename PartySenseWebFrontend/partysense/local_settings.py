@@ -7,9 +7,10 @@ ROOT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+ENABLE_DJANGO_TOOLBAR = False
 INTERCEPT_REDIRECTS = False
 COMPRESS_ENABLED = False
+
 
 DATABASES = {
     'default': {
@@ -21,6 +22,19 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         # maybe we can map straight to google app engine?
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'brian',                      # Or path to database file if using sqlite3.
+#         'USER': 'brian',                      # Not used with sqlite3.
+#         'PASSWORD': '',                  # Not used with sqlite3.
+#         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+#     }
+# }
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -51,8 +65,9 @@ STATICFILES_DIRS = (
 
 INTERNAL_IPS = ('127.0.0.1', 'partysen.se:8000')
 
-MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-INSTALLED_APPS += ('debug_toolbar',)
+if ENABLE_DJANGO_TOOLBAR:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    INSTALLED_APPS += ('debug_toolbar',)
 
 TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
@@ -87,7 +102,7 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'verbose'
         },
     },
     'loggers': {

@@ -10,6 +10,7 @@ from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.db import connection
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
@@ -23,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 class EventView():
     model = Event
+
 
 class EventDetail(EventView, DetailView):
 
@@ -55,12 +57,10 @@ class EventDetail(EventView, DetailView):
                  dj=context['event'].dj.pk
             ).order_by('-modified')
 
-        context['number_of_tracks'] = context['event'].tracks.count()
-
-        # add recently up-voted tracks
+        # add recently up-voted tracks TODO CACHE these per user?
         u = self.request.user
         if not u.is_anonymous():
-            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.select_related().all()
+            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())
                                    .exclude(event=context['event'])}).select_related()[0:10]
@@ -68,7 +68,7 @@ class EventDetail(EventView, DetailView):
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
 
         # Add the setlist
-        context['setlist'] = json_track_list(context['event'], u)
+        context['number_of_tracks'], context['setlist'] = json_track_list(context['event'], u)
 
         self.request.GET.next = reverse('event-detail',
                                         args=(context['event'].pk, context['event'].slug))
@@ -86,12 +86,10 @@ class EventStatsDetail(EventDetail):
 
         context['number_of_users'] = event.users.count()
         context['number_of_votes'] = event_votes.count()
-        context['voting_users'] = len({v.user.pk for v in event_votes.all()})
-
-        context['setlist'] = json_track_list(event, self.request.user)
+        context['voting_users'] = len({v.user.pk for v in event_votes.select_related('user').all()})
 
         # Number of People Who Have Added Songs
-        # For each song - find all votes, order by pk, get user associated with oldest record
+        # For each song - find all votes in this event, order by pk, get user associated with oldest record
         users_who_added_tracks = {track.vote_set.filter(event=event).order_by("pk")[0].user.pk
                                                       for track in event.tracks.all()}
         context['number_of_users_who_added_songs'] = len(users_who_added_tracks)
@@ -143,38 +141,64 @@ def modify_event(request, pk):
 
 
 def json_track_list(event, user):
+    """
+    This has some hand coded sql for speed. It is still too slow...
+    """
     track_data = []
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
     removable = user == event.dj.user
-    for t in event.tracks.all():
-        votes = event.vote_set.filter(track=t)
-        if not user.is_anonymous() and votes.filter(user=user).exists():
-            usersVote = votes.get(user=user).is_positive
-        else:
-            usersVote = None
+    event_vote_set = event.vote_set.all()
+
+    users_votes = {track_id: is_positive for (track_id, is_positive) in event_vote_set.filter(user=user).values_list('track_id', 'is_positive')}
+    track_votes = {}
+    spotify_ids = {}
+
+    track_ids = tuple(event.tracks.values_list('pk', flat=True))#','.join(map(str, event.tracks.values_list('pk', flat=True)))
+    cursor = connection.cursor()
+    cursor.execute("""SELECT "event_vote"."track_id", COUNT("event_vote"."is_positive" = TRUE), COUNT("event_vote"."is_positive" = FALSE)
+        FROM "event_vote"
+        WHERE (
+            "event_vote"."event_id" = %s  AND
+            "event_vote"."track_id" IN %s )
+        GROUP BY "event_vote"."track_id"
+            """, [event.pk, track_ids])
+
+    for track_id, upVotes, downVotes in cursor.fetchall():
+        #(251, 5L, 5L)
+        track_votes[int(track_id)] = (int(upVotes), int(downVotes))
+
+    cursor.execute("""
+    SELECT "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
+    FROM "music_externalid"
+    INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
+    WHERE "music_track__external_ids"."track_id" IN %s
+    """, [track_ids])
+    for track_id, id_type, id_value in cursor.fetchall():
+        if id_type == 1:
+            spotify_ids[track_id] = id_value
+    for t in event.tracks.select_related("artist__name", "_external_ids").prefetch_related("_external_ids"):
+        usersVote = users_votes.get(t.pk, None)
 
         track_data.append({
             'pk': t.pk,
             "name": t.name,
             "artist": t.artist.name,
-            "spotifyTrackID": t.spotify_url,
-            #"spotifyArtistID": t.artist.spotify_url,
-            #"external-ids": t.external_ids,
-            "upVotes": votes.filter(is_positive=True).count(),
-            "downVotes": votes.filter(is_positive=False).count(),
+            "spotifyTrackID": spotify_ids[t.pk],
+            "upVotes": track_votes[t.pk][0],
+            "downVotes": track_votes[t.pk][0],
             "usersVote": usersVote,
             "removable": removable
         })
 
     # Sort by most popular
     track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
-    return json.dumps(track_data)
+    return len(track_ids), json.dumps(track_data)
 
 
 def get_track_list(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user
-    setlist = json_track_list(event, user)
+    number_of_tracks, setlist = json_track_list(event, user)
 
     return HttpResponse(setlist, content_type="application/json")
 
