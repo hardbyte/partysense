@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import connection
+
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
@@ -154,28 +155,36 @@ def json_track_list(event, user):
     spotify_ids = {}
 
     track_ids = tuple(event.tracks.values_list('pk', flat=True))#','.join(map(str, event.tracks.values_list('pk', flat=True)))
-    cursor = connection.cursor()
-    cursor.execute("""SELECT "event_vote"."track_id", COUNT("event_vote"."is_positive" = TRUE), COUNT("event_vote"."is_positive" = FALSE)
-        FROM "event_vote"
-        WHERE (
-            "event_vote"."event_id" = %s  AND
-            "event_vote"."track_id" IN %s )
-        GROUP BY "event_vote"."track_id"
-            """, [event.pk, track_ids])
 
-    for track_id, upVotes, downVotes in cursor.fetchall():
-        #(251, 5L, 5L)
-        track_votes[int(track_id)] = (int(upVotes), int(downVotes))
+    if settings.POSTGRES_ENABLED:
+        cursor = connection.cursor()
+        cursor.execute("""SELECT "event_vote"."track_id", COUNT("event_vote"."is_positive" = TRUE), COUNT("event_vote"."is_positive" = FALSE)
+            FROM "event_vote"
+            WHERE (
+                "event_vote"."event_id" = %s  AND
+                "event_vote"."track_id" IN %s )
+            GROUP BY "event_vote"."track_id"
+                """, [event.pk, track_ids])
 
-    cursor.execute("""
-    SELECT "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
-    FROM "music_externalid"
-    INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
-    WHERE "music_track__external_ids"."track_id" IN %s
-    """, [track_ids])
-    for track_id, id_type, id_value in cursor.fetchall():
-        if id_type == 1:
-            spotify_ids[track_id] = id_value
+        for track_id, upVotes, downVotes in cursor.fetchall():
+            track_votes[int(track_id)] = (int(upVotes), int(downVotes))
+
+        cursor.execute("""
+        SELECT "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
+        FROM "music_externalid"
+        INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
+        WHERE "music_track__external_ids"."track_id" IN %s
+        """, [track_ids])
+        for track_id, id_type, id_value in cursor.fetchall():
+            if id_type == 1:
+                spotify_ids[track_id] = id_value
+    else:
+        # do it the database heavy way for sqlite3...
+        for t in event.tracks.all():
+            votes = event.vote_set.filter(track=t)
+            track_votes[t.pk] = (votes.filter(is_positive=True).count(), votes.filter(is_positive=False).count())
+            spotify_ids[t.pk] = t.spotify_url
+
     for t in event.tracks.select_related("artist__name", "_external_ids").prefetch_related("_external_ids"):
         usersVote = users_votes.get(t.pk, None)
 

@@ -2,14 +2,12 @@ import logging
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
 from django.utils.text import slugify
 from django.utils.timezone import utc
 from django.core.urlresolvers import reverse
 
 from partysense.dj.models import DJ
-from partysense.music.models import Track, Artist
+from partysense.music.models import Track
 
 logger = logging.getLogger(__name__)
 logger.debug("Parsing models.py")

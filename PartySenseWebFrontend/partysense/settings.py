@@ -52,6 +52,7 @@ AUTHENTICATION_BACKENDS = (
     )
 
 COMPRESS_ENABLED = True
+POSTGRES_ENABLED = True
 
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'partysense'
@@ -60,6 +61,8 @@ DEFAULT_FROM_EMAIL = 'partysense@partysen.se'
 SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+
+
 
 DATABASES = {
     'default': {

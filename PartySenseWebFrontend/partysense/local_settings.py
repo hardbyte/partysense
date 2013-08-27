@@ -11,7 +11,7 @@ ENABLE_DJANGO_TOOLBAR = False
 INTERCEPT_REDIRECTS = False
 COMPRESS_ENABLED = False
 
-
+POSTGRES_ENABLED = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
