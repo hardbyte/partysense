@@ -150,13 +150,16 @@ def json_track_list(event, user):
     removable = user == event.dj.user
     event_vote_set = event.vote_set.all()
 
-    users_votes = {track_id: is_positive for (track_id, is_positive) in event_vote_set.filter(user=user).values_list('track_id', 'is_positive')}
+    users_votes = {track_id: is_positive for (track_id, is_positive) in event_vote_set.filter(user=user.pk).values_list('track_id', 'is_positive')}
     track_votes = {}
     spotify_ids = {}
 
-    track_ids = tuple(event.tracks.values_list('pk', flat=True))#','.join(map(str, event.tracks.values_list('pk', flat=True)))
+    track_ids = tuple(event.tracks.values_list('pk', flat=True))
 
     if settings.POSTGRES_ENABLED:
+        # If there are no tracks our query still needs to be valid...
+        if len(track_ids) == 0:
+            track_ids = (None,)
         cursor = connection.cursor()
         cursor.execute("""SELECT "event_vote"."track_id", COUNT("event_vote"."is_positive" = TRUE), COUNT("event_vote"."is_positive" = FALSE)
             FROM "event_vote"
@@ -178,6 +181,8 @@ def json_track_list(event, user):
         for track_id, id_type, id_value in cursor.fetchall():
             if id_type == 1:
                 spotify_ids[track_id] = id_value
+        if len(track_ids) == 1 and track_ids[0] is None:
+            track_ids = ()
     else:
         # do it the database heavy way for sqlite3...
         for t in event.tracks.all():
