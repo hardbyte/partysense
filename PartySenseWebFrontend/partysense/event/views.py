@@ -164,8 +164,8 @@ def json_track_list(event, user):
         cursor.execute("""
             SELECT
                 "event_vote"."track_id",
-                count(nullif("event_vote"."is_positive", 't')),
-                count(nullif("event_vote"."is_positive", 'f'))
+                count(nullif("event_vote"."is_positive" = 'f', 't')),
+                count(nullif("event_vote"."is_positive" = 't', 't'))
             FROM "event_vote"
             WHERE (
                 "event_vote"."event_id" = %s  AND
@@ -197,8 +197,6 @@ def json_track_list(event, user):
             spotify_ids[t.pk] = t.spotify_url
 
     for t in event.tracks.select_related("artist__name", "_external_ids").prefetch_related("_external_ids"):
-        usersVote = users_votes.get(t.pk, None)
-
         track_data.append({
             'pk': t.pk,
             "name": t.name,
@@ -206,7 +204,7 @@ def json_track_list(event, user):
             "spotifyTrackID": spotify_ids[t.pk],
             "upVotes": track_votes[t.pk][0],
             "downVotes": track_votes[t.pk][1],
-            "usersVote": usersVote,
+            "usersVote": users_votes.get(t.pk, 0),
             "removable": removable
         })
 
