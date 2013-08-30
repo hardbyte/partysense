@@ -158,12 +158,10 @@
 
 {% block jslibs %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
-
   {% cache 300 eventdata event.pk request.user.pk %}
   {% compress js %}
     <script>
+        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
         var ps = {
             event: {{ event.pk }},
             numberOfTracks: {{ number_of_tracks }},
@@ -187,16 +185,12 @@
   {% endcache %}
 
   {% compress js %}
-    <script>
-        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
-    </script>
     <script src="{% static "js/filters.js" %}"></script>
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
-
   {% endcompress %}
 
-    {% block event_js %}
-    {% endblock %}
+  {% block event_js %}
+  {% endblock %}
 {% endblock %}
