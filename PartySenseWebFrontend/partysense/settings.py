@@ -63,7 +63,12 @@ SERVER_EMAIL = 'partysense@partysen.se'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 
 
-
+CACHES = {
+    'default': {
+        'BACKEND': "django.core.cache.backends.memcached.MemcachedCache",
+        'LOCATION': 'unix:/home/hardbyte/memcached.sock',
+    }
+}
 DATABASES = {
     'default': {
         # maybe we can map straight to google app engine?
