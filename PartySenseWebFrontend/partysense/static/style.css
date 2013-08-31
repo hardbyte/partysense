@@ -324,7 +324,10 @@ footer
 }
 
 .navbar-inner {
-    background: #1b6880 none;
+	background-image:url('/static/images/background.jpg');
+	background-size:100%;
+	background-position:center;
+    background-color: #000000 none;
 }
 
 .navbar-inner{
