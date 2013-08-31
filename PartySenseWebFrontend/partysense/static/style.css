@@ -325,6 +325,7 @@ footer
 
 .navbar-inner {
 	background-image:url('/static/images/background.jpg');
+	background-color:black;
 	background-size:100%;
 	background-position:center;
     background-color: #000000 none;
