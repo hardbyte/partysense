@@ -61,6 +61,9 @@ DEFAULT_FROM_EMAIL = 'partysense@partysen.se'
 SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+
+DJANGO_MEMCACHED_REQUIRE_STAFF = True
 
 
 CACHES = {
@@ -69,6 +72,7 @@ CACHES = {
         'LOCATION': 'unix:/home/hardbyte/memcached.sock',
     }
 }
+
 DATABASES = {
     'default': {
         # maybe we can map straight to google app engine?
@@ -201,6 +205,8 @@ INSTALLED_APPS = (
 
     # for compressing js and css files
     "compressor",
+
+    'memcache_status',
 
     # for database migrations http://south.readthedocs.org
     #'south',
