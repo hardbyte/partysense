@@ -14,11 +14,11 @@ class ClubForm(ModelForm):
                   'club_email',
                   'website',
                   'facebook_page',
-				  'address',
-				  'city',
-				  'country'
-                )
-		# @todo: Where does the user authentication happen? 
+                  'address',
+                  'city',
+                  'country')
+
+        # @todo: Where does the user authentication happen? 
 
         widgets = {
             #'content': Textarea(attrs={'cols': 60, 'rows': 10}),
