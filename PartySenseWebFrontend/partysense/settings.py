@@ -218,10 +218,14 @@ INSTALLED_APPS = (
     # for authentication with facebook etc
     'social_auth',
 
+    # our helper models
+    'partysense.util',
+
     # our core application
     'partysense.event',
     'partysense.music',
-    'partysense.dj'
+    'partysense.dj',
+    'partysense.club'
 
 )
 

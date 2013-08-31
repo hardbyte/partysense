@@ -13,3 +13,4 @@ python-memcached
 django-memcache-status
 django-registration
 django-registration-email
+django-countries

@@ -105,7 +105,7 @@ urlpatterns += patterns('partysense.dj.views',
 urlpatterns += patterns('partysense.club.views',
     url(r'^club/$', 'landing', name='club-landing'),
     url(r'^club/new/$', 'create_club', name='create-club'),
-    url(r'^club/(?P<club_id>\d+)/', ClubDetail.as_view(), name='club-profile'),
+    url(r'^club/(?P<pk>\d+)/', ClubDetail.as_view(), name='club-profile'),
 )
 
 if settings.DEBUG:

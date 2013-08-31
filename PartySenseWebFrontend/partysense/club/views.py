@@ -8,20 +8,19 @@ from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
 from django import forms
 
+from partysense.event.models import Location
 from partysense.club.models import Club
 
 
-class UserCreateForm(UserCreationForm):
-    club_name = forms.CharField(label="Club Name", required=True)
-    email = forms.EmailField(required=True)
+class NewClubForm(forms.ModelForm):
 
     class Meta:
-        model = User
-        fields = ("email", "club_name")
+        model = Club
+        fields = ("name", "email", "website", "facebook_page", "city", "country",)
 
 
 def landing(request):
-    return render(request, 'club/landing.html', {'formset': AuthenticationForm(request.POST)})
+    return render(request, 'club/landing.html')
 
 
 class ClubDetail(DetailView):
@@ -33,16 +32,38 @@ def create_club(request):
     """
     Create a new Club
     """
-    user_form = UserCreateForm(request.POST)
-    if user_form.is_valid():
-        username = user_form.clean_email()
-        password = user_form.clean_password2()
-        club_name = user_form.clean_club_name()
-        logging.info("Registering new club {}".format(club_name))
-        user_form.save()
-        user = authenticate(username=username, password=password)
-        login(request, user)
-        return redirect(reverse("club-profile"))
+    if request.method == "POST":
+        club_form = NewClubForm(data=request.POST)
+        if club_form.is_valid():
+
+            club_email = club_form.cleaned_data['email']
+            club_name = club_form.cleaned_data['name']
+
+            logging.info("Registering new club {} with contact email <{}>".format(club_name, club_email))
+            new_club = club_form.save(commit=False)
+            logging.info("Created a new club: {}".format(new_club.name))
+
+            # create a new location or use existing...
+            location = Location(
+                name=club_name,
+                latitude=0.0, #club_form.cleaned_data['latitude'],
+                longitude=0.0 #club_form.cleaned_data['longitude'],
+            )
+            location.save()
+            new_club.location = location
+            new_club.save()
+
+            # After the club has been added (and has an identifier) we can use many to many relationships
+            new_club.admins.add(request.user)
+
+
+            return redirect(reverse("club-profile", new_club.pk))
+    else:
+        # Use logged in users email (if we have it)
+        club_form = NewClubForm(initial={
+            'email': request.user.email,
+        })
+
     return render(request,
                   'club/register.html',
-                  { 'formset' : user_form })
+                  { 'formset' : club_form })

@@ -8,7 +8,7 @@ from models import *
 class ClubForm(ModelForm):
     class Meta:
         model = Club
-		
+
         # Explicitly specifying the fields we want
         fields = ('club_name',
                   'club_email',

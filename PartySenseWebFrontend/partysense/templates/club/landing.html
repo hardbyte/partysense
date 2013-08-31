@@ -10,6 +10,12 @@
 {% block content %}
 
     <div class="row">
+        <div class="span12">
+            <div class="alert alert-block">
+                <h3>This page is a work in progress!</h3>
+            </div>
+        </div>
+
         <div class="span4">
             <div class="hero-unit">
                 <div>
@@ -47,15 +53,6 @@
 
                 </section>
             </div>
-        </div>
-        <div class="span8">
-            <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
-        {% include "form_snippet.html" %}
-
-        <br style="clear:left;">
-
-        <input type="submit" value="Submit" />
-    </form>
         </div>
 
     </div>
