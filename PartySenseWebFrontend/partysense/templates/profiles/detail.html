@@ -92,6 +92,7 @@
             {% for name in social_auth.backends.oauth2 %}
                 <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
             {% endfor %}
+            <li><a href="{% url "password_login" %}">Password</a></li>
         </ul>
     </div>
 {% endif %}

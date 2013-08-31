@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
 from django import forms
+from django.contrib.auth.decorators import login_required
 
 from partysense.event.models import Location
 from partysense.club.models import Club
@@ -28,6 +29,7 @@ class ClubDetail(DetailView):
     template_name = 'club/detail.html'
 
 
+@login_required
 def create_club(request):
     """
     Create a new Club
@@ -57,7 +59,7 @@ def create_club(request):
             new_club.admins.add(request.user)
 
 
-            return redirect(reverse("club-profile", new_club.pk))
+            return redirect(reverse("club-profile", args=(new_club.pk,)))
     else:
         # Use logged in users email (if we have it)
         club_form = NewClubForm(initial={
