@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+{% block content %}
+
+<article>
+{#    <h1>{{ club.name }}</h1>#}
+
+
+    <form action="/event/new">
+        <button>Create a new event?</button>
+    </form>
+
+</article>
+{% endblock %}
+
+{% block jslibs %}
+
+
+{% endblock %}

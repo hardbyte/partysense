@@ -11,3 +11,5 @@ html5lib
 django-debug-toolbar
 python-memcached
 django-memcache-status
+django-registration
+django-registration-email

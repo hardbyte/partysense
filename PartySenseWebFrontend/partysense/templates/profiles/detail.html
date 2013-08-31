@@ -13,7 +13,6 @@
         {% endif %}
         <table class="table">
             <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
-            <tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
             <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
             <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
             <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>

@@ -29,25 +29,33 @@
                     <ol>
                         <li>
                             <h3>Register</h3>
-                            <p>Membership is free, we just need to know a few details.</p>
+                            <p>Membership from just $50 per month.</p>
+                        </li>
+                        <li>
+                            <h3>Signing up is easy</h3>
+                            <p>We just need to know a few details</p>
                         </li>
                         <li>
                             <h3>Create targeted Offers</h3>
                             <p>Leverage our detailed analytics to get to know your audience!</p>
                         </li>
                     </ol>
-                    {% if user.is_authenticated %}
-                        <form action="{% url "event.views.create" %}">
-                            <button>Host your next event now!</button>
-                        </form>
-                    {% else %}
-                        <form action="{% url "create-club" %}">
-                            <button>Register now!</button>
-                        </form>
-                    {% endif %}
+
+                    <a href="{% url "create-club" %}">
+                        <button class="btn btn-primary">Register now!</button>
+                    </a>
 
                 </section>
             </div>
+        </div>
+        <div class="span8">
+            <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% include "form_snippet.html" %}
+
+        <br style="clear:left;">
+
+        <input type="submit" value="Submit" />
+    </form>
         </div>
 
     </div>

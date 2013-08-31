@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% block content %}
+
+<section class="row">
+    <div class="span4">
+        <h2>Login to manage your account</h2>
+
+        <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+            {% include "form_snippet.html" %}
+            <input class="btn btn-primary" type="submit" value="Login" />
+        </form>
+    </div>
+
+    <div class="span6 offset1">
+        <h2>Don't have an account?</h2>
+        <p>Not a problem, it doesn't take a minute, you've even got options:</p>
+
+            <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <div id="facebook_button">Log in with Facebook</div>
+            </a>
+        <a href="{% url "registration_register" %}"><button class="btn btn-primary">Register with a email/password now</button></a>
+    </div>
+
+</section>
+
+
+{% endblock %}

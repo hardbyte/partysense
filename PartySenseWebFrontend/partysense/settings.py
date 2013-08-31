@@ -44,11 +44,10 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     #'social_auth.backends.google.GoogleOAuthBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
-    #'social_auth.backends.google.GoogleBackend',
-    #'social_auth.backends.yahoo.YahooBackend',
-    #'social_auth.backends.browserid.BrowserIDBackend',
-    #'social_auth.backends.OpenIDBackend',
+
     'django.contrib.auth.backends.ModelBackend',
+
+    'registration_email.auth.EmailBackend',
     )
 
 COMPRESS_ENABLED = True
@@ -206,6 +205,11 @@ INSTALLED_APPS = (
     # for compressing js and css files
     "compressor",
 
+    # For registering new users with password
+    'registration',
+    'registration_email',
+
+    # just adds a memcache view to the admin page
     'memcache_status',
 
     # for database migrations http://south.readthedocs.org
@@ -221,9 +225,14 @@ INSTALLED_APPS = (
 
 )
 
+# One-week activation window
+ACCOUNT_ACTIVATION_DAYS = 7
+
 LOGIN_URL          = '/profile/'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGIN_ERROR_URL    = '/'
+
+REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = "/accounts/register/complete/"
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
