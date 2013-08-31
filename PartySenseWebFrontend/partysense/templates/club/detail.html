@@ -27,6 +27,7 @@
                 <li><a href="{{club.facebook_page}}">Facebook</a></li>
             </ul>
         </div>
+
         <div class="span4">
             <h2>Club Administrators</h2>
             <ul>
@@ -34,13 +35,15 @@
                 <li>{{ u }}</li>
             {% endfor %}
             </ul>
-
+          {% if user in club.admins.all %}
             <div class="">
                 <form action="/event/new">
                     <button class="btn btn-large btn-primary">Create a new event?</button>
                 </form>
             </div>
+          {% endif %}
         </div>
+
     </div>
 
 
