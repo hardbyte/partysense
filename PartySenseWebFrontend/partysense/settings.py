@@ -232,7 +232,8 @@ LOGIN_URL          = '/profile/'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGIN_ERROR_URL    = '/'
 
-REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = "/accounts/register/complete/"
+REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = lambda request, user: "/accounts/register/complete/"
+REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = lambda request, user: "/accounts/activate/complete/"
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

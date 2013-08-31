@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load url from future %}
-{% block content %}
 
+
+{% block content %}
+    {{ form.media.css }}
     <section class="span10">
     <h2>Step one is to create an account</h2>
     <div class="progress">
