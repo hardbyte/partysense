@@ -3,7 +3,9 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required, login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
+
 from partysense.event.views import *
+from partysense.club.views import *
 from partysense.dj.views import EventList
 
 admin.autodiscover()
@@ -26,7 +28,6 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^$', 'landing', name='home'),
 
     url(r'^privacy/$', 'privacy', name='privacy'),
-    url(r'^clubs/$', 'clubs', name='clubs'),
 
     # profile worth having (me thinks no)?
     url(r'^profile/$', 'profile', name="profile"),
@@ -70,7 +71,6 @@ urlpatterns += patterns('partysense.event.views',
         did_you_mean,
         name="did-you-mean"),
 
-
 )
 
 urlpatterns += patterns('partysense.dj.views',
@@ -81,6 +81,11 @@ urlpatterns += patterns('partysense.dj.views',
     url(r'^dj/(?P<dj_id>\d+)/', EventList.as_view(), name="dj_events"),
 )
 
+urlpatterns += patterns('partysense.club.views',
+    url(r'^club/$', 'landing', name='club-landing'),
+    url(r'^club/new/$', 'create_club', name='create-club'),
+)
+
 if settings.DEBUG:
     # serve user uploaded media
     urlpatterns += patterns('',
@@ -88,4 +93,3 @@ if settings.DEBUG:
              'django.views.static.serve',
              {'document_root': settings.MEDIA_ROOT}),
         )
-    
