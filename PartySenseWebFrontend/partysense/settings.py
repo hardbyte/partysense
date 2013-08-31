@@ -223,7 +223,7 @@ INSTALLED_APPS = (
 
 LOGIN_URL          = '/profile/'
 LOGIN_REDIRECT_URL = '/profile/'
-LOGIN_ERROR_URL    = '/profile/login/'
+LOGIN_ERROR_URL    = '/'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
