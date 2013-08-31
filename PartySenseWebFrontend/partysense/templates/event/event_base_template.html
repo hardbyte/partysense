@@ -22,17 +22,16 @@
 
 <div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
 
-    <div class="col-md-3 hidden-phone affix">
+    <div class="col-md-3 hidden-xs hidden-sm">
 
         <div class="accordian" id="leftAccordion">
             <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
+                <button class="accordion-heading btn btn-block btn-primary"
+							class="accordion-toggle"
                           data-toggle="collapse"
                           data-parent="#leftAccordion"
                           href="#collapseOne">
                     Event Details
-                    </span>
                 </button>
                 <div id="collapseOne" class="event_details accordion-body collapse in">
                     <section class="accordion-inner">
@@ -89,26 +88,22 @@
                 </div>
             </div>
             <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
+                <button class="accordion-heading btn btn-block btn-primary accordion-toggle"
                        data-toggle="collapse"
                        data-parent="#leftAccordion"
                        href="#collapseTwo">
                         Import Recent Music
-                    </span>
                 </button>
                 <div id="collapseTwo" class="accordion-body collapse">
                     <div ng-include src="recentTracksTemplate"></div>
                 </div>
             </div>
             <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
+                <button class="accordion-heading btn btn-block btn-primary accordion-toggle"
                        data-toggle="collapse"
                        data-parent="#leftAccordion"
                        href="#collapseThree">
                         Your Events
-                    </span>
                 </button>
                 <div id="collapseThree" class="accordion-body collapse">
                     <section>
