@@ -8,29 +8,17 @@ from django.core.urlresolvers import reverse
 
 from partysense.dj.models import DJ
 from partysense.music.models import Track
+from partysense.util.models import *
 
 logger = logging.getLogger(__name__)
 logger.debug("Parsing models.py")
 
 
-class TimeStampedModel(models.Model):
-    """
-    An abstract base class model that provides self updating
-    ``created`` and ``modified`` fields.
-
-    Taken from Two Scoops of Django
-    TODO: django-model-utils could provide this
-    """
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-        ordering = ['-created']
-
-
 class Location(models.Model):
     """
+    Keeps track of an event/club location.
+
+    TODO: migrate into the util app
     """
 
     # Club/Bar/Venue name
@@ -53,6 +41,8 @@ class Event(TimeStampedModel):
     """
     title = models.CharField("Event name", max_length=70, help_text="Keep it simple")
     location = models.ForeignKey(Location, help_text="Where is the event?")
+
+    # TODO migrate to multiple dj's
     dj = models.ForeignKey(DJ)
     users = models.ManyToManyField(User, blank=True)
     tracks = models.ManyToManyField(Track, blank=True)
@@ -63,8 +53,8 @@ class Event(TimeStampedModel):
 
     # The DJ can choose all the music or users can add too
     user_editable = models.BooleanField(default=True,
-                                        verbose_name="Anyone can add new music?",
-                                        help_text="Otherwise you add the music, and everyone else votes.")
+                                        verbose_name="Allow anyone to add new music?",
+                                        help_text="If not selected, you add the music, and everyone else can only vote.")
 
     start_time = models.DateTimeField()
 

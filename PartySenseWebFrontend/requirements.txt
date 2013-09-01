@@ -10,5 +10,7 @@ lxml
 html5lib
 django-debug-toolbar
 python-memcached
-django-memcached-status
-beautifulsoup4
+django-memcache-status
+django-registration
+django-registration-email
+django-countries

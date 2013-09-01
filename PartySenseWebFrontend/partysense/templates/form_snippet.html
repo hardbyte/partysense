@@ -1,5 +1,6 @@
 {# So I can use the same css I'll abstract all the forms with this template #}
 {{ form.non_field_errors }}
+
 {% csrf_token %}
 {% for field in formset.visible_fields %}
 

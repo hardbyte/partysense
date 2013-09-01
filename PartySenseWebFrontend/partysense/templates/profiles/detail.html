@@ -13,7 +13,6 @@
         {% endif %}
         <table class="table">
             <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
-            <tr class="muted"><th>Username:</th> <td>{{ user.username }}</td></tr>
             <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
             <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
             <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
@@ -93,6 +92,7 @@
             {% for name in social_auth.backends.oauth2 %}
                 <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
             {% endfor %}
+            <li><a href="{% url "password_login" %}">Password</a></li>
         </ul>
     </div>
 {% endif %}

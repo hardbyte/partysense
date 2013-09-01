@@ -3,9 +3,15 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import permission_required, login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
-from partysense.event.views import *
-from partysense.dj.views import EventList
 
+from registration.backends.default.views import RegistrationView
+
+from partysense.event.views import *
+from partysense.club.views import *
+from partysense.dj.views import EventList
+from partysense.auth.views import *
+
+from partysense.auth.forms import CustomEmailRegistrationForm
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -15,8 +21,25 @@ urlpatterns = patterns('',
     # Enable the socialauth links
     url(r'', include('social_auth.urls')),
 
+    # add a page that allows users to login with a password
+    url(r'^accounts/login/', password_login, name='password_login'),
+
+    # Registration links
+    url(r'^accounts/', include('registration_email.backends.default.urls')),
+    url(r'^accounts/register/$',
+        RegistrationView.as_view(
+            template_name='registration/registration_form.html',
+            form_class=CustomEmailRegistrationForm,
+            success_url=getattr(
+                settings, 'REGISTRATION_EMAIL_REGISTER_SUCCESS_URL', None),
+        ),
+        name='registration_register',
+    ),
+
+
     # add a page that purposely errors to test logging etc
-    url(r'^500$', 'unknown')
+    url(r'^500$', 'unknown'),
+
 
 )
 
@@ -26,7 +49,6 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^$', 'landing', name='home'),
 
     url(r'^privacy/$', 'privacy', name='privacy'),
-    url(r'^clubs/$', 'clubs', name='clubs'),
 
     # profile worth having (me thinks no)?
     url(r'^profile/$', 'profile', name="profile"),
@@ -70,15 +92,20 @@ urlpatterns += patterns('partysense.event.views',
         did_you_mean,
         name="did-you-mean"),
 
-
 )
 
 urlpatterns += patterns('partysense.dj.views',
     # New dj is registering
-    url(r'^register/$', 'register', name="register"),
+    url(r'^dj/register/$', 'register', name="register"),
 
     # List this dj's events
     url(r'^dj/(?P<dj_id>\d+)/', EventList.as_view(), name="dj_events"),
+)
+
+urlpatterns += patterns('partysense.club.views',
+    url(r'^club/$', 'landing', name='club-landing'),
+    url(r'^club/new/$', 'create_club', name='create-club'),
+    url(r'^club/(?P<pk>\d+)/', ClubDetail.as_view(), name='club-profile'),
 )
 
 if settings.DEBUG:
@@ -88,4 +115,3 @@ if settings.DEBUG:
              'django.views.static.serve',
              {'document_root': settings.MEDIA_ROOT}),
         )
-    

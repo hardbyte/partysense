@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 
+
 class DJ(models.Model):
     """
     Any fb user can become a `DJ` by registering their details.

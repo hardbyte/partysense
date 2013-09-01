@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning">
+                <h3><span class="glyphicon glyphicon-warning-sign"></span> This page is a work in progress!</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="jumbotron">
+                <div>
+                    <h1>PartySense</h1>
+                    <p class="lead"> the best way to make sure you have a great night out.</p>
+                    <img class="img-responsive" src="{% static "images/phones.png" %}" alt="Coming to your platform soon!"/>
+                </div>
+            </div>
+        </div>
+
+        <div id="quick-start">
+            <div class="col-md-6">
+                <section id="dj-quick-start" class="">
+                    <h2>How it works</h2>
+                    <h1>Club Owners</h1>
+
+                    <ol>
+                        <li>
+                            <h3>Register</h3>
+                            <p>Membership from just $50 per month.</p>
+                        </li>
+                        <li>
+                            <h3>Signing up is easy</h3>
+                            <p>We just need to know a few details</p>
+                        </li>
+                        <li>
+                            <h3>Create targeted Offers</h3>
+                            <p>Leverage our detailed analytics to get to know your audience!</p>
+                        </li>
+                    </ol>
+
+                    <a href="{% url "create-club" %}">
+                        <button class="btn btn-primary">Register now!</button>
+                    </a>
+
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block jslibs %}
+{% endblock %}

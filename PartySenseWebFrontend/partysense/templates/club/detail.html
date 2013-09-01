@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="row">
+<div class="span12">
+    <div class="alert alert-block">
+        <h3> <i class="icon-warning-sign"></i> This page is a work in progress!</h3>
+        <p>Let us know what features you want to see next by commenting on our
+            <a href="https://www.facebook.com/partysenseapp">facebook page</a></p>
+    </div>
+</div>
+
+<div class="span12">
+<section>
+
+    <h1>{{ club.name }}</h1>
+    <div class="row">
+        <div class="span6">
+            <p>{{ club.description }}</p>
+
+            <ul>
+                <li>{{ club.city }} - {{ club.country.name }}</li>
+                <li><a href="{{club.website}}">{{club.website}}</a></li>
+                <li><a href="{{club.facebook_page}}">Facebook</a></li>
+            </ul>
+        </div>
+
+        <div class="span4">
+            <h2>Club Administrators</h2>
+            <ul>
+            {% for u in club.admins.all %}
+                <li>{{ u }}</li>
+            {% endfor %}
+            </ul>
+          {% if user in club.admins.all %}
+            <div class="">
+                <form action="/event/new">
+                    <button class="btn btn-large btn-primary">Create a new event?</button>
+                </form>
+            </div>
+          {% endif %}
+        </div>
+
+    </div>
+
+
+
+
+
+</section>
+</div>
+</div>
+
+{% endblock %}
+
+{% block jslibs %}
+
+
+{% endblock %}

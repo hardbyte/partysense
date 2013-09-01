@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load compress %}
+{% load staticfiles %}
+{% block content %}
+
+    <section class="span12">
+
+    <h2>Tell us about your club {{ user.dj_set.get.nickname }}</h2>
+
+    <div class="progress">
+      <div class="progress-bar" role="progressbar"
+           aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+           style="width: 60%;">
+          <span class="sr-only">60% Complete</span>
+       </div>
+    </div>
+
+    <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% include "form_snippet.html" %}
+
+        <br style="clear:left;">
+
+        <input type="submit" value="Submit" />
+    </form>
+    </section>
+
+
+{% endblock %}
