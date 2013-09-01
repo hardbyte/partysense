@@ -11,7 +11,8 @@ body {
     margin-right: auto;
     max-width: 1280px;
 
-    background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
+    /*background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;*/
+	background:#000000;
     background-attachment: fixed;
 }
 
@@ -29,12 +30,7 @@ h1, h2, h3, h4, h5 {
 
 #content {
     overflow: hidden;
-}
-
-@media (min-width: 979px){
-    #content {
-        padding-top: 85px;
-    }
+	padding-top: 85px;
 }
 
 section {
@@ -68,6 +64,8 @@ nav a.regularActive:link, nav a.regularActive:visited {
 nav a.regularActive {
     display: block;
 	font-size: 1.6em;
+	
+	
     text-align: center;
 
     min-width: 50px;
@@ -171,13 +169,13 @@ footer
     content: counter(li);
     counter-increment: li;
     position: absolute;
-    left: -1.3em;
+    left: -0.5em;
     top: 50%;
     margin-top: -1.3em;
     background: #2ba6cb;
     height: 2em;
     width: 2em;
-    line-height: 2em;
+    line-height: 1.5em;
     border: .3em solid #fff;
     text-align: center;
     font-weight: bold;
@@ -236,8 +234,8 @@ footer
 	border-radius: 2px;
 }
 
-.recentTrack {
-
+#recentTracks {
+	background-color:rgba(33, 33, 33, 0.0);
 }
 
 .track-info {
@@ -311,4 +309,128 @@ footer
 
 #GoogleAdvert {
     margin-top: 20px;
+}
+
+
+.icon-bar {
+	background-color: #FFFFFF;
+	font-weight: bold;
+}
+
+.jumbotron {
+    background-color:rgba(33, 33, 33, 0.75);
+}
+
+.navbar-inner {
+	background-image:url('/static/images/background.jpg');
+	background-color:black;
+	background-size:100%;
+	background-position:center;
+    background-color: #000000;
+}
+
+.navbar-inner{
+    min-height: 60px;
+}
+
+  
+.carousel-caption{
+	background-color:  rgba(0, 0, 0, 0.8);
+	left:0%;
+	right:0%;
+	bottom:0px;
+}
+
+.carousel-indicators{
+	bottom:-10px;
+	padding:0px;
+}
+
+.brand{
+    margin-left:10px;
+}
+
+.hero-background{
+    background-color:rgba(33, 33, 33, 0.75);
+}
+
+.hero-logo{
+    max-height:110px;
+    padding:10px;
+    margin-bottom:10px
+}
+
+.navbar-inner{
+    min-height:60px;
+}
+
+.nav-pill{
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a{
+	margin-top:5px;
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a:hover{
+	background-color:#074458;
+	border-radius:5px;
+}
+
+.dropdown-menu>li{
+	width:100%;
+}
+
+.dropdown-menu>li:hover{
+	background-color:#000000;
+}
+
+.dropdown.open a.dropdown-toggle .caret {
+	color:#FFFFFF;
+}
+
+.accordian-panel{
+	background-color:rgba(33, 33, 33, 0.75);
+	border-width:0px;
+	color:white;
+}
+
+.dropdown-menu {
+	background-color:#074458;
+}
+
+.dropdown-menu > li > a{
+	color: white;
+}
+ 
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+  background-color:#074458;
+  color:#7496A1;
+  background-image: none;
+  filter: none;
+}
+ 
+#eventURL{
+	width:100%;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus{
+	background-color:#074458;
+	background-image: none;
+	border:0px;
+}
+
+@media (max-width:400px){
+	.carousel-heading, #quick-start button, #quick-start h1 , #quick-start h3{
+        font-size:18px;
+    }
+	.jumbotron h2{
+		font-size:20px;
+	}
+	.carousel-paragraph, #quick-start h2{
+        font-size:14px;
+    }
 }

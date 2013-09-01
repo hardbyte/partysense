@@ -1,14 +1,15 @@
 <div id="search" ng-controller="SearchCtrl" ng-show="loggedIn">
-    <div class="row-fluid">
-        <form class="input-append span12" ng-submit="doSearch(true)">
+    <div class="row">
+        <form class="input-append col-md-12" ng-submit="doSearch(true)">
 
-            <input class="form-search" type="search"
+            <input class="" type="search"
                    ng-model="searchTerm"
                    ng-change="doSearch(false)"
                    results="10"
                    placeholder="Search for music to add"
                    autofocus autocomplete="off">
-            <button class="btn btn-primary" ng-show="spotifyResult.tracks" type="button" ng-click="clear()">Clear</button>
+            <button class="btn btn-primary" ng-show="spotifyResult.tracks"
+                    type="button" ng-click="clear()">Clear</button>
         </form>
     </div>
 
@@ -22,21 +23,21 @@
                            href="#">{{ correction }}</a></b>?
     </div>
 
-    <div ng-class="scrollableClass" class="row-fluid">
+    <div ng-class="scrollableClass" class="row">
         <table class="table my-hover" ng-show="spotifyResult.tracks">
             <thead><tr><th>Track</th><th>Artist</th></tr></thead>
             <tbody>
                 <tr ng-repeat="track in spotifyResult.tracks | limitTo:100 | removeAddedTracks"
                     ng-hide="track.added">
-                    <td class="track-name span6" ng-click="addTrack(track); track.added=true;">
+                    <td class="track-name col-md-6" ng-click="addTrack(track); track.added=true;">
                         <span>
-                            <i ng-hide="track.added" class="icon-plus icon-white"></i>
+                            <i ng-hide="track.added" class="glyphicon glyphicon-plus"></i>
                             {{track.name}}
                         </span>
                     </td>
-                    <td class="track-artist span6" ng-click="searchArtist(track.artists[0]);">
+                    <td class="track-artist col-md-6" ng-click="searchArtist(track.artists[0]);">
                         <span>
-                            <i class="icon-search"></i> {{track.artists[0].name}}
+                            <i class="glyphicon glyphicon-search"></i> {{track.artists[0].name}}
                         </span>
                     </td>
                 </tr>

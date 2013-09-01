@@ -9,7 +9,6 @@
 
 {% endblock %}
 
-
 {% block fb %}
     {% cache 3600 facebookmeta event.pk %}
     <meta property="fb:app_id"          content="386541278102635" />
@@ -27,21 +26,17 @@
 <div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
 
 {% cache 900 eventsidebar event.pk request.user.pk %}
-    <div class="span3 hidden-phone affix">
-
-        <div class="accordian" id="leftAccordion">
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                          data-toggle="collapse"
-                          data-parent="#leftAccordion"
-                          href="#collapseOne">
-                    Event Details
-                    </span>
-                </button>
-                <div id="collapseOne" class="event_details accordion-body collapse in">
-                    <section class="accordion-inner">
-                        <h4 id="event-name">{{ event.title }}</h4>
+    <div class="col-md-3 hidden-xs hidden-sm">
+		<div class="panel-group" id="accordion">
+		  <div class="panel panel-default  accordian-panel">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Event Details
+			  </button>
+			</a>
+			<div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+			  <h4 id="event-name">{{ event.title }}</h4>
 
                         {% if event.dj.user == user %}
                             <a class="btn btn-block"
@@ -89,34 +84,30 @@
                             <dd>{{ event.location }}</dd>
                         </dl>
                         <div id="map_canvas" style="width: 100%; height: 200px;"></div>
-
-                    </section>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                       data-toggle="collapse"
-                       data-parent="#leftAccordion"
-                       href="#collapseTwo">
-                        Import Recent Music
-                    </span>
-                </button>
-                <div id="collapseTwo" class="accordion-body collapse">
-                    <div ng-include src="recentTracksTemplate"></div>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                       data-toggle="collapse"
-                       data-parent="#leftAccordion"
-                       href="#collapseThree">
-                        Your Events
-                    </span>
-                </button>
-                <div id="collapseThree" class="accordion-body collapse">
-                    <section>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default  accordian-panel">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Import Recent Music
+			  </button>
+			</a>
+			<div id="collapseTwo" class="panel-collapse collapse">
+			  <div class="panel-body">
+				<div ng-include src="recentTracksTemplate"></div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default accordian-panel">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Your Events
+			  </button>
+			</a>
+			<div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+				
                         {% if upcoming_events %}
                             <h3>Upcoming</h3>
                             <ul>
@@ -142,11 +133,11 @@
                             </div>
                         {% endif %}
 
-                    </section>
-                </div>
-            </div>
-        </div>
-    </div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div>
 
 {% endcache %}
     {% block event_content %}
@@ -158,7 +149,7 @@
 
 {% block jslibs %}
 
-  {% cache 300 eventdata event.pk request.user.pk %}
+  {% cache 600 eventdata event.pk request.user.pk %}
   {% compress js %}
     <script>
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";

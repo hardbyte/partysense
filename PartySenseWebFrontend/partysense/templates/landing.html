@@ -2,21 +2,58 @@
 {% load humanize %}
 {% load url from future %}
 
-{% block style %}
-
-{% endblock %}
-
 {% block content %}
 
-    <div class="hero-unit">
-        <div>
-            <h1>PartySense</h1>
-            <p class="lead"> the best way to make sure you have a great night out.</p>
-        </div>
-    </div>
+		<div align="center" id="major-logo" class="hero-background hero-logo">
+			<img src="static/images/logo.png" style="width:70%; max-width:450px;" alt="Party Sense"/>
+			<p style="color:white">the best way to make sure you have a great night out</p>
+		</div>
+
+        <div id="myCarousel" class="carousel slide">
+		  <ol class="carousel-indicators">
+			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#myCarousel" data-slide-to="1"></li>
+			<li data-target="#myCarousel" data-slide-to="2"></li>
+			<li data-target="#myCarousel" data-slide-to="3"></li>
+		  </ol>
+		  <!-- Carousel items -->
+		  <div class="carousel-inner">
+			<div class="item active">
+				<img src="/static/images/IMG3.jpg" alt="">
+				<div class="carousel-caption">
+				  <h3 class="carousel-heading">Partying Made Awesomer</h3>
+				  <p class="carousel-paragraph">Take your music choices with you to parties and nightclubs</p>
+				</div>
+			</div>
+			<div class="item">
+				<img src="/static/images/IMG2.jpg" alt="">
+				<a href="http://www.google.com">
+				<div class="carousel-caption">
+				  <h3 class="carousel-heading">Hassle-Free Playlists for your parties</h3>
+				  <p class="carousel-paragraph">Lets the crowd add and vote on songs for your event. Make sure they have an awesome time at your party</p>
+				</div>
+				</a>
+			</div>
+			<div class="item">
+				<img src="/static/images/IMG1.jpg" alt="">
+				<div class="carousel-caption">
+				  <h3 class="carousel-heading">Crowd Analytics for DJs</h3>
+				  <p class="carousel-paragraph">Find out what your crowd loves and mix it in your playlist. Keep the dance floor going!</p>
+				</div>
+			</div>
+			<div class="item">
+				<img src="/static/images/IMG4.jpg" alt="">
+				<div class="carousel-caption">
+				  <h3 class="carousel-heading">Going Clubbing?</h3>
+				  <p class="carousel-paragraph">PartySense finds clubs in your city catered to your taste to make sure you have a great night out</p>
+				</div>
+			</div>
+		  </div>
+		  
+		</div>
 
     <div class="row" id="quick-start">
-        <div class="span6">
+        <div class="col-md-6">
             <section id="customer-quick-start">
                 <h2>How it works</h2>
                 <h1>Party Animals!</h1>
@@ -40,12 +77,12 @@
                 </ol>
 
                 <form action="{% url "event-detail" 2 "preview-party" %}">
-                    <button class="button btn-primary">Preview Party</button>
+                    <button class="button btn-primary btn-event" >Preview Party</button>
                 </form>
 
             </section>
         </div>
-        <div class="span6">
+        <div class="col-md-6">
             <section id="dj-quick-start">
                 <h2>How it works</h2>
                 <h1>DJ's and Hosts</h1>
@@ -57,38 +94,45 @@
                     </li>
                     <li>
                         <h3>Create Events</h3>
-                        <p>Share the link on your social networks and see the crowd sourced data pour in!</p>
-                        <p>You can choose all the available music yourself, or allow anyone to add music
+                        <p>Share the link on your social networks and see the crowd sourced data pour in!
+                        You can choose all the available music yourself, or allow anyone to add music
                            to the event.</p>
                     </li>
                     <li>
                         <h3>Host an awesome party</h3>
                         <p>Leverage our detailed analytics to cater to your crowd!</p>
+                        <br>
                     </li>
                 </ol>
                 {% if user.is_authenticated %}
                     <form action="{% url "event.views.create" %}">
-                        <button>Host your next event now!</button>
+                        <button class="button btn-primary btn-event">Host your next event now!</button>
                     </form>
                 {% else %}
                     <form action="{% url "dj.views.register" %}">
-                        <button>Register now!</button>
+                        <button class="button btn-primary btn-event">Register now!</button>
                     </form>
                 {% endif %}
 
             </section>
         </div>
+		
     </div>
-
-
+	<div class="jumbotron" align="center">
+            <h2>We all like listening to music of our choice
+                when we are at home, at work or jogging
+                so why should this stop when we go out to party?</h2>
+    </div>
+	
     <div class="row">
         <div class="">
-            <div class="span2"></div>
-            <div class="span3">
+            <div class="col-md-2"></div>
+            <div class="col-md-3">
                 <div class="g-plusone" data-annotation="inline" data-width="300"></div>
             </div>
-            <div class="span4">
-               <div class="fb-like" data-href="https://www.facebook.com/partysenseapp" data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></div>
+            <div class="col-md-4">
+               <div class="fb-like" data-href="https://www.facebook.com/partysenseapp"
+                    data-send="false" data-width="450" data-show-faces="true" data-colorscheme="dark"></div>
             </div>
         </div>
     </div>
@@ -97,6 +141,24 @@
 
 {% block jslibs %}
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+	$('.carousel').carousel({
+  			interval: 5000
+	});
+	$( document ).ready(function() {
+		$('#logo').hide();
+	});
+	$(window).scroll(
+		function(){
+			if(($(window).scrollTop() - $('#major-logo').offset().top)>0){
+				$('#logo').animate({width:'show'},200);
+			}
+			else{
+				$('#logo').animate({width:'hide'},200);
+			}
+		}
+	);
+</script>
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

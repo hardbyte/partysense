@@ -11,3 +11,4 @@ html5lib
 django-debug-toolbar
 python-memcached
 django-memcached-status
+beautifulsoup4

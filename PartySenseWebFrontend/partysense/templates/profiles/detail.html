@@ -6,7 +6,7 @@
 {% if user.is_authenticated %}
 
     <div class="row">
-    <section class="span3">
+    <section class="col-md-3">
         <h3>Account info:</h3>
         {% if user.is_staff %}
             <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
@@ -47,7 +47,7 @@
     {% endif %}
     </section>
 
-    <div class="span5">
+    <div class="col-md-5">
         <section>
             <h3>Upcoming</h3>
             <ul>
@@ -73,7 +73,7 @@
     </div>
 
     {% if djs %}
-    <section class="span3">
+    <section class="col-md-3">
         <h3>Your DJ's:</h3>
         <ul>
         {% for dj in djs %}

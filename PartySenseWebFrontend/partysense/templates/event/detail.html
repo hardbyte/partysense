@@ -5,10 +5,10 @@
 {% load compress %}
 
 {% block event_content %}
-    <div class="span6 offset3">
+    <div class="col-md-6">
 
         {% if event.dj.user == user %}
-            <a class="btn btn-large btn-block"
+            <a class="btn btn-block btn-primary"
                href="{% url "event-stats" event.pk event.slug %}">
                 <i class="icon-signal"></i> Event Analytics
             </a>
@@ -36,7 +36,7 @@
         </section>
     </div>
 
-    <div class="offset9 affix hidden-phone">
+    <div class="col-md-3 hidden-xs hidden-sm">
         <div>
             <div ng-include src="previewTemplate"></div>
         </div>
