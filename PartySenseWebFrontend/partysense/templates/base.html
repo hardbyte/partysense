@@ -35,46 +35,47 @@
 </head>
 <body>
 	<nav align='center' class="navbar navbar-fixed-top  container navbar-inner center" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-	<a class="navbar-brand" href="/">
-		<img id="logo" src="{% static "images/logo.png" %}" alt="Party Sense"/>
-	</a>
-  </div>
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+            <img id="logo" src="{% static "images/logo.png" %}" alt="Party Sense"/>
+        </a>
+      </div>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
-      <li><a href="{% url "clubs" %}">Clubs</a></li>
-	  <li><a href="{% url "profile" %}">Playlist</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-		{% if not user.is_authenticated %}
-			<div style="margin-top:20px;margin-left:15px;">
-				<a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-					<div id="facebook_button">Login</div>
-				</a>
-			</div>
-		{% else %}
-			<li class="dropdown">
-				<a href="{% url "profile" %}" class="dropdown-toggle" >{{ user.first_name }}<b class="caret" style="color:white"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="{% url "profile" %}"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
-					<li><a href="{% url "logout" %}"><i class="glyphicon glyphicon-remove"></i> Logout</a></li>
-				</ul>
-			  </li>
-			  
-		{% endif %}
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Home</a></li>
+          <li><a href="{% url "clubs" %}">Clubs</a></li>
+          <li><a href="{% url "profile" %}">Playlist</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if not user.is_authenticated %}
+                <div style="margin-top:20px;margin-left:15px;">
+                    <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                        <div id="facebook_button">Login</div>
+                    </a>
+                </div>
+            {% else %}
+                <li class="dropdown">
+                    <a href="{% url "profile" %}" class="dropdown-toggle" >{{ user.first_name }}<b class="caret" style="color:white"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url "profile" %}"><i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                        <li><a href="{% url "logout" %}"><i class="glyphicon glyphicon-remove"></i> Logout</a></li>
+                    </ul>
+                  </li>
+
+            {% endif %}
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+
     <div class="wrap">
         <div class="row">
             <div id="content" class="container">

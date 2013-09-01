@@ -326,7 +326,7 @@ footer
 	background-color:black;
 	background-size:100%;
 	background-position:center;
-    background-color: #000000 none;
+    background-color: #000000;
 }
 
 .navbar-inner{
@@ -347,21 +347,21 @@ footer
 }
 
 .brand{
-margin-left:10px;
+    margin-left:10px;
 }
 
 .hero-background{
-background-color:rgba(33, 33, 33, 0.75);
+    background-color:rgba(33, 33, 33, 0.75);
 }
 
 .hero-logo{
-max-height:110px;
-padding:10px;
-margin-bottom:10px
+    max-height:110px;
+    padding:10px;
+    margin-bottom:10px
 }
 
 .navbar-inner{
-min-height:60px;
+    min-height:60px;
 }
 
 .nav-pill{

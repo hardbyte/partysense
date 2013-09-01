@@ -9,5 +9,6 @@ beautifulsoup4
 lxml
 html5lib
 django-debug-toolbar
-django-appconf
+python-memcached
+django-memcached-status
 beautifulsoup4
