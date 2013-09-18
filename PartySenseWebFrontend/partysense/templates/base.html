@@ -50,18 +50,18 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="{% url "clubs" %}">Clubs</a></li>
-          <li><a href="{% url "profile" %}">Playlist</a></li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
+              <li><a href="/">Home</a></li>
+              <li><a href="{% url "clubs" %}">Clubs</a></li>
+              <li><a href="{% url "profile" %}">Playlist</a></li>
             {% if not user.is_authenticated %}
+              <li>
                 <div style="margin-top:20px;margin-left:15px;">
                     <a rel="nofollow" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                         <div id="facebook_button">Login</div>
                     </a>
                 </div>
+              </li>
             {% else %}
                 <li class="dropdown">
                     <a href="{% url "profile" %}" class="dropdown-toggle" >{{ user.first_name }}<b class="caret" style="color:white"></b></a>
