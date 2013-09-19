@@ -22,7 +22,7 @@
         <div><img src="{{ img.url }}"></div>
     {% endif %}
 
-    {% if social_auth.associated %}
+    {% if backends.associated %}
         <p>
             <a href="{% url "logout" %}" class="btn btn-block">Logout</a>
         </p>
@@ -34,7 +34,7 @@
             {% for account in accounts %}
 
               <span class="disconnect">
-                <form action="{% url "socialauth_disconnect_individual" account.provider account.id %}" method="post">
+                <form action="{% url "social:disconnect_individual" account.provider account.id %}" method="post">
                     {% csrf_token %}
                     <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
                 </form>
@@ -82,17 +82,18 @@
     </section>
     {% endif %}
 
+{# TODO   if clubs ...#}
 </div>
 {% else %}
 
-    <div class="alert">
-        <p>The action you have requested requires you to be logged in!</p>
-        <h4>You can login using:</h4>
+    <div class="alert alert-warning">
+        <h3>Opps, this won't take a second</h3>
+        <p>The action you have requested requires you to be logged in! You can login using:</p>
         <ul>
-            {% for name in social_auth.backends.oauth2 %}
-                <li><a rel="nofollow" href="{% url "socialauth_begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
+            {% for name in backends.backends %}
+                <li><a class="alert-link" rel="nofollow" href="{% url "social:begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
             {% endfor %}
-            <li><a href="{% url "password_login" %}">Password</a></li>
+            <li><a class="alert-link" href="{% url "password_login" %}">Password</a></li>
         </ul>
     </div>
 {% endif %}

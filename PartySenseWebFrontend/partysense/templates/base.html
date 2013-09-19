@@ -20,9 +20,10 @@
     {% endblock %}
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" />
+    <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.min.css" %}" media="screen"/>
+    <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-theme.min.css" %}" media="screen"/>
+
     {% compress css %}
-        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap.min.css" %}" media="screen"/>
-        <link rel="stylesheet" href="{% static "lib/bootstrap/css/bootstrap-theme.min.css" %}" media="screen"/>
         <link rel="stylesheet" href="{% static "style.css" %}" />
 
         <style>
@@ -30,6 +31,7 @@
             {% endblock %}
         </style>
     {% endcompress %}
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
@@ -53,7 +55,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 <li><a href="{% url "club-landing" %}">Clubs</a></li>
-                <li><a href="{% url "profile" %}">Playlist</a></li>
+                <li><a href="{% url "profile" %}">Your Playlists</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
           {% if not user.is_authenticated %}
@@ -65,7 +67,7 @@
                     <ul class="fallback hidden-phone">
                         <li>
                             <a rel="nofollow"
-                               href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
+                               href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
                                >
                                 <div id="facebook_button">facebook</div> &nbsp;
                             </a>
@@ -119,7 +121,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
     <script src="{% static "lib/bootstrap/js/bootstrap.min.js" %}"></script>
-    {% endcompress %}
 
     {% block jslibs %}
 

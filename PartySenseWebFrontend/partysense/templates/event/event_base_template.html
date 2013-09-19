@@ -162,8 +162,8 @@
             recentTracks: [
             {% for track in recent_tracks %}
                 {
-                    name: "{{ track.name }}",
-                    artist: "{{ track.artist }}",
+                    name: "{{ track.name|safe }}",
+                    artist: "{{ track.artist|safe }}",
                     spotify_url: "{{ track.spotify_url|safe|escape }}"
                 },
             {% endfor %}

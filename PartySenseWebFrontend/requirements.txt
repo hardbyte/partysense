@@ -1,13 +1,13 @@
 django>=1.5
 python-openid
-django-compressor
 oauth2
 pillow
-django-social-auth
+python-social-auth
 django-braces
 beautifulsoup4
 lxml
 html5lib
+django-compressor
 django-debug-toolbar
 python-memcached
 django-memcache-status

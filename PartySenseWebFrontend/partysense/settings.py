@@ -24,7 +24,6 @@ GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 
 FACEBOOK_APP_ID = "386541278102635"
 FACEBOOK_API_SECRET = "08fd5dddc6329c7c56ce980e07a5d83d"
-SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 
 LASTFM_API_KEY = '2f42e9b46522dc31c099904e3a94f6b1'
 LASTFM_SECRET = 'f17d10f5aaf23a34e270370e6d030c6c'
@@ -40,10 +39,8 @@ MANAGERS = ADMINS
 
 # http://django-social-auth.readthedocs.org/
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social.backends.facebook.FacebookOAuth2',
+    #'social.backends.google.GoogleOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 
@@ -61,6 +58,11 @@ SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+#SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
+SOCIAL_AUTH_FACEBOOK_KEY = FACEBOOK_APP_ID
+SOCIAL_AUTH_FACEBOOK_SECRET = FACEBOOK_API_SECRET
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/accounts/login/'
+#SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 DJANGO_MEMCACHED_REQUIRE_STAFF = True
 
@@ -160,10 +162,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
 
-    'social_auth.context_processors.social_auth_by_type_backends',
-    # Adds a social_auth dict where each key is a provider name and its value is a UserSocialAuth instance if user
-    # has associated an account with that provider, otherwise None
-    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect'
+
     )
 
 MIDDLEWARE_CLASSES = (
@@ -172,6 +173,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -216,7 +219,7 @@ INSTALLED_APPS = (
     #'south',
 
     # for authentication with facebook etc
-    'social_auth',
+    'social.apps.django_app.default',
 
     # for using custom forms
     'crispy_forms',
@@ -235,7 +238,7 @@ INSTALLED_APPS = (
 # One-week activation window
 ACCOUNT_ACTIVATION_DAYS = 7
 
-LOGIN_URL          = '/profile/'
+LOGIN_URL          = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/profile/'
 LOGIN_ERROR_URL    = '/'
 

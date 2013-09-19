@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Enable the socialauth links
-    url(r'', include('social_auth.urls')),
+    url('', include('social.apps.django_app.urls', namespace='social')),
 
     # add a page that allows users to login with a password
     url(r'^accounts/login/', password_login, name='password_login'),

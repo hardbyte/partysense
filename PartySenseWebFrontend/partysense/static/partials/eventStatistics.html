@@ -1,10 +1,30 @@
 <section ng-controller="EventStatsCtrl" >
 
-    <div class="alert alert-block">
-        <div>
-            Filter tracks: <input ng-model="searchText">
-            Show more results? <input type="range" min="3" max="50" ng-model="numberOfResults">
+    <div class="row">
+        <div class="col-md-6">
+            <strong>Filter tracks:</strong>
+            <input class="form-control" ng-model="searchText">
         </div>
+        <div class="col-md-4">
+            <strong>Show more results?</strong>
+            <input type="range" min="3" max="50" ng-model="numberOfResults">
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <article class="col-md-6">
+            <h3>Most up-voted tracks</h3>
+            <div class="recentTrack" ng-repeat="track in popularTracks.slice(0, numberOfResults) | filter:searchText">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                <span>
+                    <strong class="white">{{track.artist}}</strong>
+                    <span class="muted"> / {{track.name}} / </span>
+                    <span class="white">{{ track.upVotes - track.downVotes }}</span>
+                </span>
+            </div>
+        </article>
     </div>
 
     <div class="row">
@@ -36,20 +56,7 @@
             </div>
         </article>
     </div>
-    <div class="row">
 
-        <article class="col-md-6">
-            <h3>Most up-voted tracks</h3>
-            <div class="recentTrack" ng-repeat="track in popularTracks.slice(0, numberOfResults) | filter:searchText">
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <span>
-                    <strong class="white">{{track.artist}}</strong>
-                    <span class="muted"> / {{track.name}} / </span>
-                    <span class="white">{{ track.upVotes - track.downVotes }}</span>
-                </span>
-            </div>
-        </article>
-    </div>
 
 </section>
 

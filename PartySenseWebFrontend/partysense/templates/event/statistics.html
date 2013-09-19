@@ -12,27 +12,31 @@
                href="{% url "event-detail" event.pk event.slug %}">
                 <i class="icon-backward"></i> Back to event
             </a>
-            <section>
+
+            <div>
+                <div ng-include src="eventStatisticsTemplate"></div>
+            </div>
+
+            <section class="jumbotron alert alert-warning">
 
                 {# Note these stats are calculated on the server #}
-                <h3>Summary</h3>
+                <h3>Summary Statistics</h3>
 
                 <p>Number of people that have logged in to see this event: {{ number_of_users }}</p>
                 <p>Number of people that have voted on the setlist: {{ voting_users }}</p>
                 <p>Number of people who have added tracks: {{ number_of_users_who_added_songs }}</p>
                 <p>Total votes received: {{number_of_votes}}</p>
                 <p>Tracks added to the setlist {{ number_of_tracks }}</p>
-            </section>
 
-            <div>
-                <div ng-include src="eventStatisticsTemplate"></div>
-            </div>
-            <section class="jumbotron">
-                <h3>Something else?</h3>
-                <p style="color:white">This is a very early prototype - let us know
+                <hr>
+
+
+                <h3>Is something missing?</h3>
+                <p>This is a very early prototype - let us know
                     <a href="https://www.facebook.com/partysenseapp">on our facebook page</a> what you would like to see here!
 
                 </p>
+
             </section>
 
         </div>
