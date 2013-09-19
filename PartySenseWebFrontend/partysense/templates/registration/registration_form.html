@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+
+
+{% block content %}
+    {{ form.media.css }}
+    <section class="span10">
+    <h2>Step one is to create an account</h2>
+    <div class="progress">
+      <div class="bar" style="width: 33%;"></div>
+    </div>
+
+    <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+
+    <div class="control-group {% if field.errors %}warning{% endif %}">
+        {{ field.label_tag }} {{ field }}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="help-inline">
+                    <strong>{{ error|escape }}</strong>
+                </span>
+            {% endfor %}
+        {% endif %}
+        {% if field.help_text %}
+            <span class="help-inline">
+                {{ field.help_text }}
+            </span>
+        {% endif %}
+    </div>
+{% endfor %}
+
+        <input type="submit" value="Register your account" />
+    </form>
+    </section>
+{% endblock %}

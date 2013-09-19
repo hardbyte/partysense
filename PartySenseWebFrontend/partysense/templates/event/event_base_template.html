@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load cache %}
 {% load humanize %}
 {% load url from future %}
 {% load staticfiles %}
@@ -9,6 +10,7 @@
 {% endblock %}
 
 {% block fb %}
+    {% cache 3600 facebookmeta event.pk %}
     <meta property="fb:app_id"          content="386541278102635" />
     <meta property="og:url"             content="http://partysen.se{% url "event-detail" event.pk event.slug %}" />
     <meta property="og:site_name"       content="partysen.se"/>
@@ -16,12 +18,14 @@
     <meta property="og:type"            content="article" />
     <meta property="og:description"     content="Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}!" />
     <meta property="og:image"           content="{% static "images/fblink.png" %}" />
+    {% endcache %}
 {% endblock %}
 
 {% block content %}
 
 <div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
 
+{% cache 900 eventsidebar event.pk request.user.pk %}
     <div class="col-md-3 hidden-xs hidden-sm">
 		<div class="panel-group" id="accordion">
 		  <div class="panel panel-default  accordian-panel">
@@ -83,7 +87,6 @@
 			  </div>
 			</div>
 		  </div>
-		  
 		  <div class="panel panel-default  accordian-panel">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
@@ -134,9 +137,9 @@
 			</div>
 		  </div>
 		</div>
-	
 	</div>
 
+{% endcache %}
     {% block event_content %}
         Nothing to see here....
     {% endblock %}
@@ -146,11 +149,10 @@
 
 {% block jslibs %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-{#    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>#}
+  {% cache 600 eventdata event.pk request.user.pk %}
   {% compress js %}
-    <script src="{% static "lib/angular-1.1.4/angular-resource.min.js" %}"></script>
     <script>
+        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
         var ps = {
             event: {{ event.pk }},
             numberOfTracks: {{ number_of_tracks }},
@@ -160,8 +162,8 @@
             recentTracks: [
             {% for track in recent_tracks %}
                 {
-                    name: "{{ track.name }}",
-                    artist: "{{ track.artist }}",
+                    name: "{{ track.name|safe }}",
+                    artist: "{{ track.artist|safe }}",
                     spotify_url: "{{ track.spotify_url|safe|escape }}"
                 },
             {% endfor %}
@@ -169,17 +171,17 @@
             loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %},
             setlist: {{ setlist|safe|escape }}
         };
-
-
-        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
     </script>
+  {% endcompress %}
+  {% endcache %}
+
+  {% compress js %}
     <script src="{% static "js/filters.js" %}"></script>
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
-
   {% endcompress %}
 
-    {% block event_js %}
-    {% endblock %}
+  {% block event_js %}
+  {% endblock %}
 {% endblock %}

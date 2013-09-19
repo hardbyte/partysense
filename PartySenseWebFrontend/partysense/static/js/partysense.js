@@ -25,8 +25,7 @@ function EventStatsCtrl($scope, Track, updateService){
         // GET: /api/123/get-track-list
         //$scope.setlist = Track.query({action: "get-track-list"}, function(data){
 
-            var data = ps.setlist;
-
+        var data = ps.setlist;
 
             $scope.numberOfResults = Math.min(10, $scope.setlist.length);
             var artists = [];
@@ -249,15 +248,18 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
         var i;
         for (var j = 0; j < data.length; j++) {
             data[j].coverURL = "/static/images/defaultCover.png";
-            findCover(data[j]);
         }
+        $scope.setlist = data;
 
         for(i=0; i<Math.min(80, data.length);i++){
             songs += data[i].spotifyTrackID.slice(14) + ',';
         }
         $scope.playlistSongs = songs;
         $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
-        return data;
+
+        for (var k = 0; k < data.length; k++) {
+            findCover(data[k]);
+        }
     }
 
     $scope.updateSetlist = function(){
@@ -266,7 +268,7 @@ function SetlistCtrl($scope, $http, Track, LastfmTrack, updateService) {
     };
 
     //$scope.updateSetlist();
-    $scope.setlist = refreshSetlist(ps.setlist);
+    refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
         console.log("It appears you're adding a track to the setlist");

@@ -24,7 +24,6 @@ GOOGLE_OAUTH2_CLIENT_SECRET  = ''
 
 FACEBOOK_APP_ID = "386541278102635"
 FACEBOOK_API_SECRET = "08fd5dddc6329c7c56ce980e07a5d83d"
-SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
 
 LASTFM_API_KEY = '2f42e9b46522dc31c099904e3a94f6b1'
 LASTFM_SECRET = 'f17d10f5aaf23a34e270370e6d030c6c'
@@ -40,18 +39,16 @@ MANAGERS = ADMINS
 
 # http://django-social-auth.readthedocs.org/
 AUTHENTICATION_BACKENDS = (
-    #'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    #'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    #'social_auth.backends.google.GoogleBackend',
-    #'social_auth.backends.yahoo.YahooBackend',
-    #'social_auth.backends.browserid.BrowserIDBackend',
-    #'social_auth.backends.OpenIDBackend',
+    'social.backends.facebook.FacebookOAuth2',
+    #'social.backends.google.GoogleOAuth2',
+
     'django.contrib.auth.backends.ModelBackend',
+
+    'registration_email.auth.EmailBackend',
     )
 
 COMPRESS_ENABLED = True
+POSTGRES_ENABLED = True
 
 EMAIL_HOST = 'smtp.webfaction.com'
 EMAIL_HOST_USER = 'partysense'
@@ -60,6 +57,22 @@ DEFAULT_FROM_EMAIL = 'partysense@partysen.se'
 SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
+SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+#SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
+SOCIAL_AUTH_FACEBOOK_KEY = FACEBOOK_APP_ID
+SOCIAL_AUTH_FACEBOOK_SECRET = FACEBOOK_API_SECRET
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/accounts/login/'
+#SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+DJANGO_MEMCACHED_REQUIRE_STAFF = True
+
+
+CACHES = {
+    'default': {
+        'BACKEND': "django.core.cache.backends.memcached.MemcachedCache",
+        'LOCATION': 'unix:/home/hardbyte/memcached.sock',
+    }
+}
 
 DATABASES = {
     'default': {
@@ -149,10 +162,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     #'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
 
-    'social_auth.context_processors.social_auth_by_type_backends',
-    # Adds a social_auth dict where each key is a provider name and its value is a UserSocialAuth instance if user
-    # has associated an account with that provider, otherwise None
-    #'social_auth.context_processors.social_auth_by_name_backends',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect'
+
     )
 
 MIDDLEWARE_CLASSES = (
@@ -161,6 +173,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -194,22 +208,44 @@ INSTALLED_APPS = (
     # for compressing js and css files
     "compressor",
 
+    # For registering new users with password
+    'registration',
+    'registration_email',
+
+    # just adds a memcache view to the admin page
+    'memcache_status',
+
     # for database migrations http://south.readthedocs.org
     #'south',
 
     # for authentication with facebook etc
-    'social_auth',
+    'social.apps.django_app.default',
+
+    # for using custom forms
+    'crispy_forms',
+
+    # our helper models
+    'partysense.util',
 
     # our core application
     'partysense.event',
     'partysense.music',
-    'partysense.dj'
+    'partysense.dj',
+    'partysense.club'
 
 )
 
-LOGIN_URL          = '/profile/'
+# One-week activation window
+ACCOUNT_ACTIVATION_DAYS = 7
+
+LOGIN_URL          = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/profile/'
-LOGIN_ERROR_URL    = '/profile/login/'
+LOGIN_ERROR_URL    = '/'
+
+REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = lambda request, user: "/accounts/register/complete/"
+REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = lambda request, user: "/accounts/activate/complete/"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -1,32 +1,55 @@
+{% load crispy_forms_tags %}
 {# So I can use the same css I'll abstract all the forms with this template #}
 {{ form.non_field_errors }}
+
 {% csrf_token %}
-{% for field in formset.visible_fields %}
 
-    <div class="control-group {% if field.errors %}warning{% endif %}">
-        {{ field.label_tag }} {{ field }}
-        {% if field.errors %}
-            {% for error in field.errors %}
-                <span class="help-inline">
-                    <strong>{{ error|escape }}</strong>
-                </span>
-            {% endfor %}
-        {% endif %}
-        {% if field.help_text %}
-            <span class="help-inline">
-                {{ field.help_text }}
-            </span>
-        {% endif %}
-    </div>
-{% endfor %}
+{#{% crispy formset %}#}
 
-{% for field in formset.hidden_fields %}
-    {{ field }}
-    {% if field.errors %}
-        {% for error in field.errors %}
-            <div class="alert">
-                <strong class="errorMessage">{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endfor %}
+{{ formset | crispy }}
+
+{#<fieldset>#}
+{#{% for field in formset.visible_fields %}#}
+{##}
+{#    <div class="control-group {% if field.errors %}warning{% endif %}">#}
+{##}
+{#        {% if field.errors %}#}
+{#            <div class="control-group error">#}
+{##}
+{#                <label class="control-label">{{ field.label }}</label>#}
+{#                <div class="controls">{{ field }}</div>#}
+{#                <span class="help-inline">#}
+{#                    {% for error in field.errors %}#}
+{#                    <strong>{{ error|escape }}</strong>#}
+{#                    {% endfor %}#}
+{#                </span>#}
+{##}
+{#            </div>#}
+{#        {% else %}#}
+{#            <div class="control-group">#}
+{##}
+{#                <label class="control-label">{{ field.label }}</label>#}
+{#                <div class="controls">{{ field }}</div>#}
+{#            </div>#}
+{#        {% endif %}#}
+{#        {% if field.help_text %}#}
+{#            <p class="help-inline"><small>#}
+{#                {{ field.help_text }}#}
+{#                </small>#}
+{#            </p>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#{% endfor %}#}
+{##}
+{#{% for field in formset.hidden_fields %}#}
+{#    {{ field }}#}
+{#    {% if field.errors %}#}
+{#        {% for error in field.errors %}#}
+{#            <div class="alert">#}
+{#                <strong class="errorMessage">{{ error|escape }}</strong>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endif %}#}
+{#{% endfor %}#}
+{##}
+{#</fieldset>#}

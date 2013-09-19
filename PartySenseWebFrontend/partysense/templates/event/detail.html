@@ -17,8 +17,8 @@
         <section>
 
             {% if not user.is_authenticated %}
-                <a class="btn btn-primary btn-block btn-large" href="{% url "socialauth_begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                    Login with facebook to vote on the music!
+                <a class="btn btn-primary btn-block btn-large" href="{% url "password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                    Login to vote on the music!
                 </a>
             {% endif %}
 
@@ -50,6 +50,7 @@
                  data-ad-client="ca-pub-6160731913142438"
                  data-ad-slot="5621308889"></ins>
             <script>
+
             (adsbygoogle = window.adsbygoogle || []).push({});
             </script>
             {% endif %}

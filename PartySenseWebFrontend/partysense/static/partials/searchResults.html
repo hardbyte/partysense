@@ -13,12 +13,12 @@
         </form>
     </div>
 
-    <div class="alert fade in" ng-show="msg" ng-class="msgClass">
+    <div class="alert alert-info fade in" ng-show="msg" ng-class="msgClass">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
         <strong ng-model="msg">{{ msg }}</strong>
     </div>
 
-    <div class="alert fade in" ng-show="correction">
+    <div class="alert alert-success fade in" ng-show="correction">
         Did you mean <b><a ng-click="searchTerm=correction; doSearch(true);"
                            href="#">{{ correction }}</a></b>?
     </div>
