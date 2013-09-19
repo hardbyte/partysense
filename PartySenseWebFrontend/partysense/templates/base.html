@@ -105,12 +105,12 @@
                 {% endif %}
 
                 {% block content %}{% endblock %}
+            
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <!-- Footer content -->
         <p><a href="/privacy/">Privacy Policy</a>. Made in New Zealand by PartySense Ltd. © 2013</p>
         <p class="pull-right"><a href="#top">Back to top</a></p>
     </footer>
@@ -119,14 +119,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
     <script src="{% static "lib/bootstrap/js/bootstrap.min.js" %}"></script>
+    {% endcompress %}
 
     {% block jslibs %}
 
     {% endblock %}
-
     {% compress js %}
         <script>
-
             var csrftoken = $.cookie('csrftoken');
 
             function csrfSafeMethod(method) {
