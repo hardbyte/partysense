@@ -5,6 +5,7 @@ from django.core.validators import validate_email
 
 from models import *
 
+
 class ClubForm(ModelForm):
     class Meta:
         model = Club

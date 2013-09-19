@@ -17,7 +17,7 @@ class NewClubForm(forms.ModelForm):
 
     class Meta:
         model = Club
-        fields = ("name", "email", "website", "facebook_page", "city", "country",)
+        fields = ("name", "email", "website", "facebook_page", "city", "country", "description")
 
 
 def landing(request):

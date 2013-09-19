@@ -4,6 +4,9 @@ from django.db import models
 from django.forms import ModelForm,  CharField, SplitDateTimeField, DateInput, TimeInput
 from django.forms.widgets import SplitDateTimeWidget, HiddenInput, MultiWidget
 
+from crispy_forms.helper import FormHelper, Layout
+from crispy_forms.layout import Div, Field
+
 from models import *
 from widgets import GoogleMapsWidget
 
@@ -28,6 +31,14 @@ class EventForm(ModelForm):
                   'user_editable',
                   'start_time'
                   )
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.label_class = "col-lg-2"
+        self.helper.field_class = "col-lg-8"
+        self.helper.layout = Layout('title', 'user_editable',
+                                    Div(Field('start_time'), css_class="col-lg-3", css_id="my_custom_id"))
 
     start_time = SplitDateTimeField(
         input_date_formats=['%Y-%m-%d'],
