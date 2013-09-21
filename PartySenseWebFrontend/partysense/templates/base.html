@@ -52,45 +52,48 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-profile-dropdown">
-            <ul class="nav navbar-nav">
+            <!--<ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 <li><a href="{% url "club-landing" %}">Clubs</a></li>
                 <li><a href="{% url "profile" %}">Your Playlists</a></li>
-            </ul>
+            </ul>-->
             <ul class="nav navbar-nav navbar-right">
-          {% if not user.is_authenticated %}
-                <li class="dropdown">
-                    <a rel="nofollow" href="{% url "password_login" %}" id="logindropdown"
-                       class="regularActive">
-                       Login <b class="caret"></b>
-                    </a>
-                    <ul class="fallback hidden-phone">
-                        <li>
-                            <a rel="nofollow"
-                               href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
-                               >
-                                <div id="facebook_button">facebook</div> &nbsp;
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url "password_login" %}"> <i class="icon-user"></i> Password</a>
-                        </li>
-                    </ul>
-                </li>
-          {% else %}
-                <li class="dropdown">
-                    <a class="regularActive" href="{% url "profile" %}">
-                        {{ user.first_name|default:"Profile" }}
-                    </a>
-                    <!-- Drop down for nav bar -->
-                    <ul class="dropdown-menu">
-                        <li><a class="" href="{% url "profile" %}">
-                            <i class="glyphicon glyphicon-user"></i> Profile</a></li>
-                        <li><a href="{% url "logout" %}" class="">
-                            <i class="glyphicon glyphicon-remove"></i> Logout</a></li>
-                    </ul>
-                </li>
-          {% endif %}
+                <li><a href="/">Home</a></li>
+                <li><a href="{% url "club-landing" %}">Clubs</a></li>
+                <li><a href="{% url "profile" %}">Your Playlists</a></li>
+                {% if not user.is_authenticated %}
+                    <li class="dropdown">
+                        <a rel="nofollow" href="{% url "password_login" %}" id="logindropdown"
+                           >
+                           Login <b class="caret"></b>
+                        </a>
+                        <ul class="fallback hidden-phone">
+                            <li>
+                                <a rel="nofollow"
+                                   href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
+                                   >
+                                    <div id="facebook_button">facebook</div> &nbsp;
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url "password_login" %}"> <i class="icon-user"></i> Password</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a href="{% url "profile" %}">
+                            {{ user.first_name|default:"Profile" }}
+                        </a>
+                        <!-- Drop down for nav bar -->
+                        <ul class="dropdown-menu">
+                            <li><a class="" href="{% url "profile" %}">
+                                <i class="glyphicon glyphicon-user"></i> Profile</a></li>
+                            <li><a href="{% url "logout" %}" class="">
+                                <i class="glyphicon glyphicon-remove"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
