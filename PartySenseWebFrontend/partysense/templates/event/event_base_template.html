@@ -26,7 +26,7 @@
 <div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
 
 {% cache 900 eventsidebar event.pk request.user.pk %}
-    <div class="col-md-3 hidden-xs hidden-sm">
+    <div class="col-md-3 col-sm-4">
 		<div class="panel-group" id="accordion">
 		  <div class="panel panel-default  accordian-panel">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -87,7 +87,7 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="panel panel-default  accordian-panel">
+		  <div class="panel panel-default  accordian-panel hidden-xs">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
 				Import Recent Music
@@ -99,7 +99,7 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="panel panel-default accordian-panel">
+		  <div class="panel panel-default accordian-panel hidden-xs">
 			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
 				Your Events

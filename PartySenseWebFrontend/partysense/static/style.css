@@ -431,7 +431,7 @@ footer
 	border:0px;
 }
 
-@media (max-width:990px){
+@media (max-width:992px){
 	.banner-button section{
         text-align:center;
     }
@@ -474,4 +474,8 @@ footer
     margin-bottom: 10px;
     border-radius: 5px;
     padding: 15px;
+}
+
+.accordion-heading{
+    widows: 90%;
 }

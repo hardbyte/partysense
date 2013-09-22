@@ -5,7 +5,7 @@
 {% load compress %}
 
 {% block event_content %}
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-8" style="margin-top: 5px">
 
         {% if event.dj.user == user %}
             <a class="btn btn-block btn-primary"
@@ -36,7 +36,7 @@
         </section>
     </div>
 
-    <div class="col-md-3 hidden-xs hidden-sm">
+    <div class="col-md-3 col-sm-0 hidden-xs hidden-sm" id = "spotify-panel" >
         <div>
             <div ng-include src="previewTemplate"></div>
         </div>
@@ -44,7 +44,7 @@
         <div id="GoogleAdvert">
             {% if not debug %}
             <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- Party Sense - Med Rect -->
+
             <ins class="adsbygoogle"
                  style="display:inline-block;width:300px;height:250px"
                  data-ad-client="ca-pub-6160731913142438"
@@ -65,7 +65,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=false"></script>
     {% compress js %}
       <script type="text/javascript">
+
       function initialize() {
+
+
         var loc = new google.maps.LatLng({{ event.location.latitude }}, {{ event.location.longitude }});
 
         var mapOptions = {
