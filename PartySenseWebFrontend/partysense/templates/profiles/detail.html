@@ -6,7 +6,7 @@
 {% if user.is_authenticated %}
 
     <div class="row">
-    <section class="col-md-3">
+    <section class="col-sm-4" style="margin-top: 10px" >
         <h3>Account info:</h3>
         {% if user.is_staff %}
             <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
@@ -24,7 +24,7 @@
 
     {% if backends.associated %}
         <p>
-            <a href="{% url "logout" %}" class="btn btn-block">Logout</a>
+            <a href="{% url "logout" %}" class="btn btn-block btn-primary panel-heading accordion-heading ">Logout</a>
         </p>
         <div class="hide">
         <h3>Disconnect</h3>
@@ -44,43 +44,83 @@
         {% endfor %}
         </div>
     {% endif %}
+    <hr>
+    <p>
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          <button class="btn btn-block btn-primary panel-heading accordion-heading">
+            Upcoming Events
+          </button>
+        </a>
+    </p>
+    <p>
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			  <button class="btn btn-block btn-primary panel-heading accordion-heading">
+				Recent Events
+			  </button>
+			</a>
+    </p>
+    <p>
+    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			  <button class="btn btn-block btn-primary panel-heading accordion-heading">
+				Your DJs
+			  </button>
+			</a>
+    </p>
     </section>
 
-    <div class="col-md-5">
-        <section>
-            <h3>Upcoming</h3>
-            <ul>
-            {% for e in upcoming_events %}
-                <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
-            {% endfor %}
-            </ul>
-            <form action="{% url "event.views.create" %}">
-                <button class="btn btn-primary btn-block">Host your next event now!</button>
-            </form>
-        </section>
+    <div class="col-sm-8">
+    <div class="panel-group" id="accordion">
+		  <div class="panel panel-default  accordian-panel" style="margin-top: 10px">
+			<div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+                <h3>Upcoming</h3>
+                <ul>
+                {% for e in upcoming_events %}
+                    <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                {% endfor %}
+                </ul>
+                <form action="{% url "event.views.create" %}">
+                    <button class="btn btn-primary btn-block">Host your next event now!</button>
+                </form>
+			  </div>
+			</div>
+		  </div>
 
-    {% if past_events %}
-        <section>
-            <h3>Recent</h3>
-            <ul>
-            {% for e in past_events %}
-                 <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a></li>
-            {% endfor %}
-            </ul>
-        </section>
-    {% endif %}
+
+		  <div class="panel panel-default  accordian-panel">
+			<div id="collapseTwo" class="panel-collapse collapse">
+			  <div class="panel-body">
+                    <h3>Recent</h3>
+                    {% if past_events %}
+                        <ul>
+                        {% for e in past_events %}
+                             <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="panel panel-default accordian-panel">
+
+			<div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+                <h3>Your DJ's:</h3>
+                {% if djs %}
+                <ul>
+                {% for dj in djs %}
+                    <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+			  </div>
+			</div>
+		  </div>
+		</div>
     </div>
 
-    {% if djs %}
-    <section class="col-md-3">
-        <h3>Your DJ's:</h3>
-        <ul>
-        {% for dj in djs %}
-            <li><a href="/dj/{{ dj.pk }}/{{ dj.nickname|slugify }}">{{dj.nickname}}</a></li>
-        {% endfor %}
-        </ul>
-    </section>
-    {% endif %}
+
 
 {# TODO   if clubs ...#}
 </div>
