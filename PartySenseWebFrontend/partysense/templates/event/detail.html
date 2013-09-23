@@ -8,7 +8,7 @@
     <div class="col-md-6 col-sm-8" style="margin-top: 5px">
 
         {% if event.dj.user == user %}
-            <a class="btn btn-block btn-primary"
+            <a class="btn btn-block btn-primary panel-heading accordion-heading "
                href="{% url "event-stats" event.pk event.slug %}">
                 <i class="icon-signal"></i> Event Analytics
             </a>
