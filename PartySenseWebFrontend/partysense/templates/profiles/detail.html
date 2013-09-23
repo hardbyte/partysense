@@ -94,7 +94,7 @@
                     {% if past_events %}
                         <ul>
                         {% for e in past_events %}
-                             <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a></li>
+                             <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a> by <a href="#">{{ e.dj }}</a> at {{ e.location.name }}</li>
                         {% endfor %}
                         </ul>
                     {% endif %}
