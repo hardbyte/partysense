@@ -18,9 +18,13 @@
     <div class="col-md-6 col-md-offset-1">
         <h2>Don't have an account?</h2>
         <p>Not a problem, it doesn't take a minute, either</p>
+        <p><a href="{% url "registration_register" %}"><button class="btn btn-primary">Register with an email/password now</button></a></p>
          <a rel="nofollow" href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                <div id="facebook_button">Log in with Facebook</div>
-            </a>  <a href="{% url "registration_register" %}"><button class="btn btn-primary">Register with an email/password now</button></a>
+            <div id="facebook_button" style="padding: 10px; background-position:center;">&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLog in with Facebook</div>
+        </a>
+
+
+
 
     </div>
 
