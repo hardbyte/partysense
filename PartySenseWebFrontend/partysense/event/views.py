@@ -108,7 +108,7 @@ def modify_event(request, pk):
 
     # First see if the user has been "added" to this event
     if not Event.objects.filter(users=request.user).exists():
-        logging.info("Adding {} to event {}".format(request.user, event.title))
+        logging.info("Adding {} to event {}".format(str(request.user), event.title))
         event.users.add(request.user)
 
     data = json.loads(request.body)
@@ -133,13 +133,13 @@ def modify_event(request, pk):
             id_type, created = IDType.objects.get_or_create(name=external_id_data['type'])
             track._external_ids.create(id_type=id_type, value=external_id_data['id'])
 
+    # Since this user added the track they will count as a vote up
+    response = vote_on_track(request, event.pk, track.pk, internal=True)
     if not event.tracks.filter(pk=track.pk).exists():
-        #logger.info("Adding new track to event: {}".format(track.name))
+        logger.info("Adding new track to event: {}".format(str(track.name)))
         event.tracks.add(track)
 
-    # Since this user added it they probably want to vote it up
-    return vote_on_track(request, event.pk, track.pk, internal=True)
-
+    return response
 
 def json_track_list(event, user):
     """
@@ -150,7 +150,9 @@ def json_track_list(event, user):
     removable = user == event.dj.user
     event_vote_set = event.vote_set.all()
 
-    users_votes = {track_id: is_positive for (track_id, is_positive) in event_vote_set.filter(user=user.pk).values_list('track_id', 'is_positive')}
+    users_votes = {track_id: is_positive
+                   for (track_id, is_positive) in event_vote_set.filter(user=user.pk).values_list('track_id',
+                                                                                                  'is_positive')}
     track_votes = {}
     spotify_ids = {}
 
@@ -202,8 +204,8 @@ def json_track_list(event, user):
             "name": t.name,
             "artist": t.artist.name,
             "spotifyTrackID": spotify_ids[t.pk],
-            "upVotes": track_votes[t.pk][0],
-            "downVotes": track_votes[t.pk][1],
+            "upVotes": track_votes.get(t.pk, [0,0])[0],
+            "downVotes": track_votes.get(t.pk, [0,0])[1],
             "usersVote": users_votes.get(t.pk, 0),
             "removable": removable
         })
@@ -250,8 +252,11 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
     if not event.users.filter(pk=request.user.pk).exists():
         event.users.add(request.user)
 
-    # Check that this user hasn't voted on this event and track
-    logger.info("User: {} is voting on track:{}".format(request.user.first_name, track_pk))
+
+    logger.info("User: {} is voting on track: {}".format(
+        str(request.user.first_name), str(track_pk)))
+
+    # This avoids the need to check that this user hasn't voted on this event and track
     vote, created = Vote.objects.get_or_create(
         event=event,
         user=request.user,
