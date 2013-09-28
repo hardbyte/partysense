@@ -78,11 +78,6 @@ if ENABLE_DJANGO_TOOLBAR:
     MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
     INSTALLED_APPS += ('debug_toolbar',)
 
-TEMPLATE_DIRS = (
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_DIR, 'templates'),
-)
-
 # logging configuration.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.

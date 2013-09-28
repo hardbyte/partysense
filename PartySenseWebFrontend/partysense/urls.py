@@ -81,9 +81,16 @@ urlpatterns += patterns('partysense.club.views',
 )
 
 if settings.DEBUG:
-    # serve user uploaded media
+    # During development django can serve media and static files.
+
     urlpatterns += patterns('',
             (r'^media/(?P<path>.*)$',
              'django.views.static.serve',
              {'document_root': settings.MEDIA_ROOT}),
+        )
+
+    urlpatterns += patterns('',
+            (r'^static/(?P<path>.*)$',
+             'django.views.static.serve',
+             {'document_root': settings.STATIC_ROOT}),
         )
