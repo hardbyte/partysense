@@ -136,8 +136,9 @@ def modify_event(request, pk):
     # Since this user added the track they will count as a vote up
     response = vote_on_track(request, event.pk, track.pk, internal=True)
     if not event.tracks.filter(pk=track.pk).exists():
-        logger.info("Adding new track to event: {}".format(str(track.name)))
+        logger.info("Adding new track to event")
         event.tracks.add(track)
+        logging.info("Added: {} to {}".format(track, event))
 
     return response
 
