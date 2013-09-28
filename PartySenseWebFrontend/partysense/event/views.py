@@ -427,12 +427,6 @@ def profile(request):
     })
 
 
-def logout(request):
-    """Logs out user"""
-    auth_logout(request)
-    return HttpResponseRedirect('/')
-
-
 def landing(request):
     # List upcoming "public" events
     return render(request, 'landing.html', {})

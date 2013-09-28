@@ -41,8 +41,6 @@ urlpatterns += patterns('partysense.event.views',
 
     # profile worth having (me thinks no)?
     url(r'^profile/$', 'profile', name="profile"),
-    url(r'^profile/logout/$', 'logout', name='logout'),
-
 
     # These next urls form the javascript API
 
