@@ -1,12 +1,14 @@
-django>=1.5
+django>=1.5.4
+fabric
 python-openid
 oauth2
 pillow
 python-social-auth
-django-braces
 beautifulsoup4
 lxml
+python-amazon-product-api
 html5lib
+django-braces
 django-compressor
 django-debug-toolbar
 python-memcached
