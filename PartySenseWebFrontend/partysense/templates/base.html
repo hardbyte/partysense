@@ -83,7 +83,7 @@
                 {% else %}
                     <li class="dropdown">
                         <a href="{% url "profile" %}">
-                            {{ user.first_name|default:"Profile" }}
+                            {{ user.first_name|default:"Profile" }} <b class="caret"></b>
                         </a>
                         <!-- Drop down for nav bar -->
                         <ul class="dropdown-menu">
