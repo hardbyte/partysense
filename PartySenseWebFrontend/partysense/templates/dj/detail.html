@@ -10,7 +10,7 @@
     {% if user == dj.user %}
         <p>looks like this is you!</p>
 
-        <form action="/event/new">
+        <form action="{% url "event:create" %}">
             <button>Create a new event?</button>
         </form>
 

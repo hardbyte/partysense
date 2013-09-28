@@ -11,7 +11,12 @@
             {% include "form_snippet.html" %}
 
             <input class="btn btn-primary" type="submit" value="Login" />
+            <div class="fieldWrapper">
+                <a href="{% url "auth_password_reset" %}">Forgot your password?</a>
+            </div>
         </form>
+
+
         </div>
     </div>
 

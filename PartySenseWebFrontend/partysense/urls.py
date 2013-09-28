@@ -1,17 +1,15 @@
 from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.contrib.auth.decorators import permission_required, login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
 
-from registration.backends.default.views import RegistrationView
+
 from partysense.event.urls import *
-from partysense.event.views import *
+
 from partysense.club.views import *
 from partysense.dj.views import EventList
-from partysense.auth.views import *
 
-from partysense.auth.forms import CustomEmailRegistrationForm
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -23,21 +21,10 @@ urlpatterns = patterns('',
     # Enable the socialauth links
     url('', include('social.apps.django_app.urls', namespace='social')),
 
-    # add a page that allows users to login with a password
-    url(r'^accounts/login/', password_login, name='password_login'),
 
+    url(r'^accounts/', include('auth.urls', namespace="auth")),
     # Registration links
     url(r'^accounts/', include('registration_email.backends.default.urls')),
-    url(r'^accounts/register/$',
-        RegistrationView.as_view(
-            template_name='registration/registration_form.html',
-            form_class=CustomEmailRegistrationForm,
-            success_url=getattr(
-                settings, 'REGISTRATION_EMAIL_REGISTER_SUCCESS_URL', None),
-        ),
-        name='registration_register',
-    ),
-
 
     # add a page that purposely errors to test logging etc
     url(r'^500$', 'unknown'),

@@ -17,7 +17,7 @@
         <section>
 
             {% if not user.is_authenticated %}
-                <a class="btn btn-primary btn-block btn-large" href="{% url "password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <a class="btn btn-primary btn-block btn-large" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     Login to vote on the music!
                 </a>
             {% endif %}

@@ -60,7 +60,7 @@
             <ul class="nav navbar-nav navbar-right">
           {% if not user.is_authenticated %}
                 <li class="dropdown">
-                    <a rel="nofollow" href="{% url "password_login" %}" id="logindropdown"
+                    <a rel="nofollow" href="{% url "auth:password_login" %}" id="logindropdown"
                        class="regularActive">
                        Login <b class="caret"></b>
                     </a>
@@ -73,7 +73,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url "password_login" %}"> <i class="icon-user"></i> Password</a>
+                            <a href="{% url "auth:password_login" %}"> <i class="icon-user"></i> Password</a>
                         </li>
                     </ul>
                 </li>

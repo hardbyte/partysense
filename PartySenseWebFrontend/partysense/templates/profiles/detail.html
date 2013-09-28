@@ -93,7 +93,7 @@
             {% for name in backends.backends %}
                 <li><a class="alert-link" rel="nofollow" href="{% url "social:begin" name %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">{{ name|title }}</a></li>
             {% endfor %}
-            <li><a class="alert-link" href="{% url "password_login" %}">Password</a></li>
+            <li><a class="alert-link" href="{% url "auth:password_login" %}">Password</a></li>
         </ul>
     </div>
 {% endif %}
