@@ -108,7 +108,9 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
     });
 
     $scope.$on("addTrackBySpotifyURI", function(evt, uri){
-        SpotifyLookup.get({uri: uri}, function(data){
+        console.log("Adding track by known spotify url...");
+        console.log("uri: " + uri);
+        SpotifyLookup.get(uri).then( function(data){
             console.log("heard back from spotify for " + uri);
             $scope.addTrack(data.track);
         });

@@ -44,10 +44,12 @@ angular.module('ps.directives', [])
                 // get an open url:
                 //http://open.spotify.com/user/1242959390/playlist/4rN0f6C22Mz9dUX5lcbG5F
                 var open_url = event.dataTransfer.getData("text/plain");
-                console.log(open_url);
+                console.log("open url: " + open_url);
                 if(/.*spotify.*/.test(open_url)){
 
                     var uri = event.dataTransfer.getData("text/uri-list");
+                    console.log("uri: " + uri);
+                    // sometimes like this:
                     //spotify:user:1242959390:playlist:4rN0f6C22Mz9dUX5lcbG5F
 
                     //console.log(event.dataTransfer.getData("text/html"));
@@ -56,20 +58,21 @@ angular.module('ps.directives', [])
                     var el = document.createElement( 'div' );
                     el.innerHTML = event.dataTransfer.getData("text/html");
                     var name = el.innerText;
+                    console.log("Name: " + name);
 
-                    var type = "";
+                    var type = "unknown";
 
-                    if(/spotify[:].*playlist:.*/g.test(uri)){
+                    if(/.*playlist.*/g.test(uri)){
                         console.log("Looks like " + uri + " is a playlist");
                         type = "playlist - I can't import that from spotify sorry";
                     }
-                    if(/spotify[:].*album:.*/g.test(uri)) {
+                    if(/.*album.*/g.test(uri)) {
                         type = "album";
                         $rootScope.$apply(function(){
                             updateService.update("importAlbumBySpotifyURI", uri);
                         });
                     }
-                    if(/spotify[:].*artist:.*/.test(uri)) {
+                    if(/.*artist.*/.test(uri)) {
                         //console.log("Looks like " + uri + " is an artist");
                         type = "artist";
                         /* The html already has the artist name, so lets just use that... (is that a hack?)*/
@@ -81,10 +84,11 @@ angular.module('ps.directives', [])
                         });
 
                     }
-                    if(/spotify[:].*track:.*/.test(uri)) {
+                    if(/.*track.*/.test(uri)) {
                         console.log("Looks like " + uri + " is a track");
                         type = "track";
                         $rootScope.$apply(function(){
+                            console.log("Sending broadcast...");
                             updateService.update("addTrackBySpotifyURI", uri);
                         });
                     }
