@@ -5,3 +5,4 @@ PartySenseWebFrontend/partysense/local_settings.py
 PartySenseWebFrontend/tmp/*
 
 *.db
+*.pyc

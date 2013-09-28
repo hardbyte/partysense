@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from event.views import *
+from partysense.event.views import *
 
 urlpatterns = patterns('',
 
