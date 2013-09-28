@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from registration.backends.default.views import RegistrationView
-
+from partysense.event.urls import *
 from partysense.event.views import *
 from partysense.club.views import *
 from partysense.dj.views import EventList
@@ -17,6 +17,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # enable admin
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^event/', include('event.urls', namespace="event")),
 
     # Enable the socialauth links
     url('', include('social.apps.django_app.urls', namespace='social')),
@@ -54,22 +56,7 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^profile/$', 'profile', name="profile"),
     url(r'^profile/logout/$', 'logout', name='logout'),
 
-    url(r'^event/new/$', 'create', name="create-event"),
 
-    # the actual main event page
-    url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/$',
-        ensure_csrf_cookie(EventDetail.as_view()),
-        name="event-detail"),
-
-    # statistics page
-    url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/stats/$',
-        login_required(EventStatsDetail.as_view()),
-        name="event-stats"),
-
-    # edit view
-    url(r'^event/(?P<pk>\d+)/(?P<slug>[-\w]+)/edit/$',
-        'update',
-        name="event-update"),
     # These next urls form the javascript API
 
     url(r'^api/(?P<pk>\d+)/modify',

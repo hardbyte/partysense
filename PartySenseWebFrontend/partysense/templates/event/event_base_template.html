@@ -12,7 +12,7 @@
 {% block fb %}
     {% cache 3600 facebookmeta event.pk %}
     <meta property="fb:app_id"          content="386541278102635" />
-    <meta property="og:url"             content="http://partysen.se{% url "event-detail" event.pk event.slug %}" />
+    <meta property="og:url"             content="http://partysen.se{% url "event:detail" event.pk event.slug %}" />
     <meta property="og:site_name"       content="partysen.se"/>
     <meta property="og:title"           content="Interactive setlist for {{ event.title }}" />
     <meta property="og:type"            content="article" />
@@ -40,7 +40,7 @@
 
                         {% if event.dj.user == user %}
                             <a class="btn btn-block"
-                               href="{% url "event-update" event.pk event.slug %}">
+                               href="{% url "event:update" event.pk event.slug %}">
                                 <i class="icon-edit"></i> Edit Event Details
                             </a>
                         {% endif %}
@@ -52,7 +52,7 @@
                             <input type="text" id="eventURL" class="input-block-level" readonly
                                    title="share event with others by copying this link"
                                    style="cursor:default;"
-                                   value="http://partysen.se{% url "event-detail" event.pk event.slug %}"/>
+                                   value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
                         </div>
 
                         <dl>
@@ -73,7 +73,7 @@
                                        id="dLabel">other events</a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                         {% for event in djsOtherEvents %}
-                                            <li><a href="{% url "event-detail" event.pk event.slug %}">{{ event }} at {{ event.location.name }}</a></li>
+                                            <li><a href="{% url "event:detail" event.pk event.slug %}">{{ event }} at {{ event.location.name }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </span>)
@@ -112,10 +112,10 @@
                             <h3>Upcoming</h3>
                             <ul>
                             {% for e in upcoming_events %}
-                                <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                                <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
                             {% endfor %}
                             </ul>
-                            <form action="{% url "event.views.create" %}">
+                            <form action="{% url "event:create" %}">
                                 <button class="btn btn-primary btn-block">Host your next event now!</button>
                             </form>
                         {% endif %}
@@ -124,7 +124,7 @@
                             <h3>Recent</h3>
                             <ul>
                             {% for e in past_events %}
-                                 <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                                 <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
                             {% endfor %}
                             </ul>
                         {% else %}

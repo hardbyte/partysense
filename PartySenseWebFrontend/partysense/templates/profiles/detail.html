@@ -51,10 +51,10 @@
             <h3>Upcoming</h3>
             <ul>
             {% for e in upcoming_events %}
-                <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
             {% endfor %}
             </ul>
-            <form action="{% url "event.views.create" %}">
+            <form action="{% url "event:create" %}">
                 <button class="btn btn-primary btn-block">Host your next event now!</button>
             </form>
         </section>
@@ -64,7 +64,7 @@
             <h3>Recent</h3>
             <ul>
             {% for e in past_events %}
-                 <li><a href="{% url "event-detail" e.pk e.slug %}">{{ e.title }}</a></li>
+                 <li><a href="{% url "event:detail" e.pk e.slug %}">{{ e.title }}</a></li>
             {% endfor %}
             </ul>
         </section>

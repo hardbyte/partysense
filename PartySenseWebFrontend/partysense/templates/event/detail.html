@@ -9,7 +9,7 @@
 
         {% if event.dj.user == user %}
             <a class="btn btn-block btn-primary"
-               href="{% url "event-stats" event.pk event.slug %}">
+               href="{% url "event:stats" event.pk event.slug %}">
                 <i class="icon-signal"></i> Event Analytics
             </a>
         {% endif %}

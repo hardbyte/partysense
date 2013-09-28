@@ -12,7 +12,7 @@
         <div  class="row">
             <div class="col-md-6 banner-button" id="banner-event-button">
             <section>
-                <form action="{% url "event-detail" 2 "preview-party" %}">
+                <form action="{% url 'event:detail' 2 'preview-party' %}">
                     <button class="button btn-primary btn-event" >Preview Party</button>
                 </form>
             </section>
@@ -21,7 +21,7 @@
             <section>
 
                 {% if user.is_authenticated %}
-                    <form action="{% url "event.views.create" %}">
+                    <form action="{% url "event:create" %}">
                         <button class="button btn-primary btn-event">Host your next event now!</button>
                     </form>
                 {% else %}

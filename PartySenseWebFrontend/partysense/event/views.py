@@ -71,7 +71,7 @@ class EventDetail(EventView, DetailView):
         # Add the setlist
         context['number_of_tracks'], context['setlist'] = json_track_list(context['event'], u)
 
-        self.request.GET.next = reverse('event-detail',
+        self.request.GET.next = reverse('event:detail',
                                         args=(context['event'].pk, context['event'].slug))
         return context
 
