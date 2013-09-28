@@ -72,7 +72,7 @@ class ExternallyDefinedIDModel(models.Model):
 
 
 class Artist(ExternallyDefinedIDModel):
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.name
@@ -87,7 +87,7 @@ class Artist(ExternallyDefinedIDModel):
 
 class Track(ExternallyDefinedIDModel):
     artist = models.ForeignKey('Artist')
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.artist.name + ": " + self.name
