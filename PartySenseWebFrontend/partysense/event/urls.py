@@ -5,7 +5,7 @@ from partysense.event.views import *
 
 urlpatterns = patterns('',
 
-    url(r'^new/$', 'create', name="create"),
+    url(r'^new/$', create, name="create"),
 
     # the actual main event page
     url(r'^(?P<pk>\d+)/(?P<slug>[-\w]+)/$',
