@@ -91,26 +91,29 @@
 		
     </div>
     <div class="features">
-        <div class="row" >
-            <div class="col-sm-6 col-featurette">
-                <h3 class="carousel-heading">Partying Made Awesomer</h3>
-                <p class="carousel-paragraph">Take your music choices with you to parties and nightclubs</p>
-            </div>
-            <div class="col-sm-6 col-featurette">
-                <h3 class="carousel-heading">Hassle-Free Playlists for your parties</h3>
-                      <p class="carousel-paragraph">Lets the crowd add and vote on songs for your event. Make sure they have an awesome time at your party</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 col-featurette">
-                <h3 class="carousel-heading">Crowd Analytics for DJs</h3>
-              <p class="carousel-paragraph">Find out what your crowd loves and mix it in your playlist. Keep the dance floor going!</p>
-            </div>
-            <div class="col-sm-6 col-featurette">
-                <h3 class="carousel-heading">Going Clubbing?</h3>
-                      <p class="carousel-paragraph">PartySense finds clubs in your city catered to your taste to make sure you have a great night out</p>
-            </div>
-        </div>
+
+        <table>
+            <tr>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Partying Made Awesomer</h3>
+                    <p class="carousel-paragraph">Take your music choices with you to parties and nightclubs</p>
+                </td>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Hassle-Free Playlists for your parties</h3>
+                    <p class="carousel-paragraph">Lets the crowd add and vote on songs for your event. Make sure they have an awesome time at your party</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Crowd Analytics for DJs</h3>
+                    <p class="carousel-paragraph">Find out what your crowd loves and mix it in your playlist. Keep the dance floor going!</p>
+                </td>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Going Clubbing?</h3>
+                    <p class="carousel-paragraph">PartySense finds clubs in your city catered to your taste to make sure you have a great night out</p>
+                </td>
+            </tr>
+        </table>
     </div>
 
 
@@ -157,6 +160,9 @@
                         }
                 }
         );
+    $( document ).ready(function() {
+                $('#logo').hide();
+        });
 </script>
 
 <script>(function(d, s, id) {
