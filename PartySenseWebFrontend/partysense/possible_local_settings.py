@@ -1,4 +1,7 @@
 # local Django settings for project.
+# rename to local_settings.py to take effect
+# DO NOT Commit the local_settings.py to master!
+
 # Server has its own settings file with postgres database etc
 import os.path
 from settings import MIDDLEWARE_CLASSES, INSTALLED_APPS
