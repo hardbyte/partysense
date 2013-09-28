@@ -6,7 +6,6 @@ from django.core.exceptions import ValidationError
 
 from django_countries import CountryField
 
-from partysense.event.models import Location
 from partysense.util.models import *
 
 
@@ -36,11 +35,11 @@ class Club(models.Model):
     # https://bitbucket.org/smileychris/django-countries/
     country = CountryField()
 
-    location = models.ForeignKey(Location, verbose_name="Where is the club?")
+    location = models.ForeignKey("event.Location", verbose_name="Where is the club?")
     
     # @TODO : Genres and Demographics. 
     # Need a list of Tags here for music genres and the scene
-    # Also need an agegroup field
+    # Also need an age group field
 
 
     def __str__(self):

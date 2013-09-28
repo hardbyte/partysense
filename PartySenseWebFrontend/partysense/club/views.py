@@ -1,16 +1,15 @@
 import logging
 
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
 from django import forms
 from django.contrib.auth.decorators import login_required
 
-from partysense.event.models import Location
+
 from partysense.club.models import Club
+from partysense.event.models import Location
 
 
 class NewClubForm(forms.ModelForm):

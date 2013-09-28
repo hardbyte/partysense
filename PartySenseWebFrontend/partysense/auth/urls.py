@@ -3,8 +3,8 @@ from django.conf.urls import patterns, url
 
 from registration.backends.default.views import RegistrationView
 
-from auth.forms import CustomEmailRegistrationForm
-from auth.views import *
+from partysense.auth.forms import CustomEmailRegistrationForm
+from partysense.auth.views import *
 
 urlpatterns = patterns('',
 

@@ -16,13 +16,13 @@ urlpatterns = patterns('',
     # enable admin
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^event/', include('event.urls', namespace="event")),
+    url(r'^event/', include('partysense.event.urls', namespace="event")),
 
     # Enable the socialauth links
     url('', include('social.apps.django_app.urls', namespace='social')),
 
 
-    url(r'^accounts/', include('auth.urls', namespace="auth")),
+    url(r'^accounts/', include('partysense.auth.urls', namespace="auth")),
     # Registration links
     url(r'^accounts/', include('registration_email.backends.default.urls')),
 
