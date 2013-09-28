@@ -202,14 +202,15 @@ footer
 
 #facebook_button{
     float: left;
-    display: block;
+
+    display: inline;
     margin-right: 20px;
     line-height: 20px;
-    padding-left: 25px;
+    padding-left: 4px;
     padding-right: 4px;
     background: url('images/social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
-    border: 1px solid #1A356E;
-    text-decoration: none;
+    /*border: 1px solid #1A356E;*/
+
     color: white;
 }
 
@@ -430,7 +431,7 @@ footer
 	border:0px;
 }
 
-@media (max-width:990px){
+@media (max-width:992px){
 	.banner-button section{
         text-align:center;
     }
@@ -472,4 +473,9 @@ footer
     border-width:1px;
     margin-bottom: 10px;
     border-radius: 5px;
+    padding: 15px;
+}
+
+.accordion-heading{
+    widows: 90%;
 }
