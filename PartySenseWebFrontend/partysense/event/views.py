@@ -33,7 +33,7 @@ class EventDetail(EventView, DetailView):
 
     def get_object(self):
         # add this event to this user now if logged in
-        logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
+        logger.debug("Serving event id = {}".format(self.kwargs['pk']))
         event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
         # if we are not in debug mode check that the slug was correct
@@ -224,8 +224,8 @@ def get_track_list(request, pk):
 
 @login_required
 def did_you_mean(request):
-    logging.info("Checking spelling")
     q = request.GET["q"]
+    logging.info("Checking spelling of '{}'".format(q))
     return HttpResponse(json.dumps({'changed': dym.didYouMean(q)}),
                         content_type="application/json")
 
