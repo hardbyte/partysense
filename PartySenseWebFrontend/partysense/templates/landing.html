@@ -13,7 +13,7 @@
             <div class="col-md-6 banner-button" id="banner-event-button">
             <section>
                 <form action="{% url "event-detail" 2 "preview-party" %}">
-                    <button class="button btn-primary btn-event" >Preview Party</button>
+                    <button class="button  btn-event btn-primary">Preview Party</button>
                 </form>
             </section>
             </div>
@@ -22,11 +22,11 @@
 
                 {% if user.is_authenticated %}
                     <form action="{% url "event.views.create" %}">
-                        <button class="button btn-primary btn-event">Host your next event now!</button>
+                        <button class="button  btn-event btn-primary">Host your next event now!</button>
                     </form>
                 {% else %}
                     <form action="{% url "dj.views.register" %}">
-                        <button class="button btn-primary btn-event">Register now!</button>
+                        <button class="button  btn-event btn-primary">Register now!</button>
                     </form>
                 {% endif %}
             </section>
@@ -35,6 +35,37 @@
         <div class="hidden-sm hidden-xs" style="height: 100px">
         </div>
 
+
+
+
+    <div class="features">
+        <table>
+            <tr>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Partying Made Awesomer</h3>
+                    <p class="carousel-paragraph">Take your music choices with you to parties and nightclubs</p>
+                </td>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Hassle-Free Playlists for your parties</h3>
+                    <p class="carousel-paragraph">Lets the crowd add and vote on songs for your event. Make sure they have an awesome time at your party</p>
+                </td>
+            </tr>
+            <tr>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Crowd Analytics for DJs</h3>
+                    <p class="carousel-paragraph">Find out what your crowd loves and mix it in your playlist. Keep the dance floor going!</p>
+                </td>
+                <td class="feature-td">
+                    <h3 class="carousel-heading">Going Clubbing?</h3>
+                    <p class="carousel-paragraph">PartySense finds clubs in your city catered to your taste to make sure you have a great night out</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="intro-video">
+        <iframe src="//player.vimeo.com/video/75675459?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    </div>
 
     <div class="row quick-start">
         <div class="col-md-6">
@@ -90,31 +121,7 @@
         </div>
 		
     </div>
-    <div class="features">
 
-        <table>
-            <tr>
-                <td class="feature-td">
-                    <h3 class="carousel-heading">Partying Made Awesomer</h3>
-                    <p class="carousel-paragraph">Take your music choices with you to parties and nightclubs</p>
-                </td>
-                <td class="feature-td">
-                    <h3 class="carousel-heading">Hassle-Free Playlists for your parties</h3>
-                    <p class="carousel-paragraph">Lets the crowd add and vote on songs for your event. Make sure they have an awesome time at your party</p>
-                </td>
-            </tr>
-            <tr>
-                <td class="feature-td">
-                    <h3 class="carousel-heading">Crowd Analytics for DJs</h3>
-                    <p class="carousel-paragraph">Find out what your crowd loves and mix it in your playlist. Keep the dance floor going!</p>
-                </td>
-                <td class="feature-td">
-                    <h3 class="carousel-heading">Going Clubbing?</h3>
-                    <p class="carousel-paragraph">PartySense finds clubs in your city catered to your taste to make sure you have a great night out</p>
-                </td>
-            </tr>
-        </table>
-    </div>
 
 
     <div class="jumbotron" align="center">
