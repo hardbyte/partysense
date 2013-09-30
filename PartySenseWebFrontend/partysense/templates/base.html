@@ -39,7 +39,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle"
-                    data-toggle="collapse" data-target="navbar-profile-dropdown">
+                    data-toggle="collapse" data-target="#navbar-profile-dropdown">
                <span class="sr-only">Toggle navigation</span>
                <span class="icon-bar"></span>
                <span class="icon-bar"></span>
@@ -58,16 +58,15 @@
                 <li><a href="{% url "profile" %}">Your Playlists</a></li>
                 {% if not user.is_authenticated %}
                 <li class="dropdown">
-                    <a rel="nofollow" href="{% url "auth:password_login" %}" id="logindropdown"
-                       class="regularActive">
-                       Login <b class="caret"></b>
+                    <a rel="nofollow" href="{% url "auth:password_login" %}" id="logindropdown">
+                        Login <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu hidden-phone">
                         <li>
                             <a rel="nofollow"
                                href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
-                               >
-                                <div id="facebook_button">facebook</div> &nbsp;
+                             >
+                                <div id="facebook_button" style="width: 100%">Facebook</div> &nbsp;
                             </a>
                         </li>
                         <li>
@@ -75,12 +74,11 @@
                         </li>
                     </ul>
                 </li>
-          {% else %}
+                {% else %}
                 <li class="dropdown">
                     <a href="{% url "profile" %}">
-                        {{ user.first_name|default:"Profile" }}
+                        {{ user.first_name|default:"Profile" }} <b class="caret"></b>
                     </a>
-                    <!-- Drop down for nav bar -->
                     <ul class="dropdown-menu">
                         <li><a class="" href="{% url "profile" %}">
                             <i class="glyphicon glyphicon-user"></i> Profile</a></li>
@@ -88,7 +86,7 @@
                             <i class="glyphicon glyphicon-remove"></i> Logout</a></li>
                     </ul>
                 </li>
-          {% endif %}
+                {% endif %}
             </ul>
         </div>
     </nav>

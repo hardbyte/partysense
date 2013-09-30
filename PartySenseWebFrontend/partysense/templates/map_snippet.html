@@ -105,10 +105,12 @@
         <input id="id_address" type="text" value="" placeholder="Address" />
         <input id="city_country" type="text" value="{{ country_city }}" />
 
-        <input type="button" value="Find" onclick="codeAddress()" />
+        <input type="button" class="btn btn-primary" value="Find" onclick="codeAddress()" />
         <br style="clear: both" />
         <div id="search_results">
         </div>
+
     </div>
-    <div id="map_canvas" style="width: {{ width }}px; height: {{ height }}px;"></div>
+    <p style="margin: 15px;"></p>
+    <div id="map_canvas" style="width: 100%; height: {{ height }}px;"></div>
 </div>

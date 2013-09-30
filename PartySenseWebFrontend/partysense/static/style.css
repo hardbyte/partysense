@@ -10,7 +10,9 @@ body {
     margin-left: auto;
     margin-right: auto;
     max-width: 1280px;
-	background:#000000;
+	/*background:#000000;
+    background-image:url('/static/images/background-top.png') no-repeat top center*/
+    background: url('/static/images/background-top.png') #000 no-repeat top center;
 }
 
 h1, h2, h3, h4, h5 {
@@ -193,7 +195,7 @@ footer
 }
 
 .banner-button section{
-    background: #000000;
+    background: transparent;
 }
 
 .quick-start p.action{
@@ -359,7 +361,7 @@ footer
 
 .hero-background{
     /*background-color:rgba(33, 33, 33, 0.75);*/
-    background: black;
+    background: transparent;
 }
 
 .hero-logo{
@@ -434,6 +436,7 @@ footer
 @media (max-width:992px){
 	.banner-button section{
         text-align:center;
+
     }
 }
 
@@ -441,6 +444,7 @@ footer
 	.carousel-heading, .quick-start button, .quick-start h1 , .quick-start h3{
         font-size:18px;
     }
+
 	.jumbotron h2{
 		font-size:20px;
 	}
@@ -463,19 +467,57 @@ footer
     text-align: right;
 }
 
-.col-featurette{
+.feature-td{
+    width: 50%;
     text-align: center;
-}
-
-.features{
     border: #444;
     border-style:solid;
     border-width:1px;
-    margin-bottom: 10px;
     border-radius: 5px;
-    padding: 15px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.feature-td p{
+    color: #ffffff;
+}
+
+.features{
+    margin-bottom: 10px;
 }
 
 .accordion-heading{
     widows: 90%;
+}
+
+.intro-video{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.club-landing-section{
+    margin-top: 140px;
+}
+
+.club-landing-section p, li{
+    color: white;
+    font-size: 16px;
+}
+
+.club-register-button{
+    text-align: center;
+}
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }

@@ -312,7 +312,7 @@ def create(request):
             # then commit the new event to our database
             event.save()
 
-            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+            return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()

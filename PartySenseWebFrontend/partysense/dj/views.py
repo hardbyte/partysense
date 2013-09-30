@@ -71,7 +71,7 @@ def register(request):
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
             # Redirect to a new event page
-            return HttpResponseRedirect(reverse('create-event'))
+            return HttpResponseRedirect(reverse('create:event'))
     else:
         # Partially fill in what we know (if anything)
         # Get location from fb

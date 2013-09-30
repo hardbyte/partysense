@@ -19,6 +19,6 @@ urlpatterns = patterns('',
 
     # edit view
     url(r'^(?P<pk>\d+)/(?P<slug>[-\w]+)/edit/$',
-        'update',
+        update,
         name="update")
 )

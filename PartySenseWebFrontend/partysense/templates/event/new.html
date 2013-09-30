@@ -5,21 +5,18 @@
 {% load staticfiles %}
 {% block content %}
 
-    <section class="col-md-12">
+    <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
     <h2>Tell us about this gig {{ user.dj_set.get.nickname }}</h2>
-
-    <div class="progress">
-      <div class="bar" style="width: 66%;"></div>
-    </div>
 
     <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% include "form_snippet.html" %}
 
         <br style="clear:left;">
 
-        <input type="submit" value="Submit" />
+        <input type="submit" class="btn btn-primary" value="Submit" />
     </form>
+
     </section>
 
 
