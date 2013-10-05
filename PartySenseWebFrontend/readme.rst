@@ -74,3 +74,23 @@ For example on the event page, the following caches all the track information:
 
     {% cache 600 eventdata event.pk request.user.pk %}
 
+=====
+South
+=====
+
+South is a database migration tool.
+
+Start with a new schema migration per app:
+
+    ./manage.py convert_to_south event
+
+The convert_to_south command only works entirely on the first machine you run it on.
+Once you’ve committed the initial migrations it made into your VCS, you’ll have to run
+    ./manage.py migrate myapp 0001 --fake
+on every machine that has a copy of the codebase (make sure they were up-to-date with
+models and schema first).
+
+
+Then when the schema changes (new fields etc) make a migration:
+
+    ./manage.py schemamigration event --auto

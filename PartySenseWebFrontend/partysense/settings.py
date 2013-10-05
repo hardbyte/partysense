@@ -216,7 +216,7 @@ INSTALLED_APPS = (
     'memcache_status',
 
     # for database migrations http://south.readthedocs.org
-    #'south',
+    'south',
 
     # for authentication with facebook etc
     'social.apps.django_app.default',
