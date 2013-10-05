@@ -52,7 +52,7 @@ Vote on track
 -------------
 
     POST {vote:false} or {vote:true} to the URL:
-   /api/2/vote/4/
+    /api/2/vote/4/
 
 Also requires authentication.
 
@@ -63,3 +63,14 @@ Remove track
     /api/{event}/remove/{track}/
 
 As the dj.
+
+
+=========
+Memcached
+=========
+
+Works as a map of some unique ID to some content.
+For example on the event page, the following caches all the track information:
+
+    {% cache 600 eventdata event.pk request.user.pk %}
+

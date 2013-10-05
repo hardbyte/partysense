@@ -61,6 +61,11 @@ class EventDetail(EventView, DetailView):
         # add recently up-voted tracks TODO CACHE these per user?
         u = self.request.user
         if not u.is_anonymous():
+            # Add this user to the event
+            if not context['event'].users.filter(pk=u.pk).exists():
+                context['event'].users.add(u)
+
+
             context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())

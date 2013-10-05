@@ -73,7 +73,10 @@
                                id="dLabel">other events</a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                 {% for event in djsOtherEvents %}
-                                    <li><a href="{% url "event:detail" event.pk event.slug %}">{{ event }} at {{ event.location.name }}</a></li>
+                                    <li><a href="{% url "event:detail" event.pk event.slug %}">
+                                          {{ event }} at {{ event.location.name }}
+                                        </a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </span>)
