@@ -1,35 +1,67 @@
+"""
+
+Create a ~/.amazon-product-api file with:
+
+    [Credentials]
+    access_key = AKIAJ6HNZC6HWILISCKA
+    secret_key = 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
+    associate_tag = 6404-2547-9415
+
+"""
+
 # amazon api test
 
 from amazonproduct import API, AWSError
-access_key = "AKIAJ6HNZC6HWILISCKA"
-secret_key = "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"
-associate_tag = "6404-2547-9415"
 
-api = API(access_key, secret_key, associate_tag=associate_tag, locale="us")
+api = API(locale="us")
 
-for page in api.item_search('MP3Downloads', Keywords='Daft Punk', ResponseGroup='Large'):
-    for product in page.Items.Item:
-        amazon_id = product.ASIN
-        try:
-            title = product.ItemAttributes.Title
-        except:
-            pass
+"""
+195211011 - MP3Downloads browse node.
+In an ItemSearch request, when the SearchIndex parameter equals "MP3Downloads",
+only the following parameters can be used in the request.
 
-        print amazon_id, title
+* Browsenode
+* Keyword
+* Title
 
-        """
-        Not sure how this is supposed to work there are
-        hundreds of things in http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_response_elements.html
-        and only some of them seem to be in the "product"
-        """
-        if hasattr(product.ItemAttributes, 'ListPrice'):
-            print unicode(product.ItemAttributes.ListPrice.FormattedPrice)
-        if hasattr(product.OfferSummary, 'LowestUsedPrice'):
-            print u'(used from %s)' % product.OfferSummary.LowestUsedPrice.FormattedPrice
-        if hasattr(product.ItemAttributes, 'Amount'):
-            print unicode(product.ItemAttributes.Amount)
+ResponseGroup = Large or Medium seems to be required to get the OfferDetails
+http://docs.aws.amazon.com/AWSECommerceService/latest/DG/CHAP_ResponseGroupsList.html
+"""
 
-        # http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_RetrievingPriceInformation.html
-        if hasattr(product, "OfferSummary"):
+
+items = api.item_search('MP3Downloads',
+                        Keywords='Daft Punk',
+                        Title='Get Lucky',
+                        ResponseGroup='Medium'
+                        )
+
+for product in items:
+    amazon_id = product.ASIN
+
+    """ItemAttributes
+    Creator: "Daft Punk feat.
+    Genre: pop-music
+    ReleaseDate: 2013-04-13
+    RunningTime: 248
+    Title: ""
+    """
+    title = product.ItemAttributes.Title
+
+
+    print amazon_id, title, product.ItemAttributes.Creator
+    print "URL to purchase: ", product.DetailPageURL
+
+    # Another similar URL...?
+    #print product.ItemLinks.ItemLink.URL
+
+    print "Image: ", product.MediumImage.URL
+
+
+    # http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_RetrievingPriceInformation.html
+    if hasattr(product, "OfferSummary"):
+
+        if hasattr(product.OfferSummary, 'LowestNewPrice'):
             price = product.OfferSummary.LowestNewPrice.FormattedPrice
             print price
+
+    print
