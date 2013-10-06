@@ -1,4 +1,5 @@
 import datetime
+from django.core.exceptions import ValidationError
 
 from django.db import models
 from django.forms import ModelForm,  CharField, SplitDateTimeField, DateInput, TimeInput
@@ -10,16 +11,6 @@ from crispy_forms.layout import Div, Field
 from models import *
 from widgets import GoogleMapsWidget
 
-
-class MySplitDateTimeWidget(SplitDateTimeWidget):
-    """
-    A Widget that splits datetime input into two <input type="text"> boxes.
-    """
-
-    def __init__(self, attrs=None, date_format=None, time_format=None):
-        widgets = (DateInput(attrs={'type': 'date'}, format=date_format),
-                   TimeInput(attrs={'type': 'time'}, format=time_format))
-        MultiWidget.__init__(self, widgets, attrs)
 
 
 class EventForm(ModelForm):
@@ -35,24 +26,25 @@ class EventForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+        self.helper.form_class = "form-inline"
+        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
         self.helper.label_class = "col-lg-2"
         self.helper.field_class = "col-lg-8"
-        self.helper.layout = Layout('title', 'user_editable',
-                                    Div(Field('start_time'), css_class="col-lg-3", css_id="my_custom_id"))
+        self.helper.layout = Layout('title',
+                                    'user_editable',
+                                    Div('start_time',
+                                        css_class="col-lg-10")
+        )
 
     start_time = SplitDateTimeField(
         input_date_formats=['%Y-%m-%d'],
         input_time_formats=['%H:%M'],
-        widget=MySplitDateTimeWidget(
-            date_format="%Y-%m-%d",
-            time_format='%H:%M')
     )
 
     venue = CharField(label="Venue", widget=GoogleMapsWidget(
-        attrs={'width': 800,
-               'height': 400,
-               'country_city': "Christchurch, NZ",
-
+        attrs={
+            'width': 800,
+            'height': 400,
               }),
         error_messages={'required': 'Please select point from the map.'},
         help_text="location")

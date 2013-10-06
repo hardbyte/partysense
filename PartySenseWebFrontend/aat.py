@@ -1,13 +1,4 @@
-"""
 
-Create a ~/.amazon-product-api file with:
-
-    [Credentials]
-    access_key = AKIAJ6HNZC6HWILISCKA
-    secret_key = 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
-    associate_tag = 6404-2547-9415
-
-"""
 
 # amazon api test
 
