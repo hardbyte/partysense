@@ -6,10 +6,10 @@ Developer Documentation
 Repository Structure
 ---------------------
 
-**PartySenseApp** : Code for the android application
-**PartySenseAppiOS** : Code for the iOS application
-**PartySenseWebBackend**: Google App Engine Server for partysenseapp.appspot.com
-**PartySenseWebFrontend**: Complete Web Application including the partysen.se website
+- **PartySenseApp** : Code for the android application
+- **PartySenseAppiOS** : Code for the iOS application
+- **PartySenseWebBackend**: Google App Engine Server for partysenseapp.appspot.com
+- **PartySenseWebFrontend**: Complete Web Application including the partysen.se website
 
 Local Deployment
 ----------------
@@ -17,14 +17,15 @@ Local Deployment
 - Clone the repository (Use develop branch for beta site)
 - Make sure you have python 2.7 installed along with Pip
 - In a terminal, in the PartysenseWebFrontend folder, execute `sudo pip install -r requirements.txt`
-- Next, run `python manage.py syncdb` . If this gives *DatabaseError: no such table: music_idtype*, temporarily comment the line `_spotify_type = IDType.objects.get(pk=1)`  from music\models.py
+- Next, run `python manage.py syncdb` . If this gives *DatabaseError: no such table: music_idtype*, temporarily comment the line
+    > `_spotify_type = IDType.objects.get(pk=1)`  from music\models.py
 - Once this is done, you should have a new file *development_database.db* in the webfrontend folder
 - Run `python manage.py runserver`
 - You only need to create a local admin if you need to play with the Django Admin locally
-- You should now be able to see the partysense website on *localhost:8000*
+- You should now be able to see the partysense website on localhost:8000
 - If you need to login with Facebook, you will need to add `127.0.0.1    partysen.se` to '/etc/hosts' file and visit *partysen.se:8000* in your browser instead
-      - Note: The hosts file in windows can be found at 'C:\\Windows\System32\drivers\etc\hosts'
-- If you want to revert to visiting the web version of the PartySense web app, you will need to comment the line added to hosts.
+- Note: The hosts file in windows can be found at `'C:\\Windows\System32\drivers\etc\hosts'`
+- If you want to revert to viewing the live web version of the PartySense web app, you will need to comment the line added to hosts
 
 
 Testing Procedure
