@@ -8,7 +8,7 @@ def fb_request(request, fields):
     try:
         fb_user_id = request.user.social_auth.get().uid
         res = json.load(urllib.urlopen(fb_api + fb_user_id + "?" + urllib.urlencode({
-            "access_token": request.user.social_auth.get().tokens['access_token'],
+            "access_token": request.user.social_auth.get().tokens,
             "fields": fields
         })))
     except Exception as e:
