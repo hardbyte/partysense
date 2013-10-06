@@ -26,7 +26,7 @@
         $('#id_address').keydown(function (event) {
             var keypressed = event.keyCode || event.which;
             if (keypressed == 13) {
-                codeAddress();
+                entrySelected();
                 return false;
             }
             return true;
@@ -76,39 +76,21 @@
         };
 
         autocomplete = new google.maps.places.Autocomplete(input, options);
+        google.maps.event.addListener(autocomplete, 'place_changed', function(){
+            var selectedPlace = autocomplete.getPlace();
+            if(!selectedPlace.geometry){
+                alert("Place not found");
 
-    });
-
-    function codeAddress(){
-        var address = $('#id_address').val() + ', ' + $('#city_country').val();
-        //console.log("Asking google where to find: " + address);
-        geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var results_len = results.length;
-
-                var results_table = new Array();
-                //console.log("Found " + results_len + " results!");
-                for(i=0; i<results_len; i++){
-                    var address_location = results[i].geometry.location
-
-                    if(i === 0){
-                        console.log("Found address: " + address_location);
-                        //map.setCenter(address_location);
-                        set_center(address_location.lat(), address_location.lng())
-                    } else {
-                        // Display the results as a basic list
-                        results_table[i] = '<div style="cursor: pointer" onclick="set_center(' +
-                            address_location.lat() + ', ' +
-                            address_location.lng() + ')">' +
-                            results[i].formatted_address +
-                            '</div>';
-                        }
-                }
-                $('#search_results').html(results_table.join(''));
             } else {
-                alert("Geocode was not successful for the following reason: " + status);
+                console.log("Lat: " + selectedPlace.geometry.location.lat() + ", Long: " + selectedPlace.geometry.location.lng() )
+                set_center(selectedPlace.geometry.location.lat(),selectedPlace.geometry.location.lng());
+
             }
         });
+    });
+
+    function entrySelected(){
+        console.log("Entry Selected")
     }
 
     function set_center(lat, lng){
@@ -126,9 +108,6 @@
 <div>
     <div class="address_input input-group">
         <input id="id_address" type="text" value="" class="textinput form-control" placeholder="Address" />
-        <span class="input-group-btn">
-            <input type="button" class="btn btn-default" value="Find" onclick="codeAddress()" />
-        </span>
         <br style="clear: both" />
         <div id="search_results">
         </div>
