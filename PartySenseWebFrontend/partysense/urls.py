@@ -21,8 +21,10 @@ urlpatterns = patterns('',
     # Enable the socialauth links
     url('', include('social.apps.django_app.urls', namespace='social')),
 
+    url(r'^amazon/', include('partysense.amazon.urls', namespace="amazon")),
 
     url(r'^accounts/', include('partysense.auth.urls', namespace="auth")),
+
     # Registration links
     url(r'^accounts/', include('registration_email.backends.default.urls')),
 

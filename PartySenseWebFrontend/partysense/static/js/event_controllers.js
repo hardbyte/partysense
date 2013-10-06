@@ -169,6 +169,19 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
+    $scope.showTrackPurchase = function(track){
+        track.offer = {};//
+
+        $http.get("/amazon/purchase/?artist="+ track.artist + "&track=" + track.name)
+          .success(function(response){
+              track.offer = {
+                  url: response.URL,
+                  price: response.price
+              };
+
+          });
+    };
+
     function refreshSetlist(data){
         var songs = "";
         var i;
@@ -193,7 +206,6 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
-    //$scope.updateSetlist();
     refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
@@ -235,22 +247,22 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
 
     };
 
- /*
-    If lastfm cannot find the song the response will be:
-    {error: 6, message: "track not found"}
+     /*
+        If lastfm cannot find the song the response will be:
+        {error: 6, message: "track not found"}
 
-    Otherwise the data.track **might** have all of the following fields:
-        mbid
-        duration
-        toptags -> tags -> [0, ..., 4] -> {name: "indie"}
-        album -> image -> [smallest, ..., largest] -> {#text: image url, size}
-                 mbid
-                 artist
-        artist -> mbid
-                  name
-                  url
-        wiki
-*/
+        Otherwise the data.track **might** have all of the following fields:
+            mbid
+            duration
+            toptags -> tags -> [0, ..., 4] -> {name: "indie"}
+            album -> image -> [smallest, ..., largest] -> {#text: image url, size}
+                     mbid
+                     artist
+            artist -> mbid
+                      name
+                      url
+            wiki
+     */
     function findCover(track){
         // and genre
         var updateCover = function(data){
