@@ -53,8 +53,8 @@ class Event(TimeStampedModel):
 
     # The DJ can choose all the music or users can add too
     user_editable = models.BooleanField(default=True,
-                                        verbose_name="Allow anyone to add new music?",
-                                        help_text="If not selected, you add the music, and everyone else can only vote.")
+                                        verbose_name="Allow guests to add music to the playlist (Recommended) ",
+                                        help_text="If not selected, only you can add songs to the playlist, and others can only vote")
 
     start_time = models.DateTimeField()
 
