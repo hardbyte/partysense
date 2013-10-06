@@ -246,7 +246,7 @@ REGISTRATION_EMAIL_REGISTER_SUCCESS_URL = lambda request, user: "/accounts/regis
 REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = lambda request, user: "/accounts/activate/complete/"
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
+CRISPY_FAIL_SILENTLY = not DEBUG
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
