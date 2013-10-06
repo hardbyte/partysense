@@ -74,6 +74,10 @@ For example on the event page, the following caches all the track information:
 
     {% cache 600 eventdata event.pk request.user.pk %}
 
+Memcached itself is started with:
+
+    memcached -d -m 64 -s $HOME/memcached.sock -P $HOME/memcached.pid
+
 =====
 South
 =====
@@ -86,7 +90,9 @@ Start with a new schema migration per app:
 
 The convert_to_south command only works entirely on the first machine you run it on.
 Once you’ve committed the initial migrations it made into your VCS, you’ll have to run
+
     ./manage.py migrate myapp 0001 --fake
+
 on every machine that has a copy of the codebase (make sure they were up-to-date with
 models and schema first).
 
@@ -94,3 +100,23 @@ models and schema first).
 Then when the schema changes (new fields etc) make a migration:
 
     ./manage.py schemamigration event --auto
+
+
+Deployment Steps
+----------------
+
+SSH into hardbyte@web388.webfaction.com
+
+cd webapps/partysense_beta
+
+1) version control update
+
+    git pull
+
+2) Update static files
+
+    python2.7 manage.py collectstatic
+
+3) Trigger apache
+
+    touch wsgi.py
