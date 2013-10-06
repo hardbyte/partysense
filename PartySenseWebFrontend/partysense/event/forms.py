@@ -12,6 +12,19 @@ from models import *
 from widgets import GoogleMapsWidget
 
 
+class MySplitDateTimeWidget(SplitDateTimeWidget):
+    """
+    A Widget that splits datetime input into two <input type="text"> boxes.
+    """
+
+    def __init__(self, attrs=None, date_format=None, time_format=None):
+        widgets = (
+            DateInput(format=date_format),
+            TimeInput(attrs={'type': 'time'}, format=time_format)
+        )
+        MultiWidget.__init__(self, widgets, attrs)
+
+
 class EventForm(ModelForm):
     class Meta:
         model = Event
@@ -32,14 +45,14 @@ class EventForm(ModelForm):
                 Div(
                     Field('title'),
                     Div(
-                         Field('user_editable', css_class="col-md-3"),
-                         css_class="col-md-6"
+                         Field('user_editable', css_class="col-md-1"),
+                         css_class="col-md-12"
                     ),
-                    Div(Field('start_time'), css_class="col-md-6"),
+                    Div(Field('start_time'), css_class="col-md-12"),
 
                     css_class="col-md-6"),
-                Div(Div(css_class="row"),
-                    Div('venue', css_class="col-md-12"),
+                Div(
+                    Div('venue'),
                     css_class="col-md-6"),
                 css_class="row"),
 
@@ -52,11 +65,12 @@ class EventForm(ModelForm):
                 css_class="col-md-12")
         )
 
-        #self.helper.add_input()
 
     start_time = SplitDateTimeField(
         input_date_formats=['%Y-%m-%d'],
         input_time_formats=['%H:%M'],
+        localize=True,
+        widget=MySplitDateTimeWidget()
     )
 
     venue = CharField(label="Venue", widget=GoogleMapsWidget(

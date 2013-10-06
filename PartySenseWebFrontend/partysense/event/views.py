@@ -373,7 +373,7 @@ def update(request, pk, slug):
             # then commit the new event to our database
             event.save()
 
-            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+            return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Fill in from the event instance
 

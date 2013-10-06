@@ -43,7 +43,7 @@
         $('#id_address').keydown(function (event) {
             var keypressed = event.keyCode || event.which;
             if (keypressed == 13) {
-                codeAddress();
+                entrySelected();
                 return false;
             }
             return true;
@@ -55,9 +55,6 @@
         $('#id_address').change(function(){
             $('#id_venue').val($('#id_address').val());
         });
-
-
-
 
         my_point = new google.maps.Marker({
             position: center,
@@ -80,40 +77,18 @@
         };
 
         autocomplete = new google.maps.places.Autocomplete(input, options);
-
-    });
-
-    function codeAddress(){
-        var address = $('#id_address').val();
-        //console.log("Asking google where to find: " + address);
-        geocoder.geocode( { 'address': address}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                var results_len = results.length;
-
-                var results_table = new Array();
-                //console.log("Found " + results_len + " results!");
-                for(i=0; i<results_len; i++){
-                    var address_location = results[i].geometry.location
-
-                    if(i === 0){
-                        console.log("Found address: " + address_location);
-                        //map.setCenter(address_location);
-                        set_center(address_location.lat(), address_location.lng())
-                    } else {
-                        // Display the results as a basic list
-                        results_table[i] = '<div style="cursor: pointer" onclick="set_center(' +
-                            address_location.lat() + ', ' +
-                            address_location.lng() + ')">' +
-                            results[i].formatted_address +
-                            '</div>';
-                        }
-                }
-                $('#search_results').html(results_table.join(''));
+        google.maps.event.addListener(autocomplete, 'place_changed', function(){
+            var selectedPlace = autocomplete.getPlace();
+            if(!selectedPlace.geometry){
+                alert("Sorry, location not found");
             } else {
-                alert("Geocode was not successful for the following reason: " + status);
+                set_center(selectedPlace.geometry.location.lat(), selectedPlace.geometry.location.lng());
             }
         });
-    }
+    });
+    var entrySelected = function(){
+        console.log("entry selected");
+    };
 
     function set_center(lat, lng){
         var latlng = new google.maps.LatLng(lat, lng);
@@ -127,13 +102,10 @@
 </script>
 <div>
 
-    <div class="address_input input-group">
+    <div class="address_input control-group">
         <label for="id_address" class="control-label">Event Venue</label>
         <input id="id_address" type="text" value="" class="textinput textInput form-control" placeholder="Address" />
 
-        <span class="input-group-btn">
-            <input type="button" class="btn btn-default" value="Find" onclick="codeAddress()" />
-        </span>
         <br style="clear: both;" />
         <div id="search_results">
         </div>
