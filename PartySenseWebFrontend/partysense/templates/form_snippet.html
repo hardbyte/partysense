@@ -4,52 +4,6 @@
 
 {% csrf_token %}
 
-{#{% crispy formset %}#}
+{% crispy formset %}
 
-{{ formset | crispy }}
-
-{#<fieldset>#}
-{#{% for field in formset.visible_fields %}#}
-{##}
-{#    <div class="control-group {% if field.errors %}warning{% endif %}">#}
-{##}
-{#        {% if field.errors %}#}
-{#            <div class="control-group error">#}
-{##}
-{#                <label class="control-label">{{ field.label }}</label>#}
-{#                <div class="controls">{{ field }}</div>#}
-{#                <span class="help-inline">#}
-{#                    {% for error in field.errors %}#}
-{#                    <strong>{{ error|escape }}</strong>#}
-{#                    {% endfor %}#}
-{#                </span>#}
-{##}
-{#            </div>#}
-{#        {% else %}#}
-{#            <div class="control-group">#}
-{##}
-{#                <label class="control-label">{{ field.label }}</label>#}
-{#                <div class="controls">{{ field }}</div>#}
-{#            </div>#}
-{#        {% endif %}#}
-{#        {% if field.help_text %}#}
-{#            <p class="help-inline"><small>#}
-{#                {{ field.help_text }}#}
-{#                </small>#}
-{#            </p>#}
-{#        {% endif %}#}
-{#    </div>#}
-{#{% endfor %}#}
-{##}
-{#{% for field in formset.hidden_fields %}#}
-{#    {{ field }}#}
-{#    {% if field.errors %}#}
-{#        {% for error in field.errors %}#}
-{#            <div class="alert">#}
-{#                <strong class="errorMessage">{{ error|escape }}</strong>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    {% endif %}#}
-{#{% endfor %}#}
-{##}
-{#</fieldset>#}
+{#{{ formset | crispy }}#}

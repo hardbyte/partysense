@@ -6,18 +6,17 @@ from django.forms import ModelForm,  CharField, SplitDateTimeField, DateInput, T
 from django.forms.widgets import SplitDateTimeWidget, HiddenInput, MultiWidget
 
 from crispy_forms.helper import FormHelper, Layout
-from crispy_forms.layout import Div, Field
+from crispy_forms.layout import Div, Field, MultiField, Submit, HTML, Hidden
 
 from models import *
 from widgets import GoogleMapsWidget
-
 
 
 class EventForm(ModelForm):
     class Meta:
         model = Event
 
-        # Explicitly specifying the fields we want
+        # Explicitly specifying the fields we want from the model
         fields = ('title',
                   'user_editable',
                   'start_time'
@@ -25,16 +24,35 @@ class EventForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = "form-inline"
-        self.helper.field_template = 'bootstrap3/layout/inline_field.html'
-        self.helper.label_class = "col-lg-2"
-        self.helper.field_class = "col-lg-8"
-        self.helper.layout = Layout('title',
-                                    'user_editable',
-                                    Div('start_time',
-                                        css_class="col-lg-10")
+        self.helper = FormHelper(self)
+        self.helper.form_class = "well"
+        #self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Div(
+                Div(
+                    Field('title'),
+                    Div(
+                         Field('user_editable', css_class="col-md-3"),
+                         css_class="col-md-6"
+                    ),
+                    Div(Field('start_time'), css_class="col-md-6"),
+
+                    css_class="col-md-6"),
+                Div(Div(css_class="row"),
+                    Div('venue', css_class="col-md-12"),
+                    css_class="col-md-6"),
+                css_class="row"),
+
+
+            Div(css_class="row"),
+
+            Field('latitude', css_id='id_latitude'),
+            Field('longitude', css_id='id_longitude'),
+            Div(Submit('submit', 'Submit', css_class="btn-block"),
+                css_class="col-md-12")
         )
+
+        #self.helper.add_input()
 
     start_time = SplitDateTimeField(
         input_date_formats=['%Y-%m-%d'],
@@ -44,7 +62,7 @@ class EventForm(ModelForm):
     venue = CharField(label="Venue", widget=GoogleMapsWidget(
         attrs={
             'width': 800,
-            'height': 400,
+            'height': 300,
               }),
         error_messages={'required': 'Please select point from the map.'},
         help_text="location")

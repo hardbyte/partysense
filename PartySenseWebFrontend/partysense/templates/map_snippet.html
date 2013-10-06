@@ -6,23 +6,40 @@
 
     var base_point = new google.maps.LatLng({{ base_point }});
 
-    var map, my_point;
-
-    /* Try to center the map on user's city. */
-    geocoder.geocode( { 'address': "{{ country_city }}" }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            base_point = results[0].geometry.location;
-
-            if($('#id_latitude').val() == '')
-            {
-                // force move
-                set_center(base_point.lat(), base_point.lng())
-            }
-        }
-    });
-
+    var map, my_point, center;
 
     $(document).ready(function(){
+        if($('#id_latitude').val()!=''){
+            console.log("Center is: " + center);
+            center = new google.maps.LatLng($('#id_latitude').val(), $('#id_longitude').val());
+        }else{
+            center = base_point;
+        }
+
+        var myOptions = {
+            zoom: 15,
+            center: center,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        google.maps.visualRefresh = true;
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        /* Try to center the map on user's city. */
+        geocoder.geocode( { 'address': "{{ country_city }}" }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                base_point = results[0].geometry.location;
+
+                if($('#id_latitude').val() == '')
+                {
+                    // force move
+                    set_center(base_point.lat(), base_point.lng())
+                }
+            }
+        });
+
+
+
+        console.log("Adding map");
         $('#id_address').keydown(function (event) {
             var keypressed = event.keyCode || event.which;
             if (keypressed == 13) {
@@ -40,19 +57,7 @@
         });
 
 
-        if($('#id_latitude').val()!=''){
-            center = new google.maps.LatLng($('#id_latitude').val(), $('#id_longitude').val());
-        }else{
-            center = base_point
-        }
 
-        var myOptions = {
-            zoom: 15,
-            center: center,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        google.maps.visualRefresh = true;
-        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
         my_point = new google.maps.Marker({
             position: center,
@@ -72,7 +77,6 @@
 
         var options = {
             bounds: defaultBounds
-            //types: ['establishment']
         };
 
         autocomplete = new google.maps.places.Autocomplete(input, options);
@@ -80,7 +84,7 @@
     });
 
     function codeAddress(){
-        var address = $('#id_address').val() + ', ' + $('#city_country').val();
+        var address = $('#id_address').val();
         //console.log("Asking google where to find: " + address);
         geocoder.geocode( { 'address': address}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -120,20 +124,21 @@
         $('#id_longitude').val(lng);
     }
 
-
-
 </script>
 <div>
+
     <div class="address_input input-group">
-        <input id="id_address" type="text" value="" class="textinput form-control" placeholder="Address" />
+        <label for="id_address" class="control-label">Event Venue</label>
+        <input id="id_address" type="text" value="" class="textinput textInput form-control" placeholder="Address" />
+
         <span class="input-group-btn">
             <input type="button" class="btn btn-default" value="Find" onclick="codeAddress()" />
         </span>
-        <br style="clear: both" />
+        <br style="clear: both;" />
         <div id="search_results">
         </div>
 
     </div>
     <p style="margin: 15px;"></p>
-    <div id="map_canvas" style="width: 100%; height: {{ height }}px;"></div>
+    <div id="map_canvas" style="width: 100%; height: {{ height }}px; margin-bottom: 20px;"></div>
 </div>
