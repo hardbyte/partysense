@@ -158,6 +158,7 @@ footer
 
 .quick-start li {
     position: relative;
+    min-height: 93px;
     display: block;
     padding: .4em .8em .4em 2.5em;
     *padding: .4em;
@@ -548,7 +549,7 @@ footer
     margin-right: 100px;
 }
 
-.slide-off-left-active.slide-off-left-active
-{
-
+.block-heading {
+    padding: 15px 10px;
+    border-radius: 4px;
 }

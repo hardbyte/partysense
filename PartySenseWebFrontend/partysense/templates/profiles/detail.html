@@ -5,17 +5,17 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-
-
 <div class="row">
     <section class="col-sm-4" style="margin-top: 10px" >
         <h3>Account info:</h3>
         {% if user.is_staff %}
-            <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
+            <div class="">
+                <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
+            </div>
         {% endif %}
         <table class="table">
             <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
-            <tr><th>Email:</th> <td>{{ user.email|default:"Not provided" }}</td></tr>
+            {% if user.email %}<tr><th>Email:</th> <td>{{ user.email|default:"" }}</td></tr>{% endif %}
             <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
             <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
         </table>

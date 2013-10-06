@@ -7,20 +7,18 @@
 {% block event_content %}
     <div class="col-md-6 col-sm-8">
 
-        {% if event.dj.user == user %}
-            <a class="btn btn-block btn-primary panel-heading accordion-heading "
-               href="{% url "event:stats" event.pk event.slug %}">
-                <i class="icon-signal"></i> Event Analytics
-            </a>
-        {% endif %}
-
+        <div class="page-heading">
+            <h1>Party Playlist <small ng-show="loggedIn">Vote on the current set list</small></h1>
+        </div>
         <section>
 
-            {% if not user.is_authenticated %}
-                <a class="btn btn-primary btn-block btn-large" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                    Login to vote on the music!
-                </a>
-            {% endif %}
+          {% if not user.is_authenticated %}
+            <a class="btn btn-primary btn-block btn-large" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                  Login to vote on the music!
+            </a>
+          {% endif %}
+
+
 
           {% if event.user_editable or event.dj.user == user %}
             <div>
