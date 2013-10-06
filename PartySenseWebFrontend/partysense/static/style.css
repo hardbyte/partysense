@@ -407,15 +407,15 @@ footer
 	color:white;
 }
 
-.dropdown-menu {
+.login-dropdown-ul{
 	background-color:#074458;
 }
 
-.dropdown-menu > li > a{
+.login-dropdown-ul > li > a{
 	color: white;
 }
  
-.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+.login-dropdown-ul > li > a:hover, .login-dropdown-ul > li > a:focus {
   background-color:#074458;
   color:#7496A1;
   background-image: none;

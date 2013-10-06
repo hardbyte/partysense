@@ -4,7 +4,7 @@
 {% load compress %}
 {% load staticfiles %}
 {% block content %}
-
+    <link rel="stylesheet" href="{% static "lib/datepicker/css/datepicker.css" type="text/css" %}"
     <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
     <h2>Tell us about this gig {{ user.dj_set.get.nickname }}</h2>
@@ -34,7 +34,7 @@
             // Use bootstrap-datepicker to create one,
             // then dynamically replace that <input> element.
             console.log("Adding datepicker support");
-            $("#id_start_time_0").datepicker({format: "yyy-mm-dd"});
+            $("#id_start_time_0").datepicker({format: "yyyy-mm-dd"});
           }
 
 
