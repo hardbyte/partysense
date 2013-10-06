@@ -50,6 +50,26 @@
                     <div class="">
                         <em class="track-genre">{{ track.tag }}</em>
                     </div>
+
+                    <div class="trackOffer">
+                        <a href="#" ng-hide="track.offer" ng-click="showTrackPurchase(track)"
+                            style="float:right;" ng-animate="{hide: 'slide-off-left'}">
+
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                <span ng-hide="track.offer">Download</span>
+                                <span ng-show="track.offer">Searching amazon...</span>
+
+                        </a>
+
+                        <div ng-show="track.offer.price" >
+                            <a href="{{ track.offer.url }}">
+                               <i class="glyphicon glyphicon-shopping-cart"></i> Buy now from Amazon {{ track.offer.price }}
+                            </a>
+                        </div>
+
+
+
+                    </div>
                 </div>
 
             </div>
