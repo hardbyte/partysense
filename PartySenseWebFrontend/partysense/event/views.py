@@ -66,10 +66,10 @@ class EventDetail(EventView, DetailView):
                 context['event'].users.add(u)
 
 
-            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
+            context['recent_tracks'] = reversed(Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())
-                                   .exclude(event=context['event'])}).select_related()[0:10]
+                                   .exclude(event=context['event'])}).select_related()[0:10])
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
 
@@ -209,7 +209,7 @@ def json_track_list(event, user):
             'pk': t.pk,
             "name": t.name,
             "artist": t.artist.name,
-            "spotifyTrackID": spotify_ids[t.pk],
+            "spotifyTrackID": spotify_ids.get(t.pk, None),
             "upVotes": track_votes.get(t.pk, [0,0])[0],
             "downVotes": track_votes.get(t.pk, [0,0])[1],
             "usersVote": users_votes.get(t.pk, 0),
