@@ -124,8 +124,7 @@ MEDIA_URL = DOMAIN + '/media/'
 STATIC_ROOT = '/home/hardbyte/webapps/static_partysense/'
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = DOMAIN + '/static/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -160,6 +159,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     #'django.core.context_processors.i18n',
     #'django.core.context_processors.media',
+    'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
 
     'social.apps.django_app.context_processors.backends',
@@ -215,6 +215,9 @@ INSTALLED_APPS = (
     # just adds a memcache view to the admin page
     'memcache_status',
 
+    # adds more statistics to the admin page
+    'bigbrother',
+
     # for database migrations http://south.readthedocs.org
     'south',
 
@@ -247,6 +250,26 @@ REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = lambda request, user: "/accounts/activ
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+BIGBROTHER_MODULES = (
+    # Default Modules:
+    'bigbrother.core.UserCount',
+    'bigbrother.core.NewUsersTodayCount',
+    'bigbrother.core.FreeRamCount',
+    'bigbrother.core.FreeDiskCount',
+
+    # Modules not enabled by default:
+    # 'bigbrother.core.SwapUsage',
+)
+# Restrict access to admins only.
+BIGBROTHER_REQUIRE_ADMIN = True
+BIGBROTHER_GRAPHS = (
+    # Default Graphs
+    'bigbrother.graphs.LastWeekGraph',
+    'bigbrother.graphs.LastMonthGraph',
+    'bigbrother.graphs.LastYearGraph',
+)
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

@@ -2,12 +2,16 @@ django>=1.5.4
 fabric
 python-openid
 oauth2
-pillow
 python-social-auth
 beautifulsoup4
-lxml
+lxml=3.2.3
+psycopg2
 python-amazon-product-api
 html5lib
+South
+psutil
+django-qsstats-magic
+django-bigbrother
 django-braces
 django-compressor
 django-debug-toolbar
@@ -17,4 +21,4 @@ django-registration
 django-registration-email
 django-countries
 django-crispy-forms
-South
+

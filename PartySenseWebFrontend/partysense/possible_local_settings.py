@@ -45,6 +45,8 @@ CACHES = {
     }
 }
 
+WSGI_APPLICATION = 'partysense.local_wsgi.application'
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = os.path.join(ROOT_DIR, 'media')
