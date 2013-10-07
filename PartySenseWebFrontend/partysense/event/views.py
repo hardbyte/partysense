@@ -258,7 +258,6 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
     if not event.users.filter(pk=request.user.pk).exists():
         event.users.add(request.user)
 
-
     logger.info("User: {} is voting on track: {}".format(
         str(request.user.first_name), str(track_pk)))
 
