@@ -124,8 +124,7 @@ MEDIA_URL = DOMAIN + '/media/'
 STATIC_ROOT = '/home/hardbyte/webapps/static_partysense/'
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = DOMAIN + '/static/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -263,7 +262,12 @@ BIGBROTHER_MODULES = (
 )
 # Restrict access to admins only.
 BIGBROTHER_REQUIRE_ADMIN = True
-
+BIGBROTHER_GRAPHS = (
+    # Default Graphs
+    'bigbrother.graphs.LastWeekGraph',
+    'bigbrother.graphs.LastMonthGraph',
+    'bigbrother.graphs.LastYearGraph',
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
