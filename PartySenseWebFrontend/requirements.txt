@@ -6,8 +6,10 @@ pillow
 python-social-auth
 beautifulsoup4
 lxml
+psycopg2
 python-amazon-product-api
 html5lib
+South
 django-braces
 django-compressor
 django-debug-toolbar
