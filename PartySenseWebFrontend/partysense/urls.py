@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     # enable admin
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^bigbrother/', include('bigbrother.urls'))
+    url(r'^bigbrother/', include('bigbrother.urls')),
 
     url(r'^event/', include('partysense.event.urls', namespace="event")),
 
