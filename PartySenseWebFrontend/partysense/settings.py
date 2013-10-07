@@ -215,6 +215,9 @@ INSTALLED_APPS = (
     # just adds a memcache view to the admin page
     'memcache_status',
 
+    # adds more statistics to the admin page
+    'bigbrother',
+
     # for database migrations http://south.readthedocs.org
     'south',
 
@@ -247,6 +250,21 @@ REGISTRATION_EMAIL_ACTIVATE_SUCCESS_URL = lambda request, user: "/accounts/activ
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 CRISPY_FAIL_SILENTLY = not DEBUG
+
+BIGBROTHER_MODULES = (
+    # Default Modules:
+    'bigbrother.core.UserCount',
+    'bigbrother.core.NewUsersTodayCount',
+    'bigbrother.core.FreeRamCount',
+    'bigbrother.core.FreeDiskCount',
+
+    # Modules not enabled by default:
+    # 'bigbrother.core.SwapUsage',
+)
+# Restrict access to admins only.
+BIGBROTHER_REQUIRE_ADMIN = True
+
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
