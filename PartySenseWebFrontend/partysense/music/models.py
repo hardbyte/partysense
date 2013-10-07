@@ -41,9 +41,18 @@ class ExternallyDefinedIDModel(models.Model):
     _spotify_type = IDType.objects.get(pk=1)
     _external_ids = models.ManyToManyField(ExternalID)
 
+    def __init__(self, *args, **kwargs):
+        self._cached_ids = {}
+        super(ExternallyDefinedIDModel, self).__init__(*args, **kwargs)
+
     def get_spotify_url(self):
         # Look up the external ids and find the "spotify" one
-        return self._external_ids.filter(id_type=self._spotify_type)[0].value
+        if not self._spotify_type in self._cached_ids:
+            spotify_id = self._external_ids.only("value").get(id_type=self._spotify_type).value
+            self._cached_ids[self._spotify_type] = spotify_id
+
+        return self._cached_ids[self._spotify_type]
+
 
     def set_spotify_url(self, value):
         self._external_ids.create(id_type=self._spotify_type, value=value)
@@ -63,7 +72,7 @@ class ExternallyDefinedIDModel(models.Model):
 
 
 class Artist(ExternallyDefinedIDModel):
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.name
@@ -78,7 +87,7 @@ class Artist(ExternallyDefinedIDModel):
 
 class Track(ExternallyDefinedIDModel):
     artist = models.ForeignKey('Artist')
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=256)
 
     def __unicode__(self):
         return self.artist.name + ": " + self.name

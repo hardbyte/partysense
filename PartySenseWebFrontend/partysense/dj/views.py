@@ -70,8 +70,8 @@ def register(request):
             # Always return an HttpResponseRedirect after successfully dealing
             # with POST data. This prevents data from being posted twice if a
             # user hits the Back button.
-            # Redirect to a thanks for joining page
-            return HttpResponseRedirect(reverse('profile'))
+            # Redirect to a new event page
+            return HttpResponseRedirect(reverse('create:event'))
     else:
         # Partially fill in what we know (if anything)
         # Get location from fb

@@ -10,6 +10,8 @@ from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.db import connection
+
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
@@ -24,13 +26,14 @@ logger = logging.getLogger(__name__)
 class EventView():
     model = Event
 
+
 class EventDetail(EventView, DetailView):
 
     template_name = 'event/detail.html'
 
     def get_object(self):
         # add this event to this user now if logged in
-        logger.info("Searching for event with pk = {}".format(self.kwargs['pk']))
+        logger.debug("Serving event id = {}".format(self.kwargs['pk']))
         event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
         # if we are not in debug mode check that the slug was correct
@@ -55,22 +58,25 @@ class EventDetail(EventView, DetailView):
                  dj=context['event'].dj.pk
             ).order_by('-modified')
 
-        context['number_of_tracks'] = context['event'].tracks.count()
-
-        # add recently up-voted tracks
+        # add recently up-voted tracks TODO CACHE these per user?
         u = self.request.user
         if not u.is_anonymous():
-            context['recent_tracks'] = Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.select_related().all()
+            # Add this user to the event
+            if not context['event'].users.filter(pk=u.pk).exists():
+                context['event'].users.add(u)
+
+
+            context['recent_tracks'] = reversed(Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())
-                                   .exclude(event=context['event'])}).select_related()[0:10]
+                                   .exclude(event=context['event'])}).select_related()[0:10])
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
 
         # Add the setlist
-        context['setlist'] = json_track_list(context['event'], u)
+        context['number_of_tracks'], context['setlist'] = json_track_list(context['event'], u)
 
-        self.request.GET.next = reverse('event-detail',
+        self.request.GET.next = reverse('event:detail',
                                         args=(context['event'].pk, context['event'].slug))
         return context
 
@@ -86,12 +92,10 @@ class EventStatsDetail(EventDetail):
 
         context['number_of_users'] = event.users.count()
         context['number_of_votes'] = event_votes.count()
-        context['voting_users'] = len({v.user.pk for v in event_votes.all()})
-
-        context['setlist'] = json_track_list(event, self.request.user)
+        context['voting_users'] = len({v.user.pk for v in event_votes.select_related('user').all()})
 
         # Number of People Who Have Added Songs
-        # For each song - find all votes, order by pk, get user associated with oldest record
+        # For each song - find all votes in this event, order by pk, get user associated with oldest record
         users_who_added_tracks = {track.vote_set.filter(event=event).order_by("pk")[0].user.pk
                                                       for track in event.tracks.all()}
         context['number_of_users_who_added_songs'] = len(users_who_added_tracks)
@@ -109,7 +113,7 @@ def modify_event(request, pk):
 
     # First see if the user has been "added" to this event
     if not Event.objects.filter(users=request.user).exists():
-        logging.info("Adding {} to event {}".format(request.user, event.title))
+        logging.info("Adding {} to event {}".format(str(request.user), event.title))
         event.users.add(request.user)
 
     data = json.loads(request.body)
@@ -134,54 +138,100 @@ def modify_event(request, pk):
             id_type, created = IDType.objects.get_or_create(name=external_id_data['type'])
             track._external_ids.create(id_type=id_type, value=external_id_data['id'])
 
+    # Since this user added the track they will count as a vote up
+    response = vote_on_track(request, event.pk, track.pk, internal=True)
     if not event.tracks.filter(pk=track.pk).exists():
-        #logger.info("Adding new track to event: {}".format(track.name))
+        logger.info("Adding new track to event")
         event.tracks.add(track)
+        logging.info("Added: {} to {}".format(track, event))
 
-    # Since this user added it they probably want to vote it up
-    return vote_on_track(request, event.pk, track.pk, internal=True)
-
+    return response
 
 def json_track_list(event, user):
+    """
+    This has some hand coded sql for speed. It is still too slow...
+    """
     track_data = []
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
     removable = user == event.dj.user
-    for t in event.tracks.all():
-        votes = event.vote_set.filter(track=t)
-        if not user.is_anonymous() and votes.filter(user=user).exists():
-            usersVote = votes.get(user=user).is_positive
-        else:
-            usersVote = None
+    event_vote_set = event.vote_set.all()
 
+    users_votes = {track_id: is_positive
+                   for (track_id, is_positive) in event_vote_set.filter(user=user.pk).values_list('track_id',
+                                                                                                  'is_positive')}
+    track_votes = {}
+    spotify_ids = {}
+
+    track_ids = tuple(event.tracks.values_list('pk', flat=True))
+
+    if settings.POSTGRES_ENABLED:
+        # If there are no tracks our query still needs to be valid...
+        if len(track_ids) == 0:
+            track_ids = (None,)
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT
+                "event_vote"."track_id",
+                count(nullif("event_vote"."is_positive" = 'f', 't')),
+                count(nullif("event_vote"."is_positive" = 't', 't'))
+            FROM "event_vote"
+            WHERE (
+                "event_vote"."event_id" = %s  AND
+                "event_vote"."track_id" IN %s )
+            GROUP BY "event_vote"."track_id"
+            """, [event.pk, track_ids])
+
+        for track_id, upVotes, downVotes in cursor.fetchall():
+            track_votes[int(track_id)] = (int(upVotes), int(downVotes))
+
+        # External IDS (eg spotify id)
+        cursor.execute("""
+        SELECT
+            "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
+        FROM "music_externalid"
+        INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
+        WHERE "music_track__external_ids"."track_id" IN %s
+        """, [track_ids])
+        for track_id, id_type, id_value in cursor.fetchall():
+            if id_type == 1:
+                spotify_ids[track_id] = id_value
+        if len(track_ids) == 1 and track_ids[0] is None:
+            track_ids = ()
+    else:
+        # do it the database heavy way for sqlite3...
+        for t in event.tracks.all():
+            votes = event.vote_set.filter(track=t)
+            track_votes[t.pk] = (votes.filter(is_positive=True).count(), votes.filter(is_positive=False).count())
+            spotify_ids[t.pk] = t.spotify_url
+
+    for t in event.tracks.select_related("artist__name", "_external_ids").prefetch_related("_external_ids"):
         track_data.append({
             'pk': t.pk,
             "name": t.name,
             "artist": t.artist.name,
-            "spotifyTrackID": t.spotify_url,
-            #"spotifyArtistID": t.artist.spotify_url,
-            #"external-ids": t.external_ids,
-            "upVotes": votes.filter(is_positive=True).count(),
-            "downVotes": votes.filter(is_positive=False).count(),
-            "usersVote": usersVote,
+            "spotifyTrackID": spotify_ids.get(t.pk, None),
+            "upVotes": track_votes.get(t.pk, [0,0])[0],
+            "downVotes": track_votes.get(t.pk, [0,0])[1],
+            "usersVote": users_votes.get(t.pk, 0),
             "removable": removable
         })
 
     # Sort by most popular
     track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
-    return json.dumps(track_data)
+    return len(track_ids), json.dumps(track_data)
 
 
 def get_track_list(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user
-    setlist = json_track_list(event, user)
+    number_of_tracks, setlist = json_track_list(event, user)
 
     return HttpResponse(setlist, content_type="application/json")
 
 @login_required
 def did_you_mean(request):
-    logging.info("Checking spelling")
     q = request.GET["q"]
+    logging.info("Checking spelling of '{}'".format(q))
     return HttpResponse(json.dumps({'changed': dym.didYouMean(q)}),
                         content_type="application/json")
 
@@ -208,8 +258,10 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
     if not event.users.filter(pk=request.user.pk).exists():
         event.users.add(request.user)
 
-    # Check that this user hasn't voted on this event and track
-    logger.info("User: {} is voting on track:{}".format(request.user.first_name, track_pk))
+    logger.info("User: {} is voting on track: {}".format(
+        str(request.user.first_name), str(track_pk)))
+
+    # This avoids the need to check that this user hasn't voted on this event and track
     vote, created = Vote.objects.get_or_create(
         event=event,
         user=request.user,
@@ -264,7 +316,7 @@ def create(request):
             # then commit the new event to our database
             event.save()
 
-            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+            return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()
@@ -320,7 +372,7 @@ def update(request, pk, slug):
             # then commit the new event to our database
             event.save()
 
-            return HttpResponseRedirect(reverse('event-detail', args=(event.pk, event.slug)))
+            return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Fill in from the event instance
 
@@ -380,21 +432,14 @@ def profile(request):
     })
 
 
-def logout(request):
-    """Logs out user"""
-    auth_logout(request)
-    return HttpResponseRedirect('/')
-
-
 def landing(request):
     # List upcoming "public" events
     return render(request, 'landing.html', {})
 
+
 def privacy(request):
     return render(request, 'privacy.html')
 
-def clubs(request):
-    return render(request, 'clubs.html')
 
 @permission_required("can_change_past_event")
 def mark_over(request, pk):

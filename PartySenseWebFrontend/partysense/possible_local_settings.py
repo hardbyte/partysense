@@ -1,4 +1,7 @@
 # local Django settings for project.
+# rename to local_settings.py to take effect
+# DO NOT Commit the local_settings.py to master!
+
 # Server has its own settings file with postgres database etc
 import os.path
 from settings import MIDDLEWARE_CLASSES, INSTALLED_APPS
@@ -7,10 +10,11 @@ ROOT_DIR = os.path.dirname(__file__)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
-INTERCEPT_REDIRECTS = False
+ENABLE_DJANGO_TOOLBAR = True
+DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 COMPRESS_ENABLED = False
 
+POSTGRES_ENABLED = False
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -19,6 +23,25 @@ DATABASES = {
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+
+# DATABASES = {
+#     'default': {
+#         # maybe we can map straight to google app engine?
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'brian',                      # Or path to database file if using sqlite3.
+#         'USER': 'brian',                      # Not used with sqlite3.
+#         'PASSWORD': '',                  # Not used with sqlite3.
+#         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+#     }
+# }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 
@@ -51,13 +74,9 @@ STATICFILES_DIRS = (
 
 INTERNAL_IPS = ('127.0.0.1', 'partysen.se:8000')
 
-MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-INSTALLED_APPS += ('debug_toolbar',)
-
-TEMPLATE_DIRS = (
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_DIR, 'templates'),
-)
+if ENABLE_DJANGO_TOOLBAR:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+    INSTALLED_APPS += ('debug_toolbar',)
 
 # logging configuration.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -87,7 +106,7 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
+            'formatter': 'verbose'
         },
     },
     'loggers': {

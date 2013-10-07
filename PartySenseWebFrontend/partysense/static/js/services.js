@@ -8,13 +8,22 @@ angular.module('ps.services', ['ngResource'])
             {action: 'track.json', q:'artist:Gaga'}
         );
     })
-   .factory('SpotifyLookup', function($http, $resource){
+   .factory('SpotifyLookup', function($http){
       /* When we know exactly what we're after from spotify. */
-        /* Protection against cross site scripting attacks. */
-        $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
-        return $resource("http://ws.spotify.com/lookup/1/:action",
-            {action: '.json', extras:'', uri:'spotify:track:7d40ltmahMLJKA8HhzX9xe'}
-        );
+      // http://stackoverflow.com/questions/11850025/recommended-way-of-getting-data-from-the-server
+      var SpotifyLookup = function(data){
+          angular.extend(this, data);
+      };
+
+      // static method to retrieve spotify stuff by URI
+      SpotifyLookup.get = function(uri){
+          return $http.get("http://ws.spotify.com/lookup/1/.json?uri=" + uri)
+            .then(function(response){
+                return new SpotifyLookup(response.data);
+            });
+      };
+
+      return SpotifyLookup;
     })
   .factory('Track', function($http, $resource){
       /* This is the partysen.se api */

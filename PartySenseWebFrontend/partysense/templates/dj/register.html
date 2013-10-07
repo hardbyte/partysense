@@ -3,15 +3,11 @@
 {% load url from future %}
 {% block content %}
 
-    <section class="span10">
+<section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
     <h2>First we need a couple of details about you!</h2>
-    <div class="progress">
-      <div class="bar" style="width: 33%;"></div>
-    </div>
-
-    <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+    <form class="bootstrap3"  method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
         {% include "form_snippet.html" %}
-        <input type="submit" value="Register and create your first event!" />
+        <input type="submit" class="btn btn-primary"  value="Register and create your first event!" />
     </form>
     </section>
 {% endblock %}

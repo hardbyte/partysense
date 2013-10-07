@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load cache %}
 {% load humanize %}
 {% load url from future %}
 {% load staticfiles %}
@@ -9,140 +10,148 @@
 {% endblock %}
 
 {% block fb %}
+    {% cache 3600 facebookmeta event.pk %}
     <meta property="fb:app_id"          content="386541278102635" />
-    <meta property="og:url"             content="http://partysen.se{% url "event-detail" event.pk event.slug %}" />
+    <meta property="og:url"             content="http://partysen.se{% url "event:detail" event.pk event.slug %}" />
     <meta property="og:site_name"       content="partysen.se"/>
     <meta property="og:title"           content="Interactive setlist for {{ event.title }}" />
     <meta property="og:type"            content="article" />
     <meta property="og:description"     content="Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}!" />
     <meta property="og:image"           content="{% static "images/fblink.png" %}" />
+    {% endcache %}
 {% endblock %}
 
 {% block content %}
 
-<div class="row" ng-app="Partysense" ng-controller="TemplateCtrl">
+<div class="row" ng-app="Partysense" ng-controller="TemplateCtrl" style="margin-top: 5px">
 
-    <div class="span3 hidden-phone affix">
+{% cache 900 eventsidebar event.pk request.user.pk %}
+    <div class="col-md-3 col-sm-4">
+      {% if event.dj.user == user %}
+          <div class="panel panel-default accordian-panel">
+              <a class="btn btn-block btn-primary btn-lg"
+                 href="{% url "event:stats" event.pk event.slug %}">
+                  <i class="glyphicon glyphicon-signal"></i> Event Analytics
+              </a>
+          </div>
+      {% endif %}
+		<div class="panel-group" id="accordion">
+		  <div class="panel panel-default accordian-panel">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Event Details
+			  </button>
+			</a>
+			<div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+			  <h4 id="event-name">{{ event.title }}</h4>
 
-        <div class="accordian" id="leftAccordion">
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                          data-toggle="collapse"
-                          data-parent="#leftAccordion"
-                          href="#collapseOne">
-                    Event Details
-                    </span>
-                </button>
-                <div id="collapseOne" class="event_details accordion-body collapse in">
-                    <section class="accordion-inner">
-                        <h4 id="event-name">{{ event.title }}</h4>
+                {% if event.dj.user == user %}
+                    <a class="btn btn-block"
+                       href="{% url "event:update" event.pk event.slug %}">
+                        <i class="icon-edit"></i> Edit Event Details
+                    </a>
+                {% endif %}
 
-                        {% if event.dj.user == user %}
-                            <a class="btn btn-block"
-                               href="{% url "event-update" event.pk event.slug %}">
-                                <i class="icon-edit"></i> Edit Event Details
+                <div class=""
+                     onclick="document.getElementById('eventURL').select();">
+                    <p>Share this link to collaborate with others:</p>
+
+                    <input type="text" id="eventURL" class="input-block-level" readonly
+                           title="share event with others by copying this link"
+                           style="cursor:default;"
+                           value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
+                </div>
+
+                <dl>
+                    <dt>Host: {% if event.dj.user == user %} <em>(you)</em>{% endif %}</dt>
+
+                    <dd>
+                        {% if event.dj.url  %}
+                            <a href="{{ event.dj.url }}">
+                                {{ event.dj.nickname }}
                             </a>
-                        {% endif %}
-
-                        <div class=""
-                             onclick="document.getElementById('eventURL').select();">
-                            <p>Share this link to collaborate with others:</p>
-
-                            <input type="text" id="eventURL" class="input-block-level" readonly
-                                   title="share event with others by copying this link"
-                                   style="cursor:default;"
-                                   value="http://partysen.se{% url "event-detail" event.pk event.slug %}"/>
-                        </div>
-
-                        <dl>
-                            <dt>Host: {% if event.dj.user == user %} <em>(you)</em>{% endif %}</dt>
-
-                            <dd>
-                                {% if event.dj.url  %}
-                                    <a href="{{ event.dj.url }}">
-                                        {{ event.dj.nickname }}
-                                    </a>
-                                {% else %}
-                                    {{ event.dj.nickname }}
-                                {% endif %}
-                                (<span class="dropdown">
-                                    <a class="dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}"
-                                       id="dLabel">other events</a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                        {% for event in djsOtherEvents %}
-                                            <li><a href="{% url "event-detail" event.pk event.slug %}">{{ event }} at {{ event.location.name }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </span>)
-                            </dd>
-                            <dt>When:</dt>
-                            <dd>{{ event.start_time }}</dd>
-                            <dt>Venue:</dt>
-                            <dd>{{ event.location }}</dd>
-                        </dl>
-                        <div id="map_canvas" style="width: 100%; height: 200px;"></div>
-
-                    </section>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                       data-toggle="collapse"
-                       data-parent="#leftAccordion"
-                       href="#collapseTwo">
-                        Import Recent Music
-                    </span>
-                </button>
-                <div id="collapseTwo" class="accordion-body collapse">
-                    <div ng-include src="recentTracksTemplate"></div>
-                </div>
-            </div>
-            <div class="accordion-group">
-                <button class="accordion-heading btn btn-block btn-primary">
-                    <span class="accordion-toggle"
-                       data-toggle="collapse"
-                       data-parent="#leftAccordion"
-                       href="#collapseThree">
-                        Your Events
-                    </span>
-                </button>
-                <div id="collapseThree" class="accordion-body collapse">
-                    <section>
-                        {% if upcoming_events %}
-                            <h3>Upcoming</h3>
-                            <ul>
-                            {% for e in upcoming_events %}
-                                <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
-                            {% endfor %}
-                            </ul>
-                            <form action="{% url "event.views.create" %}">
-                                <button class="btn btn-primary btn-block">Host your next event now!</button>
-                            </form>
-                        {% endif %}
-                        {% if past_events %}
-                            <hr>
-                            <h3>Recent</h3>
-                            <ul>
-                            {% for e in past_events %}
-                                 <li>{{ e.dj }}'s <a href="{% url "event-detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
-                            {% endfor %}
-                            </ul>
                         {% else %}
-                            <div ng-hide="loggedIn">
-                                <p>Login to see your events!</p>
-                            </div>
+                            {{ event.dj.nickname }}
                         {% endif %}
+                        (<span class="dropdown">
+                            <a class="dropdown-toggle"
+                               data-toggle="dropdown"
+                               href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}"
+                               id="dLabel">other events</a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                {% for event in djsOtherEvents %}
+                                    <li><a href="{% url "event:detail" event.pk event.slug %}">
+                                          {{ event }} at {{ event.location.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </span>)
+                    </dd>
+                    <dt>When:</dt>
+                    <dd>{{ event.start_time }}</dd>
+                    <dt>Venue:</dt>
+                    <dd>{{ event.location }}</dd>
+                </dl>
+                <div id="map_canvas" style="width: 100%; height: 200px;"></div>
 
-                    </section>
-                </div>
-            </div>
-        </div>
-    </div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default  accordian-panel hidden-xs">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Import Recent Music
+			  </button>
+			</a>
+			<div id="collapseTwo" class="panel-collapse collapse">
+			  <div class="panel-body">
+				<div ng-include src="recentTracksTemplate"></div>
+			  </div>
+			</div>
+		  </div>
+		  <div class="panel panel-default accordian-panel hidden-xs">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
+				Your Events
+			  </button>
+			</a>
+			<div id="collapseThree" class="panel-collapse collapse">
+			  <div class="panel-body">
+				
+                {% if upcoming_events %}
+                    <h3>Upcoming</h3>
+                    <ul>
+                    {% for e in upcoming_events %}
+                        <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                    {% endfor %}
+                    </ul>
+                    <form action="{% url "event:create" %}">
+                        <button class="btn btn-primary btn-block">Host your next event now!</button>
+                    </form>
+                {% endif %}
+                {% if past_events %}
+                    <hr>
+                    <h3>Recent</h3>
+                    <ul>
+                    {% for e in past_events %}
+                         <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <div ng-hide="loggedIn">
+                        <p>Login to see your events!</p>
+                    </div>
+                {% endif %}
 
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div>
+
+{% endcache %}
     {% block event_content %}
         Nothing to see here....
     {% endblock %}
@@ -152,11 +161,10 @@
 
 {% block jslibs %}
 
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-resource.min.js"></script>
-
+  {% cache 600 eventdata event.pk request.user.pk %}
   {% compress js %}
     <script>
+        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
         var ps = {
             event: {{ event.pk }},
             numberOfTracks: {{ number_of_tracks }},
@@ -166,8 +174,8 @@
             recentTracks: [
             {% for track in recent_tracks %}
                 {
-                    name: "{{ track.name }}",
-                    artist: "{{ track.artist }}",
+                    name: "{{ track.name|safe }}",
+                    artist: "{{ track.artist|safe }}",
                     spotify_url: "{{ track.spotify_url|safe|escape }}"
                 },
             {% endfor %}
@@ -175,17 +183,44 @@
             loggedIn: {% if user.is_authenticated %} true {% else %} false {% endif %},
             setlist: {{ setlist|safe|escape }}
         };
-
-
-        var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
     </script>
+  {% endcompress %}
+  {% endcache %}
+
+  {% compress js %}
     <script src="{% static "js/filters.js" %}"></script>
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
-
   {% endcompress %}
 
-    {% block event_js %}
-    {% endblock %}
+  {% block event_js %}
+  {% endblock %}
+
+  {% if event.location.latitude and event.location.longitude %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=false"></script>
+    {% compress js %}
+      <script type="text/javascript">
+      function initialize() {
+        var loc = new google.maps.LatLng({{ event.location.latitude }}, {{ event.location.longitude }});
+
+        var mapOptions = {
+            center: loc,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true, // disable the overlay because we don't have room
+            draggable: true
+        };
+        google.maps.visualRefresh = true;
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        var my_point = new google.maps.Marker({
+            position: loc,
+            map: map,
+            draggable: false
+        });
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+      </script>
+    {% endcompress %}
+  {% endif %}
 {% endblock %}

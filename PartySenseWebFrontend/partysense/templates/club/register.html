@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load compress %}
+{% load staticfiles %}
+{% block content %}
+
+<section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
+
+    <h2>Tell us about your club</h2>
+    <form class="bootstrap3" method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% include "form_snippet.html" %}
+
+        <br style="clear:left;">
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</section>
+
+
+{% endblock %}

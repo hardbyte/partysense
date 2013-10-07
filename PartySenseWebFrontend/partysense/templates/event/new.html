@@ -3,23 +3,16 @@
 {% load url from future %}
 {% load compress %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
+
 {% block content %}
+    <link rel="stylesheet" href="{% static "lib/datepicker/css/datepicker.css" type="text/css" %}"
 
-    <section class="span12">
+    <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
-    <h2>Tell us about this gig {{ user.dj_set.get.nickname }}</h2>
+        <h2>Tell us about this event {{ user.dj_set.get.nickname }}</h2>
+        {% crispy formset %}
 
-    <div class="progress">
-      <div class="bar" style="width: 66%;"></div>
-    </div>
-
-    <form method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
-        {% include "form_snippet.html" %}
-
-        <br style="clear:left;">
-
-        <input type="submit" value="Submit" />
-    </form>
     </section>
 
 
@@ -37,7 +30,7 @@
             // Use bootstrap-datepicker to create one,
             // then dynamically replace that <input> element.
             console.log("Adding datepicker support");
-            $("#id_start_time_0").datepicker({format: "yyy-mm-dd"});
+            $("#id_start_time_0").datepicker({format: "yyyy-mm-dd"});
           }
 
 

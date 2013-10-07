@@ -10,9 +10,9 @@ body {
     margin-left: auto;
     margin-right: auto;
     max-width: 1280px;
-
-    background: url(http://partysenseapp.appspot.com/images/background-top.png) #000 no-repeat top center;
-    background-attachment: fixed;
+	/*background:#000000;
+    background-image:url('/static/images/background-top.png') no-repeat top center*/
+    background: url('/static/images/background-top.png') #000 no-repeat top center;
 }
 
 h1, h2, h3, h4, h5 {
@@ -29,12 +29,7 @@ h1, h2, h3, h4, h5 {
 
 #content {
     overflow: hidden;
-}
-
-@media (min-width: 979px){
-    #content {
-        padding-top: 85px;
-    }
+	padding-top: 62px;
 }
 
 section {
@@ -68,6 +63,8 @@ nav a.regularActive:link, nav a.regularActive:visited {
 nav a.regularActive {
     display: block;
 	font-size: 1.6em;
+	
+	
     text-align: center;
 
     min-width: 50px;
@@ -122,28 +119,34 @@ footer
     height: 50px;   /* Height of the footer */
 }
 
-#quick-start {
+.quick-start {
     padding-top: 10px;
     padding-bottom: 10px;
+    /*background-color:rgba(33, 33, 33, 0.75);*/
 }
 
-#quick-start h1{
+.quick-start div{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.quick-start h1{
     font-size: 22px;
     text-transform: uppercase;
     margin-left: 20px;
 }
-#quick-start h2 {
+.quick-start h2 {
     font-size: 16px;
     text-transform: uppercase;
     margin-left: 30px;
     float: right;
 }
-#quick-start h3, p {
+.quick-start h3, p {
     margin-top: 3px;
     margin-bottom: 3px;
 }
 
-#quick-start ol {
+.quick-start ol {
     counter-reset: li; /* Initiate a counter */
     list-style: none; /* Remove default numbering */
     *list-style: decimal; /* Keep using default numbering for IE6/7 */
@@ -153,8 +156,9 @@ footer
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
 }
 
-#quick-start li {
+.quick-start li {
     position: relative;
+    min-height: 93px;
     display: block;
     padding: .4em .8em .4em 2.5em;
     *padding: .4em;
@@ -166,46 +170,49 @@ footer
     transition: all .3s ease-out;
 }
 
-#quick-start li:before
+.quick-start li:before
 {
     content: counter(li);
     counter-increment: li;
     position: absolute;
-    left: -1.3em;
+    left: -0.5em;
     top: 50%;
     margin-top: -1.3em;
     background: #2ba6cb;
     height: 2em;
     width: 2em;
-    line-height: 2em;
+    line-height: 1.5em;
     border: .3em solid #fff;
     text-align: center;
     font-weight: bold;
     border-radius: 2em;
     transition: all .3s ease-out;
 }
-#quick-start button {
+.banner-button button {
     width: 60%;
     height: 50px;
-    margin-left: 20%;
     margin-top: 15px;
     font-size: 20px;
 }
 
-#quick-start p.action{
+.banner-button section{
+    background: transparent;
+}
+
+.quick-start p.action{
     margin: 20px;
 }
 
 #facebook_button{
     float: left;
-    display: block;
+    padding-left: 30px;
+    display: inline;
     margin-right: 20px;
     line-height: 20px;
-    padding-left: 25px;
     padding-right: 4px;
     background: url('images/social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
-    border: 1px solid #1A356E;
-    text-decoration: none;
+    /*border: 1px solid #1A356E;*/
+
     color: white;
 }
 
@@ -236,8 +243,8 @@ footer
 	border-radius: 2px;
 }
 
-.recentTrack {
-
+#recentTracks {
+	background-color:rgba(33, 33, 33, 0.0);
 }
 
 .track-info {
@@ -311,4 +318,238 @@ footer
 
 #GoogleAdvert {
     margin-top: 20px;
+}
+
+
+.icon-bar {
+	background-color: #FFFFFF;
+	font-weight: bold;
+}
+
+.jumbotron {
+    background-color:rgba(33, 33, 33, 0.75);
+}
+
+.navbar-inner {
+	/*background-image:url('/static/images/background.jpg');*/
+    background: black;
+	background-color:black;
+	background-size:100%;
+	background-position:center;
+}
+
+.navbar-inner{
+    min-height: 60px;
+}
+
+
+.carousel-caption{
+	background-color:  rgba(0, 0, 0, 0.8);
+	left:0%;
+	right:0%;
+	bottom:0px;
+}
+
+.carousel-indicators{
+	bottom:-10px;
+	padding:0px;
+}
+
+.brand{
+    margin-left:10px;
+}
+
+.hero-background{
+    /*background-color:rgba(33, 33, 33, 0.75);*/
+    background: transparent;
+}
+
+.hero-logo{
+    min-height:110px;
+    padding:10px;
+    margin-bottom:10px
+}
+
+.navbar-inner{
+    min-height:60px;
+}
+
+.nav-pill{
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a{
+	margin-top:5px;
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a:hover{
+	background-color:#074458;
+	border-radius:5px;
+}
+
+.dropdown-menu>li{
+	width:100%;
+}
+
+.dropdown-menu>li:hover{
+	background-color:#000000;
+}
+
+.dropdown.open a.dropdown-toggle .caret {
+	color:#FFFFFF;
+}
+
+.accordian-panel{
+	background-color:rgba(33, 33, 33, 0.75);
+	border-width:0px;
+	color:white;
+}
+
+.login-dropdown-ul{
+	background-color:#074458;
+}
+
+.login-dropdown-ul > li > a{
+	color: white;
+}
+ 
+.login-dropdown-ul > li > a:hover, .login-dropdown-ul > li > a:focus {
+  background-color:#074458;
+  color:#7496A1;
+  background-image: none;
+  filter: none;
+}
+ 
+#eventURL{
+	width:100%;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus{
+
+	background-image: none;
+	border:0px;
+}
+
+@media (max-width:992px){
+	.banner-button section{
+        text-align:center;
+
+    }
+}
+
+@media (max-width:400px){
+	.carousel-heading, .quick-start button, .quick-start h1 , .quick-start h3{
+        font-size:18px;
+    }
+
+	.jumbotron h2{
+		font-size:20px;
+	}
+	.carousel-paragraph, .quick-start h2{
+        font-size:14px;
+    }
+}
+
+.quick-start-col{
+    border: #000000;
+    border-style:solid;
+    border-width:1px;
+}
+
+#banner-login-button{
+    text-align: left;
+}
+
+#banner-event-button{
+    text-align: right;
+}
+
+.feature-td{
+    width: 50%;
+    text-align: center;
+    border: #444;
+    border-style:solid;
+    border-width:1px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.feature-td p{
+    color: #ffffff;
+}
+
+.features{
+    margin-bottom: 10px;
+}
+
+.intro-video{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.club-landing-section{
+    margin-top: 140px;
+}
+
+.club-landing-section p, li{
+    color: white;
+    font-size: 16px;
+}
+
+.club-register-button{
+    text-align: center;
+}
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.trackOffer {
+    height: 20px;
+}
+
+
+.slide-off-left {
+    transition: all 750ms linear;
+    -webkit-transition: all 750ms linear;
+}
+
+.slide-on-left {
+    transition: all 250ms linear;
+    -webkit-transition: all 250ms linear;
+}
+
+.slide-on-left
+{
+    margin-left: 100px;
+}
+
+.slide-on-left-active.slide-on-left-active {
+    margin-left: 0px;
+}
+
+
+
+.slide-off-left
+{
+    margin-right: 100px;
+}
+
+.block-heading {
+    padding: 15px 10px;
+    border-radius: 4px;
 }

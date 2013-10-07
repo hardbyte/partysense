@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <img class="img-responsive" src="{% static "images/phones.png" %}" alt="Coming to your platform soon!"/>
+        </div>
+
+        <div id="quick-start">
+            <div class="col-md-6">
+                <div id="dj-quick-start" class="club-landing-section">
+                    <h1>Club Owners</h1>
+
+                    <ul>
+                        <li>
+                            <p>Sign up your club with us</p>
+                        </li>
+                        <li>
+                            <p>We just need to know a few details</p>
+                        </li>
+                        <li>
+                            <p>Leverage our detailed analytics to get to know your audience!</p>
+                        </li>
+                    </ul>
+
+                    <a href="{% url "create-club" %}">
+                        <button class="btn btn-primary club-register-button">Register now for free!</button>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block jslibs %}
+{% endblock %}
