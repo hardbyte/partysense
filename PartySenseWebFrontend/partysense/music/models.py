@@ -38,11 +38,12 @@ class ExternalID(models.Model):
 
 
 class ExternallyDefinedIDModel(models.Model):
-    _spotify_type = IDType.objects.get(pk=1)
+
     _external_ids = models.ManyToManyField(ExternalID)
 
     def __init__(self, *args, **kwargs):
         self._cached_ids = {}
+        self._spotify_type = IDType.objects.get(pk=1)
         super(ExternallyDefinedIDModel, self).__init__(*args, **kwargs)
 
     def get_spotify_url(self):

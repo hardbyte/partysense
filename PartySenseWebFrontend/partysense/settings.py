@@ -12,7 +12,7 @@ ADMINS = (
 )
 DOMAIN = "http://partysen.se"
 
-ALLOWED_HOSTS = ['partysen.se','beta.partysen.se']
+ALLOWED_HOSTS = ['partysen.se','beta.partysen.se', 'test.partysen.se']
 
 TWITTER_CONSUMER_KEY         = ''
 TWITTER_CONSUMER_SECRET      = ''

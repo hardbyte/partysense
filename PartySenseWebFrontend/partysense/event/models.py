@@ -39,7 +39,15 @@ class Event(TimeStampedModel):
     """
     The core of the system
     """
-    title = models.CharField("Event name", max_length=70, help_text="Keep it simple")
+    title = models.CharField("Event Name", max_length=70, help_text="Keep it simple")
+
+    description = models.TextField("Event Description", blank=True,
+                                   help_text="""Guidance to attendees about what to expect.
+    <strong>Eg:</strong>
+    <blockquote>We will play any tracks with more than 10 up votes</blockquote>
+
+    """)
+
     location = models.ForeignKey(Location, help_text="Where is the event?")
 
     # TODO migrate to multiple dj's
@@ -54,7 +62,8 @@ class Event(TimeStampedModel):
     # The DJ can choose all the music or users can add too
     user_editable = models.BooleanField(default=True,
                                         verbose_name="Allow guests to add music to the playlist (Recommended) ",
-                                        help_text="If not selected, only you can add songs to the playlist, and others can only vote")
+                                        help_text="""If not selected, only Event DJs can add songs to the playlist.
+                                        Other users will still be able to vote on the music you have chosen.""")
 
     start_time = models.DateTimeField()
 

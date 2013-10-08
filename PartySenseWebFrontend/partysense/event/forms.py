@@ -26,20 +26,26 @@ class MySplitDateTimeWidget(SplitDateTimeWidget):
 
 
 class EventForm(ModelForm):
+    """
+    This form is really important!
+    It is the first interaction of the dj with the site.
+
+    Consider using http://epiceditor.com/ for the description field.
+    """
     class Meta:
         model = Event
 
-        # Explicitly specifying the fields we want from the model
+        # Explicitly specify the fields we get from the model
         fields = ('title',
                   'user_editable',
-                  'start_time'
+                  'start_time',
+                  'description'
                   )
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_class = "well"
-        #self.helper.form_tag = False
         self.helper.layout = Layout(
             Div(
                 Div(
@@ -48,7 +54,9 @@ class EventForm(ModelForm):
                          Field('user_editable', css_class="col-md-1"),
                          css_class="col-md-12"
                     ),
-                    Div(Field('start_time'), css_class="col-md-12"),
+                    Div(Field('start_time'),
+                        Field('description', rows=4),
+                        css_class="col-md-12"),
 
                     css_class="col-md-6"),
                 Div(
