@@ -3,12 +3,14 @@ from django.utils.safestring import mark_safe
 from django.template import Context, loader
 
 
-class GoogleMapsWidget(forms.HiddenInput):
+class GoogleMapsWidget(forms.TextInput):
+
 
     def render(self, name, value, attrs=None, choices=()):
         self.attrs['base_point'] = self.attrs.get('base_point', "-43.532496,172.6343")
         self.attrs['width'] = self.attrs.get('width', 400)
         self.attrs['height'] = self.attrs.get('height', 400)
+        self.attrs['country_city'] = self.attrs.get('country_city', u'Christchurch, New Zealand')
 
         t = loader.get_template("map_snippet.html")
         c = Context({
@@ -17,7 +19,7 @@ class GoogleMapsWidget(forms.HiddenInput):
             'base_point': self.attrs['base_point'],
             'width': self.attrs['width'],
             'height': self.attrs['height'],
-            'country_city': "Christchurch, New Zealand"
+            'country_city': self.attrs['country_city']
             })
         maps_html = t.render(c)
 

@@ -3,24 +3,19 @@ from django.forms import ModelForm, Textarea, IntegerField, MultipleChoiceField
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, Select
 from django.core.validators import validate_email
 
-from models import *
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
+from partysense.club.models import *
 
 
-class ClubForm(ModelForm):
+class NewClubForm(ModelForm):
+
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Register club', css_class="btn-block"))
+
     class Meta:
         model = Club
+        fields = ("name", "email", "website", "facebook_page", "city", "country", "description")
 
-        # Explicitly specifying the fields we want
-        fields = ('club_name',
-                  'club_email',
-                  'website',
-                  'facebook_page',
-                  'address',
-                  'city',
-                  'country')
 
-        # @todo: Where does the user authentication happen? 
-
-        widgets = {
-            #'content': Textarea(attrs={'cols': 60, 'rows': 10}),
-            }
