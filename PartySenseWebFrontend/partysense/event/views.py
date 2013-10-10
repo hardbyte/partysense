@@ -382,8 +382,7 @@ def update(request, pk, slug):
             'venue': event.location.name,
             'latitude': event.location.latitude,
             'longitude': event.location.longitude,
-
-
+            'user_editable': event.user_editable
         }
         # Otherwise we are left with a completely unbound form
         event_form = EventForm(initial=prior_information)
