@@ -37,24 +37,14 @@
             }
         });
 
-
-
-        console.log("Adding map");
-        $('#id_address').keydown(function (event) {
-            var keypressed = event.keyCode || event.which;
-            if (keypressed == 13) {
-                entrySelected();
-                return false;
-            }
-            return true;
-        });
-
-        // If we are editing the form the id_venue will be set by the server
-        $('#id_address').val($('#id_venue').val());
-
-        $('#id_address').change(function(){
-            $('#id_venue').val($('#id_address').val());
-        });
+{#        $('#id_venue').keydown(function (event) {#}
+{#            var keypressed = event.keyCode || event.which;#}
+{#            if (keypressed == 13) {#}
+{#                entrySelected();#}
+{#                return false;#}
+{#            }#}
+{#            return true;#}
+{#        });#}
 
         my_point = new google.maps.Marker({
             position: center,
@@ -67,7 +57,7 @@
             $('#id_longitude').val(event.latLng.lng());
         });
 
-        var input = document.getElementById('id_address');
+
         var defaultBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(center.lat()-10, center.lng()-10),
           new google.maps.LatLng(center.lat()+10, center.lng()+10));
@@ -76,18 +66,20 @@
             bounds: defaultBounds
         };
 
-        autocomplete = new google.maps.places.Autocomplete(input, options);
+        var input = document.getElementById('id_venue');
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
         google.maps.event.addListener(autocomplete, 'place_changed', function(){
             var selectedPlace = autocomplete.getPlace();
             if(!selectedPlace.geometry){
                 alert("Sorry, location not found");
+                return true;
             } else {
                 set_center(selectedPlace.geometry.location.lat(), selectedPlace.geometry.location.lng());
             }
         });
     });
     var entrySelected = function(){
-        console.log("entry selected");
+
     };
 
     function set_center(lat, lng){
@@ -103,14 +95,8 @@
 <div>
 
     <div class="address_input control-group">
-        <label for="id_address" class="control-label">Event Venue</label>
-        <input id="id_address" type="text" value="" class="textinput textInput form-control" placeholder="Address" />
-
         <br style="clear: both;" />
-        <div id="search_results">
-        </div>
-
     </div>
-    <p style="margin: 15px;"></p>
+
     <div id="map_canvas" style="width: 100%; height: {{ height }}px; margin-bottom: 20px;"></div>
 </div>
