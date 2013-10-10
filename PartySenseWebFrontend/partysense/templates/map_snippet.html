@@ -37,14 +37,15 @@
             }
         });
 
-{#        $('#id_venue').keydown(function (event) {#}
-{#            var keypressed = event.keyCode || event.which;#}
-{#            if (keypressed == 13) {#}
-{#                entrySelected();#}
-{#                return false;#}
-{#            }#}
-{#            return true;#}
-{#        });#}
+        $('#id_venue').keypress(function(event) {
+            var keypressed = event.keyCode || event.which;
+            if (keypressed == 13) {
+                // avoid submitting the form because user probably just selected a google suggestion
+                try{event.cancelBubble=true;}//IE
+                catch(e){event.stopPropagation();}//others
+                event.preventDefault();
+            }
+        });
 
         my_point = new google.maps.Marker({
             position: center,
@@ -68,11 +69,9 @@
 
         var input = document.getElementById('id_venue');
         var autocomplete = new google.maps.places.Autocomplete(input, options);
-        google.maps.event.addListener(autocomplete, 'place_changed', function(){
+        google.maps.event.addListener(autocomplete, 'place_changed', function(event){
             var selectedPlace = autocomplete.getPlace();
             if(!selectedPlace.geometry){
-                alert("Sorry, location not found");
-                return true;
             } else {
                 set_center(selectedPlace.geometry.location.lat(), selectedPlace.geometry.location.lng());
             }
