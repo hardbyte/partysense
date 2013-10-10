@@ -343,8 +343,8 @@ def update(request, pk, slug):
 
     response = "Permission Denied"
 
-    if not request.user == event.dj.user:
-        return 404
+    if not request.user == event.dj.user or request.user.is_staff:
+        raise Http404
 
     if request.method == 'POST':
         # If the form has been submitted...
