@@ -341,10 +341,9 @@ def create(request):
 def update(request, pk, slug):
     event = get_object_or_404(Event, pk=pk)
 
-    response = "Permission Denied"
-
-    if not request.user == event.dj.user or request.user.is_staff:
-        raise Http404
+    if not (request.user == event.dj.user or request.user.is_staff):
+        # if not allowed here...
+        raise Http404("Permission Denied")
 
     if request.method == 'POST':
         # If the form has been submitted...
