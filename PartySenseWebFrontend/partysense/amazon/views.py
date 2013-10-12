@@ -65,8 +65,9 @@ def search_amazon_for_track(track):
             response['price'] = str(product.OfferSummary.LowestNewPrice.FormattedPrice)
         else:
             response['price'] = "(price not available)"
+        logger.debug("Amazon price for track: {} = {}".format(track.pk, response['price']))
         break
-    logger.debug("Amazon price for track: {} = {}".format(track.pk, response['price']))
+
     return response
 
 
