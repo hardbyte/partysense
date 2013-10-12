@@ -94,7 +94,7 @@ def price_multiple_tracks(request):
         else:
             # Search and hopefully get ASIN
             response = search_amazon_for_track(track)
-            asins[track.pk] = response['asin']
+            asins[track.pk] = response['ASIN']
     logger.info("Have ASINs: {}".format(asins))
 
     # Look up the prices. 10 at a time
