@@ -95,12 +95,24 @@ def price_multiple_tracks(request):
         else:
             # Search and hopefully get ASIN
             response = search_amazon_for_track(track)
+
+            # An item search will take about ~1 or ~2 seconds, so having an item
+            # that doesn't exist in amazon's db quite a slow down.
+            #
+            # So we probably want to cache the failed search for an even longer
+            # time - so that we only check if it still doesn't exist every couple
+            # of days or so.
+            track_data[track.pk] = response
+            response.pop('ASIN')
             if 'error' not in response:
-                track_data[track.pk] = response
-                response.pop('ASIN')
+
                 # As this is the first time we have searched for this track
                 # only cache for a few hours
-                cache.set("ASIN_for_pk={}".format(track.pk), response, 60 * 60 * 6)
+                cache_time = 6 * 60 * 60
+            else:
+                # there was an error, don't search for this for a while...
+                cache_time = 48 * 60 * 60
+            cache.set("ASIN_for_pk={}".format(track.pk), response, 60 * 60 * 6)
 
     logger.info("Have these ASINs to lookup: {}".format(asins))
 
