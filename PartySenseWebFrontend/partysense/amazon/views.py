@@ -48,7 +48,7 @@ def search_amazon_for_track(track):
             Title=track.name,
             ResponseGroup='Medium')
     except NoExactMatchesFound:
-        logger.warning("Searched for track that amazon didn't have")
+        logger.warning("Searched for track that amazon didn't have. pk={}".format(track.pk))
         response['error'] = "Track not found"
     except TooManyRequests:
         logger.warning("Too many amazon requests while searching for track")
@@ -96,8 +96,13 @@ def price_multiple_tracks(request):
             # Search and hopefully get ASIN
             response = search_amazon_for_track(track)
             if 'error' not in response:
-                asins[track.pk] = response['ASIN']
-    logger.info("Have ASINs: {}".format(asins))
+                track_data[track.pk] = response
+                response.pop('ASIN')
+                # As this is the first time we have searched for this track
+                # only cache for a few hours
+                cache.set("ASIN_for_pk={}".format(track.pk), response, 60 * 60 * 6)
+
+    logger.info("Have these ASINs to lookup: {}".format(asins))
 
     # Look up the prices. 10 at a time
 
