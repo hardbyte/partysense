@@ -8,7 +8,6 @@ from django.core.cache import cache
 
 from amazonproduct import API, NoExactMatchesFound, TooManyRequests
 
-from music.models import IDType
 from partysense.music.models import Track, IDType, ExternalID
 
 api = API(locale="us")
