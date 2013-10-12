@@ -102,16 +102,15 @@ def price_multiple_tracks(request):
             # So we probably want to cache the failed search for an even longer
             # time - so that we only check if it still doesn't exist every couple
             # of days or so.
-            track_data[track.pk] = response
-            response.pop('ASIN')
             if 'error' not in response:
-
+                response.pop('ASIN')
                 # As this is the first time we have searched for this track
                 # only cache for a few hours
                 cache_time = 6 * 60 * 60
             else:
                 # there was an error, don't search for this for a while...
                 cache_time = 48 * 60 * 60
+            track_data[track.pk] = response
             cache.set("ASIN_for_pk={}".format(track.pk), response, 60 * 60 * 6)
 
     logger.info("Have these ASINs to lookup: {}".format(asins))
