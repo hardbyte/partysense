@@ -40,6 +40,7 @@ def search_amazon_for_track(track):
     """
     logger.debug("Searching amazon for track: {}".format(track.pk))
     response = {}
+    items = []
     try:
         items = api.item_search(
             'MP3Downloads',
@@ -47,7 +48,6 @@ def search_amazon_for_track(track):
             Title=track.name,
             ResponseGroup='Medium')
     except NoExactMatchesFound:
-        # handle no results...
         logger.warning("Searched for track that amazon didn't have")
         response['error'] = "Track not found"
     except TooManyRequests:
