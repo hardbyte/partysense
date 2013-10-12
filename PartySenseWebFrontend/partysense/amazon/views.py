@@ -85,13 +85,10 @@ def price_multiple_tracks(request):
         # First see if we have memcached the price :-)
         cache_result = cache.get("ASIN_for_pk={}".format(track.pk))
         if cache_result is not None:
-            logger.info("Track price info was in memcached.")
+            logger.info("Track price info was memcached.")
             track_data[track.pk] = cache_result
-            # Remove the ASIN from `asins` so it doesn't get used later
-            asins.pop(track.pk)
-            continue
-
-        if track._external_ids.filter(id_type=amazon_type).exists():
+            # Note the ASIN doesn't get put in `asins` so it doesn't get queried
+        elif track._external_ids.filter(id_type=amazon_type).exists():
             # Add ASIN to list to query
             asins[track.pk] = track._external_ids.get(id_type=amazon_type).value
         else:
