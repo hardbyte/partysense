@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import connection
 
+
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
 from partysense.dj.models import DJ
@@ -147,6 +148,7 @@ def modify_event(request, pk):
 
     return response
 
+
 def json_track_list(event, user):
     """
     This has some hand coded sql for speed. It is still too slow...
@@ -225,8 +227,8 @@ def get_track_list(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user
     number_of_tracks, setlist = json_track_list(event, user)
-
     return HttpResponse(setlist, content_type="application/json")
+
 
 @login_required
 def did_you_mean(request):

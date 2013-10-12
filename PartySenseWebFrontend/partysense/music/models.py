@@ -33,7 +33,7 @@ class ExternalID(models.Model):
     id_type = models.ForeignKey('IDType')
     value = models.CharField(max_length=64)
 
-    def __str__(self):
+    def __repr__(self):
         return '<{s.id_type.name}: "{s.value}">'.format(s=self)
 
 
