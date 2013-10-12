@@ -116,7 +116,9 @@ def price_multiple_tracks(request):
             else:
                 price = "(price not available)"
 
-            track_data[pk] = {"price": price, "URL":str(item.DetailPageURL)}
+            track_data[pk] = {"price": price, "URL": str(item.DetailPageURL)}
+
+            cache.set("ASIN_for_pk={}".format(pk), track_data[pk], 60 * 60 * 12)
 
     resp = HttpResponse(content_type="application/json")
     json.dump(track_data, resp)
