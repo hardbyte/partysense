@@ -51,29 +51,31 @@ class EventDetail(EventView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
+        e = context['event']
         # add other context... if required
         context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
         context['djsOtherEvents'] = Event.objects.exclude(
-                id=context['event'].pk
+                id=e.pk
             ).filter(
                 past_event=False,
-                 djs__in=set(dj.pk for dj in context['event'].djs.all())
+                 djs__in=set(dj.pk for dj in e.djs.all())
             ).order_by('-modified')
 
         # add recently up-voted tracks TODO CACHE these per user?
         u = self.request.user
         if not u.is_anonymous():
             # Add this user to the event
-            if not context['event'].users.filter(pk=u.pk).exists():
-                context['event'].users.add(u)
+            if not e.users.filter(pk=u.pk).exists():
+                e.users.add(u)
 
             context['recent_tracks'] = reversed(Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
-                                   .exclude(track__in=context['event'].tracks.all())
-                                   .exclude(event=context['event'])}).select_related()[0:10])
+                                   .exclude(track__in=e.tracks.all())
+                                   .exclude(event=e)}).select_related()[0:10])
 
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
+            context['user_can_edit'] = u.is_staff or e.djs.filter(user=u).exists()
 
         # Add the setlist
         context['number_of_tracks'], context['setlist'] = json_track_list(context['event'], u)
@@ -324,7 +326,7 @@ def create(request):
             logger.info("Creating new event to start at: {}".format(event.start_time))
 
             # Add the automatic fields based on user
-            event.dj = dj
+
 
             # create a new location or use existing...
             location = Location(
@@ -340,6 +342,10 @@ def create(request):
             event.fb_url = "http://facebook.com/event"
 
             # then commit the new event to our database
+            event.save()
+
+            event.djs.add(dj)
+
             event.save()
 
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
