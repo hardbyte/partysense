@@ -22,10 +22,7 @@ class Location(models.Model):
     """
 
     # Club/Bar/Venue name
-    name = models.CharField(max_length=50, blank=True, help_text="Venue")
-
-    # Address as entered
-    address = models.CharField(max_length=92, blank=True)
+    name = models.CharField(max_length=256, blank=True, help_text="Venue")
 
     # coordinate as returned by google maps
     latitude = models.FloatField()
@@ -52,9 +49,10 @@ class Event(TimeStampedModel):
     past_event = models.BooleanField(default=False, editable=False)
 
     # The DJ can choose all the music or users can add too
-    user_editable = models.BooleanField(default=True,
-                                        verbose_name="Allow guests to add music to the playlist (Recommended) ",
-                                        help_text="If not selected, only you can add songs to the playlist, and others can only vote")
+    user_editable = models.BooleanField(
+        default=True,
+        verbose_name="Allow guests to add music to the playlist (Recommended) ",
+        help_text="If not selected, only you can add songs to the playlist, and others can only vote")
 
     start_time = models.DateTimeField()
 
@@ -76,7 +74,7 @@ class Event(TimeStampedModel):
         return self.start_time - datetime.datetime.utcnow().replace(tzinfo=utc)
 
     def get_absolute_url(self):
-        return reverse('event-detail', args=[str(self.id), self.slug])
+        return reverse('event:detail', args=[str(self.id), self.slug])
 
 
 class Vote(models.Model):

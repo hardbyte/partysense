@@ -10,7 +10,7 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
             $scope.scrollableClass = $scope.spotifyResult.tracks.length > 10 ? "pre-scrollable" : "";
             $scope.msg = "";
         }
-        if($scope.spotifyResult.info.num_results == 0) {
+        if($scope.spotifyResult.info.num_results === 0) {
             $scope.msg = "Sorry no results";
         }
         /* Scroll up to the search box to show the new results. */
@@ -146,7 +146,7 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
         }, function(){
             console.log("failure to add track");
             $scope.msgClass = "alert-error";
-            track.msg = "Opps, something went wrong adding " + track.name;
+            track.msg = "Oops, something went wrong adding " + track.name;
             $timeout(function() { $scope.msg = ""; }, 5000);
         });
     };
@@ -157,10 +157,13 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
     $scope.infoWidth = ps.loggedIn ? 'col-md-7' : 'col-md-9';
     $scope.loggedIn = ps.loggedIn;
     $scope.spotifyPlaylistURL = "";
+    $scope.showSpotifyPreview = false;
     $scope.numberOfTracks = ps.numberOfTracks;
+    // encode the events name in the spotify playlist
+    $scope.playlistName = encodeURIComponent("Partysense - " + ps.eventTitle);
 
     $scope.searchArtistFromTrack = function(track) {
-        console.log("want to search for an artist do you?");
+        console.log("Search for an artist");
         console.log(track);
         var artist = {
             name: track.artist,
@@ -169,40 +172,97 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
-    $scope.showTrackPurchase = function(track){
-        track.offer = {};//
+    $scope.requestAmazonPrices = function(tracks){
+        var trackIds = [];
 
-        $http.get("/amazon/purchase/?artist="+ track.artist + "&track=" + track.name)
+        // Iterate through all the tracks to get their IDs
+        for (var k = 0; k < tracks.length; k++) {
+            trackIds.push(tracks[k].pk);
+        }
+
+        $http.get("/amazon/multiple/?pks=" + JSON.stringify(trackIds))
           .success(function(response){
-              track.offer = {
-                  url: response.URL,
-                  price: response.price
-              };
-
+              if(response.error) {
+                  console.log("Bugger...");
+              } else {
+                  console.log("Received multiple amazon prices");
+                  for (var i = 0; i < tracks.length; i++) {
+                      var track = tracks[i];
+                      track.offer = {
+                          url: response[track.pk].URL,
+                          price: response[track.pk].price
+                      };
+                  }
+              }
+          })
+          .error(function(response){
+              console.log("Awkward error...");
           });
     };
 
+    // TODO make into a service
+    $scope.showTrackPurchase = function(track){
+        /* This is used to query amazon via the partysense server for one off prices*/
+        track.offer = {};
+
+        $http.get("/amazon/single/?artist="+ track.artist + "&track=" + track.name + "&pk=" + track.pk)
+          .success(function(response){
+              if(response.error) {
+                  track.offer = {
+                      "error": response.error
+                  };
+              } else {
+                  track.offer = {
+                      url: response.URL,
+                      price: response.price
+                  };
+              }
+          })
+          .error(function(response){
+              console.log("Got an error...");
+              track.offer = {
+                      "error": "Sorry, an error occurred"
+                  };
+          });
+
+    };
+
     function refreshSetlist(data){
-        var songs = "";
+        console.log("Refreshing setlist...");
+        var spotifyTracks = "";
         var i;
+        var defaultCoverURL = "/static/images/defaultCover.png";
+
         for (var j = 0; j < data.length; j++) {
-            data[j].coverURL = "/static/images/defaultCover.png";
+            if(!data[j].coverURL){
+                data[j].coverURL = defaultCoverURL;
+            }
         }
+
         $scope.setlist = data;
 
         for(i=0; i<Math.min(80, data.length);i++){
-            songs += data[i].spotifyTrackID.slice(14) + ',';
+            spotifyTracks += data[i].spotifyTrackID.slice(14) + ',';
         }
-        $scope.playlistSongs = songs;
-        $scope.spotifyPlaylistURL = "http://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + $scope.playlistSongs + "&view=list";
 
+        $scope.spotifyPlaylistURL = "https://embed.spotify.com/?uri=spotify:trackset:" + "test" + ":" + spotifyTracks + "&view=list";
+        $scope.showSpotifyPreview = true;
+
+        // Iterate through all the tracks
         for (var k = 0; k < data.length; k++) {
-            findCover(data[k]);
+            if(data[k].coverURL === defaultCoverURL){
+                findCover(data[k]);
+            }
         }
+
+        // Get the top N tracks price
+        $scope.requestAmazonPrices(data.slice(0, Math.min(30, data.length)));
+
     }
 
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
+        console.log("Calling update setlist with new data from server");
         $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
@@ -215,14 +275,11 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         $scope.updateSetlist();
     });
 
-    // encode the events name in the spotify playlist
-    $scope.playlistName = encodeURIComponent("Partysense - " + ps.eventTitle);
 
     $scope.removeTrack = function(track) {
         $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
         $http.post("/api/" + ps.event + "/remove/" + track.pk + "/").success(
           function(response){
-            console.log(response);
             $scope.updateSetlist();
           });
     };
@@ -230,7 +287,6 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
     $scope.vote = function (track, isUpVote) {
         console.log("Got a vote!");
         console.log(track);
-        // TODO replace with $resource
         /* Protection against cross site scripting attacks. */
         $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
         $http.post("/api/" + ps.event + "/vote/" + track.pk + "/",
@@ -291,6 +347,7 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         };
         // See if we have localStorage and if this track has been stored
         if(supports_html5_storage() && track.spotifyTrackID in localStorage) {
+            //console.log("Using cover from local storage");
             updateCover(JSON.parse(localStorage[track.spotifyTrackID]));
             return;
         }

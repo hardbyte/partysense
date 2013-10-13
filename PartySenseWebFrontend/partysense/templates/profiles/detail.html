@@ -78,7 +78,7 @@
                 <h3>Upcoming</h3>
                 <ul>
                 {% for e in upcoming_events %}
-                    <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                    <li>{{ e.dj }}'s <a href="{{ e.get_absolute_url }}">{{e.title}}</a> at {{ e.location.name }}</li>
                 {% endfor %}
                 </ul>
                 <form action="{% url "event:create" %}">
@@ -96,7 +96,9 @@
                     {% if past_events %}
                         <ul>
                         {% for e in past_events %}
-                             <li><a href="{% url "event:detail" e.pk e.slug %}">{{ e.title }}</a> by <a href="#">{{ e.dj }}</a> at {{ e.location.name }}</li>
+                             <li><a href="{{ e.get_absolute_url }}">{{ e.title }}</a> by
+                                 <a href="#">{{ e.dj }}</a> at {{ e.location.name }}
+                             </li>
                         {% endfor %}
                         </ul>
                     {% endif %}

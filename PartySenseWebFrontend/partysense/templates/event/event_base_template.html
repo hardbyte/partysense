@@ -81,7 +81,7 @@
                                id="dLabel">other events</a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                 {% for event in djsOtherEvents %}
-                                    <li><a href="{% url "event:detail" event.pk event.slug %}">
+                                    <li><a href="{{ event.get_absolute_url }}">
                                           {{ event }} at {{ event.location.name }}
                                         </a>
                                     </li>
