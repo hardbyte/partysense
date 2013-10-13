@@ -76,7 +76,7 @@ class EventForm(ModelForm):
 
     start_time = SplitDateTimeField(
         input_date_formats=['%Y-%m-%d'],
-        input_time_formats=['%H:%M'],
+        input_time_formats=['%H:%M', '%H:%M:%S'],
         localize=True,
         widget=MySplitDateTimeWidget()
     )
@@ -86,8 +86,8 @@ class EventForm(ModelForm):
             'width': 800,
             'height': 300,
               }),
-        error_messages={'required': 'Please select point from the map.'},
-        help_text="location")
+        error_messages={'required': 'Please select a point from the map and enter a venue name'},
+        help_text="Location of the event")
 
     latitude = CharField(widget=HiddenInput())
     longitude = CharField(widget=HiddenInput())
@@ -111,7 +111,7 @@ class EventForm(ModelForm):
 
     def clean_start_time(self):
         date = self.cleaned_data['start_time'].date()
-        logger.info("date: {}".format(date))
+        logger.info("Cleaning start time. Date: {}".format(date))
         if date < datetime.date.today():
             raise ValidationError("The date must be in the future!")
         return self.cleaned_data['start_time']

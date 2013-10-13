@@ -22,10 +22,7 @@ class Location(models.Model):
     """
 
     # Club/Bar/Venue name
-    name = models.CharField(max_length=50, blank=True, help_text="Venue")
-
-    # Address as entered
-    address = models.CharField(max_length=92, blank=True)
+    name = models.CharField(max_length=256, blank=True, help_text="Venue")
 
     # coordinate as returned by google maps
     latitude = models.FloatField()
@@ -85,7 +82,7 @@ class Event(TimeStampedModel):
         return self.start_time - datetime.datetime.utcnow().replace(tzinfo=utc)
 
     def get_absolute_url(self):
-        return reverse('event-detail', args=[str(self.id), self.slug])
+        return reverse('event:detail', args=[str(self.id), self.slug])
 
 
 class Vote(models.Model):

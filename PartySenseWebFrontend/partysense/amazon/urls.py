@@ -5,6 +5,8 @@ from partysense.amazon.views import *
 
 urlpatterns = patterns('',
     # add an api call for searching amazon for a mp3 product
-    url(r'^purchase/$', purchase, name='purchase'),
+    url(r'^single/$', price_track, name='price_single'),
+
+    url(r'^multiple/$', price_multiple_tracks, name='price_multiple'),
 
     )

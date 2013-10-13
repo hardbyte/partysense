@@ -7,7 +7,10 @@
     <h2>Thanks for activating your account!</h2>
 
     <div class="hero-unit">
-        <h3>Now perhaps you were going to go ahead and create an event? Just head to your profile, or the main page.</h3>
+        <h3>Now perhaps you were going to go ahead and <a href="{% url "event:create" %}"
+                                                          class="btn btn-primary">create an event</a>?
+            Otherwise head to your <a href="{% url "profile" %}" class="btn btn-primary">profile</a>,
+            or the <a class="btn btn-primary" href="/">home page</a>.</h3>
 
     </div>
 

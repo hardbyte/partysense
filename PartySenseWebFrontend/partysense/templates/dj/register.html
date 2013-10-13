@@ -5,9 +5,27 @@
 
 <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
     <h2>First we need a couple of details about you!</h2>
-    <form class="bootstrap3"  method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
-        {% include "form_snippet.html" %}
-        <input type="submit" class="btn btn-primary"  value="Register and create your first event!" />
-    </form>
-    </section>
+
+    {% include "form_snippet.html" %}
+
+</section>
+{% endblock %}
+
+{% block jslibs %}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=false">
+    </script>
+    <script>
+        var input = document.getElementById('id_city_name');
+        var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+
+        $('#id_city_name').keypress(function(event) {
+            var keypressed = event.keyCode || event.which;
+            if (keypressed == 13) {
+                // avoid submitting the form because user probably just selected a google suggestion
+                try{event.cancelBubble=true;}//IE
+                catch(e){event.stopPropagation();}//others
+                event.preventDefault();
+            }
+        });
+    </script>
 {% endblock %}

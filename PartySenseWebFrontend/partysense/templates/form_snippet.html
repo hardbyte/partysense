@@ -1,9 +1,6 @@
 {% load crispy_forms_tags %}
 {# So I can use the same css I'll abstract all the forms with this template #}
-{{ form.non_field_errors }}
 
 {% csrf_token %}
 
 {% crispy formset %}
-
-{#{{ formset | crispy }}#}

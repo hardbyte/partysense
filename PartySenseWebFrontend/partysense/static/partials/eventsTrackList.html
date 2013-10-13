@@ -54,18 +54,22 @@
                             style="float:right;" ng-animate="{hide: 'slide-off-left'}">
 
                                 <i class="glyphicon glyphicon-shopping-cart"></i>
-                                <span ng-hide="track.offer">Download</span>
+                                <span ng-hide="track.offer">Buy MP3</span>
                                 <span ng-show="track.offer">Searching amazon...</span>
 
                         </a>
 
                         <div ng-show="track.offer.price" >
                             <a target="_blank" href="{{ track.offer.url }}">
-                               <i class="glyphicon glyphicon-shopping-cart"></i> Buy now from Amazon {{ track.offer.price }}
+                               <i class="glyphicon glyphicon-shopping-cart"></i> Buy on Amazon from {{ track.offer.price }}
                             </a>
                         </div>
 
+                        <div ng-show="track.offer.error">
+                            <i class="glyphicon glyphicon-warning-sign"></i>
+                            <strong>{{ track.offer.error }}</strong>
 
+                        </div>
 
                     </div>
                 </div>

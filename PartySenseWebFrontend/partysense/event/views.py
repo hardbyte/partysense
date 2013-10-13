@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import connection
+from django.core.cache import cache
+#from django.core.cache.utils import make_template_fragment_key
 
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
@@ -36,8 +38,8 @@ class EventDetail(EventView, DetailView):
         logger.debug("Serving event id = {}".format(self.kwargs['pk']))
         event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
-        # if we are not in debug mode check that the slug was correct
-        if not settings.DEBUG:
+        # if we are not in debug mode (or staff) check that the slug was correct
+        if not (settings.DEBUG or self.request.user.is_staff):
             if not event.slug == self.kwargs['slug']:
                 raise Http404
         # check that the event isn't in the past
@@ -65,11 +67,11 @@ class EventDetail(EventView, DetailView):
             if not context['event'].users.filter(pk=u.pk).exists():
                 context['event'].users.add(u)
 
-
             context['recent_tracks'] = reversed(Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
                                    .exclude(track__in=context['event'].tracks.all())
                                    .exclude(event=context['event'])}).select_related()[0:10])
+
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
 
@@ -145,7 +147,10 @@ def modify_event(request, pk):
         event.tracks.add(track)
         logging.info("Added: {} to {}".format(track, event))
 
+    cache.delete('event:{}:setlist'.format(event.pk))
+
     return response
+
 
 def json_track_list(event, user):
     """
@@ -164,45 +169,57 @@ def json_track_list(event, user):
 
     track_ids = tuple(event.tracks.values_list('pk', flat=True))
 
-    if settings.POSTGRES_ENABLED:
-        # If there are no tracks our query still needs to be valid...
-        if len(track_ids) == 0:
-            track_ids = (None,)
-        cursor = connection.cursor()
-        cursor.execute("""
-            SELECT
-                "event_vote"."track_id",
-                count(nullif("event_vote"."is_positive" = 'f', 't')),
-                count(nullif("event_vote"."is_positive" = 't', 't'))
-            FROM "event_vote"
-            WHERE (
-                "event_vote"."event_id" = %s  AND
-                "event_vote"."track_id" IN %s )
-            GROUP BY "event_vote"."track_id"
-            """, [event.pk, track_ids])
+    memcache_res = cache.get('event:{}:setlist'.format(event.pk))
+    if memcache_res is not None:
+        logger.info("Setlist for event {} was in cache".format(event.pk))
+        track_votes = memcache_res['track_votes']
+        spotify_ids = memcache_res['spotify_ids']
 
-        for track_id, upVotes, downVotes in cursor.fetchall():
-            track_votes[int(track_id)] = (int(upVotes), int(downVotes))
-
-        # External IDS (eg spotify id)
-        cursor.execute("""
-        SELECT
-            "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
-        FROM "music_externalid"
-        INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
-        WHERE "music_track__external_ids"."track_id" IN %s
-        """, [track_ids])
-        for track_id, id_type, id_value in cursor.fetchall():
-            if id_type == 1:
-                spotify_ids[track_id] = id_value
-        if len(track_ids) == 1 and track_ids[0] is None:
-            track_ids = ()
     else:
-        # do it the database heavy way for sqlite3...
-        for t in event.tracks.all():
-            votes = event.vote_set.filter(track=t)
-            track_votes[t.pk] = (votes.filter(is_positive=True).count(), votes.filter(is_positive=False).count())
-            spotify_ids[t.pk] = t.spotify_url
+        if settings.POSTGRES_ENABLED:
+            # If there are no tracks our query still needs to be valid...
+            if len(track_ids) == 0:
+                track_ids = (None,)
+            cursor = connection.cursor()
+            cursor.execute("""
+                SELECT
+                    "event_vote"."track_id",
+                    count(nullif("event_vote"."is_positive" = 'f', 't')),
+                    count(nullif("event_vote"."is_positive" = 't', 't'))
+                FROM "event_vote"
+                WHERE (
+                    "event_vote"."event_id" = %s  AND
+                    "event_vote"."track_id" IN %s )
+                GROUP BY "event_vote"."track_id"
+                """, [event.pk, track_ids])
+
+            for track_id, upVotes, downVotes in cursor.fetchall():
+                track_votes[int(track_id)] = (int(upVotes), int(downVotes))
+
+            # External IDS (eg spotify id)
+            cursor.execute("""
+            SELECT
+                "music_track__external_ids"."track_id", "music_externalid"."id_type_id", "music_externalid"."value"
+            FROM "music_externalid"
+            INNER JOIN "music_track__external_ids" ON ("music_externalid"."id" = "music_track__external_ids"."externalid_id")
+            WHERE "music_track__external_ids"."track_id" IN %s
+            """, [track_ids])
+            for track_id, id_type, id_value in cursor.fetchall():
+                if id_type == 1:
+                    spotify_ids[track_id] = id_value
+            if len(track_ids) == 1 and track_ids[0] is None:
+                track_ids = ()
+        else:
+            # do it the database heavy way for sqlite3...
+            for t in event.tracks.all():
+                votes = event.vote_set.filter(track=t)
+                track_votes[t.pk] = (votes.filter(is_positive=True).count(), votes.filter(is_positive=False).count())
+                spotify_ids[t.pk] = t.spotify_url
+
+        # Add all this user independant data into the cache
+        cache.set('event:{}:setlist'.format(event.pk),
+                  {'track_votes': track_votes, 'spotify_ids': spotify_ids},
+                  600)
 
     for t in event.tracks.select_related("artist__name", "_external_ids").prefetch_related("_external_ids"):
         track_data.append({
@@ -218,15 +235,17 @@ def json_track_list(event, user):
 
     # Sort by most popular
     track_data.sort(cmp=lambda a,b: (b['upVotes'] - b['downVotes']) - (a['upVotes'] - a['downVotes']))
-    return len(track_ids), json.dumps(track_data)
+    result = json.dumps(track_data)
+
+    return len(track_ids), result
 
 
 def get_track_list(request, pk):
     event = get_object_or_404(Event, pk=pk)
     user = request.user
     number_of_tracks, setlist = json_track_list(event, user)
-
     return HttpResponse(setlist, content_type="application/json")
+
 
 @login_required
 def did_you_mean(request):
@@ -248,6 +267,8 @@ def remove_track(request, event_pk, track_pk):
         # TODO ensure this track hasn't been up voted by anyone else
         votes = Vote.objects.filter(event=event, track_id=track_pk, is_positive=True)
         #
+
+    cache.delete('event:{}:setlist'.format(event.pk))
 
     return HttpResponse(json.dumps({'response': response}), content_type="application/json")
 
@@ -274,6 +295,9 @@ def vote_on_track(request, event_pk, track_pk, internal=False):
         voteDirection = data['vote']
     vote.is_positive = voteDirection
     vote.save()
+
+    cache.delete('event:{}:setlist'.format(event.pk))
+
     return HttpResponse(json.dumps({'created': created}), content_type="application/json")
 
 
@@ -316,6 +340,10 @@ def create(request):
             # then commit the new event to our database
             event.save()
 
+            # Invalidate the memcached template blocks which are probably now invalid
+            #key = 'event:{}:detailscontext'.format(event.pk)
+            #cache.delete(key) # invalidates cached template fragment
+
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Partially fill in what we know (if anything)
@@ -341,10 +369,9 @@ def create(request):
 def update(request, pk, slug):
     event = get_object_or_404(Event, pk=pk)
 
-    response = "Permission Denied"
-
-    if not request.user == event.dj.user:
-        return 404
+    if not (request.user == event.dj.user or request.user.is_staff):
+        # if not allowed here...
+        raise Http404("Permission Denied")
 
     if request.method == 'POST':
         # If the form has been submitted...
@@ -382,8 +409,7 @@ def update(request, pk, slug):
             'venue': event.location.name,
             'latitude': event.location.latitude,
             'longitude': event.location.longitude,
-
-
+            'user_editable': event.user_editable
         }
         # Otherwise we are left with a completely unbound form
         event_form = EventForm(initial=prior_information)

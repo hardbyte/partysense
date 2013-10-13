@@ -4,19 +4,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView
-from django import forms
+
 from django.contrib.auth.decorators import login_required
 
 
 from partysense.club.models import Club
 from partysense.event.models import Location
 
-
-class NewClubForm(forms.ModelForm):
-
-    class Meta:
-        model = Club
-        fields = ("name", "email", "website", "facebook_page", "city", "country", "description")
+from partysense.club.forms import NewClubForm
 
 
 def landing(request):

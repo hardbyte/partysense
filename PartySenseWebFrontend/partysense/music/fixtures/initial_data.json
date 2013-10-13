@@ -1,30 +1,2848 @@
 [
-  {
-    "model": "music.IDType",
-    "pk": 1,
-    "fields": {
-      "name": "spotify"
+    {
+        "pk":     1,
+        "model":  "music.idtype",
+        "fields": {
+            "name": "spotify"
+        }
+    },
+    {
+        "pk":     2,
+        "model":  "music.idtype",
+        "fields": {
+            "name": "lastfm"
+        }
+    },
+    {
+        "pk":     3,
+        "model":  "music.idtype",
+        "fields": {
+            "name": "isrc"
+        }
+    },
+    {
+        "pk":     4,
+        "model":  "music.idtype",
+        "fields": {
+            "name": "mb"
+        }
+    },
+    {
+        "pk":     1,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:31TPClRtHm23RisEBtV3X7"
+        }
+    },
+    {
+        "pk":     2,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1GfettdrSIqEky8VvxpxAo"
+        }
+    },
+    {
+        "pk":     3,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1n2pb9Tsfe4SwAjmUac6YT"
+        }
+    },
+    {
+        "pk":     4,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3ts6xK5GzfMAAriT9AIBmP"
+        }
+    },
+    {
+        "pk":     5,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRN11100006"
+        }
+    },
+    {
+        "pk":     6,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:7oPftvlwr6VrsViSDV7fJY"
+        }
+    },
+    {
+        "pk":     7,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6nTiIhLmQ3FWhvrGafw2zj"
+        }
+    },
+    {
+        "pk":     8,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRE10400888"
+        }
+    },
+    {
+        "pk":     9,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:55Aa2cqylxrFIXC767Z865"
+        }
+    },
+    {
+        "pk":     10,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4lWJjtWbDDALpK9tVG8Dho"
+        }
+    },
+    {
+        "pk":     11,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USCM51300001"
+        }
+    },
+    {
+        "pk":     12,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:6BXionV4R0BunrFpSwIMUK"
+        }
+    },
+    {
+        "pk":     13,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2fdd8W8eTym1gWO1dl1nxo"
+        }
+    },
+    {
+        "pk":     14,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USSP31200575"
+        }
+    },
+    {
+        "pk":     15,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:667AQmw8LXPQsmZLCrt34I"
+        }
+    },
+    {
+        "pk":     16,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:77FzokXK5WOYoYVZqlILOl"
+        }
+    },
+    {
+        "pk":     17,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBTMZ1200142"
+        }
+    },
+    {
+        "pk":     18,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0MsrWnxQZxPAcov7c74sSo"
+        }
+    },
+    {
+        "pk":     19,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRE10401218"
+        }
+    },
+    {
+        "pk":     20,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6L89mwZXSOwYl76YXfX13s"
+        }
+    },
+    {
+        "pk":     21,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRE19900151"
+        }
+    },
+    {
+        "pk":     22,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1vCWHaC5f2uS3yhpwWbIA6"
+        }
+    },
+    {
+        "pk":     23,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2bNrvWD9d5Zn9tS8XvcaMk"
+        }
+    },
+    {
+        "pk":     24,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "SEUM71201601"
+        }
+    },
+    {
+        "pk":     25,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4AK6F7OLvEQ5QYCBNiQWHq"
+        }
+    },
+    {
+        "pk":     26,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3jZomvOBa5qfTo5HkqI1p5"
+        }
+    },
+    {
+        "pk":     27,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBHMU1300001"
+        }
+    },
+    {
+        "pk":     28,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:04gDigrS5kc9YWfZHwBETP"
+        }
+    },
+    {
+        "pk":     29,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:45kbpUIFmkS9Xla7hMXpzn"
+        }
+    },
+    {
+        "pk":     30,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71203514"
+        }
+    },
+    {
+        "pk":     31,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0AkQbXGN4KG34TS7xLrM68"
+        }
+    },
+    {
+        "pk":     32,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBHMU1200214"
+        }
+    },
+    {
+        "pk":     33,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:5Pwc4xIPtQLFEnJriah9YJ"
+        }
+    },
+    {
+        "pk":     34,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0AhRPDuVwHkLAACbPXidb3"
+        }
+    },
+    {
+        "pk":     35,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71303190"
+        }
+    },
+    {
+        "pk":     36,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:7kSLdGdXLey7pzLsWpdg1h"
+        }
+    },
+    {
+        "pk":     37,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBHMU1200361"
+        }
+    },
+    {
+        "pk":     38,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:0POK0sDgzxDOSUwiWGvohe"
+        }
+    },
+    {
+        "pk":     39,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4nWKghdnVPZcQRc16RuVSR"
+        }
+    },
+    {
+        "pk":     40,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USA371564574"
+        }
+    },
+    {
+        "pk":     41,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:3nFkdlSjzX9mRTtwJOzDYB"
+        }
+    },
+    {
+        "pk":     42,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:69yVxyuRahEzs2taFMVVoO"
+        }
+    },
+    {
+        "pk":     43,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USJZ10900031"
+        }
+    },
+    {
+        "pk":     44,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:5dkbjvKXEMacSPUSFK3FBb"
+        }
+    },
+    {
+        "pk":     45,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71204771"
+        }
+    },
+    {
+        "pk":     46,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:51Blml2LZPmy7TTiAg47vQ"
+        }
+    },
+    {
+        "pk":     47,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0G5F2msfVO77xs7ql2RiTS"
+        }
+    },
+    {
+        "pk":     48,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAAN0000196"
+        }
+    },
+    {
+        "pk":     49,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:2ye2Wgw4gimLv2eAKyk1NB"
+        }
+    },
+    {
+        "pk":     50,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1hKdDCpiI9mqz1jVHRKG0E"
+        }
+    },
+    {
+        "pk":     51,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001992"
+        }
+    },
+    {
+        "pk":     52,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:6DPYiyq5kWVQS4RGwxzPC7"
+        }
+    },
+    {
+        "pk":     53,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1aUT4xl8iiYNr6emik4qTB"
+        }
+    },
+    {
+        "pk":     54,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71029031"
+        }
+    },
+    {
+        "pk":     55,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:77gY3WsOnEsq9JOWgBmdLj"
+        }
+    },
+    {
+        "pk":     56,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEV19800013"
+        }
+    },
+    {
+        "pk":     57,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2JZfTvWWtpaE8NohqRXqFr"
+        }
+    },
+    {
+        "pk":     58,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAAN8790003"
+        }
+    },
+    {
+        "pk":     59,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1KCSPY1glIKqW2TotWuXOR"
+        }
+    },
+    {
+        "pk":     60,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1jF7IL57ayN4Ity3jQqGu0"
+        }
+    },
+    {
+        "pk":     61,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRC11200785"
+        }
+    },
+    {
+        "pk":     62,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:7CajNmpbOovFoOoasH2HaY"
+        }
+    },
+    {
+        "pk":     63,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6G0RXhQJGDnjgUdbQfBZRk"
+        }
+    },
+    {
+        "pk":     64,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBARL1201386"
+        }
+    },
+    {
+        "pk":     65,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:64LEkaZmatB7DhVnkDlZhh"
+        }
+    },
+    {
+        "pk":     66,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3MhdFuXPrD1SZANe1h7JeK"
+        }
+    },
+    {
+        "pk":     67,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "NO2XZ1203010"
+        }
+    },
+    {
+        "pk":     68,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4rHZZAmHpZrA3iH5zx8frV"
+        }
+    },
+    {
+        "pk":     69,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRC11300059"
+        }
+    },
+    {
+        "pk":     70,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:7FBcuc1gsnv6Y1nwFtNRCb"
+        }
+    },
+    {
+        "pk":     71,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:7lRlq939cDG4SzWOF4VAnd"
+        }
+    },
+    {
+        "pk":     72,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRE10400660"
+        }
+    },
+    {
+        "pk":     73,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:5pKCCKE2ajJHZ9KAiaK11H"
+        }
+    },
+    {
+        "pk":     74,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1mwt9hzaH7idmC5UCoOUkz"
+        }
+    },
+    {
+        "pk":     75,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71211793"
+        }
+    },
+    {
+        "pk":     76,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3YJlTDtUXu1sGh8lunblkG"
+        }
+    },
+    {
+        "pk":     77,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71023200"
+        }
+    },
+    {
+        "pk":     78,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1FNZq0NV4yymW1wEjIi2eY"
+        }
+    },
+    {
+        "pk":     79,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USWB10805463"
+        }
+    },
+    {
+        "pk":     80,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1GfaAWKfZE9hrYS8IqkWKB"
+        }
+    },
+    {
+        "pk":     81,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:02msrizhULJUMONtgxqDhu"
+        }
+    },
+    {
+        "pk":     82,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "US3Z41200026"
+        }
+    },
+    {
+        "pk":     83,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:3gd8FJtBJtkRxdfbTu19U2"
+        }
+    },
+    {
+        "pk":     84,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6b5rA9rthDbZDOQp9UbOgl"
+        }
+    },
+    {
+        "pk":     85,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBUM70909097"
+        }
+    },
+    {
+        "pk":     86,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:2PCUhxD40qlMqsKHjTZD2e"
+        }
+    },
+    {
+        "pk":     87,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2Dz5WpEWA0vhnMmEPYiZ2y"
+        }
+    },
+    {
+        "pk":     88,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM70964234"
+        }
+    },
+    {
+        "pk":     89,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:6eUKZXaKkcviH0Ku9w2n3V"
+        }
+    },
+    {
+        "pk":     90,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1VdZ0vKfR5jneCmWIUAMxK"
+        }
+    },
+    {
+        "pk":     91,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAHS1100095"
+        }
+    },
+    {
+        "pk":     92,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0obzwoGjXdORtAwYWZ9s53"
+        }
+    },
+    {
+        "pk":     93,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAHS1100201"
+        }
+    },
+    {
+        "pk":     94,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1uNFoZAHBGtllmzznpCI3s"
+        }
+    },
+    {
+        "pk":     95,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4rvtlpAeDuOn4baUJPCEhy"
+        }
+    },
+    {
+        "pk":     96,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71205320"
+        }
+    },
+    {
+        "pk":     97,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:3gdbcIdNypBsYNu3iiCjtN"
+        }
+    },
+    {
+        "pk":     98,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4W4wYHtsrgDiivRASVOINL"
+        }
+    },
+    {
+        "pk":     99,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRE18900030"
+        }
+    },
+    {
+        "pk":     100,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:53XhwfbYqKCa1cC15pYq2q"
+        }
+    },
+    {
+        "pk":     101,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4G8gkOterJn0Ywt6uhqbhp"
+        }
+    },
+    {
+        "pk":     102,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71201074"
+        }
+    },
+    {
+        "pk":     103,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:066X20Nz7iquqkkCW6Jxy6"
+        }
+    },
+    {
+        "pk":     104,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:5gmv3BgePSYiHnPJgY7oTJ"
+        }
+    },
+    {
+        "pk":     105,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "US4GE1000027"
+        }
+    },
+    {
+        "pk":     106,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4RxUeUyMaEe2T5tvULq5j0"
+        }
+    },
+    {
+        "pk":     107,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0NAj1x1sdYqm8ayxotgXzG"
+        }
+    },
+    {
+        "pk":     108,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USRC11300134"
+        }
+    },
+    {
+        "pk":     109,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4lvJqWwA8l2XXKqyDUKdws"
+        }
+    },
+    {
+        "pk":     110,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6t6DV12UKGyAuoDI2Ohd8T"
+        }
+    },
+    {
+        "pk":     111,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBMNA1200625"
+        }
+    },
+    {
+        "pk":     112,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4dwdTW1Lfiq0cM8nBAqIIz"
+        }
+    },
+    {
+        "pk":     113,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3o1cohFfwd57rAvrbyVE5e"
+        }
+    },
+    {
+        "pk":     114,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71119282"
+        }
+    },
+    {
+        "pk":     115,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:60eT7q88iLWKnuSXed1AGr"
+        }
+    },
+    {
+        "pk":     116,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:70mgg1jCSYhorGu04goKT5"
+        }
+    },
+    {
+        "pk":     117,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "US8571300114"
+        }
+    },
+    {
+        "pk":     118,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+        }
+    },
+    {
+        "pk":     119,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0N5x5UmYcbBeHFJtCCqf62"
+        }
+    },
+    {
+        "pk":     120,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBDVX0600080"
+        }
+    },
+    {
+        "pk":     121,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4njdEjTnLfcGImKZu1iSrz"
+        }
+    },
+    {
+        "pk":     122,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4bIuYvVh746iwXBxCdzRPY"
+        }
+    },
+    {
+        "pk":     123,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USP6L1000053"
+        }
+    },
+    {
+        "pk":     124,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1Cs0zKBU1kc0i8ypK3B9ai"
+        }
+    },
+    {
+        "pk":     125,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1x6ACsKV4UdWS2FMuPFUiT"
+        }
+    },
+    {
+        "pk":     126,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GB28K1100036"
+        }
+    },
+    {
+        "pk":     127,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:37DdwREpvvQHmGLFEZ4h0Q"
+        }
+    },
+    {
+        "pk":     128,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1RFW0IJ4bhAiJFkixHUALa"
+        }
+    },
+    {
+        "pk":     129,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUS10710940"
+        }
+    },
+    {
+        "pk":     130,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4dpARuHxo51G3z768sgnrY"
+        }
+    },
+    {
+        "pk":     131,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:7h8Ud480Fm4ReUVxgFF9ZX"
+        }
+    },
+    {
+        "pk":     132,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBBKS1000335"
+        }
+    },
+    {
+        "pk":     133,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:5PKWUDfQFtc5qqo8cs1gQp"
+        }
+    },
+    {
+        "pk":     134,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBBKS1000348"
+        }
+    },
+    {
+        "pk":     135,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:76N7FdzCI9OsiUnzJVLY2m"
+        }
+    },
+    {
+        "pk":     136,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBBKS1000349"
+        }
+    },
+    {
+        "pk":     137,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:2d0hyoQ5ynDBnkvAbJKORj"
+        }
+    },
+    {
+        "pk":     138,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0N4NO2BmOIBWrCQ9r8Ei8m"
+        }
+    },
+    {
+        "pk":     139,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USSM19200317"
+        }
+    },
+    {
+        "pk":     140,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:7FbzGvWpjaY6o3AkdWoZVO"
+        }
+    },
+    {
+        "pk":     141,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:33XYA0lVz4G4mgvQ8YCgpx"
+        }
+    },
+    {
+        "pk":     142,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "AULI01385870"
+        }
+    },
+    {
+        "pk":     143,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:2h93pZq0e7k5yf4dywlkpM"
+        }
+    },
+    {
+        "pk":     144,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6RBAJlxHY9Ulvw2y7yk4aX"
+        }
+    },
+    {
+        "pk":     145,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71207191"
+        }
+    },
+    {
+        "pk":     146,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4tZwfgrHOc3mvqYlEYSvVi"
+        }
+    },
+    {
+        "pk":     147,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2Foc5Q5nqNiosCNqttzHof"
+        }
+    },
+    {
+        "pk":     148,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USQX91300809"
+        }
+    },
+    {
+        "pk":     149,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:69kOkLUCkxIZYexIgSG8rq"
+        }
+    },
+    {
+        "pk":     150,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USQX91300108"
+        }
+    },
+    {
+        "pk":     151,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:0EmeFodog0BfCgMzAIvKQp"
+        }
+    },
+    {
+        "pk":     152,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3ZFTkvIE7kyPt6Nu3PEa7V"
+        }
+    },
+    {
+        "pk":     153,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USSM10600677"
+        }
+    },
+    {
+        "pk":     154,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:2NhdGz9EDv2FeUw6udu2g1"
+        }
+    },
+    {
+        "pk":     155,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:7y8cq2fiwZK0Ed0dbnP6gV"
+        }
+    },
+    {
+        "pk":     156,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBUM71302670"
+        }
+    },
+    {
+        "pk":     157,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:163tK9Wjr9P9DmM0AVK7lm"
+        }
+    },
+    {
+        "pk":     158,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0YAJcefABZHD0D3KcYpSdR"
+        }
+    },
+    {
+        "pk":     159,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "NZUM71200031"
+        }
+    },
+    {
+        "pk":     160,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:5M9Bb4adKAgrOFOhc05Y50"
+        }
+    },
+    {
+        "pk":     161,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1SAHKEikkKpPjy3EuyqOlO"
+        }
+    },
+    {
+        "pk":     162,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "ES7661200010"
+        }
+    },
+    {
+        "pk":     163,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:48RUHaPBaWdbnJlyST7ZzG"
+        }
+    },
+    {
+        "pk":     164,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3OpUG4N7Igc6ZbC0SONuVc"
+        }
+    },
+    {
+        "pk":     165,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "ES5631207241"
+        }
+    },
+    {
+        "pk":     166,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4hieclGAWyHDZdRgREPMDs"
+        }
+    },
+    {
+        "pk":     167,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71307869"
+        }
+    },
+    {
+        "pk":     168,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:1HY2Jd0NmPuamShAr6KMms"
+        }
+    },
+    {
+        "pk":     169,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6zSM5blO2axFxrqmv0QtOy"
+        }
+    },
+    {
+        "pk":     170,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USUM71106431"
+        }
+    },
+    {
+        "pk":     171,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:artist:4gzpq5DPGxSnKTe4SA8HAU"
+        }
+    },
+    {
+        "pk":     172,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:7LVHVU3tWfcxj5aiPFEW4Q"
+        }
+    },
+    {
+        "pk":     173,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6nek1Nin9q48AVZcWs9e9D"
+        }
+    },
+    {
+        "pk":     174,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAYE0500605"
+        }
+    },
+    {
+        "pk":     175,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAYE1101143"
+        }
+    },
+    {
+        "pk":     176,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:0BCPKOYdS2jbQ8iyB56Zns"
+        }
+    },
+    {
+        "pk":     177,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBAYE0200771"
+        }
+    },
+    {
+        "pk":     178,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3ZFwuJwUpIl0GeXsvF1ELf"
+        }
+    },
+    {
+        "pk":     179,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001999"
+        }
+    },
+    {
+        "pk":     180,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:5SnOyuBtyzufoXBAKOdcxD"
+        }
+    },
+    {
+        "pk":     181,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001995"
+        }
+    },
+    {
+        "pk":     182,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4zJLpLsfY52ih6y8u4mhKH"
+        }
+    },
+    {
+        "pk":     183,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6NwbeybX6TDtXlpXvnUOZC"
+        }
+    },
+    {
+        "pk":     184,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:64Ret7Tf2M8pDE4aqbW2tX"
+        }
+    },
+    {
+        "pk":     185,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001996"
+        }
+    },
+    {
+        "pk":     186,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001274"
+        }
+    },
+    {
+        "pk":     187,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:12oSzrBIyirNs0aCwk6elL"
+        }
+    },
+    {
+        "pk":     188,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4hOohf45f0JtxYKNsEAIOV"
+        }
+    },
+    {
+        "pk":     189,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10170109"
+        }
+    },
+    {
+        "pk":     190,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2ANizw1jaLMP5UQHYyOvri"
+        }
+    },
+    {
+        "pk":     191,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001997"
+        }
+    },
+    {
+        "pk":     192,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEV19900002"
+        }
+    },
+    {
+        "pk":     193,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10170110"
+        }
+    },
+    {
+        "pk":     194,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1p9K2Qfhwvgi3hU9YV8Qd8"
+        }
+    },
+    {
+        "pk":     195,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10002000"
+        }
+    },
+    {
+        "pk":     196,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1pHHcGYTlIc47MQv031XF9"
+        }
+    },
+    {
+        "pk":     197,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:3vqsRpkzpPnOyQr18063s0"
+        }
+    },
+    {
+        "pk":     198,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:26i37IFvFmC3517jxxZAJP"
+        }
+    },
+    {
+        "pk":     199,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10002002"
+        }
+    },
+    {
+        "pk":     200,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USWB10805466"
+        }
+    },
+    {
+        "pk":     201,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001998"
+        }
+    },
+    {
+        "pk":     202,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:2D1O6DE5aJDGHsb0W38EAN"
+        }
+    },
+    {
+        "pk":     203,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEV19719676"
+        }
+    },
+    {
+        "pk":     204,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:1yOvj5DRzCxeQCts03MVTw"
+        }
+    },
+    {
+        "pk":     205,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10001994"
+        }
+    },
+    {
+        "pk":     206,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:4m7SprdGbCH9ifPX5SbdNA"
+        }
+    },
+    {
+        "pk":     207,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "USEE10002001"
+        }
+    },
+    {
+        "pk":     208,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:6aGjEZ7kq3YXgD0EDt80O5"
+        }
+    },
+    {
+        "pk":     209,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 1,
+            "value":   "spotify:track:72C7aUQECOhNtnD0AC36ua"
+        }
+    },
+    {
+        "pk":     210,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBHMU1200368"
+        }
+    },
+    {
+        "pk":     211,
+        "model":  "music.externalid",
+        "fields": {
+            "id_type": 3,
+            "value":   "GBHMU1200210"
+        }
+    },
+    {
+        "pk":     1,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [1],
+            "name":          "Justin Timberlake"
+        }
+    },
+    {
+        "pk":     2,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [3],
+            "name":          "Jake Owen"
+        }
+    },
+    {
+        "pk":     3,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [6],
+            "name":          "Green Day"
+        }
+    },
+    {
+        "pk":     4,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [9],
+            "name":          "Lil Wayne"
+        }
+    },
+    {
+        "pk":     5,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [12],
+            "name":          "Britt Nicole"
+        }
+    },
+    {
+        "pk":     6,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [15],
+            "name":          "Fred V & Grafix feat. Reija Lee"
+        }
+    },
+    {
+        "pk":     7,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [22],
+            "name":          "Avicii"
+        }
+    },
+    {
+        "pk":     8,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [25],
+            "name":          "One Direction"
+        }
+    },
+    {
+        "pk":     9,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [28],
+            "name":          "Maroon 5"
+        }
+    },
+    {
+        "pk":     10,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [33],
+            "name":          "OneRepublic"
+        }
+    },
+    {
+        "pk":     11,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [38],
+            "name":          "Danza Kuduro"
+        }
+    },
+    {
+        "pk":     12,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [41],
+            "name":          "Jay-Z"
+        }
+    },
+    {
+        "pk":     13,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [46],
+            "name":          "U2"
+        }
+    },
+    {
+        "pk":     14,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [49],
+            "name":          "Metallica"
+        }
+    },
+    {
+        "pk":     15,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [52],
+            "name":          "Dr. Dre"
+        }
+    },
+    {
+        "pk":     16,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [59],
+            "name":          "P!nk"
+        }
+    },
+    {
+        "pk":     17,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [62],
+            "name":          "Calvin Harris"
+        }
+    },
+    {
+        "pk":     18,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [65],
+            "name":          "Sirkus Eliassen"
+        }
+    },
+    {
+        "pk":     19,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [70],
+            "name":          "My Chemical Romance"
+        }
+    },
+    {
+        "pk":     20,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [73],
+            "name":          "Rihanna"
+        }
+    },
+    {
+        "pk":     21,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [80],
+            "name":          "Tranzas"
+        }
+    },
+    {
+        "pk":     22,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [83],
+            "name":          "Mumford & Sons"
+        }
+    },
+    {
+        "pk":     23,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [86],
+            "name":          "Parachute"
+        }
+    },
+    {
+        "pk":     24,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [89],
+            "name":          "Ed Sheeran"
+        }
+    },
+    {
+        "pk":     25,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [94],
+            "name":          "Justin Bieber"
+        }
+    },
+    {
+        "pk":     26,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [97],
+            "name":          "The B-52's"
+        }
+    },
+    {
+        "pk":     27,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [100],
+            "name":          "Imagine Dragons"
+        }
+    },
+    {
+        "pk":     28,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [103],
+            "name":          "LCD Soundsystem"
+        }
+    },
+    {
+        "pk":     29,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [],
+            "name":          "Fred V &amp; Grafix feat. Reija Lee"
+        }
+    },
+    {
+        "pk":     30,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [106],
+            "name":          "Snoop Lion"
+        }
+    },
+    {
+        "pk":     31,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [109],
+            "name":          "Studio Players"
+        }
+    },
+    {
+        "pk":     32,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [112],
+            "name":          "Of Monsters And Men"
+        }
+    },
+    {
+        "pk":     33,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [115],
+            "name":          "Architecture In Helsinki"
+        }
+    },
+    {
+        "pk":     34,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [118],
+            "name":          "Kaiser Chiefs"
+        }
+    },
+    {
+        "pk":     35,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [121],
+            "name":          "AWOLNATION"
+        }
+    },
+    {
+        "pk":     36,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [124],
+            "name":          "David Guetta"
+        }
+    },
+    {
+        "pk":     37,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [127],
+            "name":          "Basshunter"
+        }
+    },
+    {
+        "pk":     38,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [130],
+            "name":          "Adele"
+        }
+    },
+    {
+        "pk":     39,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [137],
+            "name":          "Rage Against The Machine"
+        }
+    },
+    {
+        "pk":     40,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [140],
+            "name":          "British India"
+        }
+    },
+    {
+        "pk":     41,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [143],
+            "name":          "Frank Ocean"
+        }
+    },
+    {
+        "pk":     42,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [146],
+            "name":          "Daft Punk"
+        }
+    },
+    {
+        "pk":     43,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [151],
+            "name":          "Shakira"
+        }
+    },
+    {
+        "pk":     44,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [154],
+            "name":          "The Wanted"
+        }
+    },
+    {
+        "pk":     45,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [157],
+            "name":          "Lorde"
+        }
+    },
+    {
+        "pk":     46,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [160],
+            "name":          "Pablo Alboran"
+        }
+    },
+    {
+        "pk":     47,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [163],
+            "name":          "The Lord of Brazil"
+        }
+    },
+    {
+        "pk":     48,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [168],
+            "name":          "Lady Gaga"
+        }
+    },
+    {
+        "pk":     49,
+        "model":  "music.artist",
+        "fields": {
+            "_external_ids": [171],
+            "name":          "Coldplay"
+        }
+    },
+    {
+        "pk":     1,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [2],
+            "name":          "Blue Ocean Floor",
+            "artist":        1
+        }
+    },
+    {
+        "pk":     2,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [4, 5],
+            "name":          "Barefoot Blue Jean Night",
+            "artist":        2
+        }
+    },
+    {
+        "pk":     3,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [7, 8],
+            "name":          "American Idiot",
+            "artist":        3
+        }
+    },
+    {
+        "pk":     4,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [10, 11],
+            "name":          "Love Me",
+            "artist":        4
+        }
+    },
+    {
+        "pk":     5,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [13, 14],
+            "name":          "Gold",
+            "artist":        5
+        }
+    },
+    {
+        "pk":     6,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [16, 17],
+            "name":          "Just A Thought",
+            "artist":        6
+        }
+    },
+    {
+        "pk":     7,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [18, 19],
+            "name":          "Holiday/Boulevard Of Broken Dreams",
+            "artist":        3
+        }
+    },
+    {
+        "pk":     8,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [20, 21],
+            "name":          "Basket Case",
+            "artist":        3
+        }
+    },
+    {
+        "pk":     9,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [23, 24],
+            "name":          "I Could Be The One [Avicii vs Nicky Romero] - Nicktim - Radio Edit",
+            "artist":        7
+        }
+    },
+    {
+        "pk":     10,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [26, 27],
+            "name":          "One Way Or Another (Teenage Kicks)",
+            "artist":        8
+        }
+    },
+    {
+        "pk":     11,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [29, 30],
+            "name":          "One More Night",
+            "artist":        9
+        }
+    },
+    {
+        "pk":     12,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [31, 32],
+            "name":          "Kiss You",
+            "artist":        8
+        }
+    },
+    {
+        "pk":     13,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [34, 35],
+            "name":          "If I Lose Myself - Alesso vs OneRepublic",
+            "artist":        10
+        }
+    },
+    {
+        "pk":     14,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [36, 37],
+            "name":          "Little Things",
+            "artist":        8
+        }
+    },
+    {
+        "pk":     15,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [39, 40],
+            "name":          "Danza Kuduro",
+            "artist":        11
+        }
+    },
+    {
+        "pk":     16,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [42, 43],
+            "name":          "Empire State Of Mind [Jay-Z + Alicia Keys] - Explicit Album Version",
+            "artist":        12
+        }
+    },
+    {
+        "pk":     17,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [44, 45],
+            "name":          "Daylight",
+            "artist":        9
+        }
+    },
+    {
+        "pk":     18,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [47, 48],
+            "name":          "Beautiful Day",
+            "artist":        13
+        }
+    },
+    {
+        "pk":     19,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [50, 51],
+            "name":          "Enter Sandman",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     20,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [53, 54],
+            "name":          "I Need A Doctor",
+            "artist":        15
+        }
+    },
+    {
+        "pk":     21,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [55, 56],
+            "name":          "Whiskey In The Jar",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     22,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [57, 58],
+            "name":          "With Or Without You",
+            "artist":        13
+        }
+    },
+    {
+        "pk":     23,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [60, 61],
+            "name":          "Try",
+            "artist":        16
+        }
+    },
+    {
+        "pk":     24,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [63, 64],
+            "name":          "Green Valley",
+            "artist":        17
+        }
+    },
+    {
+        "pk":     25,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [66, 67],
+            "name":          "\u00c6 vil bare dans",
+            "artist":        18
+        }
+    },
+    {
+        "pk":     26,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [68, 69],
+            "name":          "Mirrors",
+            "artist":        1
+        }
+    },
+    {
+        "pk":     27,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [71, 72],
+            "name":          "I'm Not Okay - I Promise Album Version",
+            "artist":        19
+        }
+    },
+    {
+        "pk":     28,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [74, 75],
+            "name":          "Diamonds",
+            "artist":        20
+        }
+    },
+    {
+        "pk":     29,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [76, 77],
+            "name":          "Only Girl (In The World)",
+            "artist":        20
+        }
+    },
+    {
+        "pk":     30,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [78, 79],
+            "name":          "That Was Just Your Life",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     31,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [81, 82],
+            "name":          "Metalica - Concierto",
+            "artist":        21
+        }
+    },
+    {
+        "pk":     32,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [84, 85],
+            "name":          "Little Lion Man",
+            "artist":        22
+        }
+    },
+    {
+        "pk":     33,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [87, 88],
+            "name":          "She Is Love",
+            "artist":        23
+        }
+    },
+    {
+        "pk":     34,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [90, 91],
+            "name":          "The A Team",
+            "artist":        24
+        }
+    },
+    {
+        "pk":     35,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [92, 93],
+            "name":          "Grade 8",
+            "artist":        24
+        }
+    },
+    {
+        "pk":     36,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [95, 96],
+            "name":          "As Long As You Love Me",
+            "artist":        25
+        }
+    },
+    {
+        "pk":     37,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [98, 99],
+            "name":          "Love Shack",
+            "artist":        26
+        }
+    },
+    {
+        "pk":     38,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [101, 102],
+            "name":          "Radioactive",
+            "artist":        27
+        }
+    },
+    {
+        "pk":     39,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [104, 105],
+            "name":          "Home",
+            "artist":        28
+        }
+    },
+    {
+        "pk":     40,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [107, 108],
+            "name":          "No Guns Allowed",
+            "artist":        30
+        }
+    },
+    {
+        "pk":     41,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [110, 111],
+            "name":          "Moves Like Jagger",
+            "artist":        31
+        }
+    },
+    {
+        "pk":     42,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [113, 114],
+            "name":          "Love Love Love",
+            "artist":        32
+        }
+    },
+    {
+        "pk":     43,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [116, 117],
+            "name":          "In the Future",
+            "artist":        33
+        }
+    },
+    {
+        "pk":     44,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [119, 120],
+            "name":          "Ruby",
+            "artist":        34
+        }
+    },
+    {
+        "pk":     45,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [122, 123],
+            "name":          "Sail",
+            "artist":        35
+        }
+    },
+    {
+        "pk":     46,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [125, 126],
+            "name":          "Titanium - feat. Sia",
+            "artist":        36
+        }
+    },
+    {
+        "pk":     47,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [128, 129],
+            "name":          "Now You're Gone - Radio Edit",
+            "artist":        37
+        }
+    },
+    {
+        "pk":     48,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [131, 132],
+            "name":          "Rolling In The Deep",
+            "artist":        38
+        }
+    },
+    {
+        "pk":     49,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [133, 134],
+            "name":          "Set Fire To The Rain",
+            "artist":        38
+        }
+    },
+    {
+        "pk":     50,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [135, 136],
+            "name":          "Rumour Has It",
+            "artist":        38
+        }
+    },
+    {
+        "pk":     51,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [138, 139],
+            "name":          "Killing In The Name",
+            "artist":        39
+        }
+    },
+    {
+        "pk":     52,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [141, 142],
+            "name":          "Plastic Souvenirs",
+            "artist":        40
+        }
+    },
+    {
+        "pk":     53,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [144, 145],
+            "name":          "Forrest Gump",
+            "artist":        41
+        }
+    },
+    {
+        "pk":     54,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [147, 148],
+            "name":          "Get Lucky - Radio Edit",
+            "artist":        42
+        }
+    },
+    {
+        "pk":     55,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [149, 150],
+            "name":          "Get Lucky",
+            "artist":        42
+        }
+    },
+    {
+        "pk":     56,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [152, 153],
+            "name":          "Hips Don't Lie",
+            "artist":        43
+        }
+    },
+    {
+        "pk":     57,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [155, 156],
+            "name":          "Walks Like Rihanna",
+            "artist":        44
+        }
+    },
+    {
+        "pk":     58,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [158, 159],
+            "name":          "Royals",
+            "artist":        45
+        }
+    },
+    {
+        "pk":     59,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [161, 162],
+            "name":          "Qui\u00e9n",
+            "artist":        46
+        }
+    },
+    {
+        "pk":     60,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [164, 165],
+            "name":          "Bar\u00e1 Bar\u00e1 Ber\u00e9 Ber\u00e9",
+            "artist":        47
+        }
+    },
+    {
+        "pk":     61,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [166, 167],
+            "name":          "Right Now - Dyro Radio Edit",
+            "artist":        20
+        }
+    },
+    {
+        "pk":     62,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [169, 170],
+            "name":          "Marry The Night",
+            "artist":        48
+        }
+    },
+    {
+        "pk":     63,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [172, 174],
+            "name":          "Fix You",
+            "artist":        49
+        }
+    },
+    {
+        "pk":     64,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [173, 175],
+            "name":          "Paradise",
+            "artist":        49
+        }
+    },
+    {
+        "pk":     65,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [176, 177],
+            "name":          "Clocks",
+            "artist":        49
+        }
+    },
+    {
+        "pk":     66,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [178, 179],
+            "name":          "Nothing Else Matters",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     67,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [180, 181],
+            "name":          "The Unforgiven",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     68,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [182, 185],
+            "name":          "Wherever I May Roam",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     69,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [183, 192],
+            "name":          "Master Of Puppets",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     70,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [184, 186],
+            "name":          "One",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     71,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [187, 193],
+            "name":          "Fade To Black",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     72,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [188, 189],
+            "name":          "For Whom The Bell Tolls",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     73,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [190, 191],
+            "name":          "Don't Tread On Me",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     74,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [194, 195],
+            "name":          "Of Wolf And Man",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     75,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [196, 201],
+            "name":          "Through The Never",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     76,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [197, 199],
+            "name":          "My Friend Of Misery",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     77,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [198, 200],
+            "name":          "The Day That Never Comes",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     78,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [202, 203],
+            "name":          "The Unforgiven II",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     79,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [204, 205],
+            "name":          "Holier Than Thou",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     80,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [206, 207],
+            "name":          "The God That Failed",
+            "artist":        14
+        }
+    },
+    {
+        "pk":     81,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [208, 211],
+            "name":          "Live While We're Young",
+            "artist":        8
+        }
+    },
+    {
+        "pk":     82,
+        "model":  "music.track",
+        "fields": {
+            "_external_ids": [209, 210],
+            "name":          "They Don't Know About Us",
+            "artist":        8
+        }
     }
-  },
-  {
-    "model": "music.IDType",
-    "pk": 2,
-    "fields": {
-      "name": "lastfm"
-    }
-  },
-  {
-    "model": "music.IDType",
-    "pk": 3,
-    "fields": {
-      "name": "isrc"
-    }
-  },
-  {
-    "model": "music.IDType",
-    "pk": 4,
-    "fields": {
-      "name": "mb"
-    }
-  }
 ]

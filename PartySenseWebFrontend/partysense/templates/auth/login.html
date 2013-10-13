@@ -7,15 +7,12 @@
     <div class="col-md-5">
         <h2>Login to manage your account</h2>
         <div class="">
-        <form class="bootstrap3" method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+
             {% include "form_snippet.html" %}
 
-            <input class="btn btn-primary" type="submit" value="Login" />
             <div class="fieldWrapper">
                 <a href="{% url "auth_password_reset" %}">Forgot your password?</a>
             </div>
-        </form>
-
 
         </div>
     </div>

@@ -495,7 +495,7 @@ footer
     margin-top: 140px;
 }
 
-.club-landing-section p, li{
+.club-landing-section p, .club-landing-section li{
     color: white;
     font-size: 16px;
 }

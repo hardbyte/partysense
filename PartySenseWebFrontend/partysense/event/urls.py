@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from django.views.decorators.csrf import ensure_csrf_cookie
-
+from django.views.decorators.cache import cache_page
 from partysense.event.views import *
 
 urlpatterns = patterns('',
@@ -14,7 +14,7 @@ urlpatterns = patterns('',
 
     # statistics page
     url(r'^(?P<pk>\d+)/(?P<slug>[-\w]+)/stats/$',
-        login_required(EventStatsDetail.as_view()),
+        cache_page(60*15)(login_required(EventStatsDetail.as_view())),
         name="stats"),
 
     # edit view

@@ -11,7 +11,7 @@
     <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
 
         <h2>Tell us about this event {{ user.dj_set.get.nickname }}</h2>
-        {% crispy formset %}
+        {% include "form_snippet.html" %}
 
     </section>
 

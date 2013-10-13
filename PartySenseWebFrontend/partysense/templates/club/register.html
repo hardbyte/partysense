@@ -8,15 +8,49 @@
 <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">
 
     <h2>Tell us about your club</h2>
-    <form class="bootstrap3" method="post" action="" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
-        {% include "form_snippet.html" %}
 
-        <br style="clear:left;">
-        <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </div>
-    </form>
+    {% include "form_snippet.html" %}
+
 </section>
 
 
+{% endblock %}
+
+{% block jslibs %}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCjOEItJV2ny3PQzAB6jeoQztOHvqBnQ_I&sensor=false">
+    </script>
+    <script>
+        var input = document.getElementById('id_city');
+        var autocomplete = new google.maps.places.Autocomplete(input, {types: ['(cities)']});
+        // When the user selects an address from the dropdown,
+        // populate the country address fields in the form.
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            fillInAddress();
+        });
+
+        $('#id_city').keypress(function(event) {
+            var keypressed = event.keyCode || event.which;
+            if (keypressed == 13) {
+                // avoid submitting the form because user probably just selected a google suggestion
+                try{event.cancelBubble=true;}//IE
+                catch(e){event.stopPropagation();}//others
+                event.preventDefault();
+            }
+        });
+
+        var fillInAddress = function(){
+            // Get the place details from the autocomplete object.
+            var place = autocomplete.getPlace();
+            // Get each component of the address from the place details
+            // and fill the corresponding field on the form.
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (addressType === "country") {
+                    var countryInfo = place.address_components[i];
+                    document.getElementById("id_country").value = countryInfo['short_name'];
+                }
+            }
+        };
+
+    </script>
 {% endblock %}
