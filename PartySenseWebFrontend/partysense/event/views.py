@@ -57,7 +57,7 @@ class EventDetail(EventView, DetailView):
                 id=context['event'].pk
             ).filter(
                 past_event=False,
-                 dj=context['event'].dj.pk
+                 djs__in=set(dj.pk for dj in context['event'].djs.all())
             ).order_by('-modified')
 
         # add recently up-voted tracks TODO CACHE these per user?
@@ -309,6 +309,8 @@ def create(request):
     if not DJ.objects.filter(user=request.user).exists():
         return HttpResponseRedirect(reverse("register"))
 
+    dj = DJ.objects.get(user=request.user.id)
+
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
@@ -320,9 +322,9 @@ def create(request):
             # instance out of it:
             event = event_form.save(commit=False)
             logger.info("Creating new event to start at: {}".format(event.start_time))
+
             # Add the automatic fields based on user
-            # assumes the user is already a DJ
-            event.dj = DJ.objects.get(user=request.user.id)
+            event.dj = dj
 
             # create a new location or use existing...
             location = Location(
@@ -339,10 +341,6 @@ def create(request):
 
             # then commit the new event to our database
             event.save()
-
-            # Invalidate the memcached template blocks which are probably now invalid
-            #key = 'event:{}:detailscontext'.format(event.pk)
-            #cache.delete(key) # invalidates cached template fragment
 
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
@@ -362,6 +360,7 @@ def create(request):
     return render(request,
                   'event/new.html',
                   {
+                      'dj': dj,
                       "formset": event_form
                   })
 
@@ -372,6 +371,8 @@ def update(request, pk, slug):
     if not (request.user == event.dj.user or request.user.is_staff):
         # if not allowed here...
         raise Http404("Permission Denied")
+
+    dj = event.dj
 
     if request.method == 'POST':
         # If the form has been submitted...
@@ -399,6 +400,10 @@ def update(request, pk, slug):
             # then commit the new event to our database
             event.save()
 
+            # Invalidate the memcached template blocks which are probably now invalid
+            #key = 'event:{}:detailscontext'.format(event.pk)
+            #cache.delete(key) # invalidates cached template fragment
+
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Fill in from the event instance
@@ -417,6 +422,7 @@ def update(request, pk, slug):
     return render(request,
                   'event/new.html',
                   {
+                      'dj': dj,
                       "formset": event_form
                   })
 
@@ -440,6 +446,7 @@ def profile(request):
         users_events = {e.pk for e in upcoming_events}
         for e in past_events:
             users_events.add(e.pk)
+
         djs = DJ.objects.filter(event__in=users_events).distinct()
 
         """See what we can get from facebook

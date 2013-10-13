@@ -39,7 +39,8 @@ class EventForm(ModelForm):
         fields = ('title',
                   'user_editable',
                   'start_time',
-                  'description'
+                  #'description'
+                  #'fb_url'
                   )
 
     def __init__(self, *args, **kwargs):
@@ -55,7 +56,8 @@ class EventForm(ModelForm):
                          css_class="col-md-12"
                     ),
                     Div(Field('start_time'),
-                        Field('description', rows=4),
+                        #Field('fb_url'),
+                        #Field('description', rows=4),
                         css_class="col-md-12"),
 
                     css_class="col-md-6"),

@@ -27,7 +27,7 @@
 
 {#{% cache 300 eventsidebar event.pk request.user.pk %}#}
     <div class="col-md-3 col-sm-4">
-      {% if event.dj.user == user %}
+      {% if user_can_edit %}
           <div class="panel panel-default accordian-panel">
               <a class="btn btn-block btn-primary btn-lg"
                  href="{% url "event:stats" event.pk event.slug %}">
@@ -46,7 +46,7 @@
 			  <div class="panel-body">
 			  <h4 id="event-name">{{ event.title }}</h4>
 
-                {% if event.dj.user == user %}
+                {% if user_can_edit %}
                     <a class="btn btn-block"
                        href="{% url "event:update" event.pk event.slug %}">
                         <i class="icon-edit"></i> Edit Event Details
@@ -65,31 +65,35 @@
 
 
                 <dl>
-                    <dt>Host: {% if event.dj.user == user %} <em>(you)</em>{% endif %}</dt>
+                    <dt>Host: {% if user_can_edit %} <em>(you)</em>{% endif %}</dt>
                   {% cache 60 eventdetails event.pk %}
+                  {% for dj in event.djs.all %}
                     <dd>
-                        {% if event.dj.url  %}
-                            <a href="{{ event.dj.url }}">
-                                {{ event.dj.nickname }}
+                        {% if dj.url  %}
+                            <a href="{{ dj.url }}">
+                                {{ dj.nickname }}
                             </a>
                         {% else %}
-                            {{ event.dj.nickname }}
+                            {{ dj.nickname }}
                         {% endif %}
                         (<span class="dropdown">
                             <a class="dropdown-toggle"
                                data-toggle="dropdown"
-                               href="/dj/{{ event.dj.pk }}/{{ event.dj.nickname|slugify }}"
+                               href="{{ dj.get_absolute_url }}"
                                id="dLabel">other events</a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                {% for event in djsOtherEvents %}
-                                    <li><a href="{{ event.get_absolute_url }}">
-                                          {{ event }} at {{ event.location.name }}
+                                {% for evt in dj.get_upcoming_events %}
+                                    {% if evt != event %}
+                                    <li><a href="{{ evt.get_absolute_url }}">
+                                          {{ evt }} at {{ evt.location.name }}
                                         </a>
                                     </li>
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </span>)
                     </dd>
+                   {% endfor %}
                     <dt>When:</dt>
                     <dd>{{ event.start_time }}</dd>
                     <dt>Venue:</dt>

@@ -31,7 +31,8 @@ class EventList(ListView):
     def get_queryset(self):
         logger.debug("filter out finished events and events that aren't visible to this dj/user")
         dj_id = self.kwargs['dj_id']
-        queryset = Event.objects.filter(past_event=False, dj=dj_id).order_by('-modified')
+        dj = get_object_or_404(DJ, pk=dj_id)
+        queryset = dj.event_set.filter(past_event=False).order_by('-modified')
         return queryset
 
     def get_context_data(self, **kwargs):
