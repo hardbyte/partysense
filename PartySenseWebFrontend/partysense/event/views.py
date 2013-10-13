@@ -39,7 +39,7 @@ class EventDetail(EventView, DetailView):
         event = get_object_or_404(Event, pk=self.kwargs['pk'])
 
         # if we are not in debug mode (or staff) check that the slug was correct
-        if not (settings.DEBUG or self.request.user.is_staff()):
+        if not (settings.DEBUG or self.request.user.is_staff):
             if not event.slug == self.kwargs['slug']:
                 raise Http404
         # check that the event isn't in the past
