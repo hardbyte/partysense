@@ -49,6 +49,9 @@ class Event(TimeStampedModel):
 
     # TODO migrate to multiple dj's
     dj = models.ForeignKey(DJ)
+
+    djs = models.ManyToManyField(DJ, blank=True, related_name="djs")
+
     users = models.ManyToManyField(User, blank=True)
     tracks = models.ManyToManyField(Track, blank=True)
 
