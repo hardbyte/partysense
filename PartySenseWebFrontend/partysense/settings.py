@@ -280,7 +280,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -295,6 +295,10 @@ LOGGING = {
         }
     },
     'handlers': {
+        'null': {
+            'level': 'INFO',
+            'class': 'django.utils.log.NullHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -311,6 +315,10 @@ LOGGING = {
             'handlers': ['mail_admins'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['null'],
+            'propagate': False,
         },
         '': {
             'handlers': ['console'],
