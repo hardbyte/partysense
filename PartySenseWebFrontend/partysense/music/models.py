@@ -43,10 +43,11 @@ class ExternallyDefinedIDModel(models.Model):
 
     def get_spotify_url(self):
         # Look up the external ids and find the "spotify" one
-        spotify_id = cache.get("spotifyid:{}:{}".format(self.__class__.__name__, self.pk))
+        cache_key = "spotifyid:{}:{}".format(self.__class__.__name__, self.pk)
+        spotify_id = cache.get(cache_key)
         if spotify_id is None:
             spotify_id = self._external_ids.only("value").get(id_type=self._spotify_type).value
-            cache.set("spotifyid:{}:{}".format(self.__class__, self.pk), spotify_id, 9999)
+            cache.set(cache_key, spotify_id, 9999)
         return spotify_id
 
 
