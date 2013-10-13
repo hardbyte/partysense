@@ -2,7 +2,7 @@ __author__ = 'Brian'
 
 import logging
 from django.db import models
-
+from django.core.cache import cache
 
 
 """
@@ -41,17 +41,13 @@ class ExternallyDefinedIDModel(models.Model):
     _spotify_type = IDType.objects.get(pk=1)
     _external_ids = models.ManyToManyField(ExternalID)
 
-    def __init__(self, *args, **kwargs):
-        self._cached_ids = {}
-        super(ExternallyDefinedIDModel, self).__init__(*args, **kwargs)
-
     def get_spotify_url(self):
         # Look up the external ids and find the "spotify" one
-        if not self._spotify_type in self._cached_ids:
+        spotify_id = cache.get("spotifyid:{}:{}".format(self.__class__, self.pk))
+        if spotify_id is None:
             spotify_id = self._external_ids.only("value").get(id_type=self._spotify_type).value
-            self._cached_ids[self._spotify_type] = spotify_id
-
-        return self._cached_ids[self._spotify_type]
+            cache.set("spotifyid:{}:{}".format(self.__class__, self.pk), spotify_id, 9999)
+        return spotify_id
 
 
     def set_spotify_url(self, value):

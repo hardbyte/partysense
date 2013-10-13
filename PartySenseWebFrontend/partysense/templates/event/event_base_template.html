@@ -25,7 +25,7 @@
 
 <div class="row" ng-app="Partysense" ng-controller="TemplateCtrl" style="margin-top: 5px">
 
-{% cache 900 eventsidebar event.pk request.user.pk %}
+{#{% cache 300 eventsidebar event.pk request.user.pk %}#}
     <div class="col-md-3 col-sm-4">
       {% if event.dj.user == user %}
           <div class="panel panel-default accordian-panel">
@@ -63,9 +63,10 @@
                            value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
                 </div>
 
+
                 <dl>
                     <dt>Host: {% if event.dj.user == user %} <em>(you)</em>{% endif %}</dt>
-
+                  {% cache 60 eventdetails event.pk %}
                     <dd>
                         {% if event.dj.url  %}
                             <a href="{{ event.dj.url }}">
@@ -93,6 +94,7 @@
                     <dd>{{ event.start_time }}</dd>
                     <dt>Venue:</dt>
                     <dd>{{ event.location }}</dd>
+                  {% endcache %}
                 </dl>
                 <div id="map_canvas" style="width: 100%; height: 200px;"></div>
 
@@ -151,17 +153,17 @@
 		</div>
 	</div>
 
-{% endcache %}
-    {% block event_content %}
-        Nothing to see here....
-    {% endblock %}
+{#{% endcache %}#}
+{% block event_content %}
+    Nothing to see here....
+{% endblock %}
 
 </div>
 {% endblock %}
 
 {% block jslibs %}
-
-  {% cache 600 eventdata event.pk request.user.pk %}
+{# Rate limit a user to one full page load every 20 seconds #}
+  {% cache 20 eventdata event.pk request.user.pk %}
   {% compress js %}
     <script>
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
