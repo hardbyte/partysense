@@ -163,7 +163,7 @@
 
 {% block jslibs %}
 {# Rate limit a user to one full page load every 20 seconds #}
-  {% cache 20 eventdata event.pk request.user.pk %}
+  {% cache 20 eventdata event.pk user.pk %}
   {% compress js %}
     <script>
         var lastfm = "http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key={{ LAST_FM_API_KEY }}&format=json";
