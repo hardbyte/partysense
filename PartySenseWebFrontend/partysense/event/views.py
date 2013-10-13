@@ -173,7 +173,7 @@ def json_track_list(event, user):
     if memcache_res is not None:
         logger.info("Setlist for event {} was in cache".format(event.pk))
         track_votes = memcache_res['track_votes']
-        spotify_ids = memchache_res['spotify_ids']
+        spotify_ids = memcache_res['spotify_ids']
 
     else:
         if settings.POSTGRES_ENABLED:
