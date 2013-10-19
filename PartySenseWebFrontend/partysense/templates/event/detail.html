@@ -24,14 +24,13 @@
              <a class="alert-link" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                    Login to vote on the music!
              </a>
-          {% else %}
-
-             <div>
-              {{ event.description }}
-              </div>
-             <p><small class="alert-link"> {{ event.dj.nickname }}</small></p>
-
           {% endif %}
+
+          <div>
+          {{ event.description }}
+          </div>
+          <p><small class="alert-link"> {{ event.dj.nickname }}</small></p>
+
         </div>
         {% endif %}
 
