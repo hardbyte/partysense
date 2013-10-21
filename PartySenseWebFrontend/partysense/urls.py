@@ -6,7 +6,7 @@ from django.contrib import admin
 from partysense.event.urls import *
 
 from partysense.club.views import *
-from partysense.dj.views import EventList
+from partysense.dj.views import EventList, lookup_dj
 
 
 
@@ -76,6 +76,9 @@ urlpatterns += patterns('partysense.dj.views',
 
     # List this dj's events
     url(r'^dj/(?P<dj_id>\d+)/', EventList.as_view(), name="dj_events"),
+
+    # Search for a dj
+    url(r'^dj/search/(?P<q>\w+)/', lookup_dj, name="dj_search"),
 )
 
 urlpatterns += patterns('partysense.club.views',
