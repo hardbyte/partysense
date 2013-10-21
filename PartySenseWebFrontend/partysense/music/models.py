@@ -38,7 +38,6 @@ class ExternalID(models.Model):
 
 
 class ExternallyDefinedIDModel(models.Model):
-    _spotify_type = IDType.objects.get(pk=1)
     _external_ids = models.ManyToManyField(ExternalID)
 
     def get_spotify_url(self):
@@ -46,13 +45,13 @@ class ExternallyDefinedIDModel(models.Model):
         cache_key = "spotifyid:{}:{}".format(self.__class__.__name__, self.pk)
         spotify_id = cache.get(cache_key)
         if spotify_id is None:
-            spotify_id = self._external_ids.only("value").get(id_type=self._spotify_type).value
+            spotify_id = self._external_ids.only("value").get(id_type=1).value
             cache.set(cache_key, spotify_id, 9999)
         return spotify_id
 
 
     def set_spotify_url(self, value):
-        self._external_ids.create(id_type=self._spotify_type, value=value)
+        self._external_ids.create(id_type=IDType.objects.get(pk=1), value=value)
 
     spotify_url = property(get_spotify_url, set_spotify_url)
 

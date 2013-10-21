@@ -1,8 +1,7 @@
 import logging
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
 
 
 class DJ(models.Model):
@@ -30,3 +29,10 @@ class DJ(models.Model):
 
     def __str__(self):
         return self.nickname
+
+    def get_absolute_url(self):
+        """ Django uses this in its admin interface """
+        return reverse('dj_events', args=[str(self.pk)])
+
+    def get_upcoming_events(self):
+        return self.event_set.filter(past_event=False).order_by('-modified')
