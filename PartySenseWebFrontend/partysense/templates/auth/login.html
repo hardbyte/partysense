@@ -19,14 +19,17 @@
 
     <div class="col-md-6 col-md-offset-1">
         <h2>Don't have an account?</h2>
-        <p>Not a problem, it doesn't take a minute, either</p>
+        <p>Note if you register with facebook we don't require access to your wall, we would never attempt to post on your
+           behalf.</p>
+        <div class="btn-group">
+            <a rel="nofollow" href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <button class="btn btn-primary">Login with Facebook</button>
+            </a>
 
-        <a rel="nofollow" href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-            <div id="facebook_button">Log in with Facebook</div>
-        </a>
-
-        <a href="{% url "registration_register" %}"><button class="btn btn-primary">Register with an email/password now</button></a>
-
+            <a href="{% url "registration_register" %}">
+                <button class="btn btn-primary">Register with email/password</button>
+            </a>
+        </div>
     </div>
 
 </section>
