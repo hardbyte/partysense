@@ -8,17 +8,33 @@
     <div class="col-md-6 col-sm-8">
 
         <div class="page-heading">
-            <h1>Party Playlist <small ng-show="loggedIn">Vote on the current set list</small></h1>
-        </div>
-        <section>
+            <h1>
+                {% if user.is_authenticated %}
+                Vote on the current
+                {% endif %}
+                Party Playlist
+            </h1>
 
+        </div>
+
+        {% if event.description or not user.is_authenticated %}
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           {% if not user.is_authenticated %}
-            <a class="btn btn-primary btn-block btn-large" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
-                  Login to vote on the music!
-            </a>
+             <a class="alert-link" href="{% url "auth:password_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                   Login to vote on the music!
+             </a>
           {% endif %}
 
+          <div>
+          {{ event.description }}
+          </div>
+          <p><small class="alert-link"> {{ event.dj.nickname }}</small></p>
 
+        </div>
+        {% endif %}
+
+        <section>
 
           {% if event.user_editable or event.dj.user == user %}
             <div>

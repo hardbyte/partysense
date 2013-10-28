@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load url from future %}
 
 <title>User Details</title>
 
@@ -6,74 +7,111 @@
 {% if user.is_authenticated %}
 
 <div class="row">
-    <section class="col-sm-4" style="margin-top: 10px" >
-        <h3>Account info:</h3>
-        {% if user.is_staff %}
-            <div class="">
-                <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
-            </div>
-        {% endif %}
-        <table class="table">
-            <tr class="hide"><th>Id:</th> <td>{{ user.id }}</td></tr>
-            {% if user.email %}<tr><th>Email:</th> <td>{{ user.email|default:"" }}</td></tr>{% endif %}
-            <tr><th>First name:</th> <td>{{ user.first_name|default:"Not provided" }}</td></tr>
-            <tr><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
-        </table>
+    <div class="col-sm-4">
+        <section>
 
-    {% if img %}
-        <div><img src="{{ img.url }}"></div>
-    {% endif %}
+            <h3>Navigation</h3>
 
-    {% if backends.associated %}
-        <p>
-            <a href="{% url "auth_logout" %}" class="btn btn-block btn-primary panel-heading accordion-heading ">Logout</a>
-        </p>
-        <div class="hide">
-        <h3>Disconnect</h3>
-        <p class="alert">This will remove the connection to your facebook account entirely.</p>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#upcomingEvents">
+                        Upcoming Events
+                    </a>
+                </li>
 
-        {% for type, accounts in social_auth.associated.items %}
-            {% for account in accounts %}
+                <li>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#recentEvents">
+                        Recent Events
+                    </a>
+                </li>
 
-              <span class="disconnect">
-                <form action="{% url "social:disconnect_individual" account.provider account.id %}" method="post">
-                    {% csrf_token %}
-                    <a href="#">{{ account.provider|title }} ({{ user.username }})</a>
-                </form>
-              </span>
+                <li>
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#djs">
+                        Your DJs
+                    </a>
+                </li>
+            </ul>
+
+            <h3>Account info:</h3>
+            {% if user.is_staff %}
+                <div class="">
+                    <a class="btn btn-block btn-danger" href="/admin/">Admin</a>
+                </div>
+            {% endif %}
+
+            <table class="table">
+                <tr class="hide">
+                    <th>Id:</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+            {% if user.email %}
+                <tr>
+                    <th>Email:</th>
+                    <td>
+                        {{ user.email|default:"Not provided" }}
+                    </td>
+                </tr>
+
+            {% endif %}
+                <tr>
+                    <th>First name:</th>
+                    <td>
+                        {{ user.first_name|default:'Not provided' }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Last name:</th>
+                    <td >
+                        {{ user.last_name|default:"Not provided" }}
+                    </td>
+                </tr>
+                {% for account in backends.associated %}
+                <tr>
+                    <th>{{ account.provider|title }} Account</th>
+                    <td>Connected <span class="glyphicon glyphicon-ok-sign"></span></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% for backend in backends.not_associated %}
+                <a class="btn btn-info btn-block" href="{% url "social:begin" backend %}">
+                    Connect your {{ backend|title }} account?
+                </a>
 
             {% endfor %}
-        {% endfor %}
-        </div>
-    {% endif %}
-    <hr>
-    <p>
-    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          <button class="btn btn-block btn-primary panel-heading accordion-heading">
-            Upcoming Events
-          </button>
-        </a>
-    </p>
-    <p>
-    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-			  <button class="btn btn-block btn-primary panel-heading accordion-heading">
-				Recent Events
-			  </button>
-			</a>
-    </p>
-    <p>
-    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-			  <button class="btn btn-block btn-primary panel-heading accordion-heading">
-				Your DJs
-			  </button>
-			</a>
-    </p>
-    </section>
+
+            {% if img %}
+                <div class="text-center"><img class="img-responsive" src="{{ img.url }}"></div>
+            {% endif %}
+
+
+            {% if backends.associated %}
+
+                <div class="hide">
+                    <h3>Disconnect</h3>
+
+                    <div class="alert alert-warning">This will remove the ability to login with your facebook account
+                    </div>
+
+                    {% for account in backends.associated %}
+
+                        <form action="{% url "social:disconnect_individual" account.provider account.id %}"
+                              method="post">
+                            {% csrf_token %}
+                            <a href="#">Disconnect your {{ account|title }} account from partysense</a>
+                        </form>
+
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </section>
+
+    </div>
 
     <div class="col-sm-8">
-    <div class="panel-group" id="accordion">
-		  <div class="panel panel-default  accordian-panel" style="margin-top: 10px">
-			<div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-group" id="accordion">
+		  <div class="panel panel-default accordian-panel">
+			<div id="upcomingEvents" class="panel-collapse collapse in">
 			  <div class="panel-body">
                 <h3>Upcoming</h3>
                 <ul>
@@ -90,7 +128,7 @@
 
 
 		  <div class="panel panel-default accordian-panel">
-			<div id="collapseTwo" class="panel-collapse collapse">
+			<div id="recentEvents" class="panel-collapse collapse">
 			  <div class="panel-body">
                     <h3>Recent</h3>
                     {% if past_events %}
@@ -107,8 +145,7 @@
 		  </div>
 
 		  <div class="panel panel-default accordian-panel">
-
-			<div id="collapseThree" class="panel-collapse collapse">
+			<div id="djs" class="panel-collapse collapse">
 			  <div class="panel-body">
                 <h3>Your DJ's:</h3>
                 {% if djs %}
@@ -123,15 +160,11 @@
 		  </div>
 		</div>
     </div>
-
-
-
-{# TODO   if clubs ...#}
 </div>
 {% else %}
 
     <div class="alert alert-warning">
-        <h3>Opps, this won't take a second</h3>
+        <h3>Oops, this won't take a second</h3>
         <p>The action you have requested requires you to be logged in! You can login using:</p>
         <ul>
             {% for name in backends.backends %}

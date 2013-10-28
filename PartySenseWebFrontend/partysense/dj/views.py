@@ -1,9 +1,10 @@
+import json
 import logging
 
-
+from django.contrib.auth.models import User
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.views.generic import ListView, DetailView
 from django.shortcuts import  get_object_or_404, render
 from django.core.urlresolvers import reverse
@@ -31,7 +32,8 @@ class EventList(ListView):
     def get_queryset(self):
         logger.debug("filter out finished events and events that aren't visible to this dj/user")
         dj_id = self.kwargs['dj_id']
-        queryset = Event.objects.filter(past_event=False, dj=dj_id).order_by('-modified')
+        dj = get_object_or_404(DJ, pk=dj_id)
+        queryset = dj.event_set.filter(past_event=False).order_by('-modified')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -98,3 +100,47 @@ def register(request):
         {
             "formset": form,
         })
+
+
+@login_required
+def lookup_dj(request, q):
+    """
+    Given a string like "bria"
+    return a list of dj instances:
+    [
+        {
+            dj_id: 1,
+            user_id: 2,
+            user_name: "Brian Thorne",
+            dj_name: "DJ Ango",
+            city: "Christchurch, New Zealand"
+        },
+    ]
+
+    """
+    if len(q) < 3:
+        raise Http404("Permission Denied")
+
+    logger.info("Searching for dj for name")
+
+    djs = []
+
+    def add_djs_from(queryset):
+        for dj in queryset:
+            djs.append({
+                'dj_id': dj.pk,
+                'user_id': dj.user_id,
+                'user_name': dj.user.get_full_name(),
+                'dj_name': dj.nickname,
+                'city': dj.city_name
+            })
+
+    add_djs_from(DJ.objects.filter(nickname__contains=q))
+    add_djs_from(DJ.objects.filter(email__startswith=q))
+    add_djs_from(DJ.objects.filter(user__first_name__startswith=q.title()))
+
+    response = {
+        'djs': djs
+    }
+
+    return HttpResponse(json.dumps(response), content_type="application/json")

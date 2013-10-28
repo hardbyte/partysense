@@ -51,29 +51,31 @@ class EventDetail(EventView, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
+        e = context['event']
         # add other context... if required
         context['LAST_FM_API_KEY'] = settings.LASTFM_API_KEY
         context['djsOtherEvents'] = Event.objects.exclude(
-                id=context['event'].pk
+                id=e.pk
             ).filter(
                 past_event=False,
-                 dj=context['event'].dj.pk
+                 djs__in=set(dj.pk for dj in e.djs.all())
             ).order_by('-modified')
 
         # add recently up-voted tracks TODO CACHE these per user?
         u = self.request.user
         if not u.is_anonymous():
             # Add this user to the event
-            if not context['event'].users.filter(pk=u.pk).exists():
-                context['event'].users.add(u)
+            if not e.users.filter(pk=u.pk).exists():
+                e.users.add(u)
 
             context['recent_tracks'] = reversed(Track.objects.filter(pk__in={v.track.pk for v in u.vote_set.prefetch_related('track').all()
                                    .filter(is_positive=True)
-                                   .exclude(track__in=context['event'].tracks.all())
-                                   .exclude(event=context['event'])}).select_related()[0:10])
+                                   .exclude(track__in=e.tracks.all())
+                                   .exclude(event=e)}).select_related()[0:10])
 
             context['upcoming_events'] = Event.objects.filter(users=u, past_event=False)
             context['past_events'] = Event.objects.filter(users=u, past_event=True)
+            context['user_can_edit'] = u.is_staff or e.djs.filter(user=u).exists()
 
         # Add the setlist
         context['number_of_tracks'], context['setlist'] = json_track_list(context['event'], u)
@@ -309,6 +311,8 @@ def create(request):
     if not DJ.objects.filter(user=request.user).exists():
         return HttpResponseRedirect(reverse("register"))
 
+    dj = DJ.objects.get(user=request.user.id)
+
     if request.method == 'POST':
         # If the form has been submitted...
         # A form bound to the POST data
@@ -320,9 +324,9 @@ def create(request):
             # instance out of it:
             event = event_form.save(commit=False)
             logger.info("Creating new event to start at: {}".format(event.start_time))
+
             # Add the automatic fields based on user
-            # assumes the user is already a DJ
-            event.dj = DJ.objects.get(user=request.user.id)
+
 
             # create a new location or use existing...
             location = Location(
@@ -340,9 +344,9 @@ def create(request):
             # then commit the new event to our database
             event.save()
 
-            # Invalidate the memcached template blocks which are probably now invalid
-            #key = 'event:{}:detailscontext'.format(event.pk)
-            #cache.delete(key) # invalidates cached template fragment
+            event.djs.add(dj)
+
+            event.save()
 
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
@@ -362,6 +366,7 @@ def create(request):
     return render(request,
                   'event/new.html',
                   {
+                      'dj': dj,
                       "formset": event_form
                   })
 
@@ -372,6 +377,8 @@ def update(request, pk, slug):
     if not (request.user == event.dj.user or request.user.is_staff):
         # if not allowed here...
         raise Http404("Permission Denied")
+
+    dj = event.dj
 
     if request.method == 'POST':
         # If the form has been submitted...
@@ -399,6 +406,10 @@ def update(request, pk, slug):
             # then commit the new event to our database
             event.save()
 
+            # Invalidate the memcached template blocks which are probably now invalid
+            #key = 'event:{}:detailscontext'.format(event.pk)
+            #cache.delete(key) # invalidates cached template fragment
+
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
     else:
         # Fill in from the event instance
@@ -417,6 +428,7 @@ def update(request, pk, slug):
     return render(request,
                   'event/new.html',
                   {
+                      'dj': dj,
                       "formset": event_form
                   })
 
@@ -440,6 +452,7 @@ def profile(request):
         users_events = {e.pk for e in upcoming_events}
         for e in past_events:
             users_events.add(e.pk)
+
         djs = DJ.objects.filter(event__in=users_events).distinct()
 
         """See what we can get from facebook

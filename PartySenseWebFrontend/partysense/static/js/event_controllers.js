@@ -160,7 +160,7 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
     $scope.showSpotifyPreview = false;
     $scope.numberOfTracks = ps.numberOfTracks;
     // encode the events name in the spotify playlist
-    $scope.playlistName = encodeURIComponent("Partysense - " + ps.eventTitle);
+    $scope.playlistName = encodeURIComponent("Partysense Playlist - " + ps.eventTitle);
 
     $scope.searchArtistFromTrack = function(track) {
         console.log("Search for an artist");
@@ -245,7 +245,7 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
             spotifyTracks += data[i].spotifyTrackID.slice(14) + ',';
         }
 
-        $scope.spotifyPlaylistURL = "https://embed.spotify.com/?uri=spotify:trackset:" + "test" + ":" + spotifyTracks + "&view=list";
+        $scope.spotifyPlaylistURL = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + spotifyTracks + "&view=list";
         $scope.showSpotifyPreview = true;
 
         // Iterate through all the tracks

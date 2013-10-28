@@ -36,11 +36,19 @@ class Event(TimeStampedModel):
     """
     The core of the system
     """
-    title = models.CharField("Event name", max_length=70, help_text="Keep it simple")
+    title = models.CharField("Event Name", max_length=70, help_text="Keep it simple")
+
+    description = models.TextField("Event Description", blank=True,
+                                   help_text="""Guidance to attendees about what to expect.
+    <strong>Eg:</strong>
+    <blockquote>We will play any tracks with more than 10 up votes</blockquote>
+
+    """)
+
     location = models.ForeignKey(Location, help_text="Where is the event?")
 
-    # TODO migrate to multiple dj's
-    dj = models.ForeignKey(DJ)
+    djs = models.ManyToManyField(DJ, blank=True)
+
     users = models.ManyToManyField(User, blank=True)
     tracks = models.ManyToManyField(Track, blank=True)
 
@@ -49,14 +57,14 @@ class Event(TimeStampedModel):
     past_event = models.BooleanField(default=False, editable=False)
 
     # The DJ can choose all the music or users can add too
-    user_editable = models.BooleanField(
-        default=True,
-        verbose_name="Allow guests to add music to the playlist (Recommended) ",
-        help_text="If not selected, only you can add songs to the playlist, and others can only vote")
+    user_editable = models.BooleanField(default=True,
+                                        verbose_name="Allow guests to add music to the playlist (Recommended) ",
+                                        help_text="""If not selected, only Event DJs can add songs to the playlist.
+                                        Other users will still be able to vote on the music you have chosen.""")
 
     start_time = models.DateTimeField()
 
-    fb_url = models.URLField(editable=False)
+    fb_url = models.URLField(editable=True)
     slug = models.SlugField(editable=False)
 
     def save(self, *args, **kwargs):
@@ -73,8 +81,26 @@ class Event(TimeStampedModel):
     def timedelta(self):
         return self.start_time - datetime.datetime.utcnow().replace(tzinfo=utc)
 
+    def number_of_tracks(self):
+        return self.tracks.count()
+
+    def number_of_users(self):
+        return self.users.count()
+
     def get_absolute_url(self):
+        """ Django uses this in its admin interface """
         return reverse('event:detail', args=[str(self.id), self.slug])
+
+    def get_dj(self):
+        logger.warning("OLD USE OF DJ for event {}".format(self.pk))
+        return self.djs.all()[0]
+
+    def set_dj(self, new_dj):
+        logger.warning("Trying to set single dj... use event.djs.add")
+
+        raise NotImplemented
+
+    dj = property(get_dj, set_dj)
 
 
 class Vote(models.Model):
