@@ -93,7 +93,7 @@ class Genre(models.Model):
     """
     Clubs, Artists and Tracks could all have a genre.
     """
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=256, unique=True)
 
     def __unicode__(self):
         return self.name

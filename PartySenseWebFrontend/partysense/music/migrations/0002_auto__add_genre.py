@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'Genre'
         db.create_table(u'music_genre', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=256)),
+            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=256)),
         ))
         db.send_create_signal(u'music', ['Genre'])
 
@@ -37,7 +37,7 @@ class Migration(SchemaMigration):
         u'music.genre': {
             'Meta': {'object_name': 'Genre'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '256'})
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '256'})
         },
         u'music.idtype': {
             'Meta': {'object_name': 'IDType'},
