@@ -11,7 +11,7 @@ from partysense.util.api import LocationResource
 class ClubResource(ModelResource):
 
     admins = fields.ToManyField(UserResource, 'admins')
-    location = fields.ForeignKey(LocationResource, 'location')
+    location = fields.ToOneField(LocationResource, 'location', full=True)
 
     class Meta:
         queryset = Club.objects.all()
