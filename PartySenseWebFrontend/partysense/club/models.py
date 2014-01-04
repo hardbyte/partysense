@@ -38,11 +38,41 @@ class Club(models.Model):
 
     location = models.ForeignKey("event.Location", verbose_name="Where is the club?")
     
-    # @TODO : Genres and Demographics. 
-    # Need a list of Tags here for music genres and the scene
+    # @TODO : Target Demographics.
+    # Need a list of Tags here for the scene
     genres = models.ManyToManyField(Genre)
-    # Maybe an age group field
 
+    # A target age group field
 
-    def __str__(self):
+    cost = models.CharField(max_length=3,
+                            choices=(
+                                ('low', '$'),
+                                ('med', '$$'),
+                                ('exp', '$$$'),
+                            ),
+                            default='med')
+
+    cover_charge = models.BooleanField(default=False)
+
+    dress_code = models.PositiveSmallIntegerField(
+        choices=(
+            (1, "Chilled"),
+            (2, "Formal"),
+            (3, "Fancy")
+        ),
+        default=1)
+
+    style = models.PositiveSmallIntegerField(
+        choices=(
+            (0, 'Chilled'),
+            (1, 'Lounge'),
+            (2, 'Dance Floor'),
+            (3, 'Hipster'),
+            (4, 'Sports Bar')
+        ),
+        default=0)
+
+    live_music = models.BooleanField(name="Live Music")
+
+    def __unicode__(self):
         return self.name
