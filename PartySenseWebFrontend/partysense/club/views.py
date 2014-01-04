@@ -53,7 +53,7 @@ def create_club(request):
             new_club.admins.add(request.user)
 
 
-            return redirect(reverse("club-profile", args=(new_club.pk,)))
+            return redirect(reverse("club:profile", args=(new_club.pk,)))
     else:
         # Use logged in users email (if we have it)
         club_form = NewClubForm(initial={

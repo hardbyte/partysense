@@ -2,12 +2,15 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
+from tastypie.api import Api
 
 from partysense.event.urls import *
-
 from partysense.club.views import *
 from partysense.dj.views import EventList, lookup_dj
 
+from partysense.club.api import ClubResource
+from partysense.api import UserResource
+from partysense.util.api import LocationResource
 
 
 admin.autodiscover()
@@ -19,6 +22,8 @@ urlpatterns = patterns('',
     url(r'^bigbrother/', include('bigbrother.urls')),
 
     url(r'^event/', include('partysense.event.urls', namespace="event")),
+
+    url(r'^club/', include('partysense.club.urls', namespace='club')),
 
     # Enable the socialauth links
     url('', include('social.apps.django_app.urls', namespace='social')),
@@ -36,6 +41,11 @@ urlpatterns = patterns('',
 
 )
 
+v1_api = Api(api_name='v1')
+v1_api.register(UserResource())
+v1_api.register(ClubResource())
+v1_api.register(LocationResource())
+
 urlpatterns += patterns('partysense.event.views',
 
     # static landing page
@@ -47,6 +57,8 @@ urlpatterns += patterns('partysense.event.views',
     url(r'^profile/$', 'profile', name="profile"),
 
     # These next urls form the javascript API
+
+    url(r'^api/', include(v1_api.urls)),
 
     url(r'^api/(?P<pk>\d+)/modify',
         modify_event,
@@ -81,11 +93,7 @@ urlpatterns += patterns('partysense.dj.views',
     url(r'^dj/search/(?P<q>\w+)/', lookup_dj, name="dj_search"),
 )
 
-urlpatterns += patterns('partysense.club.views',
-    url(r'^club/$', 'landing', name='club-landing'),
-    url(r'^club/new/$', 'create_club', name='create-club'),
-    url(r'^club/(?P<pk>\d+)/', ClubDetail.as_view(), name='club-profile'),
-)
+
 
 if settings.DEBUG:
     # During development django can serve media and static files.
