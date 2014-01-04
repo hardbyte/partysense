@@ -7,6 +7,7 @@ from django.core.exceptions import ValidationError
 from django_countries import CountryField
 
 from partysense.util.models import *
+from partysense.music.models import Genre
 
 
 class Club(models.Model):
@@ -16,7 +17,7 @@ class Club(models.Model):
     # The Admin will be a number of users
     admins = models.ManyToManyField(User)
 
-    description = models.TextField(max_length=1000, verbose_name="Description")
+    description = models.TextField(max_length=1000, verbose_name="Description", blank=True)
 
     # Club details
     name = models.CharField(max_length=140, verbose_name="Name of the nightclub")
@@ -30,7 +31,7 @@ class Club(models.Model):
     facebook_page = models.URLField(max_length=70, verbose_name="Link to Facebook Page", blank=True)
 
     city = models.CharField(verbose_name="City", max_length=70,
-                            help_text="What city are you based in?")
+                            help_text="What city is the club based in?")
 
     # https://bitbucket.org/smileychris/django-countries/
     country = CountryField()
@@ -39,7 +40,8 @@ class Club(models.Model):
     
     # @TODO : Genres and Demographics. 
     # Need a list of Tags here for music genres and the scene
-    # Also need an age group field
+    genres = models.ManyToManyField(Genre)
+    # Maybe an age group field
 
 
     def __str__(self):

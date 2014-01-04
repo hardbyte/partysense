@@ -4,7 +4,7 @@ python-openid
 oauth2
 python-social-auth
 beautifulsoup4
-lxml=3.2.3
+lxml==3.2.3
 psycopg2
 python-amazon-product-api
 html5lib
