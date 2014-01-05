@@ -227,6 +227,9 @@ INSTALLED_APPS = (
     # for using custom forms
     'crispy_forms',
 
+    # for REST api
+    'tastypie',
+
     # our helper models
     'partysense.util',
 
