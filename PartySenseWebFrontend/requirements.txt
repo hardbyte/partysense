@@ -1,4 +1,4 @@
-django>=1.5.4
+django==1.5.4
 fabric
 python-openid
 oauth2
