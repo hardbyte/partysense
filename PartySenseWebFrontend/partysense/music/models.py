@@ -94,6 +94,7 @@ class Genre(models.Model):
     Clubs, Artists and Tracks could all have a genre.
     """
     name = models.CharField(max_length=256, unique=True)
+    popular = models.BooleanField(verbose_name="Main genre", default=False)
 
     def __unicode__(self):
         return self.name

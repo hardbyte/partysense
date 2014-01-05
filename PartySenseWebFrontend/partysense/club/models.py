@@ -8,6 +8,7 @@ from django_countries import CountryField
 
 from partysense.util.models import *
 from partysense.music.models import Genre
+from partysense.dj.models import DJ
 
 
 class Club(models.Model):
@@ -16,6 +17,8 @@ class Club(models.Model):
     """
     # The Admin will be a number of users
     admins = models.ManyToManyField(User)
+
+    djs = models.ManyToManyField(DJ)
 
     description = models.TextField(max_length=1000, verbose_name="Description", blank=True)
 
@@ -27,8 +30,8 @@ class Club(models.Model):
                               verbose_name="Official email address for the club",
                               blank=False)
 
-    website = models.URLField(max_length=70, verbose_name="Official Club Website", blank=True)
-    facebook_page = models.URLField(max_length=70, verbose_name="Link to Facebook Page", blank=True)
+    website = models.URLField(max_length=256, verbose_name="Official Club Website", blank=True)
+    facebook_page = models.URLField(max_length=256, verbose_name="Link to Facebook Page", blank=True)
 
     city = models.CharField(verbose_name="City", max_length=70,
                             help_text="What city is the club based in?")
@@ -45,6 +48,7 @@ class Club(models.Model):
     # A target age group field
 
     cost = models.CharField(max_length=3,
+                            blank=True,
                             choices=(
                                 ('low', '$'),
                                 ('med', '$$'),
@@ -52,9 +56,11 @@ class Club(models.Model):
                             ),
                             default='med')
 
-    cover_charge = models.BooleanField(default=False)
+    cover_charge = models.NullBooleanField(verbose_name="Cover Charge", default=False)
+    live_music = models.NullBooleanField(verbose_name="Live Music")
 
     dress_code = models.PositiveSmallIntegerField(
+        blank=True,
         choices=(
             (1, "Chilled"),
             (2, "Formal"),
@@ -63,6 +69,7 @@ class Club(models.Model):
         default=1)
 
     style = models.PositiveSmallIntegerField(
+        blank=True,
         choices=(
             (0, 'Chilled'),
             (1, 'Lounge'),
@@ -72,7 +79,9 @@ class Club(models.Model):
         ),
         default=0)
 
-    live_music = models.BooleanField(name="Live Music")
+    uses_partysense = models.BooleanField(verbose_name="Uses Partysense", default=False)
+
+    live_on_partysense = models.BooleanField(verbose_name="Live on Partysense", default=False)
 
     def __unicode__(self):
         return self.name

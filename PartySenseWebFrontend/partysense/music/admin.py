@@ -11,6 +11,11 @@ class ArtistAdmin(admin.ModelAdmin):
     list_display = ("name", "track_count")
 
 
-admin.site.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
+    list_filter = ('popular', )
+    ordering = ['name']
+    search_fields = ['name', ]
+
+admin.site.register(Genre, GenreAdmin)
 admin.site.register(Track, TrackAdmin)
 admin.site.register(Artist, ArtistAdmin)
