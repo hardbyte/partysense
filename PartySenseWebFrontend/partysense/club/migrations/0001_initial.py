@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -11,14 +11,21 @@ class Migration(SchemaMigration):
         # Adding model 'Club'
         db.create_table(u'club_club', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(max_length=1000)),
+            ('description', self.gf('django.db.models.fields.TextField')(max_length=1000, blank=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=140)),
             ('email', self.gf('django.db.models.fields.EmailField')(max_length=254)),
-            ('website', self.gf('django.db.models.fields.URLField')(max_length=70, blank=True)),
-            ('facebook_page', self.gf('django.db.models.fields.URLField')(max_length=70, blank=True)),
+            ('website', self.gf('django.db.models.fields.URLField')(max_length=256, blank=True)),
+            ('facebook_page', self.gf('django.db.models.fields.URLField')(max_length=256, blank=True)),
             ('city', self.gf('django.db.models.fields.CharField')(max_length=70)),
             ('country', self.gf('django_countries.fields.CountryField')(max_length=2)),
             ('location', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['event.Location'])),
+            ('cost', self.gf('django.db.models.fields.CharField')(default='med', max_length=3, blank=True)),
+            ('cover_charge', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
+            ('live_music', self.gf('django.db.models.fields.NullBooleanField')(null=True, blank=True)),
+            ('dress_code', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=1, blank=True)),
+            ('style', self.gf('django.db.models.fields.PositiveSmallIntegerField')(default=0, blank=True)),
+            ('uses_partysense', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('live_on_partysense', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'club', ['Club'])
 
@@ -31,6 +38,24 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['club_id', 'user_id'])
 
+        # Adding M2M table for field djs on 'Club'
+        m2m_table_name = db.shorten_name(u'club_club_djs')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('club', models.ForeignKey(orm[u'club.club'], null=False)),
+            ('dj', models.ForeignKey(orm[u'dj.dj'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['club_id', 'dj_id'])
+
+        # Adding M2M table for field genres on 'Club'
+        m2m_table_name = db.shorten_name(u'club_club_genres')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('club', models.ForeignKey(orm[u'club.club'], null=False)),
+            ('genre', models.ForeignKey(orm[u'music.genre'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['club_id', 'genre_id'])
+
 
     def backwards(self, orm):
         # Deleting model 'Club'
@@ -38,6 +63,12 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field admins on 'Club'
         db.delete_table(db.shorten_name(u'club_club_admins'))
+
+        # Removing M2M table for field djs on 'Club'
+        db.delete_table(db.shorten_name(u'club_club_djs'))
+
+        # Removing M2M table for field genres on 'Club'
+        db.delete_table(db.shorten_name(u'club_club_genres'))
 
 
     models = {
@@ -74,14 +105,23 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Club'},
             'admins': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.User']", 'symmetrical': 'False'}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '70'}),
+            'cost': ('django.db.models.fields.CharField', [], {'default': "'med'", 'max_length': '3', 'blank': 'True'}),
             'country': ('django_countries.fields.CountryField', [], {'max_length': '2'}),
-            'description': ('django.db.models.fields.TextField', [], {'max_length': '1000'}),
+            'cover_charge': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'max_length': '1000', 'blank': 'True'}),
+            'djs': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['dj.DJ']", 'symmetrical': 'False'}),
+            'dress_code': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '1', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '254'}),
-            'facebook_page': ('django.db.models.fields.URLField', [], {'max_length': '70', 'blank': 'True'}),
+            'facebook_page': ('django.db.models.fields.URLField', [], {'max_length': '256', 'blank': 'True'}),
+            'genres': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['music.Genre']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'live_music': ('django.db.models.fields.NullBooleanField', [], {'null': 'True', 'blank': 'True'}),
+            'live_on_partysense': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'location': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['event.Location']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
-            'website': ('django.db.models.fields.URLField', [], {'max_length': '70', 'blank': 'True'})
+            'style': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '0', 'blank': 'True'}),
+            'uses_partysense': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'website': ('django.db.models.fields.URLField', [], {'max_length': '256', 'blank': 'True'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -90,13 +130,27 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        u'dj.dj': {
+            'Meta': {'object_name': 'DJ'},
+            'city_name': ('django.db.models.fields.CharField', [], {'max_length': '70'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '254'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nickname': ('django.db.models.fields.CharField', [], {'max_length': '70'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
         u'event.location': {
             'Meta': {'object_name': 'Location'},
-            'address': ('django.db.models.fields.CharField', [], {'max_length': '92', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'latitude': ('django.db.models.fields.FloatField', [], {}),
             'longitude': ('django.db.models.fields.FloatField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '256', 'blank': 'True'})
+        },
+        u'music.genre': {
+            'Meta': {'object_name': 'Genre'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '256'}),
+            'popular': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         }
     }
 
