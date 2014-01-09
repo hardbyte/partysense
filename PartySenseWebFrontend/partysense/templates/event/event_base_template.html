@@ -49,7 +49,7 @@
 			  <h4 id="event-name">{{ event.title }}</h4>
 
                 {% if user_can_edit %}
-                    <a class="btn btn-block"
+                    <a class="btn btn-block btn-warning"
                        href="{% url "event:update" event.pk event.slug %}">
                         <i class="icon-edit"></i> Edit Event Details
                     </a>

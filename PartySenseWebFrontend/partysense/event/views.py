@@ -310,7 +310,7 @@ def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
     if not DJ.objects.filter(user=request.user).exists():
         return HttpResponseRedirect(reverse("register"))
-
+    event = None
     dj = DJ.objects.get(user=request.user.id)
 
     if request.method == 'POST':
@@ -326,8 +326,6 @@ def create(request):
             logger.info("Creating new event to start at: {}".format(event.start_time))
 
             # Add the automatic fields based on user
-
-
             # create a new location or use existing...
             location = Location(
                 name=event_form.cleaned_data['venue'],
@@ -337,18 +335,21 @@ def create(request):
             location.save()
             event.location = location
 
-            # todo get fb event url from incoming link?
-            # or ask for it?
-            event.fb_url = "http://facebook.com/event"
+            if event.fb_event_id:
+                # Create fb event url from event ID
+                event.fb_url = "https://www.facebook.com/events/{}/".format(
+                    event.fb_event_id
+                )
 
             # then commit the new event to our database
             event.save()
-
+            # Only now that the event exists can we add the dj to it
             event.djs.add(dj)
-
             event.save()
 
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
+        else:
+            logger.warning("Received new event form with invalid data")
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()
@@ -367,10 +368,11 @@ def create(request):
                   'event/new.html',
                   {
                       'dj': dj,
+                      'event': event,
                       "formset": event_form
                   })
 
-
+@login_required
 def update(request, pk, slug):
     event = get_object_or_404(Event, pk=pk)
 
@@ -396,12 +398,13 @@ def update(request, pk, slug):
             event.location.name = event_form.cleaned_data['venue']
             event.location.latitude = event_form.cleaned_data['latitude']
             event.location.longitude = event_form.cleaned_data['longitude']
-
             event.location.save()
 
-            # todo get fb event url from incoming link?
-            # or ask for it?
-            event.fb_url = "http://facebook.com/event"
+            if event.fb_event_id:
+                # Create fb event url from the event ID
+                event.fb_url = "https://www.facebook.com/events/{}/".format(
+                    event.fb_event_id
+                )
 
             # then commit the new event to our database
             event.save()
@@ -429,6 +432,7 @@ def update(request, pk, slug):
                   'event/new.html',
                   {
                       'dj': dj,
+                      'event': event,
                       "formset": event_form
                   })
 

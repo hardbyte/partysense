@@ -6,11 +6,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static "lib/datepicker/css/datepicker.css" type="text/css" %}"
+    <link rel="stylesheet" href="{% static "lib/datepicker/css/datepicker.css" %}" type="text/css" />
 
-    <section class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8">
+    <section class="col-sm-offset-1 col-sm-10">
 
         <h2>Tell us about this event {{ dj.nickname }}</h2>
+
+    <div class="well" id="fbEventDiv" style="display:none">
+        <h5 id="fbMsg"></h5>
+        {% for account in backends.associated %}{% if account.provider == "facebook" %}
+
+          {% if event.fb_event_id %}
+              <a class="btn btn-primary" href="{{ event.fb_url }}" target="_blank">Open the Facebook Event Page</a>
+              <a class="btn btn-warning" id="fbEventDropper">Unlink from facebook event <span class="glyphicon glyphicon-remove"></span></a>
+          {% else %}
+            <button class="btn btn-primary" id="fbEventPicker">Connect to a facebook event?</button>
+            <ul id="fbEventsList"></ul>
+          {% endif %}
+        {% endif %}{% endfor %}
+    </div>
+
         {% include "form_snippet.html" %}
 
     </section>
@@ -29,11 +44,76 @@
             // No native date picker support :(
             // Use bootstrap-datepicker to create one,
             // then dynamically replace that <input> element.
-            console.log("Adding datepicker support");
             $("#id_start_time_0").datepicker({format: "yyyy-mm-dd"});
-          }
+        }
 
 
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: true });
+            $.getScript('//connect.facebook.net/en_US/all.js', function () {
+                FB.init({ appId: '386541278102635', status: true });
+
+                var connectEvent = function(event){
+
+                    var title = $("#id_title");
+                    var venue = $("#id_venue");
+                    // Only set the title if it is blank
+                    if(title.val().length === 0){
+                        title.val(event.name);
+                    }
+
+                    $("#id_fb_event_id").val(event.id);
+
+                    if (venue.val().length === 0){
+                        venue.val(event.location);
+                        venue.focus();
+                    }
+
+                };
+
+                $("#fbEventDropper").click(function(){
+                    console.log("Awww");
+                });
+
+                $("#fbEventPicker").click(function(){
+                    $("#fbEventPicker").hide();
+                    $("#fbMsg").text("Checking facebook permissions");
+                    FB.login(function(response) {
+                        if (response.status === 'connected') {
+
+                            $("#fbMsg").text("Fetching your events from facebook");
+                            FB.api('/me/events/attending', function(response) {
+                                if(response.data.length == 0){
+                                    $("#fbMsg").text("Sorry, No events found");
+                                } else {
+                                    $("#fbMsg").text("Found these upcoming events:");
+                                    var eventList = $("#fbEventsList");
+                                    for (var i = 0; i < response.data.length; i++) {
+                                        var obj = response.data[i];
+                                        var btn = $('<button class="btn"></button>').text(obj.name + " - " + obj.location);
+                                        btn.click(function(evt){connectEvent(obj)});
+                                        var node = $("<li></li>").append(btn);
+                                        eventList.append(node);
+                                    }
+                                }
+
+                            });
+
+                        } else if (response.status === 'not_authorized') {
+                            // the user is logged in to Facebook,
+                            // but has not authenticated our app
+                            console.log("User not authenticated");
+                        } else {
+                            console.log("the user isn't logged in to Facebook");
+                        }
+
+                    }, {scope: 'user_events'});
+
+                });
+                // Show the facebook event selector div
+                $("#fbEventDiv").show();
+            });
+        });
 
     </script>
 

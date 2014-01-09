@@ -553,3 +553,7 @@ footer
     padding: 15px 10px;
     border-radius: 4px;
 }
+
+.well {
+    color: black;
+}

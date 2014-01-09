@@ -41,6 +41,7 @@ class EventForm(ModelForm):
                   'start_time',
                   #'description'
                   #'fb_url'
+                  'fb_event_id'
                   )
 
     def __init__(self, *args, **kwargs):
@@ -71,6 +72,8 @@ class EventForm(ModelForm):
 
             Field('latitude', css_id='id_latitude'),
             Field('longitude', css_id='id_longitude'),
+            Field('fb_event_id', initial=''),
+
             Div(Submit('submit', 'Submit', css_class="btn-block"),
                 css_class="col-md-12")
         )
@@ -94,6 +97,8 @@ class EventForm(ModelForm):
     latitude = CharField(widget=HiddenInput())
     longitude = CharField(widget=HiddenInput())
 
+    fb_event_id = CharField(widget=HiddenInput(), required=False)
+
     def clean(self):
         cleaned_data = super(EventForm, self).clean()
         return cleaned_data
@@ -105,6 +110,7 @@ class EventForm(ModelForm):
             raise ValidationError("How about a shorter event name?")
 
         return " ".join(words)
+
 
     def clean_venue(self):
         if "venue" not in self.cleaned_data:
