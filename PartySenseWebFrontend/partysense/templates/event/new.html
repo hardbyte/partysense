@@ -91,7 +91,10 @@
                                     for (var i = 0; i < response.data.length; i++) {
                                         var obj = response.data[i];
                                         var btn = $('<button class="btn"></button>').text(obj.name + " - " + obj.location);
-                                        btn.click(function(evt){connectEvent(obj)});
+                                        (function(eventObject){
+                                            btn.click(function(evt){connectEvent(eventObject)});
+                                        })(obj);
+
                                         var node = $("<li></li>").append(btn);
                                         eventList.append(node);
                                     }
