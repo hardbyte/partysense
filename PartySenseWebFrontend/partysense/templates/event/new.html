@@ -47,22 +47,27 @@
             $("#id_start_time_0").datepicker({format: "yyyy-mm-dd"});
         }
 
-
         $(document).ready(function () {
             $.ajaxSetup({ cache: true });
             $.getScript('//connect.facebook.net/en_US/all.js', function () {
                 FB.init({ appId: '386541278102635', status: true });
 
                 var connectEvent = function(event){
-
                     var title = $("#id_title");
                     var venue = $("#id_venue");
+
                     // Only set the title if it is blank
                     if(title.val().length === 0){
                         title.val(event.name);
                     }
 
                     $("#id_fb_event_id").val(event.id);
+
+                    // Set the date and time
+                    var startTime = new Date(event.start_time);
+                    $("#id_start_time_0").datepicker('setValue', startTime);
+                    $("#id_start_time_1").val(startTime.toLocaleTimeString());
+
 
                     if (venue.val().length === 0){
                         venue.val(event.location);
@@ -72,7 +77,11 @@
                 };
 
                 $("#fbEventDropper").click(function(){
-                    console.log("Awww");
+                    // Set the fb event id to blank
+                    $("#id_fb_event_id").val("");
+                    // Submit the form
+                    $("#submit-id-submit").click();
+
                 });
 
                 $("#fbEventPicker").click(function(){
