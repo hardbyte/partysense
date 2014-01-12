@@ -5,12 +5,19 @@ logger = logging.getLogger(__name__)
 
 
 def fb_request(request, fields):
+
+    logger.warning("Making facebook request")
+    fb_user_id = request.user.social_auth.get().uid
+    token = request.user.social_auth.get().tokens
+    return fb_api(fb_user_id, token, fields)
+
+
+def fb_api(uid, token, fields):
     fb_api = 'https://graph.facebook.com/'
+
     try:
-        logger.warning("Making facebook request")
-        fb_user_id = request.user.social_auth.get().uid
-        res = json.load(urllib.urlopen(fb_api + fb_user_id + "?" + urllib.urlencode({
-            "access_token": request.user.social_auth.get().tokens,
+        res = json.load(urllib.urlopen(fb_api + uid + "?" + urllib.urlencode({
+            "access_token": token,
             "fields": fields
         })))
     except Exception as e:
