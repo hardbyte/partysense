@@ -1,5 +1,7 @@
 # Tastypie API Resources
 from tastypie import fields
+from tastypie.authentication import MultiAuthentication, SessionAuthentication, ApiKeyAuthentication
+from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import ModelResource, ALL
 from partysense.club.models import Club
 from partysense.api import UserResource
@@ -20,3 +22,6 @@ class ClubResource(ModelResource):
             'country': ALL,
             'city': ALL
         }
+
+        #authorization = DjangoAuthorization()
+        authentication = MultiAuthentication(ApiKeyAuthentication())

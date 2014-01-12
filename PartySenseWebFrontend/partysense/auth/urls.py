@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     # add a custom page that allows users to login with a password or oauth
     url(r'^login/$', password_login, name='password_login'),
 
+    url(r'^api-login/$', get_api_key, name='api_login'),
+
     url(
         r'^logout/$',
         auth_views.logout,

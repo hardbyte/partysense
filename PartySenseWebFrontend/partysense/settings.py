@@ -237,7 +237,8 @@ INSTALLED_APPS = (
     'partysense.event',
     'partysense.music',
     'partysense.dj',
-    'partysense.club'
+    'partysense.club',
+    'partysense.auth'
 
 )
 
