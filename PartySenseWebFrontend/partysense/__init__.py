@@ -7,8 +7,9 @@ logger = logging.getLogger(__name__)
 def fb_request(request, fields):
 
     logger.warning("Making facebook request")
-    fb_user_id = request.user.social_auth.get().uid
-    token = request.user.social_auth.get().tokens
+    fb_social_auth = request.user.social_auth.get(provider="facebook")
+    fb_user_id = fb_social_auth.uid
+    token = fb_social_auth.tokens
     return fb_api(fb_user_id, token, fields)
 
 

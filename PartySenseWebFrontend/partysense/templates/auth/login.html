@@ -26,6 +26,10 @@
                 <button class="btn btn-primary">Login with Facebook</button>
             </a>
 
+        <a rel="nofollow" href="{% url "social:begin" "soundcloud" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+                <button class="btn btn-primary">Login with Soundcloud</button>
+            </a>
+
             <a href="{% url "registration_register" %}">
                 <button class="btn btn-primary">Register with email/password</button>
             </a>

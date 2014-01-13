@@ -67,20 +67,42 @@
                 </tr>
                 {% for account in backends.associated %}
                 <tr>
-                    <th>{{ account.provider|title }} Account</th>
-                    <td>Connected <span class="glyphicon glyphicon-ok-sign"></span></td>
+                    <th>{{ account.provider|title }}</th>
+                    <td>
+                        Connected <span class="glyphicon glyphicon-ok-sign"></span>
+
+                        <a href="#" onClick="document.getElementById('{{ account.provider }}DisconnectForm').submit()">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </a>
+
+                        <form id="{{ account.provider }}DisconnectForm"
+                              action="{% url "social:disconnect" account.provider %}"
+                              method="post">
+                            <input type="hidden" name="action" value="disconnect">
+                            {% csrf_token %}
+                        </form>
+
+                    </td>
                 </tr>
                 {% endfor %}
-            </table>
-            {% for backend in backends.not_associated %}
-                <a class="btn btn-info btn-block" href="{% url "social:begin" backend %}">
-                    Connect your {{ backend|title }} account?
-                </a>
 
-            {% endfor %}
+                {% for backend in backends.not_associated %}
+                  <tr>
+                    <th>{{ backend|title }}</th>
+                    <td>
+                        <a class="" href="{% url "social:begin" backend %}">
+                            Connect
+                        </a>
+                    </td>
+                  </tr>
+
+                {% endfor %}
+            </table>
 
             {% if img %}
-                <div class="text-center"><img class="img-responsive" src="{{ img.url }}"></div>
+                <div class="text-center">
+                    <img class="img-responsive" src="{{ img.url }}">
+                </div>
             {% endif %}
 
 

@@ -5,6 +5,7 @@ import datetime
 from django.http import Http404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
@@ -43,9 +44,10 @@ class EventDetail(EventView, DetailView):
             if not event.slug == self.kwargs['slug']:
                 raise Http404
         # check that the event isn't in the past
-        if not event.past_event and event.timedelta().days < -2:
+        if not event.past_event and event.timedelta().days < -1:
             event.past_event = True
             event.save()
+            messages.info(self.request, "Event marked as complete")
 
         return event
 
@@ -444,9 +446,11 @@ def profile(request):
     djs = []
 
     if request.user.is_authenticated():
-        res = fb_request(request, "picture.width(200).type(square)")
-        if 'error' not in res and 'picture' in res:
-            img = res['picture']['data']
+
+        if request.user.social_auth.filter(provider="facebook").exists():
+            res = fb_request(request, "picture.width(200).type(square)")
+            if 'error' not in res and 'picture' in res:
+                img = res['picture']['data']
 
         # Get past_events
         past_events = Event.objects.filter(users=request.user, past_event=True)

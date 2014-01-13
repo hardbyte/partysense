@@ -28,6 +28,10 @@ FACEBOOK_API_SECRET = "08fd5dddc6329c7c56ce980e07a5d83d"
 LASTFM_API_KEY = '2f42e9b46522dc31c099904e3a94f6b1'
 LASTFM_SECRET = 'f17d10f5aaf23a34e270370e6d030c6c'
 
+SOCIAL_AUTH_SOUNDCLOUD_KEY = 'c212fc64843d87575b462835c08827fe'
+SOCIAL_AUTH_SOUNDCLOUD_SECRET = 'd16b270372f2845870e5cf5e87d58559'
+SOCIAL_AUTH_SOUNDCLOUD_SCOPE = ['non-expiring']
+
 # NOTE: to get users email addresses, you must request the email permission
 FACEBOOK_EXTENDED_PERMISSIONS = [
     'user_actions.music',
@@ -40,6 +44,7 @@ MANAGERS = ADMINS
 # http://django-social-auth.readthedocs.org/
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
+    'social.backends.soundcloud.SoundcloudOAuth2',
     #'social.backends.google.GoogleOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
@@ -58,11 +63,10 @@ SERVER_EMAIL = 'partysense@partysen.se'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'new_social_auth_user'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
-#SOCIAL_AUTH_FORCE_POST_DISCONNECT = True
+
 SOCIAL_AUTH_FACEBOOK_KEY = FACEBOOK_APP_ID
 SOCIAL_AUTH_FACEBOOK_SECRET = FACEBOOK_API_SECRET
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/accounts/login/'
-#SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 DJANGO_MEMCACHED_REQUIRE_STAFF = True
 
@@ -76,7 +80,6 @@ CACHES = {
 
 DATABASES = {
     'default': {
-        # maybe we can map straight to google app engine?
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'partysense',                      # Or path to database file if using sqlite3.
         'USER': 'partysense',                      # Not used with sqlite3.
