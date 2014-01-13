@@ -64,6 +64,8 @@ class Event(TimeStampedModel):
 
     start_time = models.DateTimeField()
 
+    fb_event_id = models.TextField(max_length=256, blank=True, default=None)
+
     fb_url = models.URLField(editable=True)
     slug = models.SlugField(editable=False)
 

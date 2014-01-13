@@ -5,6 +5,7 @@ import datetime
 from django.http import Http404
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView
 from django.shortcuts import get_object_or_404, render
@@ -43,9 +44,10 @@ class EventDetail(EventView, DetailView):
             if not event.slug == self.kwargs['slug']:
                 raise Http404
         # check that the event isn't in the past
-        if not event.past_event and event.timedelta().days < -2:
+        if not event.past_event and event.timedelta().days < -1:
             event.past_event = True
             event.save()
+            messages.info(self.request, "Event marked as complete")
 
         return event
 
@@ -310,7 +312,7 @@ def create(request):
     # If user hasn't yet registered as a dj get them to do that first...
     if not DJ.objects.filter(user=request.user).exists():
         return HttpResponseRedirect(reverse("register"))
-
+    event = None
     dj = DJ.objects.get(user=request.user.id)
 
     if request.method == 'POST':
@@ -326,8 +328,6 @@ def create(request):
             logger.info("Creating new event to start at: {}".format(event.start_time))
 
             # Add the automatic fields based on user
-
-
             # create a new location or use existing...
             location = Location(
                 name=event_form.cleaned_data['venue'],
@@ -337,18 +337,21 @@ def create(request):
             location.save()
             event.location = location
 
-            # todo get fb event url from incoming link?
-            # or ask for it?
-            event.fb_url = "http://facebook.com/event"
+            if event.fb_event_id:
+                # Create fb event url from event ID
+                event.fb_url = "https://www.facebook.com/events/{}/".format(
+                    event.fb_event_id
+                )
 
             # then commit the new event to our database
             event.save()
-
+            # Only now that the event exists can we add the dj to it
             event.djs.add(dj)
-
             event.save()
 
             return HttpResponseRedirect(reverse('event:detail', args=(event.pk, event.slug)))
+        else:
+            logger.warning("Received new event form with invalid data")
     else:
         # Partially fill in what we know (if anything)
         now = datetime.datetime.now()
@@ -367,10 +370,11 @@ def create(request):
                   'event/new.html',
                   {
                       'dj': dj,
+                      'event': event,
                       "formset": event_form
                   })
 
-
+@login_required
 def update(request, pk, slug):
     event = get_object_or_404(Event, pk=pk)
 
@@ -396,12 +400,13 @@ def update(request, pk, slug):
             event.location.name = event_form.cleaned_data['venue']
             event.location.latitude = event_form.cleaned_data['latitude']
             event.location.longitude = event_form.cleaned_data['longitude']
-
             event.location.save()
 
-            # todo get fb event url from incoming link?
-            # or ask for it?
-            event.fb_url = "http://facebook.com/event"
+            if event.fb_event_id:
+                # Create fb event url from the event ID
+                event.fb_url = "https://www.facebook.com/events/{}/".format(
+                    event.fb_event_id
+                )
 
             # then commit the new event to our database
             event.save()
@@ -429,6 +434,7 @@ def update(request, pk, slug):
                   'event/new.html',
                   {
                       'dj': dj,
+                      'event': event,
                       "formset": event_form
                   })
 
@@ -440,9 +446,11 @@ def profile(request):
     djs = []
 
     if request.user.is_authenticated():
-        res = fb_request(request, "picture.width(200).type(square)")
-        if 'error' not in res and 'picture' in res:
-            img = res['picture']['data']
+
+        if request.user.social_auth.filter(provider="facebook").exists():
+            res = fb_request(request, "picture.width(200).type(square)")
+            if 'error' not in res and 'picture' in res:
+                img = res['picture']['data']
 
         # Get past_events
         past_events = Event.objects.filter(users=request.user, past_event=True)

@@ -55,8 +55,9 @@ def search_amazon_for_track(track):
         response['error'] = "Too many requests"
 
     for product in items:
-        eid = ExternalID(id_type=amazon_type, value=str(product.ASIN))
-        eid.save()
+
+        eid, _created = ExternalID.objects.get_or_create(id_type=amazon_type, value=str(product.ASIN))
+
         track._external_ids.add(eid)
 
         response['ASIN'] = str(product.ASIN)

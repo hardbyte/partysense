@@ -42,7 +42,7 @@ urlpatterns = patterns('',
 )
 
 v1_api = Api(api_name='v1')
-v1_api.register(UserResource())
+#v1_api.register(UserResource())
 v1_api.register(ClubResource())
 v1_api.register(LocationResource())
 
