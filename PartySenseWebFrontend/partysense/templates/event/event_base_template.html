@@ -258,13 +258,13 @@
     </script>
   {% endcompress %}
   {% endcache %}
-
+    <script src="https://apis.google.com/js/plusone.js"></script>
   {% compress js %}
     <script src="{% static "js/filters.js" %}"></script>
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
-    <script src="https://apis.google.com/js/plusone.js"></script>
+
     <script>
         $(document).ready(function() {
             if(location.hash){
