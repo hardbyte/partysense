@@ -13,6 +13,10 @@
 
 {% block fb %}
     {% cache 3600 facebookmeta event.pk %}
+    <link rel="canonical" href="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
+    <meta itemprop="name" content="Interactive setlist for {{ event.title }}">
+    <meta itemprop="description" content="A collaborative music playlist/setlist. Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}! Partysense - the best way to make sure you have a great night out">
+
     <meta property="fb:app_id"          content="386541278102635" />
     <meta property="og:url"             content="http://partysen.se{% url "event:detail" event.pk event.slug %}" />
     <meta property="og:site_name"       content="partysen.se"/>
@@ -136,9 +140,33 @@
 
                     </div>
 
-                    <div id="facebook_share">
-                        <button class="btn btn-warning btn-block" id="fb_share">Share on Facebook</button>
-                    </div>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div id="twitter_share">
+                                    <a href="https://twitter.com/share?related=partysenseapp&text=I'm%20editing%20a%20collaborative%20playlist%20on%20partysen.se"
+                                       target="_blank">
+                                    <img src="{% static "images/social_signin_buttons_icons/twitter_128.png" %}"
+                                             width="32px" />
+                                    </a>
+
+                                </div>
+                            </td>
+                            <td>
+                                <a id="facebook_share" href="#">
+                                    <img id="fb_share"
+                                         width="32px"
+                                         src="{% static "images/social_signin_buttons_icons/facebook-72.png" %}"/>
+                                </a>
+                            </td>
+                            <td>
+
+                                <div class="g-plus" data-action="share" data-annotation="none" data-height="32"></div>
+
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
             </div>
         </div>
@@ -236,6 +264,7 @@
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
+    <script src="https://apis.google.com/js/plusone.js"></script>
     <script>
         $(document).ready(function() {
             if(location.hash){

@@ -434,7 +434,8 @@ footer
 	width:100%;
     color: #555;
     font-family: arial,sans-serif;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
+
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:focus{
