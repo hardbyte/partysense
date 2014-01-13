@@ -57,7 +57,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/">Home</a></li>
                 <li><a href="{% url "club:landing" %}">Clubs</a></li>
-                <li><a href="{% url "profile" %}">Your Playlists</a></li>
+                <li><a href="{% url "profile" %}">Playlists</a></li>
                 {% if not user.is_authenticated %}
                 <li class="login-dropdown">
                     <a rel="nofollow" href="{% url "auth:password_login" %}" id="logindropdown">
@@ -68,22 +68,26 @@
                             <a rel="nofollow"
                                href="{% url "social:begin" "facebook" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}"
                              >
-                                <div id="facebook_button" style="width: 100%">Facebook</div> &nbsp;
+                                <div id="facebook_button">Facebook</div> &nbsp;
                             </a>
                         </li>
                         <li>
-                            <a href="{% url "auth:password_login" %}"> <i class="icon-user"></i> Email</a>
+                            <a href="{% url "social:begin" "soundcloud" %}">
+                                <div id="soundcloud_button">  &nbsp; </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url "auth:password_login" %}"> <i class="glyphicon glyphicon-user"></i> Email</a>
                         </li>
                     </ul>
                 </li>
                 {% else %}
                 <li class="login-dropdown">
                     <a href="{% url "profile" %}">
+                        <i class="glyphicon glyphicon-user"></i>
                         {{ user.first_name|default:"Profile" }} <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu login-dropdown-ul">
-                        <li><a class="" href="{% url "profile" %}">
-                            <i class="glyphicon glyphicon-user"></i> Profile</a></li>
                         <li><a href="{% url "auth_logout" %}" class="">
                             <i class="glyphicon glyphicon-remove"></i> Logout</a></li>
                     </ul>
@@ -143,6 +147,17 @@
         </script>
 
         <script src="{% static "js/util.js" %}"></script>
+
+        <script>
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=386541278102635";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
 
     {% endcompress %}
 

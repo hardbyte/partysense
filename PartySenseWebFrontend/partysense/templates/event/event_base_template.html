@@ -18,7 +18,7 @@
     <meta property="og:site_name"       content="partysen.se"/>
     <meta property="og:title"           content="Interactive setlist for {{ event.title }}" />
     <meta property="og:type"            content="article" />
-    <meta property="og:description"     content="Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}!" />
+    <meta property="og:description"     content="A collaborative music playlist/setlist. Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}! Partysense - the best way to make sure you have a great night out" />
     <meta property="og:image"           content="{% static "images/fblink.png" %}" />
     {% endcache %}
 {% endblock %}
@@ -39,32 +39,22 @@
       {% endif %}
 		<div class="panel-group" id="accordion">
 		  <div class="panel panel-default accordian-panel">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#details">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
 				Event Details
 			  </button>
 			</a>
-			<div id="collapseOne" class="panel-collapse collapse in">
+			<div id="details" class="panel-collapse collapse in">
 			  <div class="panel-body">
-			  <h4 id="event-name">{{ event.title }}</h4>
-
+			  <h4 id="event-name">
+                  {{ event.title }}
                 {% if user_can_edit %}
-                    <a class="btn btn-block btn-warning"
+                    <a class="btn btn-warning"
                        href="{% url "event:update" event.pk event.slug %}">
-                        <i class="icon-edit"></i> Edit Event Details
+                        <i class="glyphicon glyphicon-edit"></i> edit
                     </a>
                 {% endif %}
-
-                <div class=""
-                     onclick="document.getElementById('eventURL').select();">
-                    <p>Share this link to collaborate with others:</p>
-
-                    <input type="text" id="eventURL" class="input-block-level" readonly
-                           title="share event with others by copying this link"
-                           style="cursor:default;"
-                           value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
-                </div>
-
+              </h4>
 
                 <dl>
                     <dt>Host: {% if user_can_edit %} <em>(you)</em>{% endif %}</dt>
@@ -78,22 +68,43 @@
                         {% else %}
                             {{ dj.nickname }}
                         {% endif %}
-                        (<span class="dropdown">
-                            <a class="dropdown-toggle"
-                               data-toggle="dropdown"
-                               href="{{ dj.get_absolute_url }}"
-                               id="dLabel">other events</a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                {% for evt in dj.get_upcoming_events %}
-                                    {% if evt != event %}
-                                    <li><a href="{{ evt.get_absolute_url }}">
-                                          {{ evt }} at {{ evt.location.name }}
-                                        </a>
-                                    </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </span>)
+
+                        (<span>
+                            <a href="#"
+                               data-toggle="modal" data-target="#myDjModal{{ dj.pk }}"
+                               id="dropdownOtherEvents">other events</a>)
+                        </span>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myDjModal{{ dj.pk }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">{{ dj.nickname }}'s Upcoming Events</h4>
+                              </div>
+                              <div class="modal-body">
+                                <ul>
+                                    {% for evt in dj.get_upcoming_events %}
+                                        {% if evt != event %}
+                                        <li>
+                                            <a href="{{ evt.get_absolute_url }}">
+                                              {{ evt }} at {{ evt.location.name }}
+                                            </a>
+                                        </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              </div>
+                            </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+
+
                     </dd>
                    {% endfor %}
                     <dt>When:</dt>
@@ -106,32 +117,58 @@
 			  </div>
 			</div>
 		  </div>
+        <div class="panel panel-default accordian-panel">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#share">
+                <button class="pannel-heading accordion-heading btn btn-block btn-primary">
+                    Share
+                </button>
+            </a>
+            <div id="share" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div onclick="document.getElementById('eventURL').select();">
+                        <span class="glyphicon glyphicon-link"></span>
+                        Share this link to collaborate on the playlist:
+
+                        <input type="text" id="eventURL" class="input-block-level" readonly="readonly"
+                               title="share event with others by copying this link"
+                               style="cursor:default;"
+                               value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
+
+                    </div>
+
+                    <div id="facebook_share">
+                        <button class="btn btn-warning btn-block" id="fb_share">Share on Facebook</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 		  <div class="panel panel-default accordian-panel hidden-xs">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#import">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
 				Import Recent Music
 			  </button>
 			</a>
-			<div id="collapseTwo" class="panel-collapse collapse">
+			<div id="import" class="panel-collapse collapse">
 			  <div class="panel-body">
 				<div ng-include src="recentTracksTemplate"></div>
 			  </div>
 			</div>
 		  </div>
 		  <div class="panel panel-default accordian-panel hidden-xs">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#events">
 			  <button class="panel-heading accordion-heading btn btn-block btn-primary">
 				Your Events
 			  </button>
 			</a>
-			<div id="collapseThree" class="panel-collapse collapse">
+			<div id="events" class="panel-collapse collapse">
 			  <div class="panel-body">
 				
                 {% if upcoming_events %}
                     <h3>Upcoming</h3>
-                    <ul>
+                    <ul id="upcomingEvents">
                     {% for e in upcoming_events %}
-                        <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> at {{ e.location.name }}</li>
+                        <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> on {{ e.start_time|naturalday }}</li>
                     {% endfor %}
                     </ul>
                     <form action="{% url "event:create" %}">
@@ -199,6 +236,74 @@
     <script src="{% static "js/services.js" %}"></script>
     <script src="{% static "js/directives.js" %}"></script>
     <script src="{% static "js/partysense.js" %}"></script>
+    <script>
+        $(document).ready(function() {
+            if(location.hash){
+                $('.in.collapse').collapse();
+                $("#" + location.hash.slice(2) + '.collapse').collapse('show')
+            }
+
+
+            $.ajaxSetup({ cache: true });
+            $.getScript('//connect.facebook.net/en_US/all.js', function () {
+                //FB.init({ appId: '386541278102635', status: true });
+
+                $("#fb_share").click(function(){
+
+                    // Method 1 - requires publish permissions...
+{#                    FB.login(function(response) {#}
+{#                        console.log("Have asked for publish access");#}
+{#                        console.log(response);#}
+{##}
+{#                        FB.ui('/{{ event.fb_event_id }}/feed', 'post',#}
+{#                            {message: 'Test message'},#}
+{#                            function(response) {#}
+{#                            if (!response || response.error) {#}
+{#                                alert('Error occurred:' +  response.error.message);#}
+{#                            } else {#}
+{#                                alert('Success!');#}
+{#                            }#}
+{#                        });#}
+{#                    }, {scope: 'publish_stream'});#}
+
+                    // Method 2 - using the ui dialog
+                    FB.ui({
+                            method:              'feed',
+                            //from: 'partysenseapp',
+                            //to: '{{ event.fb_event_id }}',
+                            name:                '{{ event.title }} - Collaborative Playlist',
+                            caption:             'Vote on the music to be played at {{ event.title }}!',
+                            description:         'Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}. '+
+                                                 'So far there are ' + ps.numberOfTracks + ' tracks! Why not add some more.',
+                            picture:             'http://partysen.se{% static "images/fblink.png" %}',
+                            link:                'http://partysen.se{% url "event:detail" event.pk event.slug %}',
+                            actions: [
+                                {
+                                    name: "Vote on setlist",
+                                    link: 'http://partysen.se{% url "event:detail" event.pk event.slug %}'
+                                }
+                            ],
+                            properties: {
+                                'Create your own playlist': {text: 'www.partysen.se', href:'http://partysen.se{% url "event:create" %}'},
+                                'Like us on facebook': {text: 'partysenseapp', href:'https://www.facebook.com/partysenseapp'}
+                            }
+                        },
+                        function (response) {
+                            if (response && response.post_id) {
+                                console.log( 'Post was published.' );
+                            } else {
+                                console.log( 'Post was not published.' );
+                            }
+                        });
+
+                });
+            });
+
+        });
+
+
+
+    </script>
   {% endcompress %}
 
   {% block event_js %}
