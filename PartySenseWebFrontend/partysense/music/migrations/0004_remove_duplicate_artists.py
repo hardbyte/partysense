@@ -17,7 +17,8 @@ class Migration(DataMigration):
                 duplicate_artist = artists[1]
 
                 # Get all the second Artist's tracks
-                for t in duplicate_artist.tracks():
+
+                for t in orm.Track.objects.filter(artist=duplicate_artist.pk):
                     t.artist = original_artist
                     t.save()
 
