@@ -2,7 +2,9 @@
     <div class="" id="musicImporter" droppable>
 
 
-        <div id="event-tracks">
+        <div id="event-tracks" itemscope itemtype="http://schema.org/MusicPlaylist">
+            <div itemprop="name" class="hidden">{{ ps.eventTitle }}</div>
+            <meta itemprop="numTracks" content="{{ ps.numberOfTracks }}"/>
             <div ng-show="setlist.length === 0">
                     <div class="progress">
                         <div class="bar" ng-style="{width: '35%'}"></div>
@@ -13,8 +15,11 @@
 
             </div>
             <div class="row trackDiv"
+                 itemprop="track" itemscope itemtype="http://schema.org/MusicRecording"
                  ng-repeat="track in setlist"
                  back-img="{{ track.coverURL }}">
+                <meta itemprop="image" content="{{ track.coverURL }}"/>
+
 
                 <div class="col-md-2 voteButtonDiv" ng-show="loggedIn">
                     <button id="vote-up-{{ track.pk }}"
@@ -35,8 +40,8 @@
                 </div>
 
                 <div class="track-info" ng-class="infoWidth">
-                    <h4 class="track-name">{{ track.name }}</h4>
-                    <p class="track-artist"
+                    <h4 class="track-name" itemprop="name">{{ track.name }}</h4>
+                    <p class="track-artist" itemprop="byArtist"
                        ng-click="(loggedIn) ? searchArtistFromTrack(track) : ''">{{ track.artist }}</p>
                     <span class="muted track-votes">
                         <ng-pluralize count="track.upVotes + track.downVotes"
@@ -45,7 +50,9 @@
                                    'other': '{} people have'}">
                         </ng-pluralize> voted.
                     </span>
-                    <div class="">
+                    <meta itemprop="interactionCount" content="UserLikes:{{ track.upVotes }}"/>
+
+                    <div class="" itemprop="genre">
                         <em class="track-genre">{{ track.tag }}</em>
                     </div>
 
@@ -60,7 +67,7 @@
                         </a>
 
                         <div ng-show="track.offer.price" >
-                            <a target="_blank" href="{{ track.offer.url }}">
+                            <a target="_blank" href="{{ track.offer.url }}" itemprop="offers">
                                <i class="glyphicon glyphicon-shopping-cart"></i> Buy on Amazon from {{ track.offer.price }}
                             </a>
                         </div>
