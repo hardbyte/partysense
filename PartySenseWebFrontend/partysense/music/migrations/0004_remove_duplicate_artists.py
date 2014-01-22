@@ -23,7 +23,7 @@ class Migration(DataMigration):
                     t.save()
 
                 # Then remove the duplicate artist
-                del duplicate_artist
+                duplicate_artist.delete()
 
 
 
