@@ -129,43 +129,56 @@
             </a>
             <div id="share" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <div onclick="document.getElementById('eventURL').select();">
-                        <span class="glyphicon glyphicon-link"></span>
-                        Share this link to collaborate on the playlist:
+                    <ul class="fa-ul">
+                        <li>
+                            <i class="fa-li fa fa-facebook"></i>
+                            <a id="fb_share" href="#" class="">
+                                 Post on your Facebook timeline
+                             </a>
+                        </li>
 
-                        <input type="text" id="eventURL" class="input-block-level" readonly="readonly"
-                               title="share event with others by copying this link"
-                               style="cursor:default;"
-                               value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
+                        {% if event.fb_event_id %}
 
-                    </div>
+                        <li>
+                            <i class="fa-li fa fa-calendar"></i>
+                            <a id="fb_event_share" href="#" class="">
+                                 Share on Facebook event page
+                             </a>
+                        </li>
+                        {% endif %}
 
-                    <table class="table">
-                        <tr>
-                            <td>
-                                <div id="twitter_share">
-                                    <a href="https://twitter.com/share?related=partysenseapp&text=I'm%20editing%20a%20collaborative%20playlist%20on%20partysen.se"
-                                       target="_blank">
-                                    <img src="{% static "images/social_signin_buttons_icons/twitter_128.png" %}"
-                                             width="32px" />
-                                    </a>
-
-                                </div>
-                            </td>
-                            <td>
-                                <a id="facebook_share" href="#">
-                                    <img id="fb_share"
-                                         width="32px"
-                                         src="{% static "images/social_signin_buttons_icons/facebook-72.png" %}"/>
+                        <li>
+                            <i class="fa-li fa fa-twitter"></i>
+                            <div id="twitter_share">
+                                <a href="https://twitter.com/share?related=partysenseapp&text=I'm%20editing%20a%20collaborative%20playlist%20on%20partysen.se"
+                                   target="_blank">
+                                    Share on twitter
                                 </a>
-                            </td>
-                            <td>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-li fa fa-google-plus"></i>
 
-                                <div class="g-plus" data-action="share" data-annotation="none" data-height="32"></div>
+                            <a href="https://plus.google.com/share?url=http://partysen.se{% url "event:detail" event.pk event.slug %}"
+                               onclick="window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                                Share on Google+
+                            </a>
 
-                            </td>
-                        </tr>
-                    </table>
+                        </li>
+
+                        <li onclick="document.getElementById('eventURL').select();">
+                            <i class="fa-li fa fa-link"></i>
+                            <div>
+                                 <input type="text" id="eventURL" class="input-block-level" readonly="readonly"
+                                   title="share event with others by copying this link"
+                                   style="cursor:default;"
+                                   value="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
+                                Share this link to collaborate on the playlist.
+                            </div>
+                        </li>
+
+                    </ul>
 
                 </div>
             </div>
@@ -276,55 +289,58 @@
             $.ajaxSetup({ cache: true });
             $.getScript('//connect.facebook.net/en_US/all.js', function () {
                 //FB.init({ appId: '386541278102635', status: true });
+                var fbActions = [
+                    {
+                        name: "Vote on setlist",
+                        link: 'http://partysen.se{% url "event:detail" event.pk event.slug %}'
+                    }
+                ];
+
+                $("#fb_event_share").click(function(){
+                    // Publish a post on an event - requires publish permissions...
+                    FB.login(function(response) {
+                        if (response && response.status === "connected") {
+                            FB.api('/{{ event.fb_event_id }}/feed', 'post',
+                                {
+                                    message: 'Tell us what music you want to hear:',
+                                    link:                'http://partysen.se{% url "event:detail" event.pk event.slug %}',
+                                    name:                '{{ event.title }} - Collaborative Playlist',
+                                    caption:             'Vote on the music to be played at {{ event.title }}!',
+                                    description:         'Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}. '+
+                                                         'So far there are ' + ps.numberOfTracks + ' tracks! Why not add some more.',
+                                    picture:             'http://partysen.se{% static "images/fblink.png" %}',
+
+                                    actions: fbActions
+                                },
+                                function(response) {
+
+                                    if (!response || response.error) {
+                                        alert('Sorry an error occurred: ' +  response.error.message);
+
+                                    }
+                                });
+                        }
+
+                    }, {scope: ['publish_actions', 'publish_stream']});
+                });
 
                 $("#fb_share").click(function(){
-
-                    // Method 1 - requires publish permissions...
-{#                    FB.login(function(response) {#}
-{#                        console.log("Have asked for publish access");#}
-{#                        console.log(response);#}
-{##}
-{#                        FB.ui('/{{ event.fb_event_id }}/feed', 'post',#}
-{#                            {message: 'Test message'},#}
-{#                            function(response) {#}
-{#                            if (!response || response.error) {#}
-{#                                alert('Error occurred:' +  response.error.message);#}
-{#                            } else {#}
-{#                                alert('Success!');#}
-{#                            }#}
-{#                        });#}
-{#                    }, {scope: 'publish_stream'});#}
-
-                    // Method 2 - using the ui dialog
+                    // Facebook post on users wall. Doesn't require permissions
                     FB.ui({
                             method:              'feed',
-                            //from: 'partysenseapp',
-                            //to: '{{ event.fb_event_id }}',
                             name:                '{{ event.title }} - Collaborative Playlist',
                             caption:             'Vote on the music to be played at {{ event.title }}!',
                             description:         'Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}. '+
                                                  'So far there are ' + ps.numberOfTracks + ' tracks! Why not add some more.',
                             picture:             'http://partysen.se{% static "images/fblink.png" %}',
                             link:                'http://partysen.se{% url "event:detail" event.pk event.slug %}',
-                            actions: [
-                                {
-                                    name: "Vote on setlist",
-                                    link: 'http://partysen.se{% url "event:detail" event.pk event.slug %}'
-                                }
-                            ],
+                            actions: fbActions,
                             properties: {
                                 'Create your own playlist': {text: 'www.partysen.se', href:'http://partysen.se{% url "event:create" %}'},
                                 'Like us on facebook': {text: 'partysenseapp', href:'https://www.facebook.com/partysenseapp'}
                             }
                         },
-                        function (response) {
-                            if (response && response.post_id) {
-                                console.log( 'Post was published.' );
-                            } else {
-                                console.log( 'Post was not published.' );
-                            }
-                        });
-
+                        function (response) {});
                 });
             });
 
