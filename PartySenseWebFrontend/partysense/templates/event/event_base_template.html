@@ -14,7 +14,7 @@
 {% block fb %}
     {% cache 3600 facebookmeta event.pk %}
     <link rel="canonical" href="http://partysen.se{% url "event:detail" event.pk event.slug %}"/>
-    <meta itemprop="name" content="Interactive setlist for {{ event.title }}">
+    <meta itemprop="name" content="Interactive playlist for {{ event.title }}">
     <meta itemprop="description" content="A collaborative music playlist/setlist. Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}! Partysense - the best way to make sure you have a great night out">
 
     <meta property="fb:app_id"          content="386541278102635" />
@@ -304,9 +304,9 @@
                                 {
                                     message: 'Tell us what music you want to hear:',
                                     link:                'http://partysen.se{% url "event:detail" event.pk event.slug %}',
-                                    name:                '{{ event.title }} - Collaborative Playlist',
+                                    name:                '{{ event.title }} - Interactive Playlist',
                                     caption:             'Vote on the music to be played at {{ event.title }}!',
-                                    description:         'Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}. '+
+                                    description:         'Tell {{ event.dj.nickname }} what you want on the playlist for {{ event.title }}. '+
                                                          'So far there are ' + ps.numberOfTracks + ' tracks! Why not add some more.',
                                     picture:             'http://partysen.se{% static "images/fblink.png" %}',
 
@@ -328,15 +328,15 @@
                     // Facebook post on users wall. Doesn't require permissions
                     FB.ui({
                             method:              'feed',
-                            name:                '{{ event.title }} - Collaborative Playlist',
+                            name:                '{{ event.title }} - Interactive Playlist',
                             caption:             'Vote on the music to be played at {{ event.title }}!',
-                            description:         'Tell {{ event.dj.nickname }} what you want on the setlist for {{ event.title }}. '+
+                            description:         'Tell {{ event.dj.nickname }} what you want on the playlist for {{ event.title }}. '+
                                                  'So far there are ' + ps.numberOfTracks + ' tracks! Why not add some more.',
                             picture:             'http://partysen.se{% static "images/fblink.png" %}',
                             link:                'http://partysen.se{% url "event:detail" event.pk event.slug %}',
                             actions: fbActions,
                             properties: {
-                                'Create your own playlist': {text: 'www.partysen.se', href:'http://partysen.se{% url "event:create" %}'},
+                                'Create your own interactive playlist': {text: 'www.partysen.se', href:'http://partysen.se{% url "event:create" %}'},
                                 'Like us on facebook': {text: 'partysenseapp', href:'https://www.facebook.com/partysenseapp'}
                             }
                         },
