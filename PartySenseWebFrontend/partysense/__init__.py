@@ -7,7 +7,11 @@ logger = logging.getLogger(__name__)
 def fb_request(request, fields):
 
     logger.warning("Making facebook request")
-    fb_social_auth = request.user.social_auth.get(provider="facebook")
+    try:
+        fb_social_auth = request.user.social_auth.get(provider="facebook")
+    except:
+        logger.warning("Couldn't find facebook user for fb_request")
+        return {"error": "Sorry you need to link your facebook account"}
     fb_user_id = fb_social_auth.uid
     token = fb_social_auth.tokens
     return fb_api(fb_user_id, token, fields)
