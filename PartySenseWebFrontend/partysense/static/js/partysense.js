@@ -43,3 +43,7 @@ App.controller('RecentTrackCtrl', ['$scope', 'Track', 'updateService', function(
         $scope.recentTracks = ps.recentTracks;
     };
 }]);
+
+App.config(['$compileProvider', function($compileProvider) {
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|tel|spotify):/);
+}]);

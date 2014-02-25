@@ -1,7 +1,8 @@
 angular.module('Partysense')
-  .controller('SearchCtrl', ['$scope', "$timeout", "$http", "SpotifySearch", "SpotifyLookup", "Track", "updateService",
+  .controller('SearchCtrl', [
+      '$scope', "$timeout", "$http", "SpotifySearch", "SpotifyLookup", "Track", "updateService",
 function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateService) {
-    /* This is really the search controller (currently spotify) */
+    /* This is the search controller (currently spotify) */
     "use strict";
 
     function filterResults(data) {
@@ -151,20 +152,21 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
         });
     };
 }
-]).controller("SetlistCtrl", ['$scope', '$http', 'Track', 'LastfmTrack', 'updateService',
-function ($scope, $http, Track, LastfmTrack, updateService) {
+]).controller("SetlistCtrl", [
+      '$scope', '$http', '$log', '$sce',
+      'Track', 'LastfmTrack', 'updateService', 'SpotifyPlayer', 'Amazon',
+function ($scope, $http, $log, $sce, Track, LastfmTrack, updateService, SpotifyPlayer, Amazon) {
     "use strict";
+    $scope.setlist = [];
+    $scope.spotifyHTML = "";
     $scope.infoWidth = ps.loggedIn ? 'col-md-7' : 'col-md-9';
     $scope.loggedIn = ps.loggedIn;
-    $scope.spotifyPlaylistURL = "";
     $scope.showSpotifyPreview = false;
     $scope.numberOfTracks = ps.numberOfTracks;
-    // encode the events name in the spotify playlist
-    $scope.playlistName = encodeURIComponent("Partysense Playlist - " + ps.eventTitle);
 
     $scope.searchArtistFromTrack = function(track) {
-        console.log("Search for an artist");
-        console.log(track);
+        $log.info("Search for an artist");
+        $log.info(track);
         var artist = {
             name: track.artist,
             href: track.spotifyArtistID
@@ -172,64 +174,11 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         updateService.update("searchByArtist", artist);
     };
 
-    $scope.requestAmazonPrices = function(tracks){
-        var trackIds = [];
+    $scope.requestAmazonPrices = Amazon.showTrackOffers;
 
-        // Iterate through all the tracks to get their IDs
-        for (var k = 0; k < tracks.length; k++) {
-            trackIds.push(tracks[k].pk);
-        }
-
-        $http.get("/amazon/multiple/?pks=" + JSON.stringify(trackIds))
-          .success(function(response){
-              if(response.error) {
-                  console.log("Bugger...");
-              } else {
-                  console.log("Received multiple amazon prices");
-                  for (var i = 0; i < tracks.length; i++) {
-                      var track = tracks[i];
-                      track.offer = {
-                          url: response[track.pk].URL,
-                          price: response[track.pk].price
-                      };
-                  }
-              }
-          })
-          .error(function(response){
-              console.log("Awkward error...");
-          });
-    };
-
-    // TODO make into a service
-    $scope.showTrackPurchase = function(track){
-        /* This is used to query amazon via the partysense server for one off prices*/
-        track.offer = {};
-
-        $http.get("/amazon/single/?artist="+ track.artist + "&track=" + track.name + "&pk=" + track.pk)
-          .success(function(response){
-              if(response.error) {
-                  track.offer = {
-                      "error": response.error
-                  };
-              } else {
-                  track.offer = {
-                      url: response.URL,
-                      price: response.price
-                  };
-              }
-          })
-          .error(function(response){
-              console.log("Got an error...");
-              track.offer = {
-                      "error": "Sorry, an error occurred"
-                  };
-          });
-
-    };
 
     function refreshSetlist(data){
-        console.log("Refreshing setlist...");
-        var spotifyTracks = "";
+        $log.info("Refreshing setlist...");
         var i;
         var defaultCoverURL = "/static/images/defaultCover.png";
 
@@ -241,11 +190,8 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
 
         $scope.setlist = data;
 
-        for(i=0; i<Math.min(80, data.length);i++){
-            spotifyTracks += data[i].spotifyTrackID.slice(14) + ',';
-        }
-
-        $scope.spotifyPlaylistURL = "https://embed.spotify.com/?uri=spotify:trackset:" + $scope.playlistName + ":" + spotifyTracks + "&view=list";
+        // Set the spotify content
+        $scope.spotifyHTML = SpotifyPlayer.getIFramePlayer(data, ps.eventTitle);
         $scope.showSpotifyPreview = true;
 
         // Iterate through all the tracks
@@ -260,17 +206,19 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
 
     }
 
+    $scope.showTrackPurchase = Amazon.showTrackOffer;
+
     $scope.updateSetlist = function(){
         // GET: /api/123/get-track-list
-        console.log("Calling update setlist with new data from server");
+        $log.info("Calling update setlist with new data from server");
         $scope.setlist = Track.query({action: "get-track-list"}, refreshSetlist);
     };
 
     refreshSetlist(ps.setlist);
 
     $scope.$on("setlist", function(evt, track){
-        console.log("It appears you're adding a track to the setlist");
-        console.log(track);
+        $log.info("It appears you're adding a track to the setlist");
+        $log.info(track);
         // TODO really we could do this smarter...
         $scope.updateSetlist();
     });
@@ -285,8 +233,8 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
     };
 
     $scope.vote = function (track, isUpVote) {
-        console.log("Got a vote!");
-        console.log(track);
+        $log.info("Got a vote!");
+        $log.info(track);
         /* Protection against cross site scripting attacks. */
         $http.defaults.headers.post['X-CSRFToken'] = csrftoken;
         $http.post("/api/" + ps.event + "/vote/" + track.pk + "/",
@@ -347,7 +295,7 @@ function ($scope, $http, Track, LastfmTrack, updateService) {
         };
         // See if we have localStorage and if this track has been stored
         if(supports_html5_storage() && track.spotifyTrackID in localStorage) {
-            //console.log("Using cover from local storage");
+            //$log.info("Using cover from local storage");
             updateCover(JSON.parse(localStorage[track.spotifyTrackID]));
             return;
         }

@@ -13,17 +13,39 @@
     </div>
 
     <div class="row">
-
-        <article class="col-md-12">
+        <article class="col-mid-12">
             <h3>Most up-voted tracks</h3>
-            <div class="recentTrack" ng-repeat="track in popularTracks.slice(0, numberOfResults) | filter:searchText">
-                <i class="glyphicon glyphicon-chevron-right"></i>
-                <span>
-                    <strong class="white">{{track.artist}}</strong>
-                    <span class="muted"> / {{track.name}} / </span>
-                    <span class="white">{{ track.upVotes - track.downVotes }}</span>
-                </span>
+
+            <table class="table">
+                <thead>
+                    <th></th>
+                    <th><input type="checkbox"
+                               ng-model="selectAll" ng-change="toggleAll()"/></th>
+                    <th>Artist</th><th>Title</th><th>Votes</th>
+                </thead>
+                <tbody>
+                    <tr class="recentTrack"
+                        ng-repeat="track in popularTracks.slice(0, numberOfResults) | filter:searchText track by track.pk">
+                        <td>{{ 1 + $index }}</td>
+                        <td><input type="checkbox" ng-model="track.selected"/></td>
+                        <td><strong class="white">{{track.artist}}</strong></td>
+                        <td><span class="muted">{{track.name}}</span></td>
+                        <td><span class="white">{{ track.upVotes - track.downVotes }}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div ng-if="tracksSelected()">
+
+                <div class="btn-group">
+                    <a class="btn btn-default" target="_blank" ng-href="{{playInSpotify()}}">
+                        Play with Spotify
+                    </a>
+                    <a class="btn btn-default" target="_blank" ng-click="buyOnAmazon()">Buy on amazon</a>
+                    <a class="btn btn-default" ng-click="download()">Download as spreadsheet</a>
+                </div>
             </div>
+
         </article>
     </div>
 

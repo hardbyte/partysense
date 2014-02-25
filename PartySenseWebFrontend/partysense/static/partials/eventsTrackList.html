@@ -16,7 +16,7 @@
             </div>
             <div class="row trackDiv"
                  itemprop="track" itemscope itemtype="http://schema.org/MusicRecording"
-                 ng-repeat="track in setlist"
+                 ng-repeat="track in setlist track by track.pk"
                  back-img="{{ track.coverURL }}">
                 <meta itemprop="image" content="{{ track.coverURL }}"/>
 
