@@ -24,6 +24,7 @@ def getPage(url):
 
 
 def didYouMean(q):
+    return False
     original = q
     q = str(q.lower()).strip()
     url = "http://www.google.com/search?q=" + urllib.quote(q)
