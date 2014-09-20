@@ -88,6 +88,8 @@
                                 <h4 class="modal-title" id="myModalLabel">{{ dj.nickname }}'s Upcoming Events</h4>
                               </div>
                               <div class="modal-body">
+                              {% if dj.get_upcoming_events.count > 1 %}
+
                                 <ul>
                                     {% for evt in dj.get_upcoming_events %}
                                         {% if evt != event %}
@@ -97,8 +99,15 @@
                                             </a>
                                         </li>
                                         {% endif %}
+
                                     {% endfor %}
                                 </ul>
+
+                              {% else %}
+                                  <h1>Sorry</h1>
+                                  <h2>Looks like this DJ doesn't have any upcoming public events.</h2>
+                              {% endif %}
+
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
