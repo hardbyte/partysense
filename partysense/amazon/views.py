@@ -2,6 +2,7 @@
 import logging
 import json
 import itertools
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.core.cache import cache
@@ -56,8 +57,8 @@ def search_amazon_for_track(track):
 
     for product in items:
         if not track._external_ids.filter(id_type=amazon_type).exists():
-            eid, _created = ExternalID.objects.get_or_create(id_type=amazon_type, value=str(product.ASIN))
-            track._external_ids.add(eid)
+            new_external_id = track._external_ids.create(id_type=amazon_type, value=str(product.ASIN))
+            #logger.info("Adding amazon ID for track {}".format(track.id))
 
         response['ASIN'] = str(product.ASIN)
         response['URL'] = str(product.DetailPageURL)
@@ -91,7 +92,14 @@ def price_multiple_tracks(request):
             # Note the ASIN doesn't get put in `asins` so it doesn't get queried
         elif track._external_ids.filter(id_type=amazon_type).exists():
             # Add ASIN to list to query
-            asins[track.pk] = track._external_ids.get(id_type=amazon_type).value
+            try:
+                aid = track._external_ids.get(id_type=amazon_type).value
+            except MultipleObjectsReturned as e:
+                logging.warning("Track {} has more than one amazon ID.".format(track.id))
+                aid = track._external_ids.filter(id_type=amazon_type)[0].value
+                for eid in track._external_ids.filter(id_type=amazon_type)[1:]:
+                    eid.delete()
+            asins[track.pk] = aid
         else:
             # Search and hopefully get ASIN
             response = search_amazon_for_track(track)

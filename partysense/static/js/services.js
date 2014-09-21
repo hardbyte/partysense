@@ -10,6 +10,9 @@ angular.module('ps.services', ['ngResource'])
               * which has an url and price.
               * */
 
+              if (tracks.length == 0) {
+                  return;
+              }
               var trackIds = tracks.map(function(track){return track.pk;});
 
               $http.get("/amazon/multiple/?pks=" + JSON.stringify(trackIds))
@@ -139,7 +142,8 @@ angular.module('ps.services', ['ngResource'])
       return $resource("/api/:event/:action/:track",
         {action: "modify", event: ps.event}
       );
-  }).factory('LastfmTrack', function ($http, $resource) {
+  })
+  .factory('LastfmTrack', function ($http, $resource) {
       return $resource("http://ws.audioscrobbler.com/2.0/?method=track.:action&api_key=" + ps.LAST_FM_API_KEY + "&format=json",
         {action: "getInfo", track: "", artist: ""}
       );
@@ -152,4 +156,20 @@ angular.module('ps.services', ['ngResource'])
               $rootScope.$broadcast(event, args);
           }
       };
+  })
+  .factory('websocket', function ($rootScope) {
+      return function (config, arrayObject) {
+          var socket = new WebSocket("ws://108.168.154.105" + ":18854");
+          socket.onopen = function (e) {
+              socket.send(JSON.stringify(config));
+          };
+          socket.onmessage = function(e) {
+              var m = JSON.parse(e.data);
+              console.log(m);
+              $rootScope.$apply(function () {
+                  arrayObject.push(m);
+              });
+          };
+        };
+
   });

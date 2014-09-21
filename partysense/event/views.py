@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db import connection
 from django.core.cache import cache
-#from django.core.cache.utils import make_template_fragment_key
+
 
 from partysense import fb_request
 from partysense.event.models import Event, Location, Vote
@@ -142,7 +142,10 @@ def modify_event(request, pk):
 
         for external_id_data in json.loads(data['external-ids']):
             id_type, created = IDType.objects.get_or_create(name=external_id_data['type'])
-            track._external_ids.create(id_type=id_type, value=external_id_data['id'])
+            if not track._external_ids.filter(id_type=id_type).exists():
+                logger.info("Creating external ID")
+                external_id, created = track._external_ids.get_or_create(id_type=id_type, value=external_id_data['id'])
+                logger.info(id_type)
 
     # Since this user added the track they will count as a vote up
     response = vote_on_track(request, event.pk, track.pk, internal=True)
@@ -162,7 +165,7 @@ def json_track_list(event, user):
     """
     track_data = []
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
-    removable = user == event.dj.user
+    removable = event.djs.filter(user=user).exists()
     event_vote_set = event.vote_set.all()
 
     users_votes = {track_id: is_positive
@@ -264,7 +267,7 @@ def remove_track(request, event_pk, track_pk):
     event = get_object_or_404(Event, pk=event_pk)
     track = event.tracks.get(id=track_pk)
     response = "Permission Denied"
-    if request.user == event.dj.user:
+    if event.djs.filter(user=request.user).exists():
         event.tracks.remove(track)
         response = "Track removed"
     else:
@@ -378,11 +381,12 @@ def create(request):
 def update(request, pk, slug):
     event = get_object_or_404(Event, pk=pk)
 
-    if not (request.user == event.dj.user or request.user.is_staff):
+
+    if not (event.djs.filter(user=request.user).exists() or request.user.is_staff):
         # if not allowed here...
         raise Http404("Permission Denied")
 
-    dj = event.dj
+    djs = event.djs
 
     if request.method == 'POST':
         # If the form has been submitted...
@@ -433,7 +437,7 @@ def update(request, pk, slug):
     return render(request,
                   'event/new.html',
                   {
-                      'dj': dj,
+                      'dj': djs[0],
                       'event': event,
                       "formset": event_form
                   })

@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ("title", 'dj', "start_time", "location", 'number_of_tracks', 'number_of_users',
+    list_display = ("title", 'creator', "start_time", "location", 'number_of_tracks', 'number_of_users',
                     'past_event'
                     )
     list_filter = ('past_event', )

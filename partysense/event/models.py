@@ -93,16 +93,10 @@ class Event(TimeStampedModel):
         """ Django uses this in its admin interface """
         return reverse('event:detail', args=[str(self.id), self.slug])
 
-    def get_dj(self):
-        logger.warning("OLD USE OF DJ for event {}".format(self.pk))
+    def get_first_dj(self):
         return self.djs.all()[0]
 
-    def set_dj(self, new_dj):
-        logger.warning("Trying to set single dj... use event.djs.add")
-
-        raise NotImplemented
-
-    dj = property(get_dj, set_dj)
+    creator = property(get_first_dj)
 
 
 class Vote(models.Model):
