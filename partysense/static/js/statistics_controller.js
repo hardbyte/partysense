@@ -1,10 +1,19 @@
 
 
 angular.module('Partysense')
-  .controller('EventStatsCtrl', ['$scope', '$log', "Track", "SpotifyPlayer", "updateService", "Amazon",
-  function($scope, $log, Track, SpotifyPlayer, updateService, Amazon) {
+  .controller('EventStatsCtrl', ['$scope', '$log',
+        "Track", "SpotifyPlayer", "updateService", "Amazon", "websocket",
+  function($scope, $log, Track, SpotifyPlayer, updateService, Amazon, websocket) {
     "use strict";
     $scope.setlist = ps.setlist;
+
+    $scope.updates = [
+        // example object for testing:
+        //{"eid":1,"event":"B-rave","track":"Blue Ocean Floor","artist":"Justin Timberlake","tid":1,"up":true}
+        ];
+
+    websocket({'event': "ALL"}, $scope.updates);
+
 
     $scope.refreshTracks = function(){
         // GET: /api/123/get-track-list

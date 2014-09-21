@@ -27,6 +27,15 @@ Use these steps for deploying code on Hosted Server (possibly modified and teste
 
 SSH into `hardbyte@web388.webfaction.com`, should have ssh keys setup.
 
+## Beta Server
+
+The beta server has its own database `pstest` and is using the system version of python instead of virtualenv.
+beta.partysen.se is forwarded to port 30747. So run with django's debug server:
+
+    python2.7 manage.py runserver 30747
+    
+Or run with apache.
+
 ## Enable virtualenv
 
     workon pslive

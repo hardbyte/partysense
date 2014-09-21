@@ -1,0 +1,16 @@
+{
+  "name": "partysenselive",
+  "version": "1.0.0",
+  "description": "Websocket server for partysense",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://hardbyte@bitbucket.org/partysense/partysense.git"
+  },
+  "author": "Brian Thorne",
+  "license": "All Rights Reserved",
+  "dependencies": {
+    "pg": "^3.4.4",
+    "ws": "^0.4.32"
+  }
+}

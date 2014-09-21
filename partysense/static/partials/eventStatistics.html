@@ -79,6 +79,14 @@
         </article>
     </div>
 
+    <div class="row" ng-show="updates.length">
+        <h2>Live Stream</h2>
+        <ul>
+            <li ng-repeat="m in updates">
+                <p>Someone {{ (m.up ? "up" : "down") }} voted <span class="muted">{{ m.track }}</span> by <strong class="white">{{ m.artist}}</strong></p>
+            </li>
+        </ul>
+    </div>
 
 </section>
 

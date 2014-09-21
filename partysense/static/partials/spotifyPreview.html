@@ -1,4 +1,18 @@
 <!--<h4>Preview top tracks</h4>-->
 <div id="playlist" ng-controller="SetlistCtrl" ng-show="showSpotifyPreview">
     <div ng-bind-html="spotifyHTML"></div>
+    <div id="livestream">
+      <div class="padding" ng-show="updates.length">
+        <h2>Live Stream</h2>
+        <ul>
+            <li ng-repeat="m in updates">
+                <p>
+                    Someone {{ (m.up ? "up" : "down") }} voted
+                    <span class="muted">{{ m.track }}</span> by
+                    <strong class="white">{{ m.artist}}</strong>
+                </p>
+            </li>
+        </ul>
+      </div>
+    </div>
 </div>

@@ -5,13 +5,13 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
     /* This is the search controller (currently spotify) */
     "use strict";
 
-    function filterResults(data) {
+    function filterResults() {
         // If there aren't many tracks don't bother scrolling
         if($scope.spotifyResult.tracks) {
             $scope.scrollableClass = $scope.spotifyResult.tracks.length > 10 ? "pre-scrollable" : "";
             $scope.msg = "";
         }
-        if($scope.spotifyResult.info.num_results === 0) {
+        if($scope.spotifyResult.info && $scope.spotifyResult.info.num_results === 0) {
             $scope.msg = "Sorry no results";
         }
         /* Scroll up to the search box to show the new results. */
@@ -153,9 +153,9 @@ function ($scope, $timeout, $http, SpotifySearch, SpotifyLookup, Track, updateSe
     };
 }
 ]).controller("SetlistCtrl", [
-      '$scope', '$http', '$log', '$sce',
+      '$scope', '$http', '$log', '$sce', 'websocket',
       'Track', 'LastfmTrack', 'updateService', 'SpotifyPlayer', 'Amazon',
-function ($scope, $http, $log, $sce, Track, LastfmTrack, updateService, SpotifyPlayer, Amazon) {
+function ($scope, $http, $log, $sce, websocket, Track, LastfmTrack, updateService, SpotifyPlayer, Amazon) {
     "use strict";
     $scope.setlist = [];
     $scope.spotifyHTML = "";
@@ -163,6 +163,13 @@ function ($scope, $http, $log, $sce, Track, LastfmTrack, updateService, SpotifyP
     $scope.loggedIn = ps.loggedIn;
     $scope.showSpotifyPreview = false;
     $scope.numberOfTracks = ps.numberOfTracks;
+
+    $scope.updates = [
+        // example object for testing:
+        //{"eid":1,"event":"B-rave","track":"Blue Ocean Floor","artist":"Justin Timberlake","tid":1,"up":true}
+    ];
+
+    websocket({'event': ps.event}, $scope.updates);
 
     $scope.searchArtistFromTrack = function(track) {
         $log.info("Search for an artist");
@@ -179,6 +186,7 @@ function ($scope, $http, $log, $sce, Track, LastfmTrack, updateService, SpotifyP
 
     function refreshSetlist(data){
         $log.info("Refreshing setlist...");
+        $log.info(data);
         var i;
         var defaultCoverURL = "/static/images/defaultCover.png";
 
