@@ -1,5 +1,5 @@
 # Ignore the local webserver settings
-PartySenseWebFrontend/partysense/local_settings.py
+partysense/local_settings.py
 
 # Ignore any generated tmp files
 PartySenseWebFrontend/tmp/*
