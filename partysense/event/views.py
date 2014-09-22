@@ -165,7 +165,8 @@ def json_track_list(event, user):
     """
     track_data = []
     # For now the dj can remove tracks, but maybe later the user who added it could as well.
-    removable = event.djs.filter(user=user).exists()
+
+    removable = event.djs.filter(user=user.pk).exists()
     event_vote_set = event.vote_set.all()
 
     users_votes = {track_id: is_positive
