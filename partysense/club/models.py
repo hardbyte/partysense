@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 
-from django_countries import CountryField
+from django_countries.fields import CountryField
 
 from partysense.util.models import *
 from partysense.music.models import Genre
