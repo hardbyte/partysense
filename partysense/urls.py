@@ -30,7 +30,7 @@ urlpatterns = patterns('',
 
     url(r'^amazon/', include('partysense.amazon.urls', namespace="amazon")),
 
-    url(r'^accounts/', include('partysense.auth.urls', namespace="auth")),
+    url(r'^accounts/', include('partysense.psauth.urls', namespace="auth")),
 
     # Registration links
     url(r'^accounts/', include('registration_email.backends.default.urls')),

@@ -14,7 +14,7 @@ from social.apps.django_app.default.models import UserSocialAuth
 from tastypie.models import ApiKey, create_api_key
 
 from partysense import fb_api
-from partysense.auth.forms import EmailAuthenticationForm
+from partysense.psauth.forms import EmailAuthenticationForm
 
 # Create a tastypie API key for any new users
 models.signals.post_save.connect(create_api_key, sender=User)
