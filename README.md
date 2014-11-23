@@ -232,25 +232,22 @@ I've set up the server to use virtualenv based of this [blog][6].
 
 ## South
 
-South is a database migration tool that we should be using.
+South is a database migration tool that we use to deal with changing schemas.
 
-Start with a new schema migration per app:
-
-    ./manage.py migrate myapp 0001 --fake
-
-on every machine that has a copy of the codebase (make sure they were up-to-date with
-models and schema first).
-
-Then when the schema changes (new fields etc) make a migration:
+When the database schema changes (add or remove fields or new models etc) 
+make a migration for the appropriate `app` (event/music/dj/psauth etc):
 
     ./manage.py schemamigration event --auto
 
-This will create a migration in `event/migrations/0002_auto__description`. Look at the generated code
-and write forwards and backwards migrations.
+This will create a migration in `event/migrations/0002_auto__description`. 
+Look at the generated code and write forwards and backwards migrations.
 
-To apply the migration run:
+To apply all migrations run:
 
-    ./manage.py migrate event
+    ./manage.py migrate
+
+Note Django 1.7 comes with its own schema migration tool based on South so if/when we
+upgrade django we should be careful to document the changes for this tool.
 
 ## Amazon API
 

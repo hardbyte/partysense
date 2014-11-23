@@ -15,8 +15,10 @@ api = API(locale="us")
 
 logger = logging.getLogger(__name__)
 
-amazon_type, created = IDType.objects.get_or_create(name="amazon")
-
+try:
+    amazon_type, created = IDType.objects.get_or_create(name="amazon")
+except:
+    print("Hopefully this is the first time you've run this...")
 
 def chunker(iterable, n, fillvalue=None):
     """Helper function: Collect data into fixed-length chunks or blocks
