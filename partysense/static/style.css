@@ -1,0 +1,581 @@
+body, html { /* set size of body to full page and remove margins */
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+}
+
+body {
+    /* Align center */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+	/*background:#000000;
+    background-image:url('/static/images/background-top.png') no-repeat top center*/
+    background: url('/static/images/background-top.png') #000 no-repeat top center;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #2ba6cb;
+    font-family: 'Lato', Helvetica, sans-serif;
+}
+
+.my-hover .track-name:hover, .track-artist:hover {
+    background-color: #444444;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#livestream {
+    color:white;
+}
+
+#content {
+    overflow: hidden;
+	padding-top: 72px;
+}
+
+section {
+    background-color: rgba(33, 33, 33, 0.75);
+    color: #fff;
+    padding: 10px;
+    padding-top: 1px;
+}
+
+#logo {
+	height: 30px;
+}
+
+nav ul
+{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    white-space: nowrap;
+}
+
+nav a.regularActive:link, nav a.regularActive:visited {
+
+    font-weight: bold;
+    color: #FFFFFF;
+
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav a.regularActive {
+    display: block;
+	font-size: 1.6em;
+	
+	
+    text-align: center;
+
+    min-width: 50px;
+	max-width: 200px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 6px;
+
+    padding: 4px;
+
+    -webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+nav a.regularActive:hover, nav a.active:active
+{
+    background-color: #444444;
+    color:#9bcb48;
+    text-decoration:none;
+    -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
+	-webkit-transition-duration: 0.25s;
+	-moz-transition-duration: 0.25s;
+	transition-duration: 0.25s;
+}
+
+/* Drop down */
+nav ul li ul {position:absolute;width:110px;background:#FFF;}
+nav ul li ul li {margin:0;padding:0;width:110px;}
+nav ul li ul li a {display:block;padding:15px 10px;color:#444;}
+nav ul li ul li:hover a {background:#F7F7F7;}
+nav ul li ul.fallback {display:none;}
+nav ul li:hover ul.fallback {display:block;}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by it's height */
+    margin: 0 auto -60px;
+}
+
+footer
+{
+    text-align: center;
+    font-size: 12px;
+    margin-top: 50px;
+    height: 50px;   /* Height of the footer */
+}
+
+.quick-start {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*background-color:rgba(33, 33, 33, 0.75);*/
+}
+
+.quick-start div{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.quick-start h1{
+    font-size: 22px;
+    text-transform: uppercase;
+    margin-left: 20px;
+}
+.quick-start h2 {
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-left: 30px;
+    float: right;
+}
+.quick-start h3, p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.quick-start ol {
+    counter-reset: li; /* Initiate a counter */
+    list-style: none; /* Remove default numbering */
+    *list-style: decimal; /* Keep using default numbering for IE6/7 */
+    font: 15px 'trebuchet MS', 'lucida sans';
+    padding: 0;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.quick-start li {
+    position: relative;
+    min-height: 93px;
+    display: block;
+    padding: .4em .8em .4em 2.5em;
+    *padding: .4em;
+    margin: .5em 0;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: all .3s ease-out;
+}
+
+.quick-start li:before
+{
+    content: counter(li);
+    counter-increment: li;
+    position: absolute;
+    left: -0.5em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #2ba6cb;
+    height: 2em;
+    width: 2em;
+    line-height: 1.5em;
+    border: .3em solid #fff;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em;
+    transition: all .3s ease-out;
+}
+.banner-button button {
+    min-width: 60%;
+    height: 50px;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+.banner-button section{
+    background: transparent;
+}
+
+.quick-start p.action{
+    margin: 20px;
+}
+
+#facebook_button{
+    width: 100%;
+    float: left;
+    padding-left: 30px;
+    display: inline;
+    margin-right: 20px;
+    height: 20px;
+    padding-right: 4px;
+    background: url('images/social_signin_buttons_icons/facebook_button.png') 0 0 no-repeat;
+    color: white;
+}
+
+#soundcloud_button {
+    width: 100%;
+    height: 25px;
+
+    margin:auto;
+    background: url('images/social_signin_buttons_icons/soundcloud_button.png') 0 0 no-repeat;
+}
+
+#search {
+    padding: 20px;
+}
+#search input{
+    font-size: 20px;
+    min-width: 250px;
+}
+
+.input-append input {
+    float:left;
+    width:80%
+}
+
+#resultContainer {
+    display: none;
+}
+
+.trackDiv {
+    margin-bottom: 15px;
+    background-color: rgba(51, 51, 51, 0.5);
+    padding: 1px;
+
+    -webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+#recentTracks {
+	background-color:rgba(33, 33, 33, 0.0);
+}
+
+.track-info {
+    padding-left: 10px;
+    padding-right: 10px;
+    float:left;
+}
+
+.track-name {
+    color: white;
+}
+
+.track-artist, .track-genre {
+    color: #2ba6cb;
+}
+
+#event-name {
+    font-size: 1.5em;
+}
+
+#event-tracks {
+    min-height: 300px;
+    margin: 10px;
+}
+
+.voteButtonDiv {
+    padding: 10px;
+}
+
+#event-tracks button{
+    margin-top: 10px;
+    margin-left: 10px;
+
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#event-tracks button.voted {
+    background-color: rgba(44, 184, 222, 0.54);
+}
+
+#event-tracks button:hover {
+    background-color: #9bcb48;
+    -webkit-box-shadow: 0px 0px 10px rgba(38, 172, 228, 0.75);
+	-moz-box-shadow:    0px 0px 10px rgba(38, 172, 228, 0.75);
+	box-shadow:         0px 0px 10px rgba(38, 172, 228, 0.75);
+}
+
+#event-tracks .lastfmCover {
+    float: right;
+    max-height: 150px;
+    -webkit-border-radius: 0px 2px 2px 0px;
+    -moz-border-radius: 0px 2px 2px 0px;
+    border-radius: 0px 2px 2px 0px;
+}
+
+.event_details dl {
+    /* Remove the normal margin because we are short on vertical space */
+    margin-bottom: 2px;
+}
+
+#musicImporter {
+    padding: 5px;
+    margin: 2px;
+}
+
+.indicate-drop {
+  border: 2px dashed #f5f5f5;
+}
+
+#GoogleAdvert {
+    margin-top: 20px;
+}
+
+
+.icon-bar {
+	background-color: #FFFFFF;
+	font-weight: bold;
+}
+
+.jumbotron {
+    background-color:rgba(33, 33, 33, 0.75);
+}
+
+.navbar-inner {
+	/*background-image:url('/static/images/background.jpg');*/
+    background-size:100%;
+    background: black center;
+}
+
+.navbar-inner{
+    min-height: 60px;
+}
+
+
+.carousel-caption{
+	background-color:  rgba(0, 0, 0, 0.8);
+	left:0;
+	right:0;
+	bottom:0;
+}
+
+.carousel-indicators{
+	bottom:-10px;
+	padding:0;
+}
+
+.brand{
+    margin-left:10px;
+}
+
+.hero-background{
+    /*background-color:rgba(33, 33, 33, 0.75);*/
+    background: transparent;
+}
+
+.hero-logo{
+    min-height:110px;
+    padding:10px;
+    margin-bottom:10px
+}
+
+.navbar-inner{
+    min-height:60px;
+}
+
+.nav-pill{
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a{
+	margin-top:5px;
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+.navbar-nav>li>a:hover{
+	background-color:#074458;
+	border-radius:5px;
+}
+
+.dropdown-menu>li{
+	width:100%;
+}
+
+.dropdown-menu>li:hover{
+	background-color:#000000;
+}
+
+.dropdown.open a.dropdown-toggle .caret {
+	color:#FFFFFF;
+}
+
+.accordian-panel{
+	background-color:rgba(33, 33, 33, 0.75);
+	border-width:0px;
+	color:white;
+}
+
+.login-dropdown-ul{
+	background-color:#074458;
+}
+
+.login-dropdown-ul > li > a{
+	color: white;
+}
+ 
+.login-dropdown-ul > li > a:hover, .login-dropdown-ul > li > a:focus {
+  background-color:#074458;
+  color:#7496A1;
+  background-image: none;
+  filter: none;
+}
+ 
+#eventURL{
+	width:100%;
+    color: #555;
+    font-family: arial,sans-serif;
+    margin-bottom: 10px;
+
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus{
+
+	background-image: none;
+	border:0px;
+}
+
+@media (max-width:992px){
+	.banner-button section{
+        text-align:center;
+
+    }
+}
+
+@media (max-width:400px){
+	.carousel-heading, .quick-start button, .quick-start h1 , .quick-start h3{
+        font-size:18px;
+    }
+
+	.jumbotron h2{
+		font-size:20px;
+	}
+	.carousel-paragraph, .quick-start h2{
+        font-size:14px;
+    }
+}
+
+.quick-start-col{
+    border: #000000;
+    border-style:solid;
+    border-width:1px;
+}
+
+#banner-login-button{
+    text-align: left;
+}
+
+#banner-event-button{
+    text-align: right;
+}
+
+.feature-td{
+    width: 50%;
+    text-align: center;
+    border: #444;
+    border-style:solid;
+    border-width:1px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 3px;
+}
+
+.feature-td p{
+    color: #ffffff;
+}
+
+.features{
+    margin-bottom: 10px;
+}
+
+.intro-video{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.club-landing-section{
+    margin-top: 140px;
+}
+
+.club-landing-section p, .club-landing-section li{
+    color: white;
+    font-size: 16px;
+}
+
+.club-register-button{
+    text-align: center;
+}
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.trackOffer {
+    height: 20px;
+}
+
+
+.slide-off-left {
+    transition: all 750ms linear;
+    -webkit-transition: all 750ms linear;
+}
+
+.slide-on-left {
+    transition: all 250ms linear;
+    -webkit-transition: all 250ms linear;
+}
+
+.slide-on-left
+{
+    margin-left: 100px;
+}
+
+.slide-on-left-active.slide-on-left-active {
+    margin-left: 0px;
+}
+
+
+
+.slide-off-left
+{
+    margin-right: 100px;
+}
+
+.block-heading {
+    padding: 15px 10px;
+    border-radius: 4px;
+}
+
+.well {
+    color: black;
+}
+
+#upcomingEvents {
+    padding-left: 10px;
+    font-size: 13px;
+}
+
+#upcomingEvents li {
+    margin-bottom: 10px;
+}
+

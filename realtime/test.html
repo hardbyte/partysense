@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Live stream for event 1:</h1>
+<ol id="data">
+
+</ol>
+<script>
+    var el = document.getElementById("data");
+    var s = new WebSocket("ws://108.168.154.105" + ":18854");
+
+    s.onopen = function (e) {
+        console.log("connected new socket for event stream");
+        s.send(JSON.stringify({
+            //'event': 1
+            'event': "ALL"
+        }));
+    };
+
+    s.onmessage = function(e){
+        var m = JSON.parse(e.data);
+        console.log("Received:");
+        console.log(m);
+
+        var li = document.createElement("li");
+        li.innerText = m.track + " by " + m.artist + " was voted " + (m.up ? "up" : "down");
+        el.appendChild(li);
+    };
+</script>
+</body>
+</html>
