@@ -1,0 +1,87 @@
+<div ng-controller="SetlistCtrl">
+    <div class="" id="musicImporter" droppable>
+
+
+        <div id="event-tracks" itemscope itemtype="http://schema.org/MusicPlaylist">
+            <div itemprop="name" class="hidden">{{ ps.eventTitle }}</div>
+            <meta itemprop="numTracks" content="{{ ps.numberOfTracks }}"/>
+            <div ng-show="setlist.length === 0">
+                    <div class="progress">
+                        <div class="bar" ng-style="{width: '35%'}"></div>
+                    </div>
+
+                <p ng-show="numberOfTracks == 0">It looks like this event doesn't have any tracks yet. Why not get the ball rolling and add some?</p>
+                <p ng-show="numberOfTracks > 0">Loading {{ numberOfTracks }} tracks</p>
+
+            </div>
+            <div class="row trackDiv"
+                 itemprop="track" itemscope itemtype="http://schema.org/MusicRecording"
+                 ng-repeat="track in setlist track by track.pk"
+                 back-img="{{ track.coverURL }}">
+                <meta itemprop="image" content="{{ track.coverURL }}"/>
+
+
+                <div class="col-md-2 voteButtonDiv" ng-show="loggedIn">
+                    <button id="vote-up-{{ track.pk }}"
+                            ng-class="{'voted': track.usersVote === true }"
+                            ng-click="vote(track, true)">
+                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                    </button>
+                    <button id="vote-down-{{ track.pk }}"
+                            ng-class="{'voted': track.usersVote === false }"
+                            ng-click="vote(track, false)">
+                    <i class="glyphicon glyphicon-thumbs-down"></i>
+                    </button>
+                    <button class="muted"
+                          ng-show="track.removable"
+                          ng-click="removeTrack(track);">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                </div>
+
+                <div class="track-info" ng-class="infoWidth">
+                    <h4 class="track-name" itemprop="name">{{ track.name }}</h4>
+                    <p class="track-artist" itemprop="byArtist"
+                       ng-click="(loggedIn) ? searchArtistFromTrack(track) : ''">{{ track.artist }}</p>
+                    <span class="muted track-votes">
+                        <ng-pluralize count="track.upVotes + track.downVotes"
+                            when="{'0': 'Nobody has',
+                                   '1': '1 person has',
+                                   'other': '{} people have'}">
+                        </ng-pluralize> voted.
+                    </span>
+                    <meta itemprop="interactionCount" content="UserLikes:{{ track.upVotes }}"/>
+
+                    <div class="" itemprop="genre">
+                        <em class="track-genre">{{ track.tag }}</em>
+                    </div>
+
+                    <div class="trackOffer">
+                        <a href="#" ng-hide="track.offer" ng-click="showTrackPurchase(track)"
+                            style="float:right;" ng-animate="{hide: 'slide-off-left'}">
+
+                                <i class="glyphicon glyphicon-shopping-cart"></i>
+                                <span ng-hide="track.offer">Buy MP3</span>
+                                <span ng-show="track.offer">Searching amazon...</span>
+
+                        </a>
+
+                        <div ng-show="track.offer.price" >
+                            <a target="_blank" href="{{ track.offer.url }}" itemprop="offers">
+                               <i class="glyphicon glyphicon-shopping-cart"></i> Buy on Amazon from {{ track.offer.price }}
+                            </a>
+                        </div>
+
+                        <div ng-show="track.offer.error">
+                            <i class="glyphicon glyphicon-warning-sign"></i>
+                            <strong>{{ track.offer.error }}</strong>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

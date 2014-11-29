@@ -1,0 +1,40 @@
+{% extends "event/event_base_template.html" %}
+{% load humanize %}
+{% load url from future %}
+{% load staticfiles %}
+{% load compress %}
+
+{% block event_content %}
+
+    <div class="col-md-9">
+        <div>
+            <a class="btn btn-block btn-primary panel-heading accordion-heading"
+               href="{{ event.get_absolute_url}}">
+                <i class="icon-backward"></i> Back to event
+            </a>
+
+            <div>
+                <div ng-include src="eventStatisticsTemplate"></div>
+            </div>
+
+            <section class="jumbotron alert alert-warning">
+
+                {# Note these stats are calculated on the server #}
+                <h3>Summary Statistics</h3>
+
+                <p>Number of people that have logged in to see this event: {{ number_of_users }}</p>
+                <p>Number of people that have voted on the setlist: {{ voting_users }}</p>
+                <p>Number of people who have added tracks: {{ number_of_users_who_added_songs }}</p>
+                <p>Total votes received: {{number_of_votes}}</p>
+                <p>Tracks added to the setlist {{ number_of_tracks }}</p>
+
+            </section>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block event_js %}
+    <script src="{% static "js/statistics_controller.js" %}"></script>
+{% endblock %}
