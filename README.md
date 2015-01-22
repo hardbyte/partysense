@@ -1,28 +1,43 @@
 
-# Local Deployment
+## Getting set up for local development
+
 These steps get you a working PartySense server on your development machine. 
 
-- Clone the repository (Use develop branch for beta site)
-- Make sure you have python 2.7 installed along with pip
-- In a terminal, in the *PartysenseWebFrontend* folder, execute
-  `sudo pip install -r requirements.txt`
-- Rename *possible_local_settings.py* to *local_settings.py*. The local settings will be used for deploying locally
-- Next, run 3 commands on manage.py
-	-  `python manage.py syncdb`
-- Create a local admin if you plan to play with the Django Admin locally
-	-  `python manage.py migrate`
-- Once this is done, you should have a new file *development_database.db* in
-  the webfrontend folder.
-	-  `python manage.py runserver`
-- You should now be able to see the partysense website on localhost:8000
+- Make sure you have a recent install of Python 2.7 (which includes pip)
+- Install `virtualenv`: 
+    `sudo pip install virtualenv virtualenvwrapper`
+- Create a `ps` virtualenv
+    `virtualenv ~/VENVHOME/ps`
+- Clone the repository (Use develop branch for beta site):
+    `git clone git@bitbucket.org:partysense/partysense.git`
+    `git checkout develop`
+- Activate the virtual env (in the *partysense* folder):
+    `source ~VENVHOME/ps/bin/activate`
+- Install the project's python dependencies:
+    `pip install -r requirements.txt`
+- Rename `possible_local_settings.py` to `local_settings.py`. The local settings will be 
+  used for local testing and may be customized.
+- Next, use `manage.py` to create the local database:
+    `python manage.py syncdb`
+- Migrate/Evolve the database tables:
+    `python manage.py migrate`
+
+If all went well, you should have a new file `development_database.db` in the top level folder.
+
+## Running the project locally
+
+-  `python manage.py runserver`
+- You should now be able to see the partysense website at http://localhost:8000
 - If you need to login with Facebook, you will need to add `127.0.0.1    partysen.se`
-  to '/etc/hosts' file and visit *partysen.se:8000* in your browser instead. **Note**: The hosts file in windows can be found at `C:\\Windows\System32\drivers\etc\hosts`
+  to `/etc/hosts` file and visit *partysen.se:8000* in your browser instead. 
+  **Note**: The hosts file in windows can be found at `C:\\Windows\System32\drivers\etc\hosts`
 - If you want to revert to viewing the live web version of the PartySense web app, you
   will need to comment the line added to hosts
 - *Optional Step : Installing PostgreSQL* 
 	.. tbd
 
 # Server Deployment
+
 Use these steps for deploying code on Hosted Server (possibly modified and tested on locally deployed version first)
 
 SSH into `hardbyte@web388.webfaction.com`, should have ssh keys setup.
