@@ -20,3 +20,5 @@ python-social-auth==0.1.17
 python-amazon-product-api==0.2.6
 psutil==1.2.1
 python-memcached==1.53
+South==0.8.2
+lxml==3.2.3
