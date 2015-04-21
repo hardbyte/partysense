@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django.conf import settings
 from django.db import models
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -8,16 +9,50 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.contrib.sites.models import RequestSite, Site
 
+from registration import signals
+from registration.models import RegistrationProfile
+from registration.views import RegistrationView
 
 from social.apps.django_app.default.models import UserSocialAuth
 from tastypie.models import ApiKey, create_api_key
 
 from partysense import fb_api
-from partysense.psauth.forms import EmailAuthenticationForm
+from partysense.psauth.forms import EmailAuthenticationForm, CustomEmailRegistrationForm
 
 # Create a tastypie API key for any new users
 models.signals.post_save.connect(create_api_key, sender=User)
+
+
+class NoUserRegistrationView(RegistrationView):
+    """
+    A registration backend which follows a simple workflow:
+
+    1. User signs up, inactive account is created.
+    2. Email is sent to user with activation link.
+    3. User clicks activation link, account is now active.
+    """
+    form_class = CustomEmailRegistrationForm
+
+    SEND_ACTIVATION_EMAIL = getattr(settings, 'SEND_ACTIVATION_EMAIL', True)
+
+    def register(self, request, **cleaned_data):
+        email, password = cleaned_data['email'], cleaned_data['password1']
+        site = Site.objects.get_current() if Site._meta.installed else RequestSite(request)
+        username = email
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            username, email, password, site,
+            send_email=self.SEND_ACTIVATION_EMAIL,
+            request=request,
+        )
+        signals.user_registered.send(sender=self.__class__,
+                                     user=new_user,
+                                     request=request)
+        return new_user
+
+    def get_success_url(self, *args, **kwargs):
+        return 'registration_complete', (), {}
 
 
 def password_login(request):
@@ -30,8 +65,13 @@ def password_login(request):
             email = auth_form.data['username']
             password = auth_form.data['password']
             user = authenticate(username=email, password=password)
-            login(request, user)
-            return redirect("profile")
+
+            if user is not None and not user.is_anonymous():
+                login(request, user)
+                return redirect("profile")
+            else:
+                return redirect("auth:password_login")
+
         else:
             logging.info("Invalid login via email/password")
             logging.debug("Email was: {}".format(auth_form.data['username']))
@@ -39,9 +79,7 @@ def password_login(request):
         # create an unbound form
         auth_form = EmailAuthenticationForm()
 
-    return render(request, 'auth/login.html',
-                  {'formset': auth_form }
-    )
+    return render(request, 'auth/login.html', {'formset': auth_form})
 
 
 def fb_login(uid, fb_key):

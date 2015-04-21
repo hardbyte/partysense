@@ -218,7 +218,7 @@
                     <h3>Upcoming</h3>
                     <ul id="upcomingEvents">
                     {% for e in upcoming_events %}
-                        <li>{{ e.dj }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> on {{ e.start_time|naturalday }}</li>
+                        <li>{{ e.creator }}'s <a href="{% url "event:detail" e.pk e.slug %}">{{e.title}}</a> on {{ e.start_time|naturalday }}</li>
                     {% endfor %}
                     </ul>
                     <form action="{% url "event:create" %}">
