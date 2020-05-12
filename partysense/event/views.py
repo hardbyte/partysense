@@ -436,7 +436,7 @@ def update(request, pk, slug):
         event_form = EventForm(initial=prior_information)
 
     return render(request,
-                  'event/new.html',
+                  'event/templates/new.html',
                   {
                       'dj': djs[0],
                       'event': event,

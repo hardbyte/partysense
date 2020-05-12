@@ -1,9 +1,6 @@
 from django.conf import settings
 from django.conf.urls import patterns, url
-
 from django.contrib.auth import views as auth_views
-
-#from registration.backends.default.views import RegistrationView
 
 from partysense.psauth.forms import CustomEmailRegistrationForm
 from partysense.psauth.views import *
@@ -24,13 +21,8 @@ urlpatterns = patterns('',
     ),
 
     # page that allows registration of new users with an email + password
-    # url(r'^register/$',
-    #     RegistrationView.as_view(
-    #         template_name='registration/registration_form.html',
-    #         form_class=CustomEmailRegistrationForm,
-    #         success_url=getattr(
-    #             settings, 'REGISTRATION_EMAIL_REGISTER_SUCCESS_URL', None),
-    #     ),
-    #     name='registration_register',
-    # )
+    url(r'^register/$',
+        NoUserRegistrationView.as_view(),
+        name='registration_register',
+    )
 )

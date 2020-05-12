@@ -22,7 +22,6 @@ These steps get you a working PartySense server on your development machine.
 - Migrate/Evolve the database tables:
     `python manage.py migrate`
 
-If all went well, you should have a new file `development_database.db` in the top level folder.
 
 ## Running the project locally
 
@@ -33,12 +32,13 @@ If all went well, you should have a new file `development_database.db` in the to
   **Note**: The hosts file in windows can be found at `C:\\Windows\System32\drivers\etc\hosts`
 - If you want to revert to viewing the live web version of the PartySense web app, you
   will need to comment the line added to hosts
-- *Optional Step : Installing PostgreSQL* 
-	.. tbd
+- *Installing PostgreSQL* 
+	
+	`docker run -p 5432:5432 --name psdb -d postgres`
 
 # Server Deployment
 
-Use these steps for deploying code on Hosted Server (possibly modified and tested on locally deployed version first)
+Use these steps for deploying code on Hosted Server (tested locally version first)
 
 SSH into `hardbyte@web388.webfaction.com`, should have ssh keys setup.
 
@@ -85,14 +85,13 @@ Read the south section!
 
 It is possible to make changes on the server, but by default the SSH key
 is configured for read only communication with bitbucket. So to push changes
-on `master` from the server to bitbucket you would use your bitbucket user
-account:
+on `master` from the server to bitbucket you would have to use your bitbucket 
+user account.
 
-    git push https://{{username}}@bitbucket.org/tanmay_bhola/partysense.git master
 
 # Hosting
 
-The site is currently hosted on [webfaction][2]. The database is postgreSQL,
+The site is currently hosted on [webfaction][2]. The database is postgres,
 also hosted on webfaction, *[phpPgAdmin][3]* is a front end that can be used
 to access the raw database.
 
@@ -133,9 +132,6 @@ To stop memchached use:
     kill $(cat $HOME/memcached.pid)
 
 
-Two django applications that are used for partysense are `python-social-auth`
-for logging in with facebook, and `django-compressor` for minifying css and
-javascript files on the fly.
 
 ## Client
 
@@ -148,7 +144,7 @@ stack includes:
 - Bootstrap3
 - JQuery
 
-We also load things like Google Maps, Google Places, and D3 when required.
+We also load Google Maps, Google Places, and D3 when required.
 
 # Testing Procedure
 
@@ -168,7 +164,6 @@ dependencies are in the `static/lib` folder.
 
 django 1.5.4 and python 2.7.
 
-Upgrading docs: http://docs.webfaction.com/software/django/config.html#upgrading-your-django-libraries
 
 # API
 
@@ -245,14 +240,16 @@ Response will be a JSON object containing:
 I've set up the server to use virtualenv based of this [blog][6].
 
 
-## South
+## Database Migrations
 
-South is a database migration tool that we use to deal with changing schemas.
+Django includes a database migration tool that we use to deal with changing schemas.
+
+
 
 When the database schema changes (add or remove fields or new models etc) 
 make a migration for the appropriate `app` (event/music/dj/psauth etc):
 
-    ./manage.py schemamigration event --auto
+    ./manage.py makemigration event
 
 This will create a migration in `event/migrations/0002_auto__description`. 
 Look at the generated code and write forwards and backwards migrations.
@@ -266,13 +263,17 @@ upgrade django we should be careful to document the changes for this tool.
 
 ## Amazon API
 
-The server contains a `~/.amazon-product-api` file with:
+The server contains a `~/.amazon-product-api` file with the following credentials:
 
     [Credentials]
     access_key = AKIAJ6HNZC6HWILISCKA
     secret_key = 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
     associate_tag = 6404-2547-9415
 
+# Library Docs
+
+- [compressor](https://django-compressor.readthedocs.org/en/latest/)
+- [registration](https://django-registration-redux.readthedocs.org/en/latest/index.html)
 
 [1]: http://partysen.se
 [2]: http://webfaction.com/

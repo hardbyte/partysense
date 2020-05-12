@@ -33,7 +33,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('partysense.psauth.urls', namespace="auth")),
 
     # Registration links
-    url(r'^accounts/', include('registration_email.backends.default.urls')),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 
     # add a page that purposely errors to test logging etc
     url(r'^500$', 'unknown'),
@@ -48,16 +48,12 @@ v1_api.register(LocationResource())
 
 urlpatterns += patterns('partysense.event.views',
 
-    # static landing page
     url(r'^$', 'landing', name='home'),
-
     url(r'^privacy/$', 'privacy', name='privacy'),
-
-    # profile worth having (me thinks no)?
     url(r'^profile/$', 'profile', name="profile"),
 
-    # These next urls form the javascript API
 
+    # These next urls form the javascript API
     url(r'^api/', include(v1_api.urls)),
 
     url(r'^api/(?P<pk>\d+)/modify',

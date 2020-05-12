@@ -103,7 +103,7 @@ class Vote(models.Model):
     event = models.ForeignKey(Event, db_index=True)
     user = models.ForeignKey(User, db_index=True)
     track = models.ForeignKey(Track, db_index=True)
-    is_positive = models.BooleanField()
+    is_positive = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.first_name + ": " + self.track.name
